@@ -44,9 +44,23 @@ what is contained in the report.}
 There is no confidential information to protect.
 \section{IP to Protect}
 
-\wss{State whether there is IP to protect.  If there is, point to the agreement.
-All students who are working on a project that requires an IP agreement are also
-required to sign the ``Intellectual Property Guide Acknowledgement.''}
+This section outlines the terms of use and intellectual property rights related to the technologies used in this project, including Python, NumPy, PyTorch, CheXpert, and TypeScript. By using these technologies, all contributors acknowledge and agree to abide by the associated licenses and intellectual property terms.\\\\
+\textbf{Licences}
+\begin{itemize}
+    \item \href{https://docs.python.org/3/license.html#psf-license}{Python}
+    \item \href{https://numpy.org/terms/#:~:text=These%20Terms%20of%20Use%20constitute,mobile%20website%20or%20mobile%20application}{NumPy}
+    \item \href{https://discuss.pytorch.org/tos}{PyTorch}
+    \item \href{https://www.stanford.edu/site/terms/}{CheXpert}
+    \item \href{https://www.typescriptlang.org/License.html}{TypeScript}
+    \item \href{https://}{etc.}
+\end{itemize}
+\textbf{Acknowledgement of Terms}\\\\
+By contributing to or using this project, I acknowledge that I have read, understood, and agree to abide by the intellectual property rights. I understand the limitations and permissions granted under these licenses and commit to proper attribution and compliance with the terms of use for each technology.
+
+\vspace{1em} % Adds space between paragraphs
+
+\noindent
+Contributor Signature: \underline{\texttt{LZ KD AA NL RJ}} \hspace{4cm} Date: \underline{Sept 6 2024}
 
 \section{Copyright License}
 
@@ -212,8 +226,86 @@ Topics to discuss include the following:
 \wss{git, GitHub and GitHub projects should be part of your technology.}
 
 \section{Coding Standard}
+During the development of the project, we will adhere to the following standards to maintain readable and high-quality code. All Python files (.py) will conform to the PEP 8 style guide. Similarly, TypeScript files (.ts) will follow the Google TypeScript Style Guide. The reformating tools will be employed to enforce these coding standards automatically. By adhering to these guidelines, we aim to ensure consistency across the codebase, improve readability, and facilitate easier maintenance and collaboration among team members.
 
-\wss{What coding standard will you adopt?}
+\newpage{}
+\section*{\href{https://github.com/python/cpython}{Python}}
+
+\textbf{Standard:} \href{https://peps.python.org/pep-0008/}{PEP 8 – Style Guide for Python Code} \\
+\textbf{Code Formatter:} \href{https://github.com/hhatto/autopep8}{Autopep8} \\
+\textbf{Example Function:} \texttt{\href{https://github.com/pytorch/pytorch/blob/main/torch/cpu/__init__.py}{pytorch/torch/cpu/\_\_init\_\_.py}} \\\\
+All Python files (\texttt{.py}) in the project will adhere to the PEP 8 style guide to maintain readability and consistency in the codebase.
+
+\subsection*{PEP 8 Key Principles}
+
+\begin{itemize}
+    \item \textbf{Indentation:} Use 4 spaces per indentation level.
+    \item \textbf{Maximum Line Length:} Limit all lines to a maximum of 79 characters.
+    \item \textbf{Blank Lines:} Use blank lines to separate functions and classes, as well as larger blocks of code inside functions.
+    \item \textbf{Imports:} Group imports in the following order:
+    \begin{enumerate}
+        \item Standard library imports,
+        \item Related third-party imports,
+        \item Local application/library-specific imports.
+    \end{enumerate}
+    Each group should be separated by a blank line.
+    \item \textbf{Spaces:} Avoid extraneous whitespace in expressions and statements (e.g., immediately before a comma, colon, or semicolon).
+    \item \textbf{Naming Conventions:}
+    \begin{itemize}
+        \item Use \texttt{snake\_case} for function and variable names.
+        \item Use \texttt{CapitalizedWords} for class names.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Code Formatting with Autopep8}
+
+To enforce these practices, Autopep8 will be used as the automatic code formatter. Autopep8 will automatically adjust formatting issues in Python code to conform to the PEP 8 style guide. This tool will help ensure consistent style and quality throughout the project by reformatting the code according to PEP 8 rules.
+
+\subsection*{Usage}
+
+To use Autopep8 for formatting:\\
+\texttt{autopep8 --in-place --aggressive --aggressive <filename>.py}\\\\
+This command applies formatting to a specific Python file.
+
+\newpage{}
+
+\section*{\href{https://github.com/microsoft/TypeScript}{TypeScript}}
+
+\textbf{Standard:} \href{https://google.github.io/styleguide/tsguide.html}{Google TypeScript Style Guide} \\
+\textbf{Code Formatter:} \href{https://github.com/prettier/prettier}{Prettier} \\
+\textbf{Example Function:} \texttt{\href{https://github.com/angular/angular/blob/main/devtools/projects/ng-devtools/src/lib/devtools_spec.ts}{angular/devtools/projects/ng-devtools/src/lib/devtools\_spec.ts}} \\\\
+All TypeScript files (\texttt{.ts}) in the project will follow the Google TypeScript Style Guide to maintain a high level of consistency and readability across the codebase.
+
+\subsection*{Key Principles from the Google TypeScript Style Guide}
+
+\begin{itemize}
+    \item \textbf{Indentation:} Use 2 spaces per indentation level.
+    \item \textbf{Maximum Line Length:} Limit all lines to a maximum of 80 characters.
+    \item \textbf{Semicolons:} Always use semicolons to terminate statements.
+    \item \textbf{Quotes:} Use single quotes (\texttt{'}), except to avoid escaping.
+    \item \textbf{Naming Conventions:}
+    \begin{itemize}
+        \item Use \texttt{camelCase} for variable, function, and method names.
+        \item Use \texttt{PascalCase} for class and interface names.
+    \end{itemize}
+    \item \textbf{Type Annotations:} Prefer explicit type annotations where possible.
+    \item \textbf{Imports:} Organize imports into groups:
+    \begin{enumerate}
+        \item Standard libraries,
+        \item Third-party dependencies,
+        \item Local modules.
+    \end{enumerate}
+    Each group should be separated by a blank line.
+    \item \textbf{No Trailing Commas:} Avoid trailing commas in arrays, objects, and function parameters.
+\end{itemize}
+
+\subsection*{Code Formatting with Prettier}
+
+To enforce these style guidelines, Prettier will be used as the code formatter. Prettier will automatically format TypeScript code to conform to the Google TypeScript Style Guide rules, ensuring consistent styling across the project.
+
+\subsection*{Usage}
+To use Prettier for formatting:  \texttt{prettier --write <filename>.ts}\\\\
+This command applies formatting to a specific TypeScript file.
 
 \newpage{}
 
