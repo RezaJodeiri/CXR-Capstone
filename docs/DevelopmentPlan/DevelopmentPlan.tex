@@ -1,7 +1,9 @@
 \documentclass{article}
-
-\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{array}
 \usepackage{tabularx}
+\usepackage{booktabs}
 
 \title{Development Plan\\\progname}
 
@@ -126,7 +128,8 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 
   \item Pull Requests
   \begin{itemize}
-    \item All Pull Requests will come with a template. This template can be found under \textbf{.github/pull_request_template.md} 
+    \item All Pull Requests will come with a template. This template can be found under \textbf{.github/pull\_request\_template.md}
+
     \item On every pull requests, members are required to provide detail descriptions, and checklist, ensuring standardized code-review process.
   \end{itemize}
   
@@ -135,11 +138,12 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
     \item Branching Strategy might differ from case-to-case. However, general development guideline will encourage members to follow a trunk-based development approach.
     \item Each members will be responsible to keep their local repos up-to-date with the remote repo, then each member will work on the ticket/issue/task, and open a pull request against the main branch.
     \item With this branching strategy, each team members would need to perform rebasing on a regular basics, to avoid big merge conflicts, and potential efficiency lost. 
-    \item The branch name should be descriptive of the change that being developed. For example: \textbf{dev_plan_MEMBER_NAME} or \textbf{feature/training-data-labelling}
+    \item The branch name should be descriptive of the change that being developed. For example: \textbf{dev\_plan\_MEMBER\_NAME} or \textbf{feature/training-data-labelling}
 
   \end{itemize}
 	
-	\item Issues/ Tickets Tracking & Management
+  \item Issues/ Tickets Tracking \& Management
+
   \begin{itemize}
     \item Issues tracking and management will be conducted via Github Issues. We chose this platform instead of Jira or Trello, since GitHub can be a one-stop-shop, and preventing context switching for team members.
     \item Each issue must contain a tag (ie documentation, bug, duplicate, feature-request) to classify the issue type.
@@ -177,21 +181,6 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 
 TODO
 
-\section{Expected Technology}
-
-\wss{What programming language or languages do you expect to use?  What external
-libraries?  What frameworks?  What technologies.  Are there major components of
-the implementation that you expect you will implement, despite the existence of
-libraries that provide the required functionality.  For projects with machine
-learning, will you use pre-trained models, or be training your own model?  }
-
-\wss{The implementation decisions can, and likely will, change over the course
-of the project.  The initial documentation should be written in an abstract way;
-it should be agnostic of the implementation choices, unless the implementation
-choices are project constraints.  However, recording our initial thoughts on
-implementation helps understand the challenge level and feasibility of a
-project.  It may also help with early identification of areas where project
-members will need to augment their training.}
 
 Topics to discuss include the following:
 
