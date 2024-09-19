@@ -110,17 +110,54 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 \section{Workflow Plan}
 
 \begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classification, etc.?
-  \item Use of CI/CD
+
+  \item Usage of Git, Github
+  \begin{itemize}
+    \item The capstone repository (https://github.com/RezaJodeiri/CXR-Capstone) will be actively maintained by all 5 members.
+    \item Many Core Github features will be used extensively in order to drive our capstone project.
+    \begin{itemize}
+      \item \textbf{Github Issues}: to track Issues, Tickets, Bugs, and Tasks
+      \item \textbf{Github Repository}: to monitor, and track changes, and store source code of the capstone project.
+      \item \textbf{Github Actions}: to run automation for continuous integration tasks. For example: Unit tests or linting check per pull requests.
+      \item \textbf{Github Branch Protection}: to protect developers from accidental code push onto main branch.
+      \item \textbf{Github Approval Rules}: to make sure that changes are approved by all 4 other team members, before being merged into main.
+    \end{itemize}
+  \end{itemize}
+
+  \item Pull Requests
+  \begin{itemize}
+    \item All Pull Requests will come with a template. This template can be found under \textbf{.github/pull_request_template.md} 
+    \item On every pull requests, members are required to provide detail descriptions, and checklist, ensuring standardized code-review process.
+  \end{itemize}
+  
+  \item Branching Strategy
+  \begin{itemize}
+    \item Branching Strategy might differ from case-to-case. However, general development guideline will encourage members to follow a trunk-based development approach.
+    \item Each members will be responsible to keep their local repos up-to-date with the remote repo, then each member will work on the ticket/issue/task, and open a pull request against the main branch.
+    \item With this branching strategy, each team members would need to perform rebasing on a regular basics, to avoid big merge conflicts, and potential efficiency lost. 
+    \item The branch name should be descriptive of the change that being developed. For example: \textbf{dev_plan_MEMBER_NAME} or \textbf{feature/training-data-labelling}
+
+  \end{itemize}
+	
+	\item Issues/ Tickets Tracking & Management
+  \begin{itemize}
+    \item Issues tracking and management will be conducted via Github Issues. We chose this platform instead of Jira or Trello, since GitHub can be a one-stop-shop, and preventing context switching for team members.
+    \item Each issue must contain a tag (ie documentation, bug, duplicate, feature-request) to classify the issue type.
+    \item Each issue must contain an assignee, and the assignee is responsible to investigate and close the issue.
+  \end{itemize}
+
+  \item Usage of Continuous Integration / Continuous Deployment
+  \begin{itemize}
+    \item As mentioned, Github Actions will be used for CI/CD automation.
+    \item CI/CD can be utilized for unit testing, linting, security checks, automatic deployment onto cloud environment (AWS, GCP).
+    \item CI/CD automation would need to be developed in conjunction with feature development in order to reduce human error, and repetitive work.
+  \end{itemize}
+
 \end{itemize}
 
 \section{Project Decomposition and Scheduling}
 
-\wss{How will the project be scheduled?  This is the big picture schedule, not
-details. You will need to reproduce information that is in the course outline
-for deadlines.}
+\wss{How will the project be scheduled?  This is the big picture schedule, not details. You will need to reproduce information that is in the course outline for deadlines.}
 
 \begin{itemize}
     \item How will you be using GitHub projects? 
@@ -138,9 +175,7 @@ for deadlines.}
 
 \section{Proof of Concept Demonstration Plan}
 
-What is the main risk, or risks, for the success of your project?  What will you
-demonstrate during your proof of concept demonstration to convince yourself that
-you will be able to overcome this risk?
+TODO
 
 \section{Expected Technology}
 
