@@ -9,8 +9,9 @@
 
 \date{}
 
-\input{../Comments}
-\input{../Common}
+\input{packages/Comments.tex}
+\input{packages/Common.tex}
+\input{packages/Reflection.tex}
 
 \begin{document}
 
@@ -20,10 +21,10 @@
 \caption{Revision History} \label{TblRevisionHistory}
 \begin{tabularx}{\textwidth}{llX}
 \toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\textbf{Date} & \textbf{Developer (s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
+Date1 & Name (s) & Description of changes\\
+Date2 & Name (s) & Description of changes\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -54,8 +55,11 @@ required to sign the ``Intellectual Property Guide Acknowledgement.''}
 
 \section{Copyright License}
 
-\wss{What copyright license is your team adopting.  Point to the license in your
-repo.}
+Our Team is adopting an MIT License, which is a permissive open-source license. This license  allows users to freely use, copy, modify, merge, publish, distribute, sublicense, and even sell copies of the software, provided that the original copyright notice and the license text are included with all copies or substantial portions of the software. The license can be found in our github repository at the 
+
+\begin{itemize}
+    \item Link: \url{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/LICENSE}
+\end{itemize}
 
 \section{Team Meeting Plan}
 
@@ -71,17 +75,52 @@ in-person.}
 
 \wss{How will the meetings be structured?  There should be a chair for all meetings.  There should be an agenda for all meetings.}
 
+
 \section{Team Communication Plan}
 
-\wss{Issues on GitHub should be part of your communication plan.}
+Neuralanalyzers plans to hold in person and virutual meetings as a method of communication between the team. 
+
+\subsection{Discord}
+Discord will be used as the team's main mehtod of communication as its great at message logging, file sharing, creating threads for issues, real time communication and creating channels to separate information. Discord will be used by team members to update, and send key information or documentation links such as GitHub links, YouTube links, and code blocks to help keep the team up to date as well as ensure note taking is kept at a high standard. 
+\subsection{GitHub}
+GitHub is a great resource that Neuralanalyzers will be utilizing to create branchs and track code whilst ensuring clean merging of code between members. On github, issue requests can be created for the team to be notified and add input, to fix following issues as well as update the project as a whole. This will be the key center point where all the documentation and code will be saved. 
 
 \section{Team Member Roles}
 
-\wss{You should identify the types of roles you anticipate, like notetaker,
-leader, meeting chair, reviewer.  Assigning specific people to those roles is
-not necessary at this stage.  In a student team the role of the individuals will
-likely change throughout the year.}
-
+\begin{itemize}
+\item Nathan Luong
+    \begin{itemize}
+        \item Scrum Master
+        \item Developer
+        \item Machine Learning Expert: Will do research on how to effectively read the X-Ray Image and create models that can be used to read race, age, and details of the patient. 
+    \end{itemize}
+    \item Ayman
+    \begin{itemize}
+        \item Developer
+        \item Note Taker
+        \item Computer Vision Expert: Will do research on how using Pytorch or Cuda could be utlized to ensure best performance of Application. 
+    \end{itemize}
+\item Patrick Zhou
+    \begin{itemize}
+        \item Developer
+        \item Reviewer
+        \item Python Expert: Will be in charge of Documentation of Python code Labeling each Function as well as, keeping the programming style consistent. Will be able to transform our pseudocode  into Python code. 
+    \end{itemize}
+        
+\item Kelly Deng
+    \begin{itemize}
+        \item Developer
+        \item Meeting Chair
+        \item Machine Learning Expert: Will do research on how to effectively read the X-Ray Image and create models that can be used to read race, age, and details of the patient. 
+    \end{itemize}
+\item Reza Jodeiri
+    \begin{itemize}
+        \item Developer
+        \item Leader 
+        \item Chest X-ray Expert: Will lead the research and guide the team towards achieving the project’s objectives through their deep understanding of chest X-rays. Their expertise will be instrumental in ensuring that the X-ray images are accurately interpreted, identifying key anomalies and common disease patterns. This knowledge will directly contribute to training the machine learning model by selecting the most relevant features and markers for disease detection, such as abnormalities in lung structure, nodules, or lesions. 
+    \end{itemize}
+\end{itemize}
+  
 \section{Workflow Plan}
 
 \begin{itemize}
@@ -93,14 +132,23 @@ likely change throughout the year.}
 
 \section{Project Decomposition and Scheduling}
 
-\begin{itemize}
-  \item How will you be using GitHub projects?
-  \item Include a link to your GitHub project
-\end{itemize}
-
 \wss{How will the project be scheduled?  This is the big picture schedule, not
 details. You will need to reproduce information that is in the course outline
 for deadlines.}
+
+\begin{itemize}
+    \item How will you be using GitHub projects? 
+    
+    \begin{itemize}
+        \item We will be using GitHub projects to keep track of the progress of the project. We will create a project board with columns such as To Do, In Progress, and Done. Each task will be represented as an issue on the project board. The project board will be updated regularly to reflect the current status of the project.
+    \end{itemize}
+    \item Include a link to your GitHub project 
+    \begin{itemize}
+        \item \url{https://github.com/RezaJodeiri/CXR-Capstone}
+    \end{itemize}
+\end{itemize}
+
+
 
 \section{Proof of Concept Demonstration Plan}
 
@@ -152,15 +200,28 @@ Topics to discuss include the following:
 
 \wss{Not required for CAS 741}
 
-\input{../Reflection.tex}
 
 \begin{enumerate}
     \item Why is it important to create a development plan prior to starting the
     project?
+    \begin{itemize}
+        \item It is crucial to create a development plan prior to starting the project as it aims to ensure that the project is completed on time and within budget. The development plan outlines the tasks that need to be completed, the resources that are required, and the timeline for completion. By creating a development plan, the team can identify potential risks and issues early on and develop strategies to mitigate them. The development plan also helps to ensure that all team members are on the same page and working towards the same goals.
+    \end{itemize}
     \item In your opinion, what are the advantages and disadvantages of using
-    CI/CD?
+    CI/CD? \\ \\
+    % \begin{itemize}
+        Advantages of using CI/CD include:
+        \begin{itemize}
+        \item Improved code quality: CI/CD runs automated tests on the code to identify bugs and issues early on, which can help to improve the overall quality of the code.
+        \item Faster Development: By using CI/CD we can encourage/create faster development cycles that automate the process of building, testing, and deploying code, which can help to speed up the development process.
+        \item Reduced Human Error: By making the deployment process automated, the chance manual errors when deploying is significantly reduced, ensuring reliability and consistency in releases.
+        \end{itemize}
+    % \end{itemize}
     \item What disagreements did your group have in this deliverable, if any,
     and how did you resolve them?
+    \begin{itemize}
+        \item Our group did not have any disagreements in this deliverable.
+    \end{itemize}
 \end{enumerate}
 
 \newpage{}
