@@ -1,7 +1,9 @@
 \documentclass{article}
-
-\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{array}
 \usepackage{tabularx}
+\usepackage{booktabs}
 
 \title{Development Plan\\\progname}
 
@@ -174,42 +176,38 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 
 
 \section{Proof of Concept Demonstration Plan}
-
-TODO
-
+\newpage
 \section{Expected Technology}
-
-\wss{What programming language or languages do you expect to use?  What external
-libraries?  What frameworks?  What technologies.  Are there major components of
-the implementation that you expect you will implement, despite the existence of
-libraries that provide the required functionality.  For projects with machine
-learning, will you use pre-trained models, or be training your own model?  }
-
-\wss{The implementation decisions can, and likely will, change over the course
-of the project.  The initial documentation should be written in an abstract way;
-it should be agnostic of the implementation choices, unless the implementation
-choices are project constraints.  However, recording our initial thoughts on
-implementation helps understand the challenge level and feasibility of a
-project.  It may also help with early identification of areas where project
-members will need to augment their training.}
-
-Topics to discuss include the following:
-
-\begin{itemize}
-\item Specific programming language
-\item Specific libraries
-\item Pre-trained models
-\item Specific linter tool (if appropriate)
-\item Specific unit testing framework
-\item Investigation of code coverage measuring tools
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate
-\item Tools you will likely be using?
-\end{itemize}
-
-\wss{git, GitHub and GitHub projects should be part of your technology.}
+\renewcommand{\arraystretch}{1.5} 
+\begin{table}[h!]
+    \centering
+    \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}m{3.5cm} | >{\raggedright\arraybackslash}X |}
+        \hline
+        \textbf{Component} & \textbf{Technology / Description} \\ \hline
+        \textbf{Programming Language} & \begin{itemize}
+          \item \textbf{Python}: Chosen for its extensive support for machine learning and medical imaging libraries and models.
+          \item \textbf{JavaScript}: For developing the web-based user interface and interactive visualization components that allows users to upload chest X-ray images and view the results of the AI model.
+          \item \textbf{Groovy/Bash}: For writing scripts to automate the deployment of the application and setting up CI/CD pipelines.
+      \end{itemize} \\ \hline 
+        \textbf{Machine Learning Framework} & \textbf{PyTorch}: Selected due to its flexibility, dynamic computation graphs, and support for GPU acceleration, which are essential for training deep learning models on large datasets. \\ \hline
+        \textbf{Medical Imaging Libraries} & \begin{itemize}
+            \item \textbf{TorchXRayVision}: To leverage pre-trained models and Chest X-ray datests such as CheXpert and tools specifically designed for medical image analysis, particularly chest X-rays. 
+            \item \textbf{scikit-learn}: For additional image preprocessing tasks like resizing and normalization.
+        \end{itemize} \\ \hline
+        \textbf{Pre-trained Models} & \textbf{ResNet}: Utilized as a backbone architecture for transfer learning to classify chest X-ray images. Pre-trained models will be fine-tuned on the project’s dataset(Imagenome) to yield desired accuracy and performance. \\ \hline
+        \textbf{Linter Tool} & \textbf{Pylint}: To ensure code adheres to Python's coding standards and improve code quality through automated static analysis. \\ \hline
+        \textbf{Unit Testing Framework} & \textbf{Pytest}: For writing and automating tests to verify the reliability and functionality of machine learning models and components. \\ \hline
+        \textbf{Code Coverage Tool} & \textbf{Coverage.py}: Integrated with Pytest to measure the percentage of code covered by unit tests, ensuring robust testing of the codebase. \\ \hline
+        
+        \textbf{Continuous Integration} & \textbf{GitHub Actions}: Automates testing, linting, and other checks when code is pushed to the repository. \\ \hline
+        \textbf{Development Environment} & \begin{itemize}
+          \item \textbf{Visual Studio Code}: Chosen for its extensive Python support, ease of use, and integration with GitHub for version control and collaboration.
+          \item \textbf{Docker}: To containerize our packages and dependencies, ensuring consistency across different environments and simplifying deployment.
+      \end{itemize}\\ \hline
+        \textbf{Documentation Tool} & \textbf{LaTeX/Overleaf}: For writing and formatting our capstone documents, reports, and deliverables. \\ \hline
+    \end{tabularx}
+    \caption{Technology Choices for Capstone Project}
+\end{table}
 
 \section{Coding Standard}
 
