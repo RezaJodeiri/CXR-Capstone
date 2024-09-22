@@ -4,6 +4,8 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{ {../assets/} }
 
 \title{Development Plan\\\progname}
 
@@ -132,7 +134,8 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
     \item The capstone repository (https://github.com/RezaJodeiri/CXR-Capstone) will be actively maintained by all 5 members.
     \item Many Core Github features will be used extensively in order to drive our capstone project.
     \begin{itemize}
-      \item \textbf{Github Issues}: to track Issues, Tickets, Bugs, and Tasks
+      \item \textbf{Github Issues}: to track Issues, tickets, bugs, and tasks.
+      \item \textbf{Github Projects}: to track monitor project progress, and important deadline management.
       \item \textbf{Github Repository}: to monitor, and track changes, and store source code of the capstone project.
       \item \textbf{Github Actions}: to run automation for continuous integration tasks. For example: Unit tests or linting check per pull requests.
       \item \textbf{Github Branch Protection}: to protect developers from accidental code push onto main branch.
@@ -142,7 +145,7 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 
   \item Pull Requests
   \begin{itemize}
-    \item All Pull Requests will come with a template. This template can be found under \textbf{.github/pull\_request\_template.md} 
+    \item All Pull Requests will come with a template. This template can be found under \begin{verbatim}.github/pull_request_template.md \end{verbatim}
     \item On every pull requests, members are required to provide detail descriptions, and checklist, ensuring standardized code-review process.
   \end{itemize}
   
@@ -151,7 +154,7 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
     \item Branching Strategy might differ from case-to-case. However, general development guideline will encourage members to follow a trunk-based development approach.
     \item Each members will be responsible to keep their local repos up-to-date with the remote repo, then each member will work on the ticket/issue/task, and open a pull request against the main branch.
     \item With this branching strategy, each team members would need to perform rebasing on a regular basics, to avoid big merge conflicts, and potential efficiency lost. 
-    \item The branch name should be descriptive of the change that being developed. For example: \textbf{dev\_plan\_MEMBER\_NAME} or \textbf{feature/training-data-labelling}
+    \item The branch name should be descriptive of the change that being developed. For example: \texttt{dev\_plan\_MEMBER\_NAME} or \texttt{feature/training-data-labelling}
 
   \end{itemize}
 	
@@ -173,23 +176,51 @@ GitHub is a great resource that Neuralanalyzers will be utilizing to create bran
 
 \section{Project Decomposition and Scheduling}
 
-\wss{How will the project be scheduled?  This is the big picture schedule, not details. You will need to reproduce information that is in the course outline for deadlines.}
-
+\includegraphics[scale=0.3]{prelim-timeline.png}
 \begin{itemize}
     \item How will you be using GitHub projects? 
-    
     \begin{itemize}
-        \item We will be using GitHub projects to keep track of the progress of the project. We will create a project board with columns such as To Do, In Progress, and Done. Each task will be represented as an issue on the project board. The project board will be updated regularly to reflect the current status of the project.
+        \item We will be using GitHub Project to monitor and manage status of tasks, and TODO items.
+        \item Our Github Project board has been pre-populated with deadlines from the Course Outline, public link provided below. 
+        \item We will create a project board with columns such as To Do, In Progress, and Done. Each task will be represented as an issue on the project board. The project board will be updated regularly to reflect the current status of the project.
     \end{itemize}
-    \item Include a link to your GitHub project 
+    \item Github Project Link 
     \begin{itemize}
-        \item \url{https://github.com/RezaJodeiri/CXR-Capstone}
+        \item Project Board View \url{https://github.com/users/nathan20021/projects/3/views/4}
+        \item Roadmap View \url{https://github.com/users/nathan20021/projects/3/views/4?layout=roadmap}
     \end{itemize}
 \end{itemize}
 
 
 
 \section{Proof of Concept Demonstration Plan}
+
+\begin{itemize}
+    \item For the Proof of Concept, our team would like to achieve the following high-level goals:
+    \begin{itemize}
+        \item Clearly define the project's problem statement.
+        \item Demonstrate a simple cloud-native web application (Architectural diagram provided below) that is capable of:
+        \begin{itemize}
+            \item Accepting input as an Chest X-Ray image, returns the disease label associating with it (Lung Lesion, Hernia, Edema, etc.), as well as certain image labels (race, age, etc.).
+            \item Handling data transfer securely with Bearer authorization mechanism, allowing only authenticated application can interact with the ML model.
+            \item Providing a user-friendly interface to interact with the Machine Learning service.
+            \item Providing the ability to swap out the pre-trained model with self-trained ones with ease and minimal downtime.
+        \end{itemize}
+    \end{itemize}
+    \includegraphics[scale=0.45]{poc-architectural-diagram.png}
+    
+    \item Possible Technical Deliverables:
+    \begin{itemize}
+        \item First iteration source code of:
+        \begin{itemize}
+            \item A web-based front-end application, written in TypeScript, with the ability to upload images and returning a label.
+            \item A back-end server (written in Python) that interacts with the front-end application and Machine Learning Server.
+            \item A pre-trained, open-source Chest X-ray machine learning model that can be called via some cloud-native protocol (HTTP, or gRPC).
+            \item Github Actions files that automates software testing and full-stack deployment on public cloud provider of choice.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
 \newpage
 \section{Expected Technology}
 \renewcommand{\arraystretch}{1.5} 
@@ -365,7 +396,7 @@ Some acceptable reasons for missing team meetings or deadlines include:
 
 \subsubsection*{In Case of Emergency}
 
-In case of emergency, we will reassign the task from the memeber who has been affect to other memebers. Or ajust the workload expected for the affected memeber respectifully.\\
+In case of emergency, we will reassign the task from the member who has been affect to other members. Or adjust the workload expected for the affected member respectfully.\\
 
 \subsection*{Accountability and Teamwork}
 
