@@ -91,6 +91,10 @@ personas, Design Thinking, etc.  Normally the maximum number of extras will be
 two.  Approval of the extras will be part of the discussion with the instructor
 for approving the project.  The extras, with the approval (or request) of the
 instructor, can be modified over the course of the term.}
+\\ \\ 
+\textbf{Challenge Level: Advanced} \\ \\ 
+We believe the challenge level of this project to be advanced due to the complexity of domain knowledge and implementation required for this project. Firstly, to work with chest X-ray images for disease diagnosis it requires a deep understanding of medical imaging. Interpreting radiological data, dealing with imbalanced datasets, and ensuring proper data labelling are significant obstacles. Also, estimating patient demographics such as race, age, and gender introduces further complexity, as these features may present subtle visual cues that could risk introducing bias into the model. Addressing disease prediction and demographic classification from X-ray images requires careful handling and validation, making the task more challenging.
+Furthermore, using PyTorch to build deep learning models for multi-task classification adds to the difficulty. Preprocessing medical images, as we need to understand a pattern and handle large datasets, to design a well-designed model. The project also faces technical hurdles such as multi-label classification, where the model needs to predict multiple outputs simultaneously (disease, race, age, gender), increasing the complexity of training and fine-tuning the network. Additionally, addressing ethical concerns, such as ensuring fairness and minimizing bias in predictions related to race and gender, adds another layer of difficulty to the project, making it a highly challenging and nuanced task.
 
 \newpage{}
 
@@ -101,12 +105,15 @@ instructor, can be modified over the course of the term.}
 
 
 \begin{enumerate}
-    \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
+    \item What went well while writing this deliverable? \\\\
+While writing this deliverable our Team was able to get a better understanding of the project’s technical requirements and create a helpful time management system. Identifying the challenges related to multi-label classification, transfer learning, and ethical considerations helped outline the advanced nature of the project. Furthermore, PyTorch as a framework for implementing neural networks was a strong choice, as it provided flexibility for the complex modelling tasks at hand. We find that is very well documented and learning PyTorch comprehensively will be a great asset in this project.  
+    \item What pain points did you experience during this deliverable, and how \\\\
+    The biggest challenge our team encountered was to limit and understand the scope of the project to ensure it remained feasible within the constraints of a Capstone while maintaining sufficient complexity. Initially, the project was overly ambitious, especially regarding the number of tasks (disease detection, demographic predictions) and the potential data processing workload. This was addressed by narrowing the focus to the most critical diseases and using existing datasets to avoid time-consuming data collection. We also considered using transfer learning to aide our models to reduce the training time and improve performance on small medical datasets.
     did you resolve them?
     \item How did you and your team adjust the scope of your goals to ensure
     they are suitable for a Capstone project (not overly ambitious but also of
-    appropriate complexity for a senior design project)?
+    appropriate complexity for a senior design project)? \\\\
+    Our team ensured our scope for our Capstone was appropriate by scaling down to the diseases that are highly prevalent in chest X-rays and focusing on obtaining accuracy in one dataset. Through this decision, we can reduce the dataset complexity and the workload required for both training and model validation substantially. In addition, including the demographic predictions (age, race, and gender) as a secondary goal, and prioritizing disease classification would ensure we maintain a challenging and comprehensive project. By setting clear milestones and focusing on realistic, high-impact deliverables, we made sure the project was ambitious enough but also achievable within the given timeframe.
 \end{enumerate}  
 
 \end{document}
