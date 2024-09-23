@@ -1,10 +1,10 @@
-# Project Name
+# CXR-Capstone
 
-Developer Names:
+Developer Names: Ayman Akhras, Nathan Loung, Kelly Deng, Reza Jodeiri, Patrick Zhou
 
-Date of project start:
+Date of project start: September 6th, 2024
 
-This project is ...
+This project focuses on using PyTorch and deep learning to analyze chest X-rays and generate reports that predict potential diseases, along with demographic information such as race, age, and gender. By utilizing multi-task learning, the model aims to handle both medical diagnosis and demographic classification, addressing challenges in medical imaging, bias mitigation, and multi-label prediction.
 
 The folders and files for this project are as follows:
 
