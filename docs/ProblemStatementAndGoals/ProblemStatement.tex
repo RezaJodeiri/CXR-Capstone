@@ -2,6 +2,7 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{float}
 
 \title{Problem Statement and Goals\\\progname}
 
@@ -70,10 +71,43 @@ This refers to people who provide maintenance and suppport for the application t
 \subsection{Environment}
 This software will be compatible with Windows 10 or higher and macOS 12 or higher. Compatibiity with other version of Windows, macOS is likely but will not be guaranteed nor tested.\\
 
+\newpage
 \section{Goals}
+\begin{table}[H] % Change from [ht] to [H] for stricter control
+    \hspace*{-2cm}
+    \centering
+    \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+    \hline
+    \textbf{Goal} & \textbf{Explanation} & \textbf{Reasoning} \\ \hline
+    Accurate Disease Detection & The system must detect diseases such as pneumonia and other cardiac conditions in chest X-rays with a minimum accuracy of 85\%. & High accuracy in disease detection is essential to ensure the system’s reliability and to support clinical decisions. \\ \hline
 
+    Automated Report Generation & The system will generate structured, human-readable reports that summarize key findings, confidence levels, and disease progression status for each patient. These reports will be easily interpretable by clinicians and require no additional formatting. & Automating the report generation process streamlines clinical workflows by providing a ready-to-use summary of results. This minimizes the time clinicians spend manually reviewing raw data and allows them to focus on decision-making, improving overall efficiency in medical settings. \\ \hline
+    
+    Disease Progression Tracking Mechanism & A feature will be implemented that tracks disease progression or improvement over multiple chest X-rays taken from the same patient within a specific time frame, providing actionable insights on changes in the patient’s condition. &Tracking disease progression is crucial in offering a longitudinal analysis of the patient's health. By analyzing X-rays over time, the system will help clinicians assess the effectiveness of treatments and adjust strategies accordingly, ensuring that care is continuously optimized.\\ \hline
+
+    Intuitive User Interface & The design of the user interface for this system must be simple and intuitive, allowing healthcare professionals with varying technical backgrounds to use the platform efficiently. It is essential that the interface enables users to easily upload chest X-rays, view results, and generate reports without requiring extensive training. &The user base for this project includes clinicians and radiologists, many of whom may have limited experience with AI tools or complex interfaces. A streamlined and user-friendly design will ensure that users can navigate the system quickly, minimizing errors and maximizing adoption in clinical settings. This will help ensure that the system can be integrated seamlessly into everyday workflows.  \\ \hline
+    
+    Robust Data Privacy  & The system will ensure that users feel secure when uploading their chest X-ray images by implementing strong data encryption and offering enhanced security features. Users will have the option to enable additional security measures, such as two-factor authentication, to provide them with full control over their data protection. & By offering users an additional verification layer, such as two-factor authentication, the system not only ensures compliance with privacy regulations but also builds trust, allowing users to feel confident that their sensitive health data is fully secured and only accessible by authorized individuals. \\ \hline
+    \end{tabular}
+    \caption{Project Goals}
+\end{table}
 \section{Stretch Goals}
+\begin{table}[ht]
+    \hspace*{-2cm}
+    \centering
+    \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
+    \hline
+    \textbf{Stretch Goal} & \textbf{Explanation} & \textbf{Reasoning} \\ \hline
 
+    Alert System for Immediate Actions & An alert mechanism will flag critical cases, such as severe pneumonia or rapid disease progression, and trigger automatic notifications to clinicians for immediate intervention. & Early detection and prompt response can be critical in life-threatening conditions. An alert system ensures that urgent cases are prioritized, improving patient outcomes. \\ \hline
+
+    Demographic-Specific Model Tuning & The model will be fine-tuned to account for variations in patient demographics like age, gender, and race, with adjustments made to minimize bias in predictions across different groups. & Tailoring the model to recognize demographic differences promotes fairness and accuracy across diverse populations, addressing ethical concerns and improving clinical outcomes for all patients. \\ \hline
+
+    Integration of External Medical Datasets & Additional datasets (such as MIMIC-CXR or NIH Chest X-rays) will be integrated to expand the training set and validate the model’s performance on a broader range of chest X-ray images and disease conditions. & Incorporating external data enhances the model’s robustness and generalizability, ensuring it performs well on a variety of real-world cases, making it more applicable in different healthcare environments. \\ \hline
+
+    \end{tabular}
+    \caption{Stretch Goals}
+\end{table}
 \section{Challenge Level and Extras}
 
 \wss{State your expected challenge level (advanced, general or basic).  The
@@ -99,9 +133,6 @@ Furthermore, using PyTorch to build deep learning models for multi-task classifi
 \newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741}
-
 
 
 \begin{enumerate}
