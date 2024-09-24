@@ -5,6 +5,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{placeins}
 \graphicspath{ {../assets/} }
 
 \title{Development Plan\\\progname}
@@ -193,7 +194,40 @@ GitHub is a great resource that Neuralyzers will be utilizing to create branches
 
 
 \section{Proof of Concept Demonstration Plan}
+\subsection{Risks}
+With many moving parts in the application, our Proof of Concept Demo Plan involves critical components and tasks that carry risks if not implemented correctly. These risks are:
 
+\begin{itemize}
+    \item Inability to Confidently Identify Diseases:
+    \begin{itemize}
+        \item Description: The pre-trained, open-source model (e.g., TorchXRayVision) may not achieve sufficient accuracy (below 80\%) in identifying diseases from chest X-rays.
+        \item Concern: Low accuracy could undermine the system's reliability, potentially impacting clinical decision-making and causing delays or misdiagnoses.
+        \item Mitigation Strategy: If the model underperforms, we will switch to a more clinically validated model, such as CheXNet, which has higher reported accuracy in chest X-ray classification. We will also run cross-validation tests on a smaller dataset to benchmark models before integration.
+    \end{itemize}
+
+    \item Insufficient Access to Test Data for Model Validation:
+    \begin{itemize}
+        \item Description: Gathering diverse and labeled X-ray data for testing and validation might be challenging.
+        \item Concern: Incomplete or insufficient data could skew our understanding of the model’s performance, affecting its generalizability in real-world use cases.
+        \item Mitigation Strategy: If test data is limited, we will explore alternative datasets like MIMIC-CXR or NIH Chest X-ray Dataset to validate our results.
+    \end{itemize}
+
+    \item High Latency in Image Processing:
+    \begin{itemize}
+        \item Description: The system may experience delays when processing large chest X-ray images, especially with multiple users accessing the system at the same time.
+        \item Concern: High latency could slow down results, which might affect the system’s usability in clinical settings.
+        \item Mitigation Strategy: We will resize images where possible, utilize GPU acceleration, and implement parallel processing. Additionally, load balancing and caching mechanisms will be used to reduce any bottlenecks during high traffic periods.
+    \end{itemize}
+
+    \item Challenges with Hosting Application in a Cloud Environment:
+    \begin{itemize}
+        \item Description: Hosting the application in a cloud environment may encounter technical issues like compatibility, networking, or scaling.
+        \item Concern: Without cloud hosting, scalability and accessibility of the app may be limited during demonstrations and deployment.
+        \item Mitigation Strategy: If cloud hosting proves infeasible, we will deploy the application locally for the demonstration. Testing will be conducted both on cloud environments (e.g., AWS, Google Cloud) and locally to ensure smooth fallback if issues arise.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Demonstration Plan}
 \begin{itemize}
     \item For the Proof of Concept, our team would like to achieve the following high-level goals:
     \begin{itemize}
@@ -218,24 +252,8 @@ GitHub is a great resource that Neuralyzers will be utilizing to create branches
             \item Github Actions files that automates software testing and full-stack deployment on public cloud provider of choice.
         \end{itemize}
     \end{itemize}
-    
-    \item With many moving parts of the application, our Proof of Concept Demo Plan has critical component and tasks that are considered risky if not implemented correctly. The risks are:
-        \begin{itemize}
-            \item Unable to confidently identify the disease with the open-source model.
-            \item Unable to host the application on cloud environment (Fallback plan: hosting the application locally for demo).
-            \item Unable to have access, and gather enough data to test the open-source ML Model.
-            \item Unable to complete CI/CD pipeline to deploy app on cloud environment (Fallback plan: Deployed application manually).
-        \end{itemize}
-    \item To mitigate the risks mentioned above, our team had came up with fallback plans:
-        \begin{itemize}
-            \item If unable to confidently identify the disease with the TorchXRayVision model, we can fallback for another models.
-            \item If unable to gather enough data for the model, we can alter the dataset and make multiple mutations of the x-ray images.
-            \item If unable to host the application on cloud environment, we can host the application locally for the demo
-            \item If unable to complete CI/CD pipeline to deploy app on cloud environment, we can deploy the application manually.
-        \end{itemize}
-        
 \end{itemize}
-
+\newpage
 \section{Expected Technology}
 \renewcommand{\arraystretch}{1.5} 
 \begin{table}[h!]
