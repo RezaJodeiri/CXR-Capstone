@@ -29,6 +29,7 @@ Sep 21, 2024 & Reza & Sec1 Problem statement and I/O\\
 Sep 22, 2024 & Ayman & Fixed Readme, Fixed License, Added Challenge Level for PS\\
 Sep 22, 2024 & Kelly & Change team number\\
 Sep 23, 2024 & Reza & Added goals and stretch goals\\
+Sep 23, 2024 & Nathan & Added stakeholder, and spellcheck\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -59,19 +60,22 @@ The rapid and accurate detection of lung and cardiac conditions using chest X-ra
 
 \subsection{Stakeholders}
 1. Physicians \\
-Physicians are experts in interpreting X-ray images and their background knowledge can help validate the AI model's accuracy. They will be the primary users of the application as it would help them enhance efficiency and reduce error in analysing chest X-ray images. \\
+Physicians are experts in interpreting X-ray images and their background knowledge can help validate the AI model's accuracy. They will be the primary users of the application as it would help them enhance efficiency and reduce error in analyzing chest X-ray images. \\
 \\
 2. Patients\\
-Patients are the end-users of the AI model as they undergo X-ray examinations.They can upload the X-ray by themselves as well to the application for self-diagnosing purposes. This would provide patients with fast and high-accuaracy diagnoses which ensures that they get timely treatment, improving their health outcome.\\
+Patients are the end-users of the AI model as they undergo X-ray examinations.They can upload the X-ray by themselves as well to the application for self-diagnosing purposes. This would provide patients with fast and high-accuracy diagnoses which ensures that they get timely treatment, improving their health outcome.\\
 \\
 3. Healthcare provider\\
 This refers to  hospitals, clinics, and other medical facilities that will implement the AI model. Adapting this AI model to their system will provide a more streamlined workflow, providing patients a better experience and ease the work for physicians. \\
 \\
 4. Technical support\\
-This refers to people who provide maintenance and suppport for the application throughout its lifespan, ensuring a smooth user experience and integration into existing systems.
+This refers to people who provide maintenance and support for the application throughout its lifespan, ensuring a smooth user experience and integration into existing systems.
+\\
+5. Developers\\
+This refers to people who write, maintain and operate the software, ensuring the capture of bugs, and possible feature-enhancement in the future.
 \\
 \subsection{Environment}
-This software will be compatible with Windows 10 or higher and macOS 12 or higher. Compatibiity with other version of Windows, macOS is likely but will not be guaranteed nor tested.\\
+This software will be compatible with Windows 10 or higher and macOS 12 or higher. Compatibility with other version of Windows, macOS is likely but will not be guaranteed nor tested.\\
 
 \newpage
 \section{Goals}
@@ -112,25 +116,9 @@ This software will be compatible with Windows 10 or higher and macOS 12 or highe
 \end{table}
 \section{Challenge Level and Extras}
 
-\wss{State your expected challenge level (advanced, general or basic).  The
-challenge can come through the required domain knowledge, the implementation or
-something else.  Usually the greater the novelty of a project the greater its
-challenge level.  You should include your rationale for the selected level.
-Approval of the level will be part of the discussion with the instructor for
-approving the project.  The challenge level, with the approval (or request) of
-the instructor, can be modified over the course of the term.}
-
-\wss{Teams may wish to include extras as either potential bonus grades, or to
-make up for a less advanced challenge level.  Potential extras include usability
-testing, code walkthroughs, user documentation, formal proof, GenderMag
-personas, Design Thinking, etc.  Normally the maximum number of extras will be
-two.  Approval of the extras will be part of the discussion with the instructor
-for approving the project.  The extras, with the approval (or request) of the
-instructor, can be modified over the course of the term.}
-\\ \\ 
 \textbf{Challenge Level: Advanced} \\ \\ 
-We believe the challenge level of this project to be advanced due to the complexity of domain knowledge and implementation required for this project. Firstly, to work with chest X-ray images for disease diagnosis it requires a deep understanding of medical imaging. Interpreting radiological data, dealing with imbalanced datasets, and ensuring proper data labelling are significant obstacles. Also, estimating patient demographics such as race, age, and gender introduces further complexity, as these features may present subtle visual cues that could risk introducing bias into the model. Addressing disease prediction and demographic classification from X-ray images requires careful handling and validation, making the task more challenging.
-Furthermore, using PyTorch to build deep learning models for multi-task classification adds to the difficulty. Preprocessing medical images, as we need to understand a pattern and handle large datasets, to design a well-designed model. The project also faces technical hurdles such as multi-label classification, where the model needs to predict multiple outputs simultaneously (disease, race, age, gender), increasing the complexity of training and fine-tuning the network. Additionally, addressing ethical concerns, such as ensuring fairness and minimizing bias in predictions related to race and gender, adds another layer of difficulty to the project, making it a highly challenging and nuanced task.
+We believe the challenge level of this project to be advanced due to the complexity of domain knowledge and implementation required for this project. Firstly, to work with chest X-ray images for disease diagnosis it requires a deep understanding of medical imaging. Interpreting radio logical data, dealing with imbalanced datasets, and ensuring proper data labelling are significant obstacles. Also, estimating patient demographics such as race, age, and gender introduces further complexity, as these features may present subtle visual cues that could risk introducing bias into the model. Addressing disease prediction and demographic classification from X-ray images requires careful handling and validation, making the task more challenging.
+Furthermore, using PyTorch to build deep learning models for multi-task classification adds to the difficulty. Pre-processing medical images, as we need to understand a pattern and handle large datasets, to design a well-designed model. The project also faces technical hurdles such as multi-label classification, where the model needs to predict multiple outputs simultaneously (disease, race, age, gender), increasing the complexity of training and fine-tuning the network. Additionally, addressing ethical concerns, such as ensuring fairness and minimizing bias in predictions related to race and gender, adds another layer of difficulty to the project, making it a highly challenging and nuanced task.
 
 \newpage{}
 
