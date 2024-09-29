@@ -4,7 +4,7 @@ from flask_cors import CORS
 import skimage
 import torch
 import torchxrayvision as xrv
-import torchvision.transforms as transforms
+import torchvision.transforms as transforms 
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
@@ -22,8 +22,6 @@ def index():
 def predict():
     try:
         logging.info("Request received!")
-
-        # Check if the request contains a file
         if 'file' not in request.files:
             logging.warning("No file found in the request.")
             return jsonify({"error": "No file uploaded"}), 400
@@ -44,14 +42,11 @@ def predict():
         img = transform(img)  # Transform the image
         img = torch.from_numpy(img)  # Convert to a torch tensor
 
-        # Perform the model prediction
         outputs = model(img[None, ...])  # Perform prediction using model
         logging.info("Model prediction successful")
 
         # Create a dictionary of pathologies and their confidence scores
         prediction_results = dict(zip(model.pathologies, outputs[0].detach().numpy()))
-
-        # Log the entire dictionary of predictions
         logging.info(f"Predictions: {prediction_results}")
 
         predicted_index = outputs[0].argmax().item()  # Index of the max value (highest score)
