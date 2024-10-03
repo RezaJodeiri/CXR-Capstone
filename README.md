@@ -58,7 +58,8 @@ Ensure that you have **Docker** installed on your system:
 # 1.Direct terminal to the src folder where the docker-compose.yml file is located:
 cd src 
 
-# 2. Run the Application
+# 2. Build and  Run the Application
+docker-compose build
 docker-compose up
 
 # This will:
@@ -66,7 +67,7 @@ docker-compose up
 
 # 3. Access the Application:
 # - Frontend: Open your browser and go to http://localhost:3000 to access the web interface.
-# - Backend (API): The Flask API will be available at http://localhost:5000.
+# - Backend (API): The Flask API will be available at http://localhost:8888.
 
 # 4. Stopping the Containers
 docker-compose down
