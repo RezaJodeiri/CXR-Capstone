@@ -3,6 +3,7 @@ werkzeug==2.2.3
 scikit-image==0.18.3
 torch==1.10.0
 torchxrayvision==0.0.30
+torchvision==0.11.2
 Jinja2>=3.0
 itsdangerous>=2.0
 click>=7.1.2
