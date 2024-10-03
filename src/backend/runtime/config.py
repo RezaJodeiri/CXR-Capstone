@@ -11,11 +11,7 @@ class Config:
         for c in config:
             if config[c] is None:
                 raise ValueError(f"Config {c} is not set")
-        self.config = {
-            "FRONTEND_URL": config["FRONTEND_URL"],
-            "AWS_ACCESS_KEY_ID": config["AWS_ACCESS_KEY_ID"],
-            "AWS_SECRET_ACCESS_KEY": config["AWS_SECRET_ACCESS_KEY"],
-        }
+        self.config = config
 
     def get_config(self):
         return self.config
