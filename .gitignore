@@ -61,6 +61,8 @@ acs-*.bib
 *.snm
 *.vrb
 
+*.env
+
 # changes
 *.soc
 
