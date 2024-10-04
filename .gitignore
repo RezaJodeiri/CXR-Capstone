@@ -61,6 +61,8 @@ acs-*.bib
 *.snm
 *.vrb
 
+*.env
+
 # changes
 *.soc
 
@@ -277,3 +279,6 @@ TSWLatexianTemp*
 
 # DS_Store file from Mac computers
 .DS_Store
+
+env
+__pycache__

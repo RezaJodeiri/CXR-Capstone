@@ -1,24 +1,29 @@
-version: '3.8'
 services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - ${FRONTEND_HOST_PORT}:3000
     volumes:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - CHOKIDAR_USEPOLLING=true 
+      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
+      - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
     command: npm start
     depends_on:
       - backend
+    image: neuralanalyzer/frontend:latest
 
   backend:
     build: ./backend
     ports:
-      - "5000:5000"
+      - ${BACKEND_HOST_PORT}:5000
     volumes:
       - ./backend:/app
     environment:
-      - FLASK_DEBUG=1 
+      - FLASK_DEBUG=${FLASK_DEBUG}
+      - FRONTEND_URL=${PROTOCOL}://${HOST}:${FRONTEND_HOST_PORT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     command: python app.py
+    image: neuralanalyzer/backend:latest
