@@ -357,6 +357,16 @@ The scope of this project is to take in a chest X-ray image and output if any di
 
 The reader of this SRS document should possess undergraduate level of software development skill as it specifies the system constraints, functional and non-functional requirements etc. Reader should understand the theories of software development as this SRS contains sections about theoretical models and instance models. Readers should also have some basic experience with project management to understand the development plan and the traceability matrix. Ideally, user should have some fundamental understanding of Artificial Intelligence but this is not a required characteristic as the SRS focuses more on the requirements instead of the technical side. To understand input data types and other constraints on data, reader should have at least 1 year programming experiences.\\
 
+\subsection{Stakeholders}
+1. Healthcare Providers: they are the primary uses of the AI system, as the software will help them in interpreting chest X-rays more efficiently by detecting abnormalities and analyzing potential diseases. The use of this software as part of the diagnostic process will help improve efficiency and accuracy.
+\\
+\\
+2. Patients: they benefit from faster, more accurate diagnoses with a improved healthcare accessibility. They also can get early detection of life-threatening diseases.\\
+\\
+3. Hospitals and Clinics: Hospitals and clinics can integrate the software into their hospital systems, which can help them to improve efficiency, reduce diagnostic errors, manage costs.\\
+\\
+4. Technical Support team: they are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy. \\
+
 \subsection{Organization of Document}
 
 Section 1 of the SRS explains the symbols / units / acronyms / mathematical notations used throughout the document.\\
@@ -406,13 +416,7 @@ characteristics and lists the system constraints. \\
 
 The below system context diagram shows that the system will take in an input (chest X-ray image) from the user after they login. The user upload the chest X-ray image to the system and then system will annotate and provide the interpretation of the X-ray image back to the user.
 
-\begin{figure}[h!]
-\begin{center}
- \includegraphics[width=0.6\textwidth]{SystemContext.png}
-\caption{System Context}
-\label{Fig_SystemContext} 
-\end{center}
-\end{figure}
+
 
 \begin{itemize}
 \item User Responsibilities:
@@ -448,6 +452,14 @@ The user of this software application will primarily be patients and physicians.
 4. Ethical considerations: If the training data lacks diversity, the AI may perform poorly for certain populations. \\
 \\
 5. Regulatory constraints: Delays in obtaining necessary approvals can hinder deployment and development stages.\\
+
+\subsection{Use Case Diagram}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{UseCase.png}
+    \caption{Use Case Diagram of AI for chest X-ray read}
+    \label{fig:enter-label}
+\end{figure}
 
 \section{Specific System Description}
 
