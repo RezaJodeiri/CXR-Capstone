@@ -1359,6 +1359,349 @@ qualities that the software is expected to exhibit.
 \end{table}  
 \clearpage                                                                                                                                                    
 
+\section{Non-Functional Requirements}
+
+\subsection{Look and Feel Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LF1} & The system shall have a user interface consistent with standard medical imaging software, using familiar layouts and terminology. \\
+\hline
+\textbf{Rationale} & Radiologists and healthcare professionals are accustomed to specific interface designs; maintaining consistency reduces the learning curve. \\
+\hline
+\textbf{Fit Criterion} & At least 90\% of radiologists surveyed find the interface intuitive and comparable to existing medical imaging software. \\
+\hline
+\textbf{Traceability} & FR1, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LF1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LF2} & The system shall use color schemes and fonts that minimize eye strain during prolonged use. \\
+\hline
+\textbf{Rationale} & Medical professionals often work long hours; a comfortable visual interface helps prevent fatigue. \\
+\hline
+\textbf{Fit Criterion} & The interface adheres to ergonomic standards (e.g., ISO 9241-3) for visual displays. \\
+\hline
+\textbf{Traceability} & FR1 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LF2}
+\end{table}
+\clearpage
+\subsection{Usability and Humanity Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{UH1} & At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results) without assistance after a 30-minute training session. \\
+\hline
+\textbf{Rationale} & Busy professionals need to use the system efficiently without extensive training. \\
+\hline
+\textbf{Fit Criterion} & Usability testing shows that users can complete key tasks unassisted after initial training. \\
+\hline
+\textbf{Traceability} & FR1, FR2, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement UH1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{UH2} & The system shall provide context-sensitive help and tooltips for all interface elements to assist users in understanding functionalities. \\
+\hline
+\textbf{Rationale} & Immediate assistance reduces errors and enhances the user experience. \\
+\hline
+\textbf{Fit Criterion} & All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens. \\
+\hline
+\textbf{Traceability} & FR2, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement UH2}
+\end{table}
+\clearpage
+\subsection{Performance Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR1} & The system shall process and analyze a standard chest X-ray image within 30 seconds. \\
+\hline
+\textbf{Rationale} & Quick analysis is critical for timely diagnosis and treatment decisions in clinical settings. \\
+\hline
+\textbf{Fit Criterion} & Performance tests demonstrate that 95\% of standard images are processed within the 30-second threshold. \\
+\hline
+\textbf{Traceability} & FR3, FR4, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR2} & The system shall have an uptime of at least 99.9\%, ensuring high availability for users. \\
+\hline
+\textbf{Rationale} & Continuous access is essential in healthcare environments to prevent delays in patient care. \\
+\hline
+\textbf{Fit Criterion} & System logs indicate an uptime of 99.9\% over a 6-month monitoring period. \\
+\hline
+\textbf{Traceability} & FR5, FR7 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR2}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR3} & The system shall support concurrent processing of up to 20 images without significant performance degradation. \\
+\hline
+\textbf{Rationale} & Radiologists may need to process multiple images simultaneously, especially in busy clinics or hospitals. \\
+\hline
+\textbf{Fit Criterion} & System performance tests confirm that processing time per image does not exceed 45 seconds when 20 images are processed concurrently. \\
+\hline
+\textbf{Traceability} & FR5, FR7 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR3}
+\end{table}
+\clearpage
+\subsection{Operational and Environmental Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{OE1} & The system shall integrate with existing hospital Picture Archiving and Communication Systems (PACS) using standard protocols like DICOM. \\
+\hline
+\textbf{Rationale} & Seamless integration with PACS improves workflow efficiency and reduces manual data handling. \\
+\hline
+\textbf{Fit Criterion} & The system successfully exchanges data with at least three major PACS solutions in a test environment. \\
+\hline
+\textbf{Traceability} & FR7, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement OE1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{OE2} & The system shall operate effectively in network environments with latency up to 200ms and packet loss up to 1\%. \\
+\hline
+\textbf{Rationale} & Hospital networks may have variable conditions; the system must remain functional under less-than-ideal circumstances. \\
+\hline
+\textbf{Fit Criterion} & System testing under simulated network conditions confirms acceptable performance and responsiveness. \\
+\hline
+\textbf{Traceability} & FR4, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement OE2}
+\end{table}
+\clearpage
+\subsection{Security and Privacy Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{SR1} & The system shall encrypt all patient data, including images and reports, both in transit and at rest, using AES-256 encryption. \\
+\hline
+\textbf{Rationale} & Protecting sensitive patient information is critical to comply with legal requirements and maintain trust. \\
+\hline
+\textbf{Fit Criterion} & Security audits confirm that all data storage and transmissions use AES-256 encryption. \\
+\hline
+\textbf{Traceability} & FR7, FR12 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement SR1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{SR2} & The system shall implement role-based access control, ensuring users can only access functionalities and data appropriate to their roles (e.g., radiologist, radiographer, administrator). \\
+\hline
+\textbf{Rationale} & Restricting access based on roles prevents unauthorized data access and potential data breaches. \\
+\hline
+\textbf{Fit Criterion} & Access control tests verify that users cannot access data or functions outside their permissions. \\
+\hline
+\textbf{Traceability} & FR13, FR26 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement SR2}
+\end{table}
+\clearpage
+\subsection{Maintainability and Support Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{MS1} & The system shall be developed using modular architecture with well-documented code to facilitate future maintenance and upgrades. \\
+\hline
+\textbf{Rationale} & A modular design simplifies debugging, testing, and integration of new features, reducing maintenance costs. \\
+\hline
+\textbf{Fit Criterion} & Code reviews confirm adherence to coding standards and modular design principles; documentation covers all modules. \\
+\hline
+\textbf{Traceability} & FR2, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement MS1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{MS2} & The system shall include automated testing suites covering at least 80\% of the codebase to ensure reliability during updates. \\
+\hline
+\textbf{Rationale} & High test coverage helps detect issues early and maintains system stability over time. \\
+\hline
+\textbf{Fit Criterion} & Test coverage reports indicate that automated tests cover 80\% or more of the code. \\
+\hline
+\textbf{Traceability} & FR7, FR14 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement MS2}
+\end{table}
+
+\subsection{Cultural Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{CR1} & The system shall support both English and French languages for the user interface and reports. \\
+\hline
+\textbf{Rationale} & Supporting Canada's official languages ensures accessibility for all users and meets legal requirements in certain provinces. \\
+\hline
+\textbf{Fit Criterion} & Users can select English or French as the system language, with all interface elements and reports displayed accordingly. \\
+\hline
+\textbf{Traceability} & FR6, FR12 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement CR1}
+\end{table}
+\clearpage
+\subsection{Legal Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LR1} & The system shall comply with all applicable healthcare data protection laws, including HIPAA in the United States and PIPEDA in Canada. \\
+\hline
+\textbf{Rationale} & Legal compliance is mandatory to protect patient rights and avoid legal repercussions. \\
+\hline
+\textbf{Fit Criterion} & Compliance audits verify adherence to relevant data protection laws and regulations. \\
+\hline
+\textbf{Traceability} & FR12, FR13 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LR1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LR2} & The system shall adhere to the ISO 13485 standard for medical device software development. \\
+\hline
+\textbf{Rationale} & Following recognized standards ensures quality and safety in medical software. \\
+\hline
+\textbf{Fit Criterion} & Certification or compliance reports demonstrate adherence to ISO 13485. \\
+\hline
+\textbf{Traceability} & FR7, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LR2}
+\end{table}
+\clearpage
+\subsection{Health and Safety Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{HS1} & The system shall ensure that all AI-generated diagnoses are reviewed and confirmed by a qualified radiologist before being used in patient care decisions. \\
+\hline
+\textbf{Rationale} & To prevent misdiagnoses and ensure patient safety by involving human oversight. \\
+\hline
+\textbf{Fit Criterion} & System workflow requires radiologist validation before finalizing reports; logs confirm this process. \\
+\hline
+\textbf{Traceability} & FR3, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement HS1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{HS2} & The system shall provide clear disclaimers indicating that AI analysis is a diagnostic aid and not a replacement for professional medical judgment. \\
+\hline
+\textbf{Rationale} & Users must understand the limitations of AI to prevent overreliance and potential errors. \\
+\hline
+\textbf{Fit Criterion} & Disclaimers are prominently displayed on analysis results and require user acknowledgment upon first use. \\
+\hline
+\textbf{Traceability} & FR12, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement HS2}
+\end{table}
 
 
 \subsection{Rationale}
