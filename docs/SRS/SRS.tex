@@ -18,6 +18,7 @@
 \usepackage{caption}
 \usepackage{pdflscape}
 \usepackage{afterpage}
+\usepackage[table,xcdraw]{xcolor}
 
 \usepackage[round]{natbib}
 
@@ -1049,86 +1050,316 @@ This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
 qualities that the software is expected to exhibit.
 
-\subsection{Functional Requirements}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white} % All rows except the first will be white
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30} % Light gray for the first row (header)
+\textbf{FR1} & The system shall accept chest X-ray images as input from authorized users, including healthcare professionals and patients. \\
+\hline
+\textbf{Rationale} & To perform analysis, the system requires chest X-ray images to be uploaded by users in supported formats (DICOM, JPEG, PNG). \\
+\hline
+\textbf{Verification} & Test the upload functionality with different image formats and ensure the system can process the images without errors. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Inputs} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR1}
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR2} & The system shall enable users to input additional patient symptoms, such as cough, chest pain, or fever. \\
+\hline
+\textbf{Rationale} & Including patient symptoms helps provide more context for the AI model to enhance disease detection accuracy. Our goal is to make the AI more useful by giving it more information to work with. \\
+\hline
+\textbf{Verification} & Verify that users can enter patient symptoms and that they are correctly linked to the associated X-ray images. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Symptoms} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR2}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR3} & The system shall analyze chest X-ray images to detect the presence or absence of specific diseases with an accuracy of 85\% or higher. \\
+\hline
+\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\hline
+\textbf{Verification} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 85\% accuracy threshold. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DiseaseDetection} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR3}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR4} & The system shall indicate whether a patient's condition has improved, worsened, or remained stable between scans. \\
+\hline
+\textbf{Rationale} & This feature helps clinicians monitor disease progression or regression, which is vital for evaluating the effectiveness of treatments over time.\\
+\hline
+\textbf{Verification} & Verify that the system provides a status of the patient's condition after comparing multiple scans. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ConditionStatus} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR4}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR5} & The system shall generate visual aids by highlighting affected areas on the chest X-ray images. \\
+\hline
+\textbf{Rationale} & By highlighting affected regions, our system makes it easier for clinicians to identify the areas of concern in a chest X-ray. This improves their ability to act quickly. \\
+\hline
+\textbf{Verification} & Ensure that the system overlays the appropriate markers on the X-ray images to highlight abnormal areas. \\
+\hline
+\textbf{Priority} & Medium\\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_VisualAids} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR5}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR6} & The system shall produce a structured, human-readable report summarizing key findings, disease detection results, and progression status. \\
+\hline
+\textbf{Rationale} & A comprehensive report makes it easier for clinicians to interpret the analysis results, especially in fast-paced environments where time is critical. \\
+\hline
+\textbf{Verification} & Verify that the system generates a report containing all necessary details in an organized format. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ReportGeneration} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR6}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR7} & The system shall store patient data, including images and reports, in a secure database for future reference. \\
+\hline
+\textbf{Rationale} & Keeping patient records secure and accessible for future consultations or research is important for patient care continuity. \\
+\hline
+\textbf{Verification} & Verify that the system correctly stores and retrieves patient data from the database. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DataStorage} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR7}
+\end{table}
 
-\noindent \begin{itemize}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR8} & The system shall provide alerts to clinicians if significant changes in a patient's condition are detected between scans. \\
+\hline
+\textbf{Rationale} & Automated alerts can save time and ensure that urgent cases are handled quickly, improving patient outcomes. \\
+\hline
+\textbf{Verification} & Test that alerts are generated when the system detects a significant change in disease severity or condition. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Alerts} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR8}
+\end{table}
+\begin{table}[h!]
+  \centering
+  \rowcolors{2}{white}{white}
+  \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+  \hline
+  \rowcolor{gray!30}
+  \textbf{FR9} & The system shall allow healthcare professionals to adjust treatment plans based on the X-ray analysis results. \\
+  \hline
+  \textbf{Rationale} & Allowing clinicians to modify treatment plans based on X-ray results helps to tailor patient care more effectively. This ensures that the system supports decision-making in real-time clinical settings. \\
+  \hline
+  \textbf{Verification} & Verify that healthcare professionals can modify treatment plans directly in the system, and that these changes are linked to the corresponding X-ray analysis results. \\
+  \hline
+  \textbf{Priority} & High \\
+  \hline
+  \textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_TreatmentAdjustment} \\
+  \hline
+  \end{tabular}
+  \caption{Functional Requirement FR9}
+  \end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR10} & The system shall allow integration with electronic health record (EHR) systems to import and export patient data. \\
+\hline
+\textbf{Rationale} & Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting. \\
+\hline
+\textbf{Verification} & Test the system’s ability to connect with standard EHR systems and exchange data using appropriate protocols. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_EHRIntegration} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR10}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR11} & The system shall display confidence levels for disease detection and progression analysis results through an intuitive user interface that requires minimal training to operate. \\
+\hline
+\textbf{Rationale} & Providing confidence levels helps clinicians assess the reliability of the results. \\
+\hline
+\textbf{Verification} & Check that the system displays a confidence score alongside each analysis result. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserInterface} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR11}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR12} & The system shall allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers. \\
+\hline
+\textbf{Rationale} & Allowing patients to upload their own images increases engagement in their healthcare journey, though it must be made clear that professional interpretation is still necessary. \\
+\hline
+\textbf{Verification} & Ensure that patients can upload images and that the system displays appropriate disclaimers before analysis. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_PatientUploads} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR12}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR13} & The system shall support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient). \\
+\hline
+\textbf{Rationale} & Different users need access to different features and data, so assigning roles ensures that each user can only perform actions they are authorized to. \\
+\hline
+\textbf{Verification} & Verify that users are assigned roles and that their access is restricted to the appropriate features based on their role. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserRoles} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR13}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR14} & The system shall create a new copy of a patient’s X-ray before running the AI model for analysis. \\
+\hline
+\textbf{Rationale} & Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis. \\
+\hline
+\textbf{Verification} & Verify that the system creates a new X-ray copy, preserving the original file while the AI model runs on the duplicate. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_XrayCopy} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR14}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR15} & The system shall support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis. \\
+\hline
+\textbf{Rationale} & Supporting multiple imaging types expands the system's utility in various clinical scenarios. \\
+\hline
+\textbf{Verification} & Test the system's ability to accept and analyze different image types (e.g., CT, MRI) without errors and provide accurate results. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_OtherModalities} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR15}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR16} & The system shall support regular updates to the AI model to incorporate new data and improve accuracy over time. \\
+\hline
+\textbf{Rationale} & Continuous learning enhances the model's performance and keeps it up-to-date with the latest medical knowledge. \\
+\hline
+\textbf{Verification} & Ensure that the system can accept and integrate updated models without disrupting service. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ModelUpdates} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR16}
+\end{table}  
+\clearpage                                                                                                                                                    
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
 
-\end{itemize}
-
-\plt{Every IM should map to at least one requirement, but not every requirement
-  has to map to a corresponding IM.}
-
-\subsection{Nonfunctional Requirements}
-
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
-\plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-  and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-to give a ``high level'' view of the requirement, but allow for the details to
-be covered in the Verification and Validation document.}
-\plt{An absolute requirement on a quality of the system is rarely needed.  For
-  instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-  for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-  describing now well the quality is achieved, through experimentation, and
-  possibly theory, rather than meeting some bar that was defined a priori.}
-\plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-  SRS is to record the requirements that need to be satisfied for correctness.
-  Any statement of correctness would just be redundant. Rather than discuss
-  correctness, you can characterize how far away from the correct (true)
-  solution you are allowed to be.  This is discussed under accuracy.}
-
-\noindent \begin{itemize}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
-  \textbf{Accuracy} \plt{Characterize the accuracy by giving the context/use for
-    the software.  Maybe something like, ``The accuracy of the computed
-    solutions should meet the level needed for $<$engineering or scientific
-    application$>$.  The level of accuracy achieved by \progname{} shall be
-    described following the procedure given in Section~X of the Verification and
-    Validation Plan.''  A link to the VnV plan would be a nice extra.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  \plt{Characterize the usability by giving the context/use for the software.
-    You should likely reference the user characteristics section.  The level of
-    usability achieved by the software shall be described following the
-    procedure given in Section~X of the Verification and Validation Plan.  A
-    link to the VnV plan would be a nice extra.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Maintainability}:]
-  \textbf{Maintainability} \plt{The effort required to make any of the likely
-    changes listed for \progname{} should be less than FRACTION of the original
-    development time.  FRACTION is then a symbolic constant that can be defined
-    at the end of the report.}
-
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Portability}:]
-  \textbf{Portability} \plt{This NFR is easier to write than the others.  The
-    systems that \progname{} should run on should be listed here.  When possible
-    the specific versions of the potential operating environments should be
-    given.  To make the NFR verifiable a statement could be made that the tests
-    from a given section of the VnV plan can be successfully run on all of the
-    possible operating environments.}
-
-\item Other NFRs that might be discussed include verifiability,
-  understandability and reusability.
-
-\end{itemize}
 
 \subsection{Rationale}
 
