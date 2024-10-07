@@ -1040,22 +1040,18 @@ A correct solution must exhibit \plt{fill in the details}.  \plt{These
 \plt{This section is not for test cases or techniques for verification and
   validation.  Those topics will be addressed in the Verification and Validation
   plan.}
-
-\section{Requirements}
-
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
-
+\clearpage
+\section{Functional Requirements}
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
 qualities that the software is expected to exhibit.
 
 \begin{table}[h!]
 \centering
-\rowcolors{2}{white}{white} % All rows except the first will be white
+\rowcolors{2}{white}{white} 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
-\rowcolor{gray!30} % Light gray for the first row (header)
+\rowcolor{gray!30}
 \textbf{FR1} & The system shall accept chest X-ray images as input from authorized users, including healthcare professionals and patients. \\
 \hline
 \textbf{Rationale} & To perform analysis, the system requires chest X-ray images to be uploaded by users in supported formats (DICOM, JPEG, PNG). \\
@@ -1709,25 +1705,156 @@ qualities that the software is expected to exhibit.
 \plt{Provide a rationale for the decisions made in the documentation.  Rationale
 should be provided for scope decisions, modelling decisions, assumptions and
 typical values.}
+\newpage
+\section{Phase in Plan}    
+\subsection{High Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblHighPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR1 is essential because accepting chest X-ray images is the foundation of our system. We need this functionality first to enable all other features to build upon it. \\
+  \midrule
+  FR3 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR3 is critical as it provides the core capability of analyzing X-rays for disease detection. Implementing this early allows us to validate the system's primary purpose and proceed with dependent features. \\
+  \midrule
+  FR4 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR4 is important for monitoring patient progress. By completing it alongside FR3, we ensure clinicians can assess changes over time from the initial release. \\
+  \midrule
+  FR6 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR6 allows us to present analysis results in a usable format for clinicians. Having this ready by November 13 is vital for user acceptance and practical use of the system. \\
+  \midrule
+  FR11 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR11 improves user trust by displaying confidence levels. An intuitive UI is essential for user adoption;therefore, we aim to have it completed by November 13. \\
+  \midrule
+  FR13 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR13 is necessary for security and compliance, ensuring proper access control from the start. Implementing it early helps us protect sensitive data effectively. \\
+  \midrule
+  FR14 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR14 safeguards the integrity of original X-ray images. Completing this by November 13 is important for legal considerations. \\
+  \bottomrule
+  \end{tabular}
+  \end{table}
 
-\section{Likely Changes}    
+  \subsection{Medium Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblMediumPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR2 adds the ability to input additional patient symptoms, enhancing analysis accuracy. We scheduled it after the core functionalities to focus on essential features first. \\
+  \midrule
+  FR5 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR5 provides visual aids, improving usability. Implementing it after the main analysis features allows us to refine the user experience based on initial feedback. \\
+  \midrule
+  FR7 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR7 involves secure data storage for future reference. We plan to develop this after the initial deployment to ensure data handling aligns with user needs and compliance requirements. \\
+  \midrule
+  FR16 & \textbf{Completion Date:} February 5, 2024\\
+       & \textbf{Rationale:} FR16 enables regular updates to the AI model, allowing continuous improvement. Scheduling it for February gives us time to stabilize the initial model and plan for updates without disrupting service. \\
+  \bottomrule
+  \end{tabular}
+  \caption{High and Medium Priority Functional Requirements}
+  \end{table}
+  \subsection{Low Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblLowPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR8 & \textbf{Completion Date:} March 18, 2024\\
+      & \textbf{Rationale:} FR8 offers alerts for significant condition changes. It's useful but not essential for initial deployment, so we scheduled it after higher-priority tasks. \\
+  \midrule
+  FR10 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR10 involves integrating with EHR systems, which adds complexity. We plan to address this later to focus on core functionalities first. \\
+  \midrule
+  FR12 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR12 allows patient self-upload of images. Given legal considerations and our initial focus on clinicians, we scheduled it for later development. \\
+  \midrule
+  FR15 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR15 expands support to other imaging modalities. We aim to perfect chest X-ray analysis before adding CT and MRI support, so we scheduled this for the last phase. \\
+  \bottomrule
+  \end{tabular}
+  \caption{Low Priority Functional Requirements}
+  \end{table}
+  
+\subsection{High Priority Non-Functional Requirements}
+\begin{table}[H]
+  \label{TblHighPriorityNFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  PR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} PR1 ensures the system processes images quickly, which is crucial for usability in clinical settings. \\
+  \midrule
+  HS1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} HS1 mandates that AI diagnoses are reviewed by a radiologist, ensuring patient safety. This oversight is necessary from day one. \\
+  \midrule
+  LF1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LF1 requires an interface consistent with standard medical software, aiding user adoption. We want users to feel comfortable using the system immediately. \\
+  \midrule
+  PR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} PR2 aims for high system uptime. Reliability is critical, so we must ensure the system is stable from the initial launch. \\
+  \midrule
+  SR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} SR2 implements role-based access control, necessary for security and compliance. We need to control data access from the beginning. \\
+  \midrule
+  MS1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} MS1 involves modular architecture and documentation, facilitating future maintenance. \\
+  \midrule
+  LR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LR1 ensures compliance with data protection laws, which is legally required. We must adhere to regulations from the outset to avoid legal issues. \\
+  \midrule
+  LR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LR2 requires adherence to ISO 13485, ensuring quality and safety. Meeting industry standards builds trust and facilitates future certifications. \\
+  \midrule
+  HS2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} HS2 mandates clear disclaimers about AI limitations. Providing this information from the start is important for user awareness and legal protection. \\
+  \bottomrule
+  \end{tabular}
+  \end{table}
+  \subsection{Medium and Low Priority Non-Functional Requirements}
+\begin{table}[H]
+  \label{TblMediumLowPriorityNFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  LF2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} LF2 improves the user interface to minimize eye strain. While important for user comfort, it can be refined after the main features are operational. \\
+  \midrule
+  UH2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} UH2 adds context-sensitive help and tooltips. Enhancing usability is beneficial, but we plan to implement it after gathering initial user feedback. \\
+  \midrule
+  PR3 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} PR3 enhances performance by supporting concurrent image processing. Scheduling this for later allows us to optimize the system after core functionalities are stable. \\
+  \midrule
+  MS2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} MS2 involves automated testing for reliability. Implementing it after initial development helps us maintain code quality as the project grows. \\
+  \midrule
+  OE1 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} OE1 integrates with hospital PACS systems. Given the complexity, we plan to tackle this once the system's core features are solidified. \\
+  \midrule
+  OE2 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} OE2 ensures operation under variable network conditions. This enhancement is scheduled for later, focusing first on standard network environments. \\
+  \midrule
+  CR1 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} CR1 adds multilingual support. We aim to include additional languages after ensuring the system functions well in the primary language. \\
+  \bottomrule
+  \end{tabular}
+  \caption{Medium and Low Priority Non-Functional Requirements}
+  \end{table}
+  
+  
+\clearpage
+\section{Likelyhood of Changes}    
 
-\noindent \begin{itemize}
-
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
-
-\end{itemize}
-
-\section{Unlikely Changes}    
-
-\noindent \begin{itemize}
-
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
-
-\end{itemize}
 
 \section{Traceability Matrices and Graphs}
 
