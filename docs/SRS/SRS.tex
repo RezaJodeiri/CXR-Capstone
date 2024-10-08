@@ -18,6 +18,12 @@
 \usepackage{caption}
 \usepackage{pdflscape}
 \usepackage{afterpage}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
 
 \usepackage[round]{natbib}
 
@@ -32,8 +38,9 @@
     urlcolor=cyan           % color of external links
 }
 
-\input{../Comments}
-\input{../Common}
+\input{../packages/Comments.tex}
+\input{../packages/Common.tex}
+\input{../packages/Reflection.tex}
 
 % For easy change of table widths
 \newcommand{\colZwidth}{1.0\textwidth}
@@ -1039,120 +1046,1064 @@ A correct solution must exhibit \plt{fill in the details}.  \plt{These
   validation.  Those topics will be addressed in the Verification and Validation
   plan.}
 
-\section{Requirements}
-
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
-
+  \clearpage
+\section{Functional Requirements}
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
 qualities that the software is expected to exhibit.
 
-\subsection{Functional Requirements}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white} % All rows except the first will be white
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30} % Light gray for the first row (header)
+\textbf{FR1} & The system shall accept chest X-ray images as input from authorized users, including healthcare professionals and patients. \\
+\hline
+\textbf{Rationale} & To perform analysis, the system requires chest X-ray images to be uploaded by users in supported formats (DICOM, JPEG, PNG). \\
+\hline
+\textbf{Verification} & Test the upload functionality with different image formats and ensure the system can process the images without errors. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Inputs} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR1}
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR2} & The system shall enable users to input additional patient symptoms, such as cough, chest pain, or fever. \\
+\hline
+\textbf{Rationale} & Including patient symptoms helps provide more context for the AI model to enhance disease detection accuracy. Our goal is to make the AI more useful by giving it more information to work with. \\
+\hline
+\textbf{Verification} & Verify that users can enter patient symptoms and that they are correctly linked to the associated X-ray images. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Symptoms} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR2}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR3} & The system shall analyze chest X-ray images to detect the presence or absence of specific diseases with an accuracy of 85\% or higher. \\
+\hline
+\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\hline
+\textbf{Verification} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 85\% accuracy threshold. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DiseaseDetection} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR3}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR4} & The system shall indicate whether a patient's condition has improved, worsened, or remained stable between scans. \\
+\hline
+\textbf{Rationale} & This feature helps clinicians monitor disease progression or regression, which is vital for evaluating the effectiveness of treatments over time.\\
+\hline
+\textbf{Verification} & Verify that the system provides a status of the patient's condition after comparing multiple scans. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ConditionStatus} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR4}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR5} & The system shall generate visual aids by highlighting affected areas on the chest X-ray images. \\
+\hline
+\textbf{Rationale} & By highlighting affected regions, our system makes it easier for clinicians to identify the areas of concern in a chest X-ray. This improves their ability to act quickly. \\
+\hline
+\textbf{Verification} & Ensure that the system overlays the appropriate markers on the X-ray images to highlight abnormal areas. \\
+\hline
+\textbf{Priority} & Medium\\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_VisualAids} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR5}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR6} & The system shall produce a structured, human-readable report summarizing key findings, disease detection results, and progression status. \\
+\hline
+\textbf{Rationale} & A comprehensive report makes it easier for clinicians to interpret the analysis results, especially in fast-paced environments where time is critical. \\
+\hline
+\textbf{Verification} & Verify that the system generates a report containing all necessary details in an organized format. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ReportGeneration} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR6}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR7} & The system shall store patient data, including images and reports, in a secure database for future reference. \\
+\hline
+\textbf{Rationale} & Keeping patient records secure and accessible for future consultations or research is important for patient care continuity. \\
+\hline
+\textbf{Verification} & Verify that the system correctly stores and retrieves patient data from the database. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DataStorage} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR7}
+\end{table}
 
-\noindent \begin{itemize}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR8} & The system shall provide alerts to clinicians if significant changes in a patient's condition are detected between scans. \\
+\hline
+\textbf{Rationale} & Automated alerts can save time and ensure that urgent cases are handled quickly, improving patient outcomes. \\
+\hline
+\textbf{Verification} & Test that alerts are generated when the system detects a significant change in disease severity or condition. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Alerts} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR8}
+\end{table}
+\begin{table}[h!]
+  \centering
+  \rowcolors{2}{white}{white}
+  \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+  \hline
+  \rowcolor{gray!30}
+  \textbf{FR9} & The system shall allow healthcare professionals to adjust treatment plans based on the X-ray analysis results. \\
+  \hline
+  \textbf{Rationale} & Allowing clinicians to modify treatment plans based on X-ray results helps to tailor patient care more effectively. This ensures that the system supports decision-making in real-time clinical settings. \\
+  \hline
+  \textbf{Verification} & Verify that healthcare professionals can modify treatment plans directly in the system, and that these changes are linked to the corresponding X-ray analysis results. \\
+  \hline
+  \textbf{Priority} & High \\
+  \hline
+  \textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_TreatmentAdjustment} \\
+  \hline
+  \end{tabular}
+  \caption{Functional Requirement FR9}
+  \end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR10} & The system shall allow integration with electronic health record (EHR) systems to import and export patient data. \\
+\hline
+\textbf{Rationale} & Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting. \\
+\hline
+\textbf{Verification} & Test the system’s ability to connect with standard EHR systems and exchange data using appropriate protocols. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_EHRIntegration} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR10}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR11} & The system shall display confidence levels for disease detection and progression analysis results through an intuitive user interface that requires minimal training to operate. \\
+\hline
+\textbf{Rationale} & Providing confidence levels helps clinicians assess the reliability of the results. \\
+\hline
+\textbf{Verification} & Check that the system displays a confidence score alongside each analysis result. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserInterface} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR11}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR12} & The system shall allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers. \\
+\hline
+\textbf{Rationale} & Allowing patients to upload their own images increases engagement in their healthcare journey, though it must be made clear that professional interpretation is still necessary. \\
+\hline
+\textbf{Verification} & Ensure that patients can upload images and that the system displays appropriate disclaimers before analysis. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_PatientUploads} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR12}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR13} & The system shall support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient). \\
+\hline
+\textbf{Rationale} & Different users need access to different features and data, so assigning roles ensures that each user can only perform actions they are authorized to. \\
+\hline
+\textbf{Verification} & Verify that users are assigned roles and that their access is restricted to the appropriate features based on their role. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserRoles} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR13}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR14} & The system shall create a new copy of a patient’s X-ray before running the AI model for analysis. \\
+\hline
+\textbf{Rationale} & Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis. \\
+\hline
+\textbf{Verification} & Verify that the system creates a new X-ray copy, preserving the original file while the AI model runs on the duplicate. \\
+\hline
+\textbf{Priority} & High \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_XrayCopy} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR14}
+\end{table}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR15} & The system shall support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis. \\
+\hline
+\textbf{Rationale} & Supporting multiple imaging types expands the system's utility in various clinical scenarios. \\
+\hline
+\textbf{Verification} & Test the system's ability to accept and analyze different image types (e.g., CT, MRI) without errors and provide accurate results. \\
+\hline
+\textbf{Priority} & Low \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_OtherModalities} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR15}
+\end{table}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{FR16} & The system shall support regular updates to the AI model to incorporate new data and improve accuracy over time. \\
+\hline
+\textbf{Rationale} & Continuous learning enhances the model's performance and keeps it up-to-date with the latest medical knowledge. \\
+\hline
+\textbf{Verification} & Ensure that the system can accept and integrate updated models without disrupting service. \\
+\hline
+\textbf{Priority} & Medium \\
+\hline
+\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ModelUpdates} \\
+\hline
+\end{tabular}
+\caption{Functional Requirement FR16}
+\end{table}  
+\clearpage                                                                                                                                                    
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
+\section{Non-Functional Requirements}
 
-\end{itemize}
+\subsection{Look and Feel Requirements}
 
-\plt{Every IM should map to at least one requirement, but not every requirement
-  has to map to a corresponding IM.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LF1} & The system shall have a user interface consistent with standard medical imaging software, using familiar layouts and terminology. \\
+\hline
+\textbf{Rationale} & Radiologists and healthcare professionals are accustomed to specific interface designs; maintaining consistency reduces the learning curve. \\
+\hline
+\textbf{Fit Criterion} & At least 90\% of radiologists surveyed find the interface intuitive and comparable to existing medical imaging software. \\
+\hline
+\textbf{Traceability} & FR1, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LF1}
+\end{table}
 
-\subsection{Nonfunctional Requirements}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LF2} & The system shall use color schemes and fonts that minimize eye strain during prolonged use. \\
+\hline
+\textbf{Rationale} & Medical professionals often work long hours; a comfortable visual interface helps prevent fatigue. \\
+\hline
+\textbf{Fit Criterion} & The interface adheres to ergonomic standards (e.g., ISO 9241-3) for visual displays. \\
+\hline
+\textbf{Traceability} & FR1 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LF2}
+\end{table}
+\clearpage
+\subsection{Usability and Humanity Requirements}
 
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
-\plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-  and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-to give a ``high level'' view of the requirement, but allow for the details to
-be covered in the Verification and Validation document.}
-\plt{An absolute requirement on a quality of the system is rarely needed.  For
-  instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-  for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-  describing now well the quality is achieved, through experimentation, and
-  possibly theory, rather than meeting some bar that was defined a priori.}
-\plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-  SRS is to record the requirements that need to be satisfied for correctness.
-  Any statement of correctness would just be redundant. Rather than discuss
-  correctness, you can characterize how far away from the correct (true)
-  solution you are allowed to be.  This is discussed under accuracy.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{UH1} & At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results) without assistance after a 30-minute training session. \\
+\hline
+\textbf{Rationale} & Busy professionals need to use the system efficiently without extensive training. \\
+\hline
+\textbf{Fit Criterion} & Usability testing shows that users can complete key tasks unassisted after initial training. \\
+\hline
+\textbf{Traceability} & FR1, FR2, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement UH1}
+\end{table}
 
-\noindent \begin{itemize}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{UH2} & The system shall provide context-sensitive help and tooltips for all interface elements to assist users in understanding functionalities. \\
+\hline
+\textbf{Rationale} & Immediate assistance reduces errors and enhances the user experience. \\
+\hline
+\textbf{Fit Criterion} & All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens. \\
+\hline
+\textbf{Traceability} & FR2, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement UH2}
+\end{table}
+\clearpage
+\subsection{Performance Requirements}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
-  \textbf{Accuracy} \plt{Characterize the accuracy by giving the context/use for
-    the software.  Maybe something like, ``The accuracy of the computed
-    solutions should meet the level needed for $<$engineering or scientific
-    application$>$.  The level of accuracy achieved by \progname{} shall be
-    described following the procedure given in Section~X of the Verification and
-    Validation Plan.''  A link to the VnV plan would be a nice extra.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR1} & The system shall process and analyze a standard chest X-ray image within 30 seconds. \\
+\hline
+\textbf{Rationale} & Quick analysis is critical for timely diagnosis and treatment decisions in clinical settings. \\
+\hline
+\textbf{Fit Criterion} & Performance tests demonstrate that 95\% of standard images are processed within the 30-second threshold. \\
+\hline
+\textbf{Traceability} & FR3, FR4, FR5 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR1}
+\end{table}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  \plt{Characterize the usability by giving the context/use for the software.
-    You should likely reference the user characteristics section.  The level of
-    usability achieved by the software shall be described following the
-    procedure given in Section~X of the Verification and Validation Plan.  A
-    link to the VnV plan would be a nice extra.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR2} & The system shall have an uptime of at least 99.9\%, ensuring high availability for users. \\
+\hline
+\textbf{Rationale} & Continuous access is essential in healthcare environments to prevent delays in patient care. \\
+\hline
+\textbf{Fit Criterion} & System logs indicate an uptime of 99.9\% over a 6-month monitoring period. \\
+\hline
+\textbf{Traceability} & FR5, FR7 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR2}
+\end{table}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Maintainability}:]
-  \textbf{Maintainability} \plt{The effort required to make any of the likely
-    changes listed for \progname{} should be less than FRACTION of the original
-    development time.  FRACTION is then a symbolic constant that can be defined
-    at the end of the report.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR3} & The system shall support concurrent processing of up to 20 images without significant performance degradation. \\
+\hline
+\textbf{Rationale} & Radiologists may need to process multiple images simultaneously, especially in busy clinics or hospitals. \\
+\hline
+\textbf{Fit Criterion} & System performance tests confirm that processing time per image does not exceed 45 seconds when 20 images are processed concurrently. \\
+\hline
+\textbf{Traceability} & FR5, FR7 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement PR3}
+\end{table}
+\clearpage
+\subsection{Operational and Environmental Requirements}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Portability}:]
-  \textbf{Portability} \plt{This NFR is easier to write than the others.  The
-    systems that \progname{} should run on should be listed here.  When possible
-    the specific versions of the potential operating environments should be
-    given.  To make the NFR verifiable a statement could be made that the tests
-    from a given section of the VnV plan can be successfully run on all of the
-    possible operating environments.}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{OE1} & The system shall integrate with existing hospital Picture Archiving and Communication Systems (PACS) using standard protocols like DICOM. \\
+\hline
+\textbf{Rationale} & Seamless integration with PACS improves workflow efficiency and reduces manual data handling. \\
+\hline
+\textbf{Fit Criterion} & The system successfully exchanges data with at least three major PACS solutions in a test environment. \\
+\hline
+\textbf{Traceability} & FR7, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement OE1}
+\end{table}
 
-\item Other NFRs that might be discussed include verifiability,
-  understandability and reusability.
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{OE2} & The system shall operate effectively in network environments with latency up to 200ms and packet loss up to 1\%. \\
+\hline
+\textbf{Rationale} & Hospital networks may have variable conditions; the system must remain functional under less-than-ideal circumstances. \\
+\hline
+\textbf{Fit Criterion} & System testing under simulated network conditions confirms acceptable performance and responsiveness. \\
+\hline
+\textbf{Traceability} & FR4, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement OE2}
+\end{table}
+\clearpage
+\subsection{Security and Privacy Requirements}
 
-\end{itemize}
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{SR1} & The system shall encrypt all patient data, including images and reports, both in transit and at rest, using AES-256 encryption. \\
+\hline
+\textbf{Rationale} & Protecting sensitive patient information is critical to comply with legal requirements and maintain trust. \\
+\hline
+\textbf{Fit Criterion} & Security audits confirm that all data storage and transmissions use AES-256 encryption. \\
+\hline
+\textbf{Traceability} & FR7, FR12 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement SR1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{SR2} & The system shall implement role-based access control, ensuring users can only access functionalities and data appropriate to their roles (e.g., radiologist, radiographer, administrator). \\
+\hline
+\textbf{Rationale} & Restricting access based on roles prevents unauthorized data access and potential data breaches. \\
+\hline
+\textbf{Fit Criterion} & Access control tests verify that users cannot access data or functions outside their permissions. \\
+\hline
+\textbf{Traceability} & FR13, FR26 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement SR2}
+\end{table}
+\clearpage
+\subsection{Maintainability and Support Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{MS1} & The system shall be developed using modular architecture with well-documented code to facilitate future maintenance and upgrades. \\
+\hline
+\textbf{Rationale} & A modular design simplifies debugging, testing, and integration of new features, reducing maintenance costs. \\
+\hline
+\textbf{Fit Criterion} & Code reviews confirm adherence to coding standards and modular design principles; documentation covers all modules. \\
+\hline
+\textbf{Traceability} & FR2, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement MS1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{MS2} & The system shall include automated testing suites covering at least 80\% of the codebase to ensure reliability during updates. \\
+\hline
+\textbf{Rationale} & High test coverage helps detect issues early and maintains system stability over time. \\
+\hline
+\textbf{Fit Criterion} & Test coverage reports indicate that automated tests cover 80\% or more of the code. \\
+\hline
+\textbf{Traceability} & FR7, FR14 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement MS2}
+\end{table}
+
+\subsection{Cultural Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{CR1} & The system shall support both English and French languages for the user interface and reports. \\
+\hline
+\textbf{Rationale} & Supporting Canada's official languages ensures accessibility for all users and meets legal requirements in certain provinces. \\
+\hline
+\textbf{Fit Criterion} & Users can select English or French as the system language, with all interface elements and reports displayed accordingly. \\
+\hline
+\textbf{Traceability} & FR6, FR12 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement CR1}
+\end{table}
+\clearpage
+\subsection{Legal Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LR1} & The system shall comply with all applicable healthcare data protection laws, including HIPAA in the United States and PIPEDA in Canada. \\
+\hline
+\textbf{Rationale} & Legal compliance is mandatory to protect patient rights and avoid legal repercussions. \\
+\hline
+\textbf{Fit Criterion} & Compliance audits verify adherence to relevant data protection laws and regulations. \\
+\hline
+\textbf{Traceability} & FR12, FR13 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LR1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{LR2} & The system shall adhere to the ISO 13485 standard for medical device software development. \\
+\hline
+\textbf{Rationale} & Following recognized standards ensures quality and safety in medical software. \\
+\hline
+\textbf{Fit Criterion} & Certification or compliance reports demonstrate adherence to ISO 13485. \\
+\hline
+\textbf{Traceability} & FR7, FR10 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement LR2}
+\end{table}
+\clearpage
+\subsection{Health and Safety Requirements}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{HS1} & The system shall ensure that all AI-generated diagnoses are reviewed and confirmed by a qualified radiologist before being used in patient care decisions. \\
+\hline
+\textbf{Rationale} & To prevent misdiagnoses and ensure patient safety by involving human oversight. \\
+\hline
+\textbf{Fit Criterion} & System workflow requires radiologist validation before finalizing reports; logs confirm this process. \\
+\hline
+\textbf{Traceability} & FR3, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement HS1}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{HS2} & The system shall provide clear disclaimers indicating that AI analysis is a diagnostic aid and not a replacement for professional medical judgment. \\
+\hline
+\textbf{Rationale} & Users must understand the limitations of AI to prevent overreliance and potential errors. \\
+\hline
+\textbf{Fit Criterion} & Disclaimers are prominently displayed on analysis results and require user acknowledgment upon first use. \\
+\hline
+\textbf{Traceability} & FR12, FR6 \\
+\hline
+\end{tabular}
+\caption{Non-functional Requirement HS2}
+\end{table}
+
 
 \subsection{Rationale}
 
 \plt{Provide a rationale for the decisions made in the documentation.  Rationale
 should be provided for scope decisions, modelling decisions, assumptions and
 typical values.}
+\newpage
+\section{Phase in Plan}    
+\subsection{High Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblHighPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR1 is essential because accepting chest X-ray images is the foundation of our system. We need this functionality first to enable all other features to build upon it. \\
+  \midrule
+  FR3 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR3 is critical as it provides the core capability of analyzing X-rays for disease detection. Implementing this early allows us to validate the system's primary purpose and proceed with dependent features. \\
+  \midrule
+  FR4 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR4 is important for monitoring patient progress. By completing it alongside FR3, we ensure clinicians can assess changes over time from the initial release. \\
+  \midrule
+  FR6 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} FR6 allows us to present analysis results in a usable format for clinicians. Having this ready by November 13 is vital for user acceptance and practical use of the system. \\
+  \midrule
+  FR11 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR11 improves user trust by displaying confidence levels. An intuitive UI is essential for user adoption;therefore, we aim to have it completed by November 13. \\
+  \midrule
+  FR13 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR13 is necessary for security and compliance, ensuring proper access control from the start. Implementing it early helps us protect sensitive data effectively. \\
+  \midrule
+  FR14 & \textbf{Completion Date:} November 13, 2023\\
+       & \textbf{Rationale:} FR14 safeguards the integrity of original X-ray images. Completing this by November 13 is important for legal considerations. \\
+  \bottomrule
+  \end{tabular}
+  \end{table}
 
-\section{Likely Changes}    
+  \subsection{Medium Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblMediumPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR2 adds the ability to input additional patient symptoms, enhancing analysis accuracy. We scheduled it after the core functionalities to focus on essential features first. \\
+  \midrule
+  FR5 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR5 provides visual aids, improving usability. Implementing it after the main analysis features allows us to refine the user experience based on initial feedback. \\
+  \midrule
+  FR7 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} FR7 involves secure data storage for future reference. We plan to develop this after the initial deployment to ensure data handling aligns with user needs and compliance requirements. \\
+  \midrule
+  FR16 & \textbf{Completion Date:} February 5, 2024\\
+       & \textbf{Rationale:} FR16 enables regular updates to the AI model, allowing continuous improvement. Scheduling it for February gives us time to stabilize the initial model and plan for updates without disrupting service. \\
+  \bottomrule
+  \end{tabular}
+  \caption{High and Medium Priority Functional Requirements}
+  \end{table}
+  \subsection{Low Priority Functional Requirements}
+\begin{table}[H]
+  \label{TblLowPriorityFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  FR8 & \textbf{Completion Date:} March 18, 2024\\
+      & \textbf{Rationale:} FR8 offers alerts for significant condition changes. It's useful but not essential for initial deployment, so we scheduled it after higher-priority tasks. \\
+  \midrule
+  FR10 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR10 involves integrating with EHR systems, which adds complexity. We plan to address this later to focus on core functionalities first. \\
+  \midrule
+  FR12 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR12 allows patient self-upload of images. Given legal considerations and our initial focus on clinicians, we scheduled it for later development. \\
+  \midrule
+  FR15 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} FR15 expands support to other imaging modalities. We aim to perfect chest X-ray analysis before adding CT and MRI support, so we scheduled this for the last phase. \\
+  \bottomrule
+  \end{tabular}
+  \caption{Low Priority Functional Requirements}
+  \end{table}
+  
+\subsection{High Priority Non-Functional Requirements}
+\begin{table}[H]
+  \label{TblHighPriorityNFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  PR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} PR1 ensures the system processes images quickly, which is crucial for usability in clinical settings. \\
+  \midrule
+  HS1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} HS1 mandates that AI diagnoses are reviewed by a radiologist, ensuring patient safety. This oversight is necessary from day one. \\
+  \midrule
+  LF1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LF1 requires an interface consistent with standard medical software, aiding user adoption. We want users to feel comfortable using the system immediately. \\
+  \midrule
+  PR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} PR2 aims for high system uptime. Reliability is critical, so we must ensure the system is stable from the initial launch. \\
+  \midrule
+  SR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} SR2 implements role-based access control, necessary for security and compliance. We need to control data access from the beginning. \\
+  \midrule
+  MS1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} MS1 involves modular architecture and documentation, facilitating future maintenance. \\
+  \midrule
+  LR1 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LR1 ensures compliance with data protection laws, which is legally required. We must adhere to regulations from the outset to avoid legal issues. \\
+  \midrule
+  LR2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} LR2 requires adherence to ISO 13485, ensuring quality and safety. Meeting industry standards builds trust and facilitates future certifications. \\
+  \midrule
+  HS2 & \textbf{Completion Date:} November 13, 2023\\
+      & \textbf{Rationale:} HS2 mandates clear disclaimers about AI limitations. Providing this information from the start is important for user awareness and legal protection. \\
+  \bottomrule
+  \end{tabular}
+  \end{table}
+  \subsection{Medium and Low Priority Non-Functional Requirements}
+\begin{table}[H]
+  \label{TblMediumLowPriorityNFRs}
+  \begin{tabular}{p{0.15\textwidth}|p{0.85\textwidth}}
+  \toprule
+  \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
+  \midrule
+  LF2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} LF2 improves the user interface to minimize eye strain. While important for user comfort, it can be refined after the main features are operational. \\
+  \midrule
+  UH2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} UH2 adds context-sensitive help and tooltips. Enhancing usability is beneficial, but we plan to implement it after gathering initial user feedback. \\
+  \midrule
+  PR3 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} PR3 enhances performance by supporting concurrent image processing. Scheduling this for later allows us to optimize the system after core functionalities are stable. \\
+  \midrule
+  MS2 & \textbf{Completion Date:} February 5, 2024\\
+      & \textbf{Rationale:} MS2 involves automated testing for reliability. Implementing it after initial development helps us maintain code quality as the project grows. \\
+  \midrule
+  OE1 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} OE1 integrates with hospital PACS systems. Given the complexity, we plan to tackle this once the system's core features are solidified. \\
+  \midrule
+  OE2 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} OE2 ensures operation under variable network conditions. This enhancement is scheduled for later, focusing first on standard network environments. \\
+  \midrule
+  CR1 & \textbf{Completion Date:} March 18, 2024\\
+       & \textbf{Rationale:} CR1 adds multilingual support. We aim to include additional languages after ensuring the system functions well in the primary language. \\
+  \bottomrule
+  \end{tabular}
+  \caption{Medium and Low Priority Non-Functional Requirements}
+  \end{table}
+  
+  
+\clearpage
+\section{Likelihood of Changes for Functional Requirements}
 
-\noindent \begin{itemize}
+\subsection{Very Unlikely to Change}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
+These requirements are core to our system's functionality and are essential for meeting the project's objectives. We do not anticipate any changes to these requirements.
 
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{FR1}: Accept chest X-ray images from authorized users.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: This is the fundamental functionality upon which all other features depend.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
 
-\section{Unlikely Changes}    
+    \item \textbf{FR3}: Analyze chest X-rays to detect diseases with $\geq85\%$ accuracy.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Central to the system's purpose; critical for providing value to users.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
 
-\noindent \begin{itemize}
+    \item \textbf{FR6}: Produce structured, human-readable reports summarizing findings.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for clinicians to interpret results effectively.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
+    \item \textbf{FR13}: Support multiple user roles with appropriate access levels.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Crucial for security and compliance with regulations.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+\end{enumerate}
 
-\end{itemize}
+\subsection{Unlikely to Change}
+
+These requirements are important but may undergo minor adjustments based on user feedback or technical considerations.
+
+\begin{enumerate}[resume]
+    \item \textbf{FR2}: Enable users to input additional patient symptoms.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Enhances analysis accuracy but not critical for initial operation.
+        \item \textbf{Possible Changes}: Modify symptom input methods or adjust symptom lists.
+    \end{itemize}
+
+    \item \textbf{FR4}: Indicate if a patient's condition has changed between scans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for monitoring progress; criteria may need refinement.
+        \item \textbf{Possible Changes}: Adjust methods for assessing condition changes.
+    \end{itemize}
+
+    \item \textbf{FR5}: Generate visual aids by highlighting affected areas.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Improves usability; visualization techniques may evolve.
+        \item \textbf{Possible Changes}: Update highlighting methods based on user feedback.
+    \end{itemize}
+
+    \item \textbf{FR7}: Store patient data securely for future reference.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for data continuity; storage solutions might change.
+        \item \textbf{Possible Changes}: Enhance security measures or adopt new technologies.
+    \end{itemize}
+
+    \item \textbf{FR9}: Allow healthcare professionals to adjust treatment plans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Adds value for clinical decision-making; integration methods may adjust.
+        \item \textbf{Possible Changes}: Refine how treatment adjustments are linked to analysis.
+    \end{itemize}
+
+    \item \textbf{FR11}: Display confidence levels through an intuitive UI.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Helps assess result reliability; presentation might be refined.
+        \item \textbf{Possible Changes}: Modify the display format of confidence levels.
+    \end{itemize}
+
+    \item \textbf{FR14}: Create a new copy of the X-ray before AI analysis.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Protects data integrity; implementation methods might improve.
+        \item \textbf{Possible Changes}: Optimize data handling or copying procedures.
+    \end{itemize}
+
+    \item \textbf{FR16}: Support regular updates to the AI model.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for continuous improvement; update processes may adjust.
+        \item \textbf{Possible Changes}: Alter the frequency or method of updates.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Likely to Change}
+
+These requirements may change due to technical challenges, resource constraints, or evolving project scope.
+
+\begin{enumerate}[resume]
+    \item \textbf{FR8}: Provide alerts for significant changes between scans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Useful but not essential; may be deferred due to time constraints.
+        \item \textbf{Possible Changes}: Simplify the alert system or postpone implementation.
+    \end{itemize}
+
+    \item \textbf{FR10}: Integrate with EHR systems to import/export data.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Adds complexity; might be challenging within our timeline.
+        \item \textbf{Possible Changes}: Limit integration scope or schedule for future development.
+    \end{itemize}
+
+    \item \textbf{FR12}: Allow patients to upload images for self-diagnosis with disclaimers.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Raises legal and ethical concerns; may need alteration.
+        \item \textbf{Possible Changes}: Restrict feature access or require additional consent.
+    \end{itemize}
+
+    \item \textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: May exceed current project scope; could be deferred.
+        \item \textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.
+    \end{itemize}
+\end{enumerate}
+
+\section{Likelihood of Changes for Non-Functional Requirements}
+
+\subsection{Very Unlikely to Change}
+
+These requirements are essential for legal compliance, security, and core system performance.
+
+\begin{enumerate}
+    \item \textbf{SR1}: Encrypt all patient data using AES-256 encryption.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Mandatory for data security and compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{SR2}: Implement role-based access control.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Critical for security and regulatory compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Legal compliance is mandatory.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Unlikely to Change}
+
+These requirements are important for system usability, maintainability, and reliability but may undergo minor adjustments.
+
+\begin{enumerate}[resume]
+    \item \textbf{PR1}: Process and analyze images within 30 seconds.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Critical for usability; performance targets might adjust slightly.
+        \item \textbf{Possible Changes}: Optimize algorithms or extend processing time marginally.
+    \end{itemize}
+
+    \item \textbf{HS1}: Ensure AI diagnoses are reviewed by a radiologist.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for patient safety; review processes may streamline.
+        \item \textbf{Possible Changes}: Adjust workflow integration based on feedback.
+    \end{itemize}
+
+    \item \textbf{LF1}: Have a user interface consistent with standard medical software.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Aids user adoption; UI elements might be updated.
+        \item \textbf{Possible Changes}: Refine interface design for improved usability.
+    \end{itemize}
+
+    \item \textbf{UH1}: Users perform tasks without assistance after 30-minute training.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Key for efficiency; training materials may be adjusted.
+        \item \textbf{Possible Changes}: Modify training duration or content.
+    \end{itemize}
+
+    \item \textbf{PR2}: Achieve system uptime of at least 99.9\%.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for reliability; targets may adjust slightly.
+        \item \textbf{Possible Changes}: Revise uptime goals if necessary.
+    \end{itemize}
+
+    \item \textbf{MS1}: Develop using modular architecture with well-documented code.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for maintenance; practices may evolve.
+        \item \textbf{Possible Changes}: Update documentation standards or modularization approaches.
+    \end{itemize}
+
+    \item \textbf{MS2}: Include automated testing covering at least 80\% of the codebase.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Crucial for reliability; coverage targets may adjust.
+        \item \textbf{Possible Changes}: Modify test coverage goals based on feasibility.
+    \end{itemize}
+
+    \item \textbf{LR2}: Adhere to ISO 13485 standard.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for quality; compliance may adjust based on feasibility.
+        \item \textbf{Possible Changes}: Plan for partial compliance initially, aiming for full adherence over time.
+    \end{itemize}
+
+    \item \textbf{HS2}: Provide disclaimers that AI is a diagnostic aid.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for legal and ethical reasons.
+        \item \textbf{Possible Changes}: Refine wording of disclaimers as needed.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Likely to Change}
+
+These requirements may be adjusted due to resource constraints, technical challenges, or evolving user needs.
+
+\begin{enumerate}[resume]
+    \item \textbf{LF2}: Use color schemes and fonts that minimize eye strain.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Aesthetic elements are subjective; may change with user feedback.
+        \item \textbf{Possible Changes}: Redesign UI for improved comfort.
+    \end{itemize}
+
+    \item \textbf{UH2}: Provide context-sensitive help and tooltips.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Resource constraints might affect implementation scope.
+        \item \textbf{Possible Changes}: Adjust help features or prioritize key areas.
+    \end{itemize}
+
+    \item \textbf{PR3}: Support processing of up to 20 images concurrently.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Performance under load may be challenging.
+        \item \textbf{Possible Changes}: Reduce number of concurrent images or optimize performance.
+    \end{itemize}
+
+    \item \textbf{OE1}: Integrate with hospital PACS using DICOM.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Integration complexity may limit scope.
+        \item \textbf{Possible Changes}: Support specific PACS systems or delay integration.
+    \end{itemize}
+
+    \item \textbf{OE2}: Operate effectively in networks with latency up to 200ms.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Network optimization may be challenging within our timeline.
+        \item \textbf{Possible Changes}: Adjust network condition requirements or focus on standard environments first.
+    \end{itemize}
+
+    \item \textbf{CR1}: Support both English and French languages.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Multilingual support adds complexity; may be postponed.
+        \item \textbf{Possible Changes}: Limit initial support to English; add languages later.
+    \end{itemize}
+\end{enumerate}
+
+
 
 \section{Traceability Matrices and Graphs}
 
@@ -1368,7 +2319,6 @@ Their values are defined in this section for easy maintenance.}
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.  
 
-\input{../Reflection.tex}
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
