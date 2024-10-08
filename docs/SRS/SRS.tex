@@ -19,6 +19,11 @@
 \usepackage{pdflscape}
 \usepackage{afterpage}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
 
 \usepackage[round]{natbib}
 
@@ -1040,7 +1045,8 @@ A correct solution must exhibit \plt{fill in the details}.  \plt{These
 \plt{This section is not for test cases or techniques for verification and
   validation.  Those topics will be addressed in the Verification and Validation
   plan.}
-\clearpage
+
+  \clearpage
 \section{Functional Requirements}
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
@@ -1048,10 +1054,10 @@ qualities that the software is expected to exhibit.
 
 \begin{table}[h!]
 \centering
-\rowcolors{2}{white}{white} 
+\rowcolors{2}{white}{white} % All rows except the first will be white
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
-\rowcolor{gray!30}
+\rowcolor{gray!30} % Light gray for the first row (header)
 \textbf{FR1} & The system shall accept chest X-ray images as input from authorized users, including healthcare professionals and patients. \\
 \hline
 \textbf{Rationale} & To perform analysis, the system requires chest X-ray images to be uploaded by users in supported formats (DICOM, JPEG, PNG). \\
@@ -1853,7 +1859,250 @@ typical values.}
   
   
 \clearpage
-\section{Likelyhood of Changes}    
+\section{Likelihood of Changes for Functional Requirements}
+
+\subsection{Very Unlikely to Change}
+
+These requirements are core to our system's functionality and are essential for meeting the project's objectives. We do not anticipate any changes to these requirements.
+
+\begin{enumerate}
+    \item \textbf{FR1}: Accept chest X-ray images from authorized users.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: This is the fundamental functionality upon which all other features depend.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{FR3}: Analyze chest X-rays to detect diseases with $\geq85\%$ accuracy.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Central to the system's purpose; critical for providing value to users.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{FR6}: Produce structured, human-readable reports summarizing findings.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for clinicians to interpret results effectively.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{FR13}: Support multiple user roles with appropriate access levels.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Crucial for security and compliance with regulations.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Unlikely to Change}
+
+These requirements are important but may undergo minor adjustments based on user feedback or technical considerations.
+
+\begin{enumerate}[resume]
+    \item \textbf{FR2}: Enable users to input additional patient symptoms.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Enhances analysis accuracy but not critical for initial operation.
+        \item \textbf{Possible Changes}: Modify symptom input methods or adjust symptom lists.
+    \end{itemize}
+
+    \item \textbf{FR4}: Indicate if a patient's condition has changed between scans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for monitoring progress; criteria may need refinement.
+        \item \textbf{Possible Changes}: Adjust methods for assessing condition changes.
+    \end{itemize}
+
+    \item \textbf{FR5}: Generate visual aids by highlighting affected areas.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Improves usability; visualization techniques may evolve.
+        \item \textbf{Possible Changes}: Update highlighting methods based on user feedback.
+    \end{itemize}
+
+    \item \textbf{FR7}: Store patient data securely for future reference.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for data continuity; storage solutions might change.
+        \item \textbf{Possible Changes}: Enhance security measures or adopt new technologies.
+    \end{itemize}
+
+    \item \textbf{FR9}: Allow healthcare professionals to adjust treatment plans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Adds value for clinical decision-making; integration methods may adjust.
+        \item \textbf{Possible Changes}: Refine how treatment adjustments are linked to analysis.
+    \end{itemize}
+
+    \item \textbf{FR11}: Display confidence levels through an intuitive UI.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Helps assess result reliability; presentation might be refined.
+        \item \textbf{Possible Changes}: Modify the display format of confidence levels.
+    \end{itemize}
+
+    \item \textbf{FR14}: Create a new copy of the X-ray before AI analysis.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Protects data integrity; implementation methods might improve.
+        \item \textbf{Possible Changes}: Optimize data handling or copying procedures.
+    \end{itemize}
+
+    \item \textbf{FR16}: Support regular updates to the AI model.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for continuous improvement; update processes may adjust.
+        \item \textbf{Possible Changes}: Alter the frequency or method of updates.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Likely to Change}
+
+These requirements may change due to technical challenges, resource constraints, or evolving project scope.
+
+\begin{enumerate}[resume]
+    \item \textbf{FR8}: Provide alerts for significant changes between scans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Useful but not essential; may be deferred due to time constraints.
+        \item \textbf{Possible Changes}: Simplify the alert system or postpone implementation.
+    \end{itemize}
+
+    \item \textbf{FR10}: Integrate with EHR systems to import/export data.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Adds complexity; might be challenging within our timeline.
+        \item \textbf{Possible Changes}: Limit integration scope or schedule for future development.
+    \end{itemize}
+
+    \item \textbf{FR12}: Allow patients to upload images for self-diagnosis with disclaimers.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Raises legal and ethical concerns; may need alteration.
+        \item \textbf{Possible Changes}: Restrict feature access or require additional consent.
+    \end{itemize}
+
+    \item \textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: May exceed current project scope; could be deferred.
+        \item \textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.
+    \end{itemize}
+\end{enumerate}
+
+\section{Likelihood of Changes for Non-Functional Requirements}
+
+\subsection{Very Unlikely to Change}
+
+These requirements are essential for legal compliance, security, and core system performance.
+
+\begin{enumerate}
+    \item \textbf{SR1}: Encrypt all patient data using AES-256 encryption.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Mandatory for data security and compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{SR2}: Implement role-based access control.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Critical for security and regulatory compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Legal compliance is mandatory.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Unlikely to Change}
+
+These requirements are important for system usability, maintainability, and reliability but may undergo minor adjustments.
+
+\begin{enumerate}[resume]
+    \item \textbf{PR1}: Process and analyze images within 30 seconds.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Critical for usability; performance targets might adjust slightly.
+        \item \textbf{Possible Changes}: Optimize algorithms or extend processing time marginally.
+    \end{itemize}
+
+    \item \textbf{HS1}: Ensure AI diagnoses are reviewed by a radiologist.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for patient safety; review processes may streamline.
+        \item \textbf{Possible Changes}: Adjust workflow integration based on feedback.
+    \end{itemize}
+
+    \item \textbf{LF1}: Have a user interface consistent with standard medical software.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Aids user adoption; UI elements might be updated.
+        \item \textbf{Possible Changes}: Refine interface design for improved usability.
+    \end{itemize}
+
+    \item \textbf{UH1}: Users perform tasks without assistance after 30-minute training.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Key for efficiency; training materials may be adjusted.
+        \item \textbf{Possible Changes}: Modify training duration or content.
+    \end{itemize}
+
+    \item \textbf{PR2}: Achieve system uptime of at least 99.9\%.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for reliability; targets may adjust slightly.
+        \item \textbf{Possible Changes}: Revise uptime goals if necessary.
+    \end{itemize}
+
+    \item \textbf{MS1}: Develop using modular architecture with well-documented code.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for maintenance; practices may evolve.
+        \item \textbf{Possible Changes}: Update documentation standards or modularization approaches.
+    \end{itemize}
+
+    \item \textbf{MS2}: Include automated testing covering at least 80\% of the codebase.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Crucial for reliability; coverage targets may adjust.
+        \item \textbf{Possible Changes}: Modify test coverage goals based on feasibility.
+    \end{itemize}
+
+    \item \textbf{LR2}: Adhere to ISO 13485 standard.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Important for quality; compliance may adjust based on feasibility.
+        \item \textbf{Possible Changes}: Plan for partial compliance initially, aiming for full adherence over time.
+    \end{itemize}
+
+    \item \textbf{HS2}: Provide disclaimers that AI is a diagnostic aid.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Essential for legal and ethical reasons.
+        \item \textbf{Possible Changes}: Refine wording of disclaimers as needed.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Likely to Change}
+
+These requirements may be adjusted due to resource constraints, technical challenges, or evolving user needs.
+
+\begin{enumerate}[resume]
+    \item \textbf{LF2}: Use color schemes and fonts that minimize eye strain.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Aesthetic elements are subjective; may change with user feedback.
+        \item \textbf{Possible Changes}: Redesign UI for improved comfort.
+    \end{itemize}
+
+    \item \textbf{UH2}: Provide context-sensitive help and tooltips.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Resource constraints might affect implementation scope.
+        \item \textbf{Possible Changes}: Adjust help features or prioritize key areas.
+    \end{itemize}
+
+    \item \textbf{PR3}: Support processing of up to 20 images concurrently.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Performance under load may be challenging.
+        \item \textbf{Possible Changes}: Reduce number of concurrent images or optimize performance.
+    \end{itemize}
+
+    \item \textbf{OE1}: Integrate with hospital PACS using DICOM.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Integration complexity may limit scope.
+        \item \textbf{Possible Changes}: Support specific PACS systems or delay integration.
+    \end{itemize}
+
+    \item \textbf{OE2}: Operate effectively in networks with latency up to 200ms.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Network optimization may be challenging within our timeline.
+        \item \textbf{Possible Changes}: Adjust network condition requirements or focus on standard environments first.
+    \end{itemize}
+
+    \item \textbf{CR1}: Support both English and French languages.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Multilingual support adds complexity; may be postponed.
+        \item \textbf{Possible Changes}: Limit initial support to English; add languages later.
+    \end{itemize}
+\end{enumerate}
+
 
 
 \section{Traceability Matrices and Graphs}
