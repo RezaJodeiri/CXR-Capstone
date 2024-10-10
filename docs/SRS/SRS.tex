@@ -490,7 +490,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Inputs} \\
+\textbf{Traceability} & LF1, LF2, UH1, FR2 (for input handling), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR1}
@@ -507,7 +507,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Symptoms} \\
+\textbf{Traceability} & UH1, UH2, MS1, FR1 (input dependency), FR6 (reporting of symptoms) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR2}
@@ -526,7 +526,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DiseaseDetection} \\
+\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR3}
@@ -545,7 +545,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ConditionStatus} \\
+\textbf{Traceability} & PR1, OE2, HS1, FR3 (analysis results), FR8 (alerts) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR4}
@@ -564,7 +564,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Medium\\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_VisualAids} \\
+\textbf{Traceability} & PR1, PR3, LF1, FR3 (analysis results), FR6 (report visualization) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR5}
@@ -583,7 +583,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ReportGeneration} \\
+\textbf{Traceability} &  LF1, UH2, HS1, FR3 (analysis), FR4 (condition status). \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR6}
@@ -602,7 +602,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DataStorage} \\
+\textbf{Traceability} & PR2, PR3, SR1, LR2, FR1 (data input), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR7}
@@ -622,7 +622,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Alerts} \\
+\textbf{Traceability} & PR1, SR2, FR4 (condition changes), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR8}
@@ -641,7 +641,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \hline
   \textbf{Priority} & High \\
   \hline
-  \textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_TreatmentAdjustment} \\
+  \textbf{Traceability} & MS1, SR2, FR6 (reporting adjustments), FR7 (data updates) \\
   \hline
   \end{tabular}
   \caption{Functional Requirement FR9}
@@ -661,7 +661,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_EHRIntegration} \\
+\textbf{Traceability} & OE1, MS1, LR2, FR7 (data storage), FR9 (treatment adjustment) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR10}
@@ -680,7 +680,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserInterface} \\
+\textbf{Traceability} & UH2, PR1, FR3 (analysis results), FR5 (visual aids) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR11}
@@ -700,7 +700,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_PatientUploads} \\
+\textbf{Traceability} & SR1, SR2, HS2, FR1 (image upload), FR13 (role management) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR12}
@@ -720,7 +720,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserRoles} \\
+\textbf{Traceability} &  SR2, LR1, FR7 (data storage), FR12 (patient data access) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR13}
@@ -739,7 +739,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_XrayCopy} \\
+\textbf{Traceability} & MS2, OE1, FR1 (image upload), FR3 (analysis) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR14}
@@ -758,7 +758,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_OtherModalities} \\
+\textbf{Traceability} & PR3, LR2, FR1 (image input), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR15}
@@ -778,7 +778,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ModelUpdates} \\
+\textbf{Traceability} & MS1, MS2, FR3 (analysis), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR16}
@@ -801,7 +801,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & At least 90\% of radiologists surveyed find the interface intuitive and comparable to existing medical imaging software. \\
 \hline
-\textbf{Traceability} & FR1, FR5 \\
+\textbf{Traceability} & FR1, FR5, FR6 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LF1}
@@ -819,7 +819,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & The interface adheres to ergonomic standards (e.g., ISO 9241-3) for visual displays. \\
 \hline
-\textbf{Traceability} & FR1 \\
+\textbf{Traceability} & FR1, FR5 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LF2}
@@ -839,7 +839,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Usability testing shows that users can complete key tasks unassisted after initial training. \\
 \hline
-\textbf{Traceability} & FR1, FR2, FR5 \\
+\textbf{Traceability} & FR1, FR2, FR5, FR6 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH1}
@@ -857,7 +857,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens. \\
 \hline
-\textbf{Traceability} & FR2, FR6 \\
+\textbf{Traceability} & FR2, FR6, FR11 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH2}
@@ -877,7 +877,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Performance tests demonstrate that 95\% of standard images are processed within the 30-second threshold. \\
 \hline
-\textbf{Traceability} & FR3, FR4, FR5 \\
+\textbf{Traceability} & FR3, FR4, FR5, FR8 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR1}
@@ -913,7 +913,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & System performance tests confirm that processing time per image does not exceed 45 seconds when 20 images are processed concurrently. \\
 \hline
-\textbf{Traceability} & FR5, FR7 \\
+\textbf{Traceability} & FR5, FR7, FR15. \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR3}
@@ -933,7 +933,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & The system successfully exchanges data with at least three major PACS solutions in a test environment. \\
 \hline
-\textbf{Traceability} & FR7, FR10 \\
+\textbf{Traceability} & FR7, FR10, FR14 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement OE1}
@@ -971,7 +971,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Security audits confirm that all data storage and transmissions use AES-256 encryption. \\
 \hline
-\textbf{Traceability} & FR7, FR12 \\
+\textbf{Traceability} & FR7, FR12,FR3 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement SR1}
@@ -989,7 +989,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Access control tests verify that users cannot access data or functions outside their permissions. \\
 \hline
-\textbf{Traceability} & FR13, FR26 \\
+\textbf{Traceability} & FR13, FR12 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement SR2}
@@ -1009,7 +1009,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Code reviews confirm adherence to coding standards and modular design principles; documentation covers all modules. \\
 \hline
-\textbf{Traceability} & FR2, FR10 \\
+\textbf{Traceability} & FR2, FR10, FR16 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement MS1}
@@ -1027,7 +1027,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Test coverage reports indicate that automated tests cover 80\% or more of the code. \\
 \hline
-\textbf{Traceability} & FR7, FR14 \\
+\textbf{Traceability} & FR7, FR14, FR16\\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement MS2}
@@ -1047,7 +1047,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Users can select English or French as the system language, with all interface elements and reports displayed accordingly. \\
 \hline
-\textbf{Traceability} & FR6, FR12 \\
+\textbf{Traceability} & FR6, FR12, FR13 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement CR1}
@@ -1067,7 +1067,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Compliance audits verify adherence to relevant data protection laws and regulations. \\
 \hline
-\textbf{Traceability} & FR12, FR13 \\
+\textbf{Traceability} & FR12, FR13, FR7 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LR1}
@@ -1085,7 +1085,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Certification or compliance reports demonstrate adherence to ISO 13485. \\
 \hline
-\textbf{Traceability} & FR7, FR10 \\
+\textbf{Traceability} & FR7, FR10, FR15 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LR2}
@@ -1105,7 +1105,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & System workflow requires radiologist validation before finalizing reports; logs confirm this process. \\
 \hline
-\textbf{Traceability} & FR3, FR6 \\
+\textbf{Traceability} & FR3, FR6, FR4 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement HS1}
@@ -1123,7 +1123,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \hline
 \textbf{Fit Criterion} & Disclaimers are prominently displayed on analysis results and require user acknowledgment upon first use. \\
 \hline
-\textbf{Traceability} & FR12, FR6 \\
+\textbf{Traceability} &FR12, FR6, FR11\\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement HS2}
@@ -1523,156 +1523,92 @@ These requirements may be adjusted due to resource constraints, technical challe
 
 
 
-\section{Traceability Matrices and Graphs}
-
-The purpose of the traceability matrices is to provide easy references on what
-has to be additionally modified if a certain component is changed.  Every time a
-component is changed, the items in the column of that component that are marked
-with an ``X'' may have to be modified as well.  Table~\ref{Table:trace} shows the
-dependencies of theoretical models, general definitions, data definitions, and
-instance models with each other. Table~\ref{Table:R_trace} shows the
-dependencies of instance models, requirements, and data constraints on each
-other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, and likely changes on
-the assumptions.
-
-\plt{You will have to modify these tables for your problem.}
-
-\plt{The traceability matrix is not generally symmetric.  If GD1 uses A1, that
-  means that GD1's derivation or presentation requires invocation of A1.  A1
-  does not use GD1.  A1 is ``used by'' GD1.}
-
-\plt{The traceability matrix is challenging to maintain manually.  Please do
-  your best.  In the future tools (like Drasil) will make this much easier.}
-
 \afterpage{
 \begin{landscape}
+\section{Traceability Matrix}
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\scriptsize
+\setlength{\tabcolsep}{3pt} % Adjust the column separation to make it tighter
+\renewcommand{\arraystretch}{1.15} % Adjust row height for a tighter fit
+\begin{tabular}{|p{1cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|}
 \hline
-	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
+    & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\ 
 \hline
-\tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-\iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-\iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-\lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-\lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-\lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-\lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
+\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\ 
+\hline
+\textbf{FR2} & & X & & & & & & & & & & & & & & X \\ 
+\hline
+\textbf{FR3} & X & & X & X & X & X & & & & & & & & & & X \\ 
+\hline
+\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\ 
+\hline
+\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\ 
+\hline
+\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\ 
+\hline
+\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\ 
+\hline
+\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\ 
+\hline
+\textbf{FR9} & & & & & & X & & & X & & & & & & & \\ 
+\hline
+\textbf{FR10} & & & & & & & X & & & X & & & X & & & X \\ 
+\hline
+\textbf{FR11} & & & & & & & & & & & X & & & & & \\ 
+\hline
+\textbf{FR12} & X & & & & & & & & & & X & X & X & & & \\ 
+\hline
+\textbf{FR13} & & & & & & & X & & & X & & X & X & & & \\ 
+\hline
+\textbf{FR14} & X & & & & & & & & & & & & & X & & \\ 
+\hline
+\textbf{FR15} & X & & & & & & & & & & & & & & X & \\ 
+\hline
+\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\ 
+\hline
+\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\ 
+\hline
+\textbf{LF2} & X & & & & & & & & & & & & & & & \\ 
+\hline
+\textbf{UH1} & X & X & & & & & & & & & & & & & & \\ 
+\hline
+\textbf{UH2} & & X & & & X & X & & & & & X & & & & & \\ 
+\hline
+\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\ 
+\hline
+\textbf{PR2} & & & & & X & & X & & & & & & & & & \\ 
+\hline
+\textbf{PR3} & & & & & X & & X & & & & & & & & & \\ 
+\hline
+\textbf{OE1} & & & & & & & X & & & & & & & X & & \\ 
+\hline
+\textbf{OE2} & & & & X & & X & & & & & & & & & & \\ 
+\hline
+\textbf{SR1} & & & & & & & X & & & & & X & & & & \\ 
+\hline
+\textbf{SR2} & & & & & & & & & & & & X & X & & & \\ 
+\hline
+\textbf{MS1} & & & & & & & & & & X & & & & & & X \\ 
+\hline
+\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\ 
+\hline
+\textbf{CR1} & & & & & & & & & & & & & & X & & \\ 
+\hline
+\textbf{LR1} & & & & & & & & & & & & X & X & & & \\ 
+\hline
+\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\ 
+\hline
+\textbf{HS1} & & & X & X & & & & & & & & & & & & \\ 
+\hline
+\textbf{HS2} & & & & & & & & & & & & X & & & & \\ 
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
-\label{Table:A_trace}
+\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements}
+\label{Table:Traceability}
 \end{table}
 \end{landscape}
 }
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline        
-	& \tref{T_COE}& \tref{T_SHE}& \tref{T_LHE}& \dref{NL}& \dref{ROCT} & \ddref{FluxCoil}& \ddref{FluxPCM} & \ddref{D_HOF}& \ddref{D_MF}& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM} \\
-\hline
-\tref{T_COE}     & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}     & & & X& & & & & & & & & & \\ \hline
-\tref{T_LHE}     & & & & & & & & & & & & & \\ \hline
-\dref{NL}        & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}      & X& & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil} & & & & X& & & & & & & & & \\ \hline
-\ddref{FluxPCM}  & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}    & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}     & & & & & & & & X& & & & & \\ \hline
-\iref{ewat}      & & & & & X& X& X& & & & X& & \\ \hline
-\iref{epcm}      & & & & & X& & X& & X& X& & & X \\ \hline
-\iref{I_HWAT}    & & X& & & & & & & & & & & \\ \hline
-\iref{I_HPCM}    & & X& X& & & & X& X& X& & X& & \\
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
-\label{Table:trace}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline
-	& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
-\hline
-\iref{ewat}            & & X& & & & X& X \\ \hline
-\iref{epcm}            & X& & & X& & X& X \\ \hline
-\iref{I_HWAT}          & & & & & & X& X \\ \hline
-\iref{I_HPCM}          & & X& & & & X& X \\ \hline
-\rref{R_RawInputs}     & & & & & & & \\ \hline
-\rref{R_MassInputs}    & & & & & & X& \\ \hline
-\rref{R_CheckInputs}   & & & & & X& & \\ \hline
-\rref{R_OutputInputs}  & X& X& & & & X& X \\ \hline
-\rref{R_TempWater}     & X& & & & & & \\ \hline 
-\rref{R_TempPCM}       & & X& & & & & \\ \hline
-\rref{R_EnergyWater}   & & & X& & & & \\ \hline
-\rref{R_EnergyPCM}     & & & & X& & & \\ \hline
-\rref{R_VerifyOutput}  & & & X& X& & & \\ \hline
-\rref{R_timeMeltBegin} & & X& & & & & \\ \hline
-\rref{R_timeMeltEnd}   & & X& & & & & \\ 
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
-\label{Table:R_trace}
-\end{table}
-
-The purpose of the traceability graphs is also to provide easy references on
-what has to be additionally modified if a certain component is changed.  The
-arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
-changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=\textwidth]{ATrace.png}
-% 		}
-% 		\caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections Between Items of Different Sections}
-% 	\end{center}
-% \end{figure}
-
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=0.7\textwidth]{RTrace.png}
-% 		}
-% 		\caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections Between Requirements, Instance Models, and Data Constraints}
-% 	\end{center}
-% \end{figure}
-
-\section{Development Plan}
-
-\plt{This section is optional.  It is used to explain the plan for developing
-  the software.  In particular, this section gives a list of the order in which
-  the requirements will be implemented.  In the context of a course  this is
-  where you can indicate which requirements will be implemented as part of the
-  course, and which will be ``faked'' as future work.  This section can be
-  organized as a prioritized list of requirements, or it could should the
-  requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
-
 \section{Values of Auxiliary Constants}
 
 \begin{itemize}
