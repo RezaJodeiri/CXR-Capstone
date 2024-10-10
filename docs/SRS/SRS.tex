@@ -216,73 +216,6 @@ description of the unit and the SI name.
 \end{tabular}\\
 
 \newpage
-
-\pagenumbering{arabic}
-
-\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007,
-  SmithAndKoothoor2016}.  It will get you started.  You should not modify the
-  section headings, without first discussing the change with the course
-  instructor.  Modification means you are not following the template, which
-  loses some of the advantage of a template, especially standardization.
-  Although the bits shown below do not include type information, you may need to
-  add this information for your problem.  If you are unsure, please can ask the
-  instructor.}
-
-\plt{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}
-
-\plt{This template document assumes that a single program is being documented.
-  If you are documenting a family of models, you should start with a commonality
-  analysis.  A separate template is provided for this.  For program
-  families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
-  Single family member programs are often programs based on a single physical
-  model.  General purpose tools are usually documented as a family.  Families of
-  physical models also come up.}
-
-\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
-  reference document.  It is generally read in an ad hoc order, as the need
-  arises.  For writing an SRS, and for reading one for the first time, the
-  suggested order of sections is:
-\begin{itemize}
-\item Goal Statement
-\item Instance Models
-\item Requirements
-\item Introduction
-\item Specific System Description
-\end{itemize}
-}
-
-\plt{Guiding principles for the SRS document:
-\begin{itemize}
-\item Do not repeat the same information at the same abstraction level.  If
-  information is repeated, the repetition should be at a different abstraction
-  level.  For instance, there will be overlap between the scope section and the
-  assumptions, but the scope section will not go into as much detail as the
-  assumptions section.
-\end{itemize}
-}
-
-\plt{The template description comments should be disabled before submitting this
-  document for grading.}
-
-\plt{You can borrow any wording from the text given in the template.  It is part
-  of the template, and not considered an instance of academic integrity.  Of
-  course, you need to cite the source of the template.}
-
-\plt{When the documentation is done, it should be possible to trace back to the
-  source of every piece of information.  Some information will come from
-  external sources, like terminology.  Other information will be derived, like
-  General Definitions.}
-
-\plt{An SRS document should have the following qualities: unambiguous,
-  consistent, complete, validatable, abstract and traceable.}
-
-\plt{The overall goal of the SRS is that someone that meets the Characteristics
-  of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
-  understand and verify the captured domain knowledge.  They should not have to
-  trust the authors of the SRS on any statements.  They should be able to
-  independently verify/derive every statement made.}
-
 \section{Introduction}
 
 Chest X-rays are one of the most common diagnostic imaging techniques used in clinical practice for evaluating respiratory and cardiac conditions. However, the interpretation of chest X-ray images can be complex and time-consuming that requires high-level expertise and experience. Misinterpretations can lead to wrong diagnoses and inappropriate treatment plans, increasing the healthcare costs.\\
@@ -303,7 +236,7 @@ The scope of this project is to take in a chest X-ray image and output if any di
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-The reader of this SRS document should possess undergraduate level of software development skill as it specifies the system constraints, functional and non-functional requirements etc. Reader should understand the theories of software development as this SRS contains sections about theoretical models and instance models. Readers should also have some basic experience with project management to understand the development plan and the traceability matrix. Ideally, user should have some fundamental understanding of Artificial Intelligence but this is not a required characteristic as the SRS focuses more on the requirements instead of the technical side. To understand input data types and other constraints on data, reader should have at least 1 year programming experiences.\\
+The reader of this SRS document should possess undergraduate level of software development skill as it specifies the system constraints, functional and non-functional requirements. Reader should understand the theories of software development as this SRS contains sections about theoretical models and instance models. Readers should also have some basic experience with project management to understand the development plan and the traceability matrix. Ideally, user should have some fundamental understanding of Artificial Intelligence but this is not a required characteristic as the SRS focuses more on the requirements instead of the technical side. To understand input data types and other constraints on data, reader should have at least 1 year programming experiences.\\
 
 \subsection{Stakeholders}
 1. Healthcare Providers: they are the primary uses of the AI system, as the software will help them in interpreting chest X-rays more efficiently by detecting abnormalities and analyzing potential diseases. The use of this software as part of the diagnostic process will help improve efficiency and accuracy.
@@ -314,45 +247,6 @@ The reader of this SRS document should possess undergraduate level of software d
 3. Hospitals and Clinics: Hospitals and clinics can integrate the software into their hospital systems, which can help them to improve efficiency, reduce diagnostic errors, manage costs.\\
 \\
 4. Technical Support team: they are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy. \\
-
-\subsection{Organization of Document}
-
-Section 1 of the SRS explains the symbols / units / acronyms / mathematical notations used throughout the document.\\
-\\
-  Section 3 provides the following information:
-     \begin{enumerate}
-    \item{System context: list of user and program responsibilities and an abstract view of software.}
-    \item{User characteristics: knowledge / skills expected of the user.}
-    \item{System constraints: what limits developers' options in the system design.}
-  \end{enumerate}
-  \\
-  Section 4 provides the following information:
-    \begin{enumerate}
-    \item{Terminology and Definitions: provides meaning of the different words and phrases used in the domain of the problem.}
-    \item{Physical System Description: state the physical system that is to be modelled and element identification.}
-    \item{Goal Statements: criteria for sufficient completeness of a requirements specification and for requirements pertinence.}
-    \item{Solution Characteristics Specification: specifies the information in the solution domain of the system to be developed.}
-    \item{Assumptions}
-    \item{Theoretical Models: abstract mathematical equations or axioms for solving the problem described in "Physical System Description"}
-    \item{General definitions: refinements of theoretical models or other general definitions.}
-    \item{Data Types: all data types needed to document the models.}
-    \item{Instance models: express the problem defined in " Physical System Description to mathematical terms.}
-     \item{Input data constraints and properties of a correct solution.}
-  \end{enumerate}
-  \\
-  Section 5 provides the following information:
-  \begin{enumerate}
-    \item{Functional requirements: business tasks that the software is expected to complete.}
-    \item{Nonfunctional requirements: qualities that the software is expected to exhibit.}
-  \end{enumerate}
-  \\
-  Section 6 and 7 explains the likely and unlikely changes of this software project.\\
-  \\
-  Section 8 provide references on what has to be additionally modified if a certain component is changed.\\
-  \\
-  Section 9 explains the development plan of the project.\\
-  \\
-  Section 10 shows the value of the symbolic parameters introduced in the report.
 
 \section{General System Description}
 
@@ -378,7 +272,7 @@ The below system context diagram shows that the system will take in an input (ch
 \item {Detect abnormalities / diseases in the chest X-ray images.}
 \item {Classify abnormalities / diseases into specific categories.}
 \item {Quantify size / degree / volume of abnormalities.}
-\item {Produce report with possible diagnosis and the above information.}
+\item {Produce report with possiblee diagnosis and the above information.}
 \end{itemize}
 \end{itemize}
 
@@ -529,11 +423,59 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{itemize}
 
   \clearpage
-\section{Functional Requirements}
-This section provides the functional requirements, the business tasks that the
-software is expected to complete, and the nonfunctional requirements, the
-qualities that the software is expected to exhibit.
+\section{Requirements}
+\subsection{Formal Mathematical Specification}
 
+\subsubsection{Formal Definitions}
+\begin{itemize}
+  \item Let \( X = \{x_1, x_2, \ldots, x_n\} \) be the set of chest X-ray images, where \( x_i \) represents each individual image.
+  \item Let \( Y = \{y_1, y_2, \ldots, y_n\} \) be the set of labels, where \( y_i \in \{0, 1\} \). Here, \( y_i = 1 \) indicates the presence of a disease, and \( y_i = 0 \) indicates its absence.
+  \item Let \( M \) be the machine learning model used for disease detection.
+  \item Let \( \theta \) represent the parameters of model \( M \), which are learned during training.
+  \item Let \( P(x_i) \) represent the probability that an image \( x_i \) is classified as containing a disease by the model \( M \).
+\end{itemize}
+
+\subsubsection{Formal Expressions}
+\begin{enumerate}
+  \item \textbf{Training the Model:}
+    \begin{align*}
+      \theta^* &= \text{arg min}_\theta \sum_{i=1}^n (M(x_i; \theta) - y_i)^2 \\
+      &\text{where } M(x_i; \theta) \text{ is the predicted value for } x_i.
+    \end{align*}
+    The model parameters \( \theta \) are adjusted during training to minimize the difference between the predicted values and the actual labels.
+
+  \item \textbf{Prediction:}
+    \begin{align*}
+      \hat{y}_i &= \begin{cases}
+        1 & \text{if } P(x_i) \geq 0.5 \\
+        0 & \text{if } P(x_i) < 0.5
+      \end{cases}
+    \end{align*}
+    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.5, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
+
+  \item \textbf{Evaluation:}
+    \begin{align*}
+      \text{Accuracy} &= \frac{\sum_{i=1}^n \mathbb{I}(\hat{y}_i = y_i)}{n} \\
+      &\text{where } \mathbb{I}(\hat{y}_i = y_i) \text{ equals 1 if the prediction is correct, otherwise 0.}
+    \end{align*}
+    Accuracy measures the proportion of images for which the model's predictions match the actual labels.
+
+  \item \textbf{Loss Function:}
+    \begin{align*}
+      L(\theta) &= \sum_{i=1}^n (M(x_i; \theta) - y_i)^2
+    \end{align*}
+    The loss function measures how far the model's predictions are from the actual labels. The model aims to minimize this function during training.
+\end{enumerate}
+
+\subsubsection{Model Constraints}
+\begin{itemize}
+  \item The model \( M \) should achieve an accuracy of at least 85\% on the validation dataset.
+  \item Each input image \( x_i \) should be preprocessed to a fixed size (e.g., 224x224 pixels) to ensure compatibility with the model.
+  \item The probability threshold for classification is set at 0.5, but it can be adjusted based on the desired sensitivity of the model.
+\end{itemize}
+\subsection{Finite State Machine Diagram}
+\newpage
+\subsection{Functional Requirements}
 \begin{table}[h!]
 \centering
 \rowcolors{2}{white}{white} % All rows except the first will be white
@@ -548,7 +490,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Inputs} \\
+\textbf{Traceability} & LF1, LF2, UH1, FR2 (for input handling), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR1}
@@ -565,7 +507,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Symptoms} \\
+\textbf{Traceability} & UH1, UH2, MS1, FR1 (input dependency), FR6 (reporting of symptoms) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR2}
@@ -584,7 +526,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DiseaseDetection} \\
+\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR3}
@@ -603,7 +545,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ConditionStatus} \\
+\textbf{Traceability} & PR1, OE2, HS1, FR3 (analysis results), FR8 (alerts) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR4}
@@ -622,7 +564,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Medium\\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_VisualAids} \\
+\textbf{Traceability} & PR1, PR3, LF1, FR3 (analysis results), FR6 (report visualization) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR5}
@@ -641,7 +583,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ReportGeneration} \\
+\textbf{Traceability} &  LF1, UH2, HS1, FR3 (analysis), FR4 (condition status). \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR6}
@@ -660,7 +602,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_DataStorage} \\
+\textbf{Traceability} & PR2, PR3, SR1, LR2, FR1 (data input), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR7}
@@ -680,7 +622,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_Alerts} \\
+\textbf{Traceability} & PR1, SR2, FR4 (condition changes), FR6 (reporting) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR8}
@@ -699,7 +641,7 @@ qualities that the software is expected to exhibit.
   \hline
   \textbf{Priority} & High \\
   \hline
-  \textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_TreatmentAdjustment} \\
+  \textbf{Traceability} & MS1, SR2, FR6 (reporting adjustments), FR7 (data updates) \\
   \hline
   \end{tabular}
   \caption{Functional Requirement FR9}
@@ -719,7 +661,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_EHRIntegration} \\
+\textbf{Traceability} & OE1, MS1, LR2, FR7 (data storage), FR9 (treatment adjustment) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR10}
@@ -738,7 +680,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserInterface} \\
+\textbf{Traceability} & UH2, PR1, FR3 (analysis results), FR5 (visual aids) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR11}
@@ -758,7 +700,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_PatientUploads} \\
+\textbf{Traceability} & SR1, SR2, HS2, FR1 (image upload), FR13 (role management) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR12}
@@ -778,7 +720,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_UserRoles} \\
+\textbf{Traceability} &  SR2, LR1, FR7 (data storage), FR12 (patient data access) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR13}
@@ -797,7 +739,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & High \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_XrayCopy} \\
+\textbf{Traceability} & MS2, OE1, FR1 (image upload), FR3 (analysis) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR14}
@@ -816,7 +758,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Low \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_OtherModalities} \\
+\textbf{Traceability} & PR3, LR2, FR1 (image input), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR15}
@@ -836,16 +778,16 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Priority} & Medium \\
 \hline
-\textbf{Traceability} & R\refstepcounter{reqnum}\thereqnum \label{R_ModelUpdates} \\
+\textbf{Traceability} & MS1, MS2, FR3 (analysis), FR7 (data storage) \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR16}
 \end{table}  
 \clearpage                                                                                                                                                    
 
-\section{Non-Functional Requirements}
+\subsection{Non-Functional Requirements}
 
-\subsection{Look and Feel Requirements}
+\subsubsection{Look and Feel Requirements}
 
 \begin{table}[h!]
 \centering
@@ -859,7 +801,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & At least 90\% of radiologists surveyed find the interface intuitive and comparable to existing medical imaging software. \\
 \hline
-\textbf{Traceability} & FR1, FR5 \\
+\textbf{Traceability} & FR1, FR5, FR6 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LF1}
@@ -877,13 +819,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & The interface adheres to ergonomic standards (e.g., ISO 9241-3) for visual displays. \\
 \hline
-\textbf{Traceability} & FR1 \\
+\textbf{Traceability} & FR1, FR5 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LF2}
 \end{table}
 \clearpage
-\subsection{Usability and Humanity Requirements}
+\subsubsection{Usability and Humanity Requirements}
 
 \begin{table}[h!]
 \centering
@@ -897,7 +839,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Usability testing shows that users can complete key tasks unassisted after initial training. \\
 \hline
-\textbf{Traceability} & FR1, FR2, FR5 \\
+\textbf{Traceability} & FR1, FR2, FR5, FR6 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH1}
@@ -915,13 +857,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens. \\
 \hline
-\textbf{Traceability} & FR2, FR6 \\
+\textbf{Traceability} & FR2, FR6, FR11 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH2}
 \end{table}
 \clearpage
-\subsection{Performance Requirements}
+\subsubsection{Performance Requirements}
 
 \begin{table}[h!]
 \centering
@@ -935,7 +877,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Performance tests demonstrate that 95\% of standard images are processed within the 30-second threshold. \\
 \hline
-\textbf{Traceability} & FR3, FR4, FR5 \\
+\textbf{Traceability} & FR3, FR4, FR5, FR8 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR1}
@@ -971,13 +913,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & System performance tests confirm that processing time per image does not exceed 45 seconds when 20 images are processed concurrently. \\
 \hline
-\textbf{Traceability} & FR5, FR7 \\
+\textbf{Traceability} & FR5, FR7, FR15. \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR3}
 \end{table}
 \clearpage
-\subsection{Operational and Environmental Requirements}
+\subsubsection{Operational and Environmental Requirements}
 
 \begin{table}[h!]
 \centering
@@ -991,7 +933,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & The system successfully exchanges data with at least three major PACS solutions in a test environment. \\
 \hline
-\textbf{Traceability} & FR7, FR10 \\
+\textbf{Traceability} & FR7, FR10, FR14 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement OE1}
@@ -1015,7 +957,7 @@ qualities that the software is expected to exhibit.
 \caption{Non-functional Requirement OE2}
 \end{table}
 \clearpage
-\subsection{Security and Privacy Requirements}
+\subsubsection{Security and Privacy Requirements}
 
 \begin{table}[h!]
 \centering
@@ -1029,7 +971,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Security audits confirm that all data storage and transmissions use AES-256 encryption. \\
 \hline
-\textbf{Traceability} & FR7, FR12 \\
+\textbf{Traceability} & FR7, FR12,FR3 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement SR1}
@@ -1047,13 +989,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Access control tests verify that users cannot access data or functions outside their permissions. \\
 \hline
-\textbf{Traceability} & FR13, FR26 \\
+\textbf{Traceability} & FR13, FR12 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement SR2}
 \end{table}
 \clearpage
-\subsection{Maintainability and Support Requirements}
+\subsubsection{Maintainability and Support Requirements}
 
 \begin{table}[h!]
 \centering
@@ -1067,7 +1009,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Code reviews confirm adherence to coding standards and modular design principles; documentation covers all modules. \\
 \hline
-\textbf{Traceability} & FR2, FR10 \\
+\textbf{Traceability} & FR2, FR10, FR16 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement MS1}
@@ -1085,13 +1027,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Test coverage reports indicate that automated tests cover 80\% or more of the code. \\
 \hline
-\textbf{Traceability} & FR7, FR14 \\
+\textbf{Traceability} & FR7, FR14, FR16\\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement MS2}
 \end{table}
 
-\subsection{Cultural Requirements}
+\subsubsection{Cultural Requirements}
 
 \begin{table}[h!]
 \centering
@@ -1105,13 +1047,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Users can select English or French as the system language, with all interface elements and reports displayed accordingly. \\
 \hline
-\textbf{Traceability} & FR6, FR12 \\
+\textbf{Traceability} & FR6, FR12, FR13 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement CR1}
 \end{table}
 \clearpage
-\subsection{Legal Requirements}
+\subsubsection{Legal Requirements}
 
 \begin{table}[h!]
 \centering
@@ -1125,7 +1067,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Compliance audits verify adherence to relevant data protection laws and regulations. \\
 \hline
-\textbf{Traceability} & FR12, FR13 \\
+\textbf{Traceability} & FR12, FR13, FR7 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LR1}
@@ -1143,13 +1085,13 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Certification or compliance reports demonstrate adherence to ISO 13485. \\
 \hline
-\textbf{Traceability} & FR7, FR10 \\
+\textbf{Traceability} & FR7, FR10, FR15 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LR2}
 \end{table}
 \clearpage
-\subsection{Health and Safety Requirements}
+\subsubsection{Health and Safety Requirements}
 
 \begin{table}[h!]
 \centering
@@ -1163,7 +1105,7 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & System workflow requires radiologist validation before finalizing reports; logs confirm this process. \\
 \hline
-\textbf{Traceability} & FR3, FR6 \\
+\textbf{Traceability} & FR3, FR6, FR4 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement HS1}
@@ -1181,18 +1123,12 @@ qualities that the software is expected to exhibit.
 \hline
 \textbf{Fit Criterion} & Disclaimers are prominently displayed on analysis results and require user acknowledgment upon first use. \\
 \hline
-\textbf{Traceability} & FR12, FR6 \\
+\textbf{Traceability} &FR12, FR6, FR11\\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement HS2}
 \end{table}
 
-
-\subsection{Rationale}
-
-\plt{Provide a rationale for the decisions made in the documentation.  Rationale
-should be provided for scope decisions, modelling decisions, assumptions and
-typical values.}
 \newpage
 \section{Phase in Plan}    
 \subsection{High Priority Functional Requirements}
@@ -1587,156 +1523,92 @@ These requirements may be adjusted due to resource constraints, technical challe
 
 
 
-\section{Traceability Matrices and Graphs}
-
-The purpose of the traceability matrices is to provide easy references on what
-has to be additionally modified if a certain component is changed.  Every time a
-component is changed, the items in the column of that component that are marked
-with an ``X'' may have to be modified as well.  Table~\ref{Table:trace} shows the
-dependencies of theoretical models, general definitions, data definitions, and
-instance models with each other. Table~\ref{Table:R_trace} shows the
-dependencies of instance models, requirements, and data constraints on each
-other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, and likely changes on
-the assumptions.
-
-\plt{You will have to modify these tables for your problem.}
-
-\plt{The traceability matrix is not generally symmetric.  If GD1 uses A1, that
-  means that GD1's derivation or presentation requires invocation of A1.  A1
-  does not use GD1.  A1 is ``used by'' GD1.}
-
-\plt{The traceability matrix is challenging to maintain manually.  Please do
-  your best.  In the future tools (like Drasil) will make this much easier.}
-
 \afterpage{
 \begin{landscape}
+\section{Traceability Matrix}
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\scriptsize
+\setlength{\tabcolsep}{3pt} % Adjust the column separation to make it tighter
+\renewcommand{\arraystretch}{1.15} % Adjust row height for a tighter fit
+\begin{tabular}{|p{1cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|}
 \hline
-	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
+    & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\ 
 \hline
-\tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-\iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-\iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-\lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-\lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-\lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-\lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
+\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\ 
+\hline
+\textbf{FR2} & & X & & & & & & & & & & & & & & X \\ 
+\hline
+\textbf{FR3} & X & & X & X & X & X & & & & & & & & & & X \\ 
+\hline
+\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\ 
+\hline
+\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\ 
+\hline
+\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\ 
+\hline
+\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\ 
+\hline
+\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\ 
+\hline
+\textbf{FR9} & & & & & & X & & & X & & & & & & & \\ 
+\hline
+\textbf{FR10} & & & & & & & X & & & X & & & X & & & X \\ 
+\hline
+\textbf{FR11} & & & & & & & & & & & X & & & & & \\ 
+\hline
+\textbf{FR12} & X & & & & & & & & & & X & X & X & & & \\ 
+\hline
+\textbf{FR13} & & & & & & & X & & & X & & X & X & & & \\ 
+\hline
+\textbf{FR14} & X & & & & & & & & & & & & & X & & \\ 
+\hline
+\textbf{FR15} & X & & & & & & & & & & & & & & X & \\ 
+\hline
+\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\ 
+\hline
+\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\ 
+\hline
+\textbf{LF2} & X & & & & & & & & & & & & & & & \\ 
+\hline
+\textbf{UH1} & X & X & & & & & & & & & & & & & & \\ 
+\hline
+\textbf{UH2} & & X & & & X & X & & & & & X & & & & & \\ 
+\hline
+\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\ 
+\hline
+\textbf{PR2} & & & & & X & & X & & & & & & & & & \\ 
+\hline
+\textbf{PR3} & & & & & X & & X & & & & & & & & & \\ 
+\hline
+\textbf{OE1} & & & & & & & X & & & & & & & X & & \\ 
+\hline
+\textbf{OE2} & & & & X & & X & & & & & & & & & & \\ 
+\hline
+\textbf{SR1} & & & & & & & X & & & & & X & & & & \\ 
+\hline
+\textbf{SR2} & & & & & & & & & & & & X & X & & & \\ 
+\hline
+\textbf{MS1} & & & & & & & & & & X & & & & & & X \\ 
+\hline
+\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\ 
+\hline
+\textbf{CR1} & & & & & & & & & & & & & & X & & \\ 
+\hline
+\textbf{LR1} & & & & & & & & & & & & X & X & & & \\ 
+\hline
+\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\ 
+\hline
+\textbf{HS1} & & & X & X & & & & & & & & & & & & \\ 
+\hline
+\textbf{HS2} & & & & & & & & & & & & X & & & & \\ 
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
-\label{Table:A_trace}
+\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements}
+\label{Table:Traceability}
 \end{table}
 \end{landscape}
 }
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline        
-	& \tref{T_COE}& \tref{T_SHE}& \tref{T_LHE}& \dref{NL}& \dref{ROCT} & \ddref{FluxCoil}& \ddref{FluxPCM} & \ddref{D_HOF}& \ddref{D_MF}& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM} \\
-\hline
-\tref{T_COE}     & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}     & & & X& & & & & & & & & & \\ \hline
-\tref{T_LHE}     & & & & & & & & & & & & & \\ \hline
-\dref{NL}        & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}      & X& & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil} & & & & X& & & & & & & & & \\ \hline
-\ddref{FluxPCM}  & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}    & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}     & & & & & & & & X& & & & & \\ \hline
-\iref{ewat}      & & & & & X& X& X& & & & X& & \\ \hline
-\iref{epcm}      & & & & & X& & X& & X& X& & & X \\ \hline
-\iref{I_HWAT}    & & X& & & & & & & & & & & \\ \hline
-\iref{I_HPCM}    & & X& X& & & & X& X& X& & X& & \\
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
-\label{Table:trace}
-\end{table}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline
-	& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
-\hline
-\iref{ewat}            & & X& & & & X& X \\ \hline
-\iref{epcm}            & X& & & X& & X& X \\ \hline
-\iref{I_HWAT}          & & & & & & X& X \\ \hline
-\iref{I_HPCM}          & & X& & & & X& X \\ \hline
-\rref{R_RawInputs}     & & & & & & & \\ \hline
-\rref{R_MassInputs}    & & & & & & X& \\ \hline
-\rref{R_CheckInputs}   & & & & & X& & \\ \hline
-\rref{R_OutputInputs}  & X& X& & & & X& X \\ \hline
-\rref{R_TempWater}     & X& & & & & & \\ \hline 
-\rref{R_TempPCM}       & & X& & & & & \\ \hline
-\rref{R_EnergyWater}   & & & X& & & & \\ \hline
-\rref{R_EnergyPCM}     & & & & X& & & \\ \hline
-\rref{R_VerifyOutput}  & & & X& X& & & \\ \hline
-\rref{R_timeMeltBegin} & & X& & & & & \\ \hline
-\rref{R_timeMeltEnd}   & & X& & & & & \\ 
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
-\label{Table:R_trace}
-\end{table}
-
-The purpose of the traceability graphs is also to provide easy references on
-what has to be additionally modified if a certain component is changed.  The
-arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
-changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=\textwidth]{ATrace.png}
-% 		}
-% 		\caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections Between Items of Different Sections}
-% 	\end{center}
-% \end{figure}
-
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=0.7\textwidth]{RTrace.png}
-% 		}
-% 		\caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections Between Requirements, Instance Models, and Data Constraints}
-% 	\end{center}
-% \end{figure}
-
-\section{Development Plan}
-
-\plt{This section is optional.  It is used to explain the plan for developing
-  the software.  In particular, this section gives a list of the order in which
-  the requirements will be implemented.  In the context of a course  this is
-  where you can indicate which requirements will be implemented as part of the
-  course, and which will be ``faked'' as future work.  This section can be
-  organized as a prioritized list of requirements, or it could should the
-  requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
-
 \section{Values of Auxiliary Constants}
 
 \begin{itemize}
@@ -1757,48 +1629,6 @@ At the same time, automated data classification can be utilized in emergency sit
 
 \bibliographystyle {plainnat}
 \bibliography {../../refs/References}
-
-\newpage
-
-\noindent \plt{The following is not part of the template, just some things to consider
-  when filing in the template.}
-
-\noindent \plt{Grammar, flow and \LaTeX advice:
-\begin{itemize}
-\item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
-\item \LaTeX{} and formatting rules
-\begin{itemize}
-\item Variables are italic, everything else not, includes subscripts (link to
-  document)
-\begin{itemize}
-\item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
-\item Watch out for implied multiplication
-\end{itemize}
-\item Use BibTeX
-\item Use cross-referencing
-\end{itemize}
-\item Grammar and writing rules
-\begin{itemize}
-\item Acronyms expanded on first usage (not just in table of acronyms)
-\item ``In order to'' should be ``to''
-\end{itemize}
-\end{itemize}}
-
-\noindent \plt{Advice on using the template:
-\begin{itemize}
-\item Difference between physical and software constraints
-\item Properties of a correct solution means \emph{additional} properties, not
-  a restating of the requirements (may be ``not applicable'' for your problem).
-  If you have a table of output constraints, then these are properties of a
-  correct solution.
-\item Assumptions have to be invoked somewhere
-\item ``Referenced by'' implies that there is an explicit reference
-\item Think of traceability matrix, list of assumption invocations and list of
-  reference by fields as automatically generatable
-\item If you say the format of the output (plot, table etc), then your
-  requirement could be more abstract
-\end{itemize}
-}
 
 \newpage{}
 \section*{Appendix --- Reflection}
