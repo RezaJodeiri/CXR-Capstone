@@ -1808,15 +1808,29 @@ At the same time, automated data classification can be utilized in emergency sit
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.  
 
+\input{packages/Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable? \\\\
+We felt the SRS document provided us strong growth and structures as the content was comprehensive. We were able to gain a better understanding of the necessary elements like the scope, context diagrams, and nonfunctional requirements such as performance and safety. The clear delineation between normal operations and undesired event handling gave us confidence in its thoroughness. Overall, we felt that the SRS document provided us with a solid foundation to work from, especially in terms of its clarity, organization, and attention to detail. It gave us a clear picture of the system's requirements and made it easier to move forward with design and implementation.
+
+
   \item What pain points did you experience during this deliverable, and how did
-  you resolve them?
+  you resolve them? \\
+
+When writing the Software Requirements Specification document caused us few challenges that hindered our process. One common issue we faced was the ambiguity in the requirements this can create confusion for our team. We also felt that some things had incomplete requirements, as some aspects were overlooked or not thoroughly explored. Additionally, failing to gather input from all stakeholders, such as clients, end-users, and developers, can result in missing critical features or misunderstanding the true needs of the project. We resolved these pain points by talking with the teaching assistants of this course, whom of which helped us immensely.  
+
+
   \item How many of your requirements were inspired by speaking to your
-  client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
+  client(s) or their proxies (e.g. your peers, stakeholders, potential users)? \\
+  
+Many of our requirements came from us asking healthcare professionals as well as our supervisor. There was a big emphasises on the need for accuracy, reliability, and a user-friendly interface. These discussions helped shape key requirements, such as incorporating a robust AI model for detecting lung diseases, ensuring transparency in how the AI reaches its conclusions, and making the system accessible to users with varying levels of technical expertise.
+      
   \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
+  your team to be successful with your capstone project. \\
+
+  By taking courses such as Machine Learning, Human-Computer Interfaces (HCI), and previous taken software development will help us substantially. The Machine Learning course has equipped us to gain a better understanding and via taking 4ML3 we can develop an accurate AI model capable of analyzing chest X-rays and identifying potential lung diseases, including knowledge of various algorithms. Meanwhile, as for HCI, the course is teaching us the importance of creating intuitive, user-friendly interfaces that make complex AI results accessible to medical professionals and patients alike. By applying user-centered design principles, we aim to ensure seamless interaction with our system and enhance user trust through transparent communication of AI decisions. All in all, our previous software development courses have further solidified our programming skills and understanding of software architecture, enabling us to effectively integrate these elements into a cohesive application.
+  
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete this capstone project?  Examples of possible knowledge
   to acquire include domain specific knowledge from the domain of your
@@ -1827,7 +1841,35 @@ graduate attribute of Lifelong Learning.
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice? \\\\
+
+    The following Two quesitons have been answered below: \\\\
+
+\textbf{Assigned Team Members: All} \\
+All team members will be required to thoroughly understand the medical conditions and diseases related to chest X-rays that the AI model will be detecting. This knowledge will be acquired through reviewing medical literature, studying annotated chest X-ray datasets, and utilizing any available online medical resources or tutorials that explain chest X-ray interpretation and diagnosis. Every team member will be using all the discussed methods to gain expertise in this domain, as it is essential for everyone to understand the features of different lung conditions (such as pneumonia, tuberculosis, or lung cancer). The team will start by studying medical images and datasets, and then further enhance their knowledge by reading research papers and consulting with healthcare professionals to understand how chest X-rays reveal signs of disease.
+
+
+\textbf{Assigned Team Members: Patrick, Reza, and Kelly} \\
+Learning the fundamentals of PyTorch is essential for building AI models to analyze lung X-rays. Our primary focus will be gaining a better understanding of PyTorch's torch tensor data structure. Understanding automatic differentiation through PyTorch's autograd module will allow for efficient backpropagation during model training. Moreover, gaining knowledge on how to handle X-ray images, including resizing, normalization, and augmentation, will be crucial. This will involve using libraries like \texttt{torchvision} to apply image transformations and \texttt{DataLoader} to manage batching and loading data for training.
+
+
+\textbf{Assigned Team Members: Ayman} \\
+Data Visualization Analysis will require developers to understand users' expected data points, graphic representations, and what types of data need to be compared. Group members are required to have sufficient knowledge of Python data science libraries such as \texttt{Matplotlib}, \texttt{Seaborn}, \texttt{NumPy}, and \texttt{pandas} to create informative graphics and present accurate information to users efficiently. Ayman will be using online tutorials and documentation to gain expertise in data visualization and data analysis to find the most effective way to analyze the logs from the Game Engine and AI Agent.
+
+\subsection*{13.4 Web Creation}
+
+\textbf{Assigned Team Members: Nathan} \\
+The Angular Frontend Development will require developers to design and implement a user-friendly interface for our web application. The team will focus on creating a responsive and efficient UI that meets users' needs by ensuring optimal performance and accessibility. The frontend should effectively interact with the backend API for data retrieval and submission, enabling smooth integration of user interactions with the underlying server logic.
+
+This requires sufficient knowledge of Angular, TypeScript, HTML, and CSS. They must be proficient in Angular components, directives, services, routing, and form validation to build dynamic, modular, and maintainable applications. The team will utilize Angular Material or Bootstrap for UI components to create visually appealing and responsive designs.
+
+
+\textbf{Assigned Team Members: All} \\
+The main component of the AI model for chest X-ray analysis centers around comprehending the user’s expectations. Healthcare professionals, including radiologists, pulmonologists, and general practitioners, will be the main users of this application since they will need to use the tool for diagnosing lung diseases. Therefore, it is critical to gain an understanding of users and their information needs when designing the AI model and its interface, with the intention of providing relevant information that is precise and adequate.
+
+Furthermore, our application would be helpful for end-users, including junior doctors in medical school, who can use the application as an educational tool or supplemental diagnostic aid. Determining which users will be the target audience and their expectations will inform design choices ranging from how complex the expected output is to how user-friendly the user-interface design is. Everyone is expected to partake in user research, where they will seek feedback from potential end-users and consult healthcare professionals to ensure the tool caters to the specific needs of users from different disciplines. The team will also consider designs that may be more attractive to patients, such as picture-based diagnostic aids or X-ray interpretation rather than a plethora of diagnostic radiology information. This will involve creating a proper compromise between providing detailed diagnostic and analytical information.
+
+  
 \end{enumerate}
 
 \end{document}
