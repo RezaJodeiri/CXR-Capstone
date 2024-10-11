@@ -74,7 +74,6 @@
 
 \newcounter{adrnum} %ADR Number
 \newcommand{\atheadrnum}{ADR\theadrnum}
-\newcommand{\aref}[1]{ADR\ref{#1}}
 
 \newcounter{goalnum} %Goal Number
 \newcommand{\gthegoalnum}{GS\thegoalnum}
@@ -157,19 +156,15 @@
 \section*{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
-\bottomrule
-\end{tabularx}
+  \toprule
+  {\bf Date} & {\bf Version} & {\bf Notes}\\
+  \midrule
+  2024-11-01 & 1.0 & Added reference material, functional and non-functional requirements, and outlined the purpose of the project.\\
+  2024-11-07 & 1.1 & Included details about stakeholders, system constraints, and an analysis of the potential impact of the project on various sectors.\\
+  2024-11-11 & 1.2 & Developed formal mathematical specifications, designed a Finite State Machine (FSM) for the system, and provided a reflection on the project's challenges and future directions.\\
+  \bottomrule
+  \end{tabularx}
 
-~\\
-\plt{This template is intended for use by CAS 741.  For CAS 741 the template
-should be used exactly as given, except the Reflection Appendix can be deleted.
-For the capstone course it is a source of ideas, but shouldn't be followed
-exactly.  The exception is the reflection appendix.  All capstone SRS documents
-should have a refelection appendix.}
 
 ~\newpage
 
@@ -199,44 +194,41 @@ This subsection provides a list of terms that are used in the subsequent section
 \begin{itemize}
     
     
-    \item \textbf{Artificial Intelligence (AI) Model}: A program that analyzes datasets to identify patterns and make predictions. Used extensively in medical image analysis for automating diagnostics. 
+    \item[-] \textbf{Artificial Intelligence (AI) Model}: A program that analyzes datasets to identify patterns and make predictions. Used extensively in medical image analysis for automating diagnostics. 
     
-    \item \textbf{Convolutional Neural Network (CNN)}: A deep learning algorithm that processes images by assigning weights and biases, allowing it to identify patterns and features in medical images such as chest X-rays.
+    \item[-] \textbf{Convolutional Neural Network (CNN)}: A deep learning algorithm that processes images by assigning weights and biases, allowing it to identify patterns and features in medical images such as chest X-rays.
     
-    \item \textbf{DICOM (Digital Imaging and Communications in Medicine)}: The international standard for medical images, defining formats for image exchange that ensure clinical quality.
+    \item[-] \textbf{DICOM (Digital Imaging and Communications in Medicine)}: The international standard for medical images, defining formats for image exchange that ensure clinical quality.
     
-    \item \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
+    \item[-] \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
   
-    \item \textbf{Machine Learning (ML)}: A subset of AI focusing on using data and algorithms to mimic human learning, improving accuracy over time.
-    \item \textbf{Picture Archiving and Communication System (PACS)}: A system for acquiring, storing, transmitting, and displaying medical images digitally, providing a filmless clinical environment.
-    \item \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
-    \item \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
-    \item \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
-    \item \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
-    \item \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
-    \item \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
-    \item \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
-    \item \textbf{React}: A web front-end framework, written in Javascript.
-    \item \textbf{Flask}: An HTTP-based server framework, written in Python.
-    \item \textbf{Radiologists}: Medical doctors specializing in diagnosing and treating conditions using medical imaging (e.g., X-rays, CT, MRI).
+    \item[-] \textbf{Machine Learning (ML)}: A subset of AI focusing on using data and algorithms to mimic human learning, improving accuracy over time.
+    \item[-] \textbf{Picture Archiving and Communication System (PACS)}: A system for acquiring, storing, transmitting, and displaying medical images digitally, providing a filmless clinical environment.
+    \item[-] \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
+    \item[-] \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
+    \item[-] \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
+    \item[-] \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
+    \item[-] \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
+    \item[-] \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
+    \item[-] \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
+    \item[-] \textbf{React}: A web front-end framework, written in Javascript.
+    \item[-] \textbf{Flask}: An HTTP-based server framework, written in Python.
+    \item[-] \textbf{Finite State Machine (FSM)}: A computation model that simulates sequential logic using state transitions, applied in processes like user authentication and backend workflows.
     
-    \item \textbf{Finite State Machine (FSM)}: A computation model that simulates sequential logic using state transitions, applied in processes like user authentication and backend workflows.
+    \item[-] \textbf{ROC Curve (Receiver Operating Characteristic Curve)}: A graph that shows the performance of a classification model by plotting the true positive rate against the false positive rate at various threshold levels.
     
-    \item \textbf{ROC Curve (Receiver Operating Characteristic Curve)}: A graph that shows the performance of a classification model by plotting the true positive rate against the false positive rate at various threshold levels.
+    \item[-] \textbf{Service-Level Agreement (SLA)}: Defines the guaranteed uptime of the system, such as ensuring the availability of the AI service for 99.99\% of operational hours.
     
-    \item \textbf{Service-Level Agreement (SLA)}: Defines the guaranteed uptime of the system, such as ensuring the availability of the AI service for 99.99\% of operational hours.
+    \item[-] \textbf{Software as a Medical Device (SaMD)}: Software classified as a medical device under regulatory frameworks, such as those defined by the Food and Drugs Act.
     
-    \item \textbf{Software as a Medical Device (SaMD)}: Software classified as a medical device under regulatory frameworks, such as those defined by the Food and Drugs Act.
+    \item[-] \textbf{TorchXRAYVision}: An open-source library for classifying diseases based on chest X-ray images, offering pre-trained models to accelerate the development process.
     
-    \item \textbf{TorchXRAY Vision}: An open-source library for classifying diseases based on chest X-ray images, offering pre-trained models to accelerate the development process.
+    \item[-] \textbf{X-ray}: A form of high-energy electromagnetic radiation used in medical imaging to produce images of the inside of the body, enabling the diagnosis of conditions through radiographic film or digital detectors.
     
-    \item \textbf{X-ray}: A form of high-energy electromagnetic radiation used in medical imaging to produce images of the inside of the body, enabling the diagnosis of conditions through radiographic film or digital detectors.
+    \item[-] \textbf{MIT License}: An open-source software license that allows for the free use, modification, and distribution of software.
     
-    \item \textbf{MIT License}: An open-source software license that allows for the free use, modification, and distribution of software.
+    \item[-] \textbf{Training Data}: Refers to the dataset of labeled chest X-ray images used to train the AI model. In this project, the dataset size is approximately 471.12 GB.
     
-    \item \textbf{Training Data}: Refers to the dataset of labeled chest X-ray images used to train the AI model. In this project, the dataset size is approximately 471.12 GB.
-    
-    \item \textbf{Accuracy Rate}: Refers to the percentage of correct predictions made by the AI model when classifying chest X-rays.
 \end{itemize}
 
 \subsection{Abbreviations and Acronyms}
@@ -269,19 +261,34 @@ This subsection provides a list of terms that are used in the subsequent section
 \newpage
 \subsection{Values of Auxiliary Constants}
 
-\begin{itemize}
-    \item \textbf{Uptime:} 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics.
-    \item \textbf{Training Photos:} 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy.
-    \item \textbf{Accuracy Rate:} 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use.
-    \item \textbf{Response Time:} Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times.
-    \item \textbf{Batch Size:} 32 images per batch – Defines the number of images processed together during each training iteration.
-    \item \textbf{Learning Rate:} 0.001 – The step size during gradient descent, impacting model training speed.
-    \item \textbf{Number of Epochs:} 50 – The number of times the model processes the entire training dataset.
-    \item \textbf{Input Image Size:} 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail.
-    \item \textbf{Threshold for ROC Analysis:} 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity.
-    \item \textbf{Precision:} 92\% – Reflects the percentage of true positive cases among all cases predicted positive.
-    \item \textbf{Recall:} 88\% – Reflects the percentage of true positive cases among all actual positive cases.
-\end{itemize}
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{|p{3.5cm}|p{9.5cm}|}
+    \hline
+    \rowcolor{lightgray} \textbf{Parameter} & \textbf{Description} \\
+    \hline
+    Uptime & 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics. \\
+    \hline
+    Training Photos & 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy. \\
+    \hline
+    Accuracy Rate & 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use. \\
+    \hline
+    Response Time & Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times. \\
+    \hline
+    Batch Size & 32 images per batch – Defines the number of images processed together during each training iteration. \\
+    \hline
+    Learning Rate & 0.001 – The step size during gradient descent, impacting model training speed. \\
+    \hline
+    Number of Epochs & 50 – The number of times the model processes the entire training dataset. \\
+    \hline
+    Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
+    \hline
+    Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
+    \hline
+    Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
+    \hline
+    Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
+    \hline
+\end{tabular}
 
 
 \newpage
@@ -289,9 +296,9 @@ This subsection provides a list of terms that are used in the subsequent section
 \section{Introduction}
 
 Chest X-rays are one of the most common diagnostic imaging techniques used in clinical practice for evaluating respiratory and cardiac conditions. However, the interpretation of chest X-ray images can be complex and time-consuming that requires high-level expertise and experience. Misinterpretations can lead to wrong diagnoses and inappropriate treatment plans, increasing the healthcare costs.\\
-
+\newline
 As healthcare professionals are facing challenges in accurately and efficiently diagnosing abnormalities from chest X-ray images, there is a urgent need for a reliable, efficient and user-friendly AI/ML tool that helps them with interpreting chest X-ray images.\\
-
+\newline
 In this section, the document will go through the purpose of this SRS document, scope of requirements, characteristics of intended readers and organization of this SRS.\\
 
 
@@ -317,6 +324,24 @@ The reader of this SRS document should possess undergraduate level of software d
 3. Hospitals and Clinics: Hospitals and clinics can integrate the software into their hospital systems, which can help them to improve efficiency, reduce diagnostic errors, manage costs.\\
 \\
 4. Technical Support team: they are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy. \\
+
+\subsection{Impact Analysis}
+
+The primary benefit of this project lies in the ability to deliver preliminary diagnostic results quickly, thereby enhancing diagnostic efficiency and significantly reducing patient wait times. Moreover, the system’s capability for large-scale data classification can gradually improve the precision of analyses, reduce misdiagnoses, and alleviate the workload on medical professionals. When scaled effectively, this project has the potential to increase productivity within the medical sector, reduce healthcare costs, and accelerate service delivery. Additionally, by leveraging cloud-based deployment, this solution can extend diagnostic support to remote regions, providing preliminary assessments without the immediate need for in-person medical consultations.
+
+\subsubsection{Economic Impact}
+The economic implications of this project are considerable. According to 2023 data from the Canadian government, the average annual salary for doctors is CAD 233,726 \cite{2}. With each chest X-ray analysis typically taking around 15 minutes and a wait time of 1 to 2 days for results \cite{1}, this AI tool has the potential to reduce analysis time to near-instantaneous levels, cutting costs by approximately CAD 30 per examination. Given that Canada conducts around 20 million X-ray examinations annually, with chest X-rays comprising about 6 to 8 million of these \cite{3}, the potential cost savings range from CAD 160 million to CAD 240 million annually. This economic benefit not only supports more efficient use of healthcare resources but also enables reinvestment into other critical areas of patient care.
+
+\subsubsection{Health and Safety Impact}
+From a health and safety perspective, the automated nature of this system can play a critical role in emergency situations. During the COVID-19 pandemic, the healthcare infrastructure faced unprecedented pressure, with a widespread shortage of medical professionals \cite{4}. In such scenarios, AI-assisted tools like this could be deployed to manage and classify X-ray data, significantly improving processing speed and relieving the burden on healthcare providers. This allows for more patients to receive timely care, which is crucial during high-demand periods.
+\newline
+However, deploying AI for disease diagnosis involves considerations of accuracy and reliability. AI models, while efficient, produce probabilistic outcomes rather than absolute determinations. This inherent uncertainty can introduce risks, including ethical dilemmas and potential legal challenges, particularly if a misdiagnosis occurs \cite{5}. Thus, while the technology can accelerate diagnosis, integrating human oversight remains essential to mitigate these risks and ensure patient safety.
+
+\subsubsection{Cultural Impact}
+The introduction of AI-based diagnostic systems, such as this project, can influence the cultural landscape of healthcare delivery. In some cultures, there is a strong preference for direct consultations with healthcare professionals, where personal interaction and trust in human expertise are preferred. The adoption of AI in these contexts may require a cultural shift as patients adapt to receiving initial assessments through automated systems. However, in regions with limited access to healthcare professionals, such as remote or underserved areas, AI-based diagnostics can be perceived as an empowering tool. It offers a level of autonomy and timely access to healthcare information that was previously unavailable \cite{6}. This dual impact reflects the need to balance technological advancements with cultural sensitivity.
+
+\subsubsection{Overall Societal Impact}
+This project, when implemented at scale, has the potential to transform the delivery of healthcare. By reducing analysis time and increasing access to diagnostic support, it addresses critical issues such as the strain on healthcare systems and accessibility of medical services in remote areas. The use of cloud technology further ensures that the system can be deployed across a range of settings, from urban hospitals to rural clinics, providing consistent support regardless of location. As society increasingly embraces digital solutions in healthcare, this project stands to play a significant role in reshaping diagnostic practices, making them faster, more efficient, and more accessible.
 
 \section{General System Description}
 
@@ -354,10 +379,20 @@ The below system context diagram shows that the system will take in an input(che
 \item {Produce report with possible diagnosis and the above information.}
 \end{itemize}
 \end{itemize}
-
 The software is typically used in medical and clinical contexts to support healthcare professionals and physicians to speed up X-ray readings and improve accuracy in diagnosis. It is a safety critical application as failure could lead to delay in treatment, misdiagnosis and potentially severe outcomes for the patient.
-
-
+\subsection{Behavior Overview}
+\begin{figure}[H] 
+  \centering
+  \includegraphics[width=1\linewidth]{UseCase.png}
+  \caption{Use Case Diagram of AI for chest X-ray read}
+  \label{fig:use-case-diagram}
+\end{figure}
+\vspace{-5em} 
+\newpage
+\subsubsection{Normal Operation}
+As observed in the use case diagram, the system begins with user input from either patients or radiologists, who upload chest X-ray images to be analyzed. These images can be stored locally or in the cloud for easy access. Once uploaded, the system processes the images using machine learning algorithms to detect abnormalities, annotate findings, and generate diagnostic reports. These reports include detailed analysis results and suggested diagnostic advice, which radiologists can review, edit, and compare with previous records if needed.The system also enables radiologists to refine patient treatment plans based on the AI-generated insights, ensuring a smooth and accurate workflow from image upload to delivering meaningful medical recommendations.
+\subsubsection{Undesired Event Handling}
+If an undesired event occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 The user of this software application will primarily be patients and physicians. The end user should be able to read / understand middle school level English. The end user should also have a basic understanding of chest-related diseases, advanced knowledge is preferred but not required. Users can consult professionals if they have trouble interpreting the result. The user should also know to to upload X-ray images via web app from local machine and have basic knowledge of how to use computer / laptop. \\
@@ -373,15 +408,6 @@ The user of this software application will primarily be patients and physicians.
 4. Ethical considerations: If the training data lacks diversity, the AI may perform poorly for certain populations. \\
 \\
 5. Regulatory constraints: Delays in obtaining necessary approvals can hinder deployment and development stages.\\
-
-\subsection{Use Case Diagram}
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{UseCase.png}
-    \caption{Use Case Diagram of AI for chest X-ray read}
-    \label{fig:enter-label}
-\end{figure}
-
 \pagebreak
 
 \section{Specific System Description}
@@ -392,7 +418,7 @@ the instance models.
 
 \subsection{Problem Description}
 Disease prediction via medical imaging continues to be one of the most important aspect of health-care. However, the health-care industry is still slowly catching up with current technology, making disease prediction and prevention processes labour-intensive and inefficient. With a prolong history in operation, countless images has been captured from CT Scanners and X-Ray machines, for medical and health-care research, but yet to be applied in hospital settings between physicians and patients.
-
+\newline
 Our team, Neuralanalyzer, saw an opportunity to transform traditional health-care processes, by applying Machine Learning, and modern software engineering techniques; aiming to provide an optimized, unified, and HIPAA-compliant platform to predict diseases from chest X-Ray scans.
 
 \subsubsection{Goal Statements}
@@ -510,17 +536,6 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
     \end{itemize}
 \end{itemize}
 
-\subsubsection{Assumptions} \label{sec_assumpt}
-\begin{itemize}
-
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] ML Models validation process will have to be \textbf{publicly published and accepted by all stakeholders} after being developed. Reason being the accuracy of the ML model is vital for safety of the patient, as well as the sucesss of the project, therefore this validation method need to be transparent to all the stakeholders, and users.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] AWS will share the responsibility with Neuralanalyzer to protect the customer PHI in a law-compliance manner, as mentioned in this \href{https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/shared-responsibility-model.html}{share-responsibility blog post}.
-
-
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] McMaster Department's servers will be available for our group members to perform model training and development. Under another assumption that our group members, as users of department resources must follows department's guidelines.
-
-\end{itemize}
-
 \subsubsection{Input Data Constraints} \label{sec_DataConstraints} 
 From our math formulation of the machine learning plugin, the input data will be in a form of an image binary, of size 224x224 pixels. The image being passed in into the ML model will be automatically transformed into gray-scale. Example below:
 \begin{center}
@@ -529,22 +544,20 @@ From our math formulation of the machine learning plugin, the input data will be
 
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
 In the context of our machine learning model, the absolute correct solution can not be calculated at run-time. However, A solution is considered good enough when during in the training and validation process, the error rate of the system has been reduced to an agreeable number before bringing it to production.
-
-\section{Required Behaviour Overview}
-\subsection{Use Case Diagram}
-\begin{figure}[H] 
-    \centering
-    \includegraphics[width=1\linewidth]{UseCase.png}
-    \caption{Use Case Diagram of AI for chest X-ray read}
-    \label{fig:use-case-diagram}
-\end{figure}
-\vspace{-1em} 
 \newpage
-Neuralanalyzer's system is composed of 3 main sub-systems:
+\subsection{Assumptions and Relevant Facts}
+\subsubsection{Legal and Regulatory Facts} \label{sec_legal}
+This project must comply with critical legal and regulatory standards to ensure the secure handling of medical data and the development of software classified as a medical device. In the United States, the Health Insurance Portability and Accountability Act (HIPAA) mandates strict protections for handling Personal Health Information (PHI), with non-compliance potentially resulting in fines of up to \$1.5 million per violation \cite{10}. Similarly, in Canada, the Personal Information Protection and Electronic Documents Act (PIPEDA) governs the handling of personal data in commercial activities, with possible penalties reaching up to CAD 100,000 for non-compliance \cite{2}. For cloud-based storage solutions like those provided by Amazon Web Services (AWS), adherence to their shared responsibility model is necessary, where AWS ensures the security of the cloud infrastructure while users manage the security of their data within the cloud \cite{7}. Additionally, the project must adhere to ISO 13485 standards for medical device software, which ensure quality management and regulatory compliance throughout the development and testing phases \cite{8}. Using the Digital Imaging and Communications in Medicine (DICOM) standard also ensures compatibility with Picture Archiving and Communication Systems (PACS), facilitating standardized exchange and storage of medical imaging data \cite{9}.
+\subsubsection{Assumptions} \label{sec_assumpt}
 \begin{itemize}
-    \item \textbf{Neuralanalyzer Front-end}: Responsible for handling user's interaction via a web-based UI. The front-end will be responsible for core functionalities such as login, account registration, image uploading.
-    \item \textbf{Neuralanalyzer Back-end}: Responsible for handling front-end calls, authentication logic, and ML-plugins interactions. The back-end will follow a stateless design pattern, optimized for horizontal scalling.
-    \item \textbf{Neuralanalyzer ML Plugins}: Responsible for taking in images, and returns a prediction vector with high accuracy and high-throughput. The ML-plugins will also follow a stateless design pattern, optimized for horizontal scalling.
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] ML Models validation process will have to be \textbf{publicly published and accepted by all stakeholders} after being developed. The reason is that the accuracy of the ML model is vital for the safety of the patient, as well as the success of the project. Therefore, this validation method needs to be transparent to all stakeholders and users.
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] AWS will share the responsibility with Neuralanalyzer to protect the customer PHI in a law-compliant manner, as mentioned in this \href{https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/shared-responsibility-model.html}{shared-responsibility blog post}.
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] McMaster Department's servers will be available for our group members to perform model training and development. Under another assumption that our group members, as users of department resources, must follow department guidelines.
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] It is assumed that the training data set used for model development will include diverse and representative samples to ensure the model’s robustness and generalization across different populations.
 \end{itemize}
 
   \clearpage
@@ -602,7 +615,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 % addd the state.png file under finite state diagram subsection
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{state.png}
+    \includegraphics[width=1\linewidth]{statem.png}
     \caption{Finite State Machine Diagram}
     \label{fig:enter-label}
 \end{figure}
@@ -966,7 +979,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{UH1} & At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results) without assistance after a 30-minute training session. \\
+\textbf{UH1} & At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results). \\
 \hline
 \textbf{Rationale} & Busy professionals need to use the system efficiently without extensive training. \\
 \hline
@@ -1022,7 +1035,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{PR2} & The system shall have an uptime of at least 99.9\%, ensuring high availability for users. \\
+\textbf{PR2} & The system shall maintain consistent availability, ensuring minimal disruptions to user access and experience. \\
 \hline
 \textbf{Rationale} & Continuous access is essential in healthcare environments to prevent delays in patient care. \\
 \hline
@@ -1269,26 +1282,26 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \toprule
   \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
   \midrule
-  FR1 & \textbf{Completion Date:} November 13, 2023\\
+  FR1 & \textbf{Completion Date:} October 17, 2023\\
       & \textbf{Rationale:} FR1 is essential because accepting chest X-ray images is the foundation of our system. We need this functionality first to enable all other features to build upon it. \\
   \midrule
-  FR3 & \textbf{Completion Date:} November 13, 2023\\
+  FR3 & \textbf{Completion Date:} October 20, 2023\\
       & \textbf{Rationale:} FR3 is critical as it provides the core capability of analyzing X-rays for disease detection. Implementing this early allows us to validate the system's primary purpose and proceed with dependent features. \\
   \midrule
-  FR4 & \textbf{Completion Date:} November 13, 2023\\
+  FR4 & \textbf{Completion Date:} October 25, 2023\\
       & \textbf{Rationale:} FR4 is important for monitoring patient progress. By completing it alongside FR3, we ensure clinicians can assess changes over time from the initial release. \\
   \midrule
   FR6 & \textbf{Completion Date:} November 13, 2023\\
       & \textbf{Rationale:} FR6 allows us to present analysis results in a usable format for clinicians. Having this ready by November 13 is vital for user acceptance and practical use of the system. \\
   \midrule
-  FR11 & \textbf{Completion Date:} November 13, 2023\\
-       & \textbf{Rationale:} FR11 improves user trust by displaying confidence levels. An intuitive UI is essential for user adoption;therefore, we aim to have it completed by November 13. \\
+  FR11 & \textbf{Completion Date:} November 20, 2023\\
+       & \textbf{Rationale:} FR11 improves user trust by displaying confidence levels. An intuitive UI is essential for user adoption. \\
   \midrule
-  FR13 & \textbf{Completion Date:} November 13, 2023\\
+  FR13 & \textbf{Completion Date:} November 25, 2023\\
        & \textbf{Rationale:} FR13 is necessary for security and compliance, ensuring proper access control from the start. Implementing it early helps us protect sensitive data effectively. \\
   \midrule
-  FR14 & \textbf{Completion Date:} November 13, 2023\\
-       & \textbf{Rationale:} FR14 safeguards the integrity of original X-ray images. Completing this by November 13 is important for legal considerations. \\
+  FR14 & \textbf{Completion Date:} November 15, 2023\\
+       & \textbf{Rationale:} FR14 safeguards the integrity of original X-ray images.\\
   \bottomrule
   \end{tabular}
   \end{table}
@@ -1300,16 +1313,16 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \toprule
   \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
   \midrule
-  FR2 & \textbf{Completion Date:} February 5, 2024\\
+  FR2 & \textbf{Completion Date:} December 3, 2024\\
       & \textbf{Rationale:} FR2 adds the ability to input additional patient symptoms, enhancing analysis accuracy. We scheduled it after the core functionalities to focus on essential features first. \\
   \midrule
-  FR5 & \textbf{Completion Date:} February 5, 2024\\
+  FR5 & \textbf{Completion Date:} December 5, 2024\\
       & \textbf{Rationale:} FR5 provides visual aids, improving usability. Implementing it after the main analysis features allows us to refine the user experience based on initial feedback. \\
   \midrule
-  FR7 & \textbf{Completion Date:} February 5, 2024\\
+  FR7 & \textbf{Completion Date:} Januaray 20, 2024\\
       & \textbf{Rationale:} FR7 involves secure data storage for future reference. We plan to develop this after the initial deployment to ensure data handling aligns with user needs and compliance requirements. \\
   \midrule
-  FR16 & \textbf{Completion Date:} February 5, 2024\\
+  FR16 & \textbf{Completion Date:} February 2, 2024\\
        & \textbf{Rationale:} FR16 enables regular updates to the AI model, allowing continuous improvement. Scheduling it for February gives us time to stabilize the initial model and plan for updates without disrupting service. \\
   \bottomrule
   \end{tabular}
@@ -1322,16 +1335,16 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \toprule
   \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
   \midrule
-  FR8 & \textbf{Completion Date:} March 18, 2024\\
+  FR8 & \textbf{Completion Date:} February 10, 2024\\
       & \textbf{Rationale:} FR8 offers alerts for significant condition changes. It's useful but not essential for initial deployment, so we scheduled it after higher-priority tasks. \\
   \midrule
-  FR10 & \textbf{Completion Date:} March 18, 2024\\
+  FR10 & \textbf{Completion Date:} February 11, 2024\\
        & \textbf{Rationale:} FR10 involves integrating with EHR systems, which adds complexity. We plan to address this later to focus on core functionalities first. \\
   \midrule
-  FR12 & \textbf{Completion Date:} March 18, 2024\\
+  FR12 & \textbf{Completion Date:} March 2, 2024\\
        & \textbf{Rationale:} FR12 allows patient self-upload of images. Given legal considerations and our initial focus on clinicians, we scheduled it for later development. \\
   \midrule
-  FR15 & \textbf{Completion Date:} March 18, 2024\\
+  FR15 & \textbf{Completion Date:} March 10, 2024\\
        & \textbf{Rationale:} FR15 expands support to other imaging modalities. We aim to perfect chest X-ray analysis before adding CT and MRI support, so we scheduled this for the last phase. \\
   \bottomrule
   \end{tabular}
@@ -1345,31 +1358,31 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \toprule
   \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
   \midrule
-  PR1 & \textbf{Completion Date:} November 13, 2023\\
+  PR1 & \textbf{Completion Date:} October 17, 2023\\
       & \textbf{Rationale:} PR1 ensures the system processes images quickly, which is crucial for usability in clinical settings. \\
   \midrule
-  HS1 & \textbf{Completion Date:} November 13, 2023\\
+  HS1 & \textbf{Completion Date:} October 22, 2023\\
       & \textbf{Rationale:} HS1 mandates that AI diagnoses are reviewed by a radiologist, ensuring patient safety. This oversight is necessary from day one. \\
   \midrule
-  LF1 & \textbf{Completion Date:} November 13, 2023\\
+  LF1 & \textbf{Completion Date:} December 15, 2023\\
       & \textbf{Rationale:} LF1 requires an interface consistent with standard medical software, aiding user adoption. We want users to feel comfortable using the system immediately. \\
   \midrule
-  PR2 & \textbf{Completion Date:} November 13, 2023\\
+  PR2 & \textbf{Completion Date:} October 25, 2023\\
       & \textbf{Rationale:} PR2 aims for high system uptime. Reliability is critical, so we must ensure the system is stable from the initial launch. \\
   \midrule
-  SR2 & \textbf{Completion Date:} November 13, 2023\\
+  SR2 & \textbf{Completion Date:} December 4, 2023\\
       & \textbf{Rationale:} SR2 implements role-based access control, necessary for security and compliance. We need to control data access from the beginning. \\
   \midrule
-  MS1 & \textbf{Completion Date:} November 13, 2023\\
+  MS1 & \textbf{Completion Date:} December 8, 2023\\
       & \textbf{Rationale:} MS1 involves modular architecture and documentation, facilitating future maintenance. \\
   \midrule
-  LR1 & \textbf{Completion Date:} November 13, 2023\\
+  LR1 & \textbf{Completion Date:} Januaray 7, 2023\\
       & \textbf{Rationale:} LR1 ensures compliance with data protection laws, which is legally required. We must adhere to regulations from the outset to avoid legal issues. \\
   \midrule
-  LR2 & \textbf{Completion Date:} November 13, 2023\\
+  LR2 & \textbf{Completion Date:} January 20, 2023\\
       & \textbf{Rationale:} LR2 requires adherence to ISO 13485, ensuring quality and safety. Meeting industry standards builds trust and facilitates future certifications. \\
   \midrule
-  HS2 & \textbf{Completion Date:} November 13, 2023\\
+  HS2 & \textbf{Completion Date:} January 25, 2023\\
       & \textbf{Rationale:} HS2 mandates clear disclaimers about AI limitations. Providing this information from the start is important for user awareness and legal protection. \\
   \bottomrule
   \end{tabular}
@@ -1381,25 +1394,25 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \toprule
   \textbf{Req ID} & \textbf{Completion Date and Rationale} \\
   \midrule
-  LF2 & \textbf{Completion Date:} February 5, 2024\\
+  LF2 & \textbf{Completion Date:} February 18, 2024\\
       & \textbf{Rationale:} LF2 improves the user interface to minimize eye strain. While important for user comfort, it can be refined after the main features are operational. \\
   \midrule
-  UH2 & \textbf{Completion Date:} February 5, 2024\\
+  UH2 & \textbf{Completion Date:} February 15, 2024\\
       & \textbf{Rationale:} UH2 adds context-sensitive help and tooltips. Enhancing usability is beneficial, but we plan to implement it after gathering initial user feedback. \\
   \midrule
-  PR3 & \textbf{Completion Date:} February 5, 2024\\
+  PR3 & \textbf{Completion Date:} February 10, 2024\\
       & \textbf{Rationale:} PR3 enhances performance by supporting concurrent image processing. Scheduling this for later allows us to optimize the system after core functionalities are stable. \\
   \midrule
-  MS2 & \textbf{Completion Date:} February 5, 2024\\
+  MS2 & \textbf{Completion Date:} February 2, 2024\\
       & \textbf{Rationale:} MS2 involves automated testing for reliability. Implementing it after initial development helps us maintain code quality as the project grows. \\
   \midrule
   OE1 & \textbf{Completion Date:} March 18, 2024\\
        & \textbf{Rationale:} OE1 integrates with hospital PACS systems. Given the complexity, we plan to tackle this once the system's core features are solidified. \\
   \midrule
-  OE2 & \textbf{Completion Date:} March 18, 2024\\
+  OE2 & \textbf{Completion Date:} March 14, 2024\\
        & \textbf{Rationale:} OE2 ensures operation under variable network conditions. This enhancement is scheduled for later, focusing first on standard network environments. \\
   \midrule
-  CR1 & \textbf{Completion Date:} March 18, 2024\\
+  CR1 & \textbf{Completion Date:} March 4, 2024\\
        & \textbf{Rationale:} CR1 adds multilingual support. We aim to include additional languages after ensuring the system functions well in the primary language. \\
   \bottomrule
   \end{tabular}
@@ -1631,23 +1644,6 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Limit initial support to English; add languages later.
     \end{itemize}
 \end{enumerate}
-\section{Impact Analysis}
-
-The primary benefit of this project lies in the ability to deliver preliminary diagnostic results quickly, thereby enhancing diagnostic efficiency and significantly reducing patient wait times. Moreover, the system’s capability for large-scale data classification can gradually improve the precision of analyses, reduce misdiagnoses, and alleviate the workload on medical professionals. When scaled effectively, this project has the potential to increase productivity within the medical sector, reduce healthcare costs, and accelerate service delivery. Additionally, by leveraging cloud-based deployment, this solution can extend diagnostic support to remote regions, providing preliminary assessments without the immediate need for in-person medical consultations.
-
-\subsection{Economic Impact}
-The economic implications of this project are considerable. According to 2023 data from the Canadian government, the average annual salary for doctors is CAD 233,726 \cite{2}. With each chest X-ray analysis typically taking around 15 minutes and a wait time of 1 to 2 days for results \cite{1}, this AI tool has the potential to reduce analysis time to near-instantaneous levels, cutting costs by approximately CAD 30 per examination. Given that Canada conducts around 20 million X-ray examinations annually, with chest X-rays comprising about 6 to 8 million of these \cite{3}, the potential cost savings range from CAD 160 million to CAD 240 million annually. This economic benefit not only supports more efficient use of healthcare resources but also enables reinvestment into other critical areas of patient care.
-
-\subsection{Health and Safety Impact}
-From a health and safety perspective, the automated nature of this system can play a critical role in emergency situations. During the COVID-19 pandemic, the healthcare infrastructure faced unprecedented pressure, with a widespread shortage of medical professionals \cite{4}. In such scenarios, AI-assisted tools like this could be deployed to manage and classify X-ray data, significantly improving processing speed and relieving the burden on healthcare providers. This allows for more patients to receive timely care, which is crucial during high-demand periods.
-
-However, deploying AI for disease diagnosis involves considerations of accuracy and reliability. AI models, while efficient, produce probabilistic outcomes rather than absolute determinations. This inherent uncertainty can introduce risks, including ethical dilemmas and potential legal challenges, particularly if a misdiagnosis occurs \cite{5}. Thus, while the technology can accelerate diagnosis, integrating human oversight remains essential to mitigate these risks and ensure patient safety.
-
-\subsection{Cultural Impact}
-The introduction of AI-based diagnostic systems, such as this project, can influence the cultural landscape of healthcare delivery. In some cultures, there is a strong preference for direct consultations with healthcare professionals, where personal interaction and trust in human expertise are preferred. The adoption of AI in these contexts may require a cultural shift as patients adapt to receiving initial assessments through automated systems. However, in regions with limited access to healthcare professionals, such as remote or underserved areas, AI-based diagnostics can be perceived as an empowering tool. It offers a level of autonomy and timely access to healthcare information that was previously unavailable \cite{6}. This dual impact reflects the need to balance technological advancements with cultural sensitivity.
-
-\subsection{Overall Societal Impact}
-This project, when implemented at scale, has the potential to transform the delivery of healthcare. By reducing analysis time and increasing access to diagnostic support, it addresses critical issues such as the strain on healthcare systems and accessibility of medical services in remote areas. The use of cloud technology further ensures that the system can be deployed across a range of settings, from urban hospitals to rural clinics, providing consistent support regardless of location. As society increasingly embraces digital solutions in healthcare, this project stands to play a significant role in reshaping diagnostic practices, making them faster, more efficient, and more accessible.
 
 
 \newpage
@@ -1805,5 +1801,16 @@ Furthermore, our application would be helpful for end-users, including junior do
 
   
 \end{enumerate}
+
+\section*{Appendix --- Refinements to the Original SRS Template}
+The following changes were made to tailor the SRS template to our project requirements:
+\begin{itemize}
+  \item Impact Analysis (Section 2.5): This section was added to discuss the overall impact of the project on the stakeholders and society.
+  \item Behavior Overview (Section 3.2): This section was added to provide a high-level overview of the system's behavior under various conditions, showcasing it through a use case diagram.
+  \item Solution Characteristic Specification (Section 4.2): Major changes were made to this section to describe the system's specifications and architecture in more detail.
+  \item Formal Mathematical Specification (Section 5.1): This was added as a preliminary to the system's requirements to provide a formal mathematical specification of the system.
+  \item Phase in Plan (Section 6): An outline was added to show the timeline of the project, providing a clear understanding of the project's development stages.
+\end{itemize}
+
 
 \end{document}
