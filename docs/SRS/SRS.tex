@@ -25,9 +25,9 @@
 \usepackage{longtable}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage[numbers]{natbib}
 \graphicspath{ {../assets/} }
 
-\usepackage[round]{natbib}
 
 %\usepackage{refcheck}
 
@@ -170,50 +170,117 @@ should have a refelection appendix.}
 
 \section{Reference Material}
 
-This section records information for easy reference.
+This section records information for easy reference and aims to reduce ambiguity in understanding key concepts used in the project.
 
 \subsection{Table of Units}
 
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
-~\newline
+Throughout this document, SI (Système International d'Unités) is employed as the unit system. In addition to basic units, several derived units are used as described below. For each unit, the symbol is given, followed by a description of the unit and the SI name.
 
 \renewcommand{\arraystretch}{1.2}
-%\begin{table}[ht]
-  \noindent \begin{tabular}{l l l} 
+\noindent \begin{tabular}{l l l} 
     \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
+    \textbf{Symbol} & \textbf{Unit} & \textbf{SI}\\
     \midrule 
-    \si{\second} & time  & second\\
-    \si{GB} & Data 	& Gigabyte\\
-    \si{MB} & Data  & Megabyte\\
+    \si{\second} & Time & Second\\
+    \si{GB} & Data & Gigabyte\\
+    \si{MB} & Data & Megabyte\\
     \si{LOC} & Quantity & Lines of Code\\
     \bottomrule
-  \end{tabular}
-  %	\caption{Provide a caption}
-%\end{table}
+\end{tabular}
+
+\subsection{Definitions}
+This subsection provides a list of terms that are used in the subsequent sections and their meanings, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements:
+
+\begin{itemize}
+    
+    
+    \item \textbf{Artificial Intelligence (AI) Model}: A program that analyzes datasets to identify patterns and make predictions. Used extensively in medical image analysis for automating diagnostics. 
+    
+    \item \textbf{Convolutional Neural Network (CNN)}: A deep learning algorithm that processes images by assigning weights and biases, allowing it to identify patterns and features in medical images such as chest X-rays.
+    
+    \item \textbf{DICOM (Digital Imaging and Communications in Medicine)}: The international standard for medical images, defining formats for image exchange that ensure clinical quality.
+    
+    \item \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
+  
+    \item \textbf{Machine Learning (ML)}: A subset of AI focusing on using data and algorithms to mimic human learning, improving accuracy over time.
+    \item \textbf{Picture Archiving and Communication System (PACS)}: A system for acquiring, storing, transmitting, and displaying medical images digitally, providing a filmless clinical environment.
+    \item \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
+    \item \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
+    \item \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
+    \item \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
+    \item \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
+    \item \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
+    \item \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
+    \item \textbf{React}: A web front-end framework, written in Javascript.
+    \item \textbf{Flask}: An HTTP-based server framework, written in Python.
+    \item \textbf{Radiologists}: Medical doctors specializing in diagnosing and treating conditions using medical imaging (e.g., X-rays, CT, MRI).
+    
+    \item \textbf{Finite State Machine (FSM)}: A computation model that simulates sequential logic using state transitions, applied in processes like user authentication and backend workflows.
+    
+    \item \textbf{ROC Curve (Receiver Operating Characteristic Curve)}: A graph that shows the performance of a classification model by plotting the true positive rate against the false positive rate at various threshold levels.
+    
+    \item \textbf{Service-Level Agreement (SLA)}: Defines the guaranteed uptime of the system, such as ensuring the availability of the AI service for 99.99\% of operational hours.
+    
+    \item \textbf{Software as a Medical Device (SaMD)}: Software classified as a medical device under regulatory frameworks, such as those defined by the Food and Drugs Act.
+    
+    \item \textbf{TorchXRAY Vision}: An open-source library for classifying diseases based on chest X-ray images, offering pre-trained models to accelerate the development process.
+    
+    \item \textbf{X-ray}: A form of high-energy electromagnetic radiation used in medical imaging to produce images of the inside of the body, enabling the diagnosis of conditions through radiographic film or digital detectors.
+    
+    \item \textbf{MIT License}: An open-source software license that allows for the free use, modification, and distribution of software.
+    
+    \item \textbf{Training Data}: Refers to the dataset of labeled chest X-ray images used to train the AI model. In this project, the dataset size is approximately 471.12 GB.
+    
+    \item \textbf{Accuracy Rate}: Refers to the percentage of correct predictions made by the AI model when classifying chest X-rays.
+\end{itemize}
 
 \subsection{Abbreviations and Acronyms}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol} & \textbf{Description}\\
   \midrule 
   SRS & Software Requirements Specification\\
   AI & Artificial Intelligence\\
+  CNN & Convolutional Neural Network\\
+  DICOM & Digital Imaging and Communications in Medicine\\
+  IVDDs & In Vitro Diagnostic Devices\\
+  ML & Machine Learning\\
+  PACS & Picture Archiving and Communication System\\
+  SaMD & Software as a Medical Device\\
+  ROC & Receiver Operating Characteristic Curve\\
+  SLA & Service-Level Agreement\\
   FR & Functional Requirement\\
-  NFR & Non Functional Requirement\\
+  NFR & Non-Functional Requirement\\
   FSM & Finite State Machine\\
   CXR & Chest X-Ray Project\\
-  POC & Proof of concept\\
+  POC & Proof of Concept\\
   TM & Theoretical Model\\
+  AWS & Amazon Web Services\\
+  ECS & Elastic Container Service\\
+  ECR & Elastic Container Registry\\
   \bottomrule
-\end{tabular}\\
+\end{tabular}
+\newpage
+\subsection{Values of Auxiliary Constants}
+
+\begin{itemize}
+    \item \textbf{Uptime:} 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics.
+    \item \textbf{Training Photos:} 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy.
+    \item \textbf{Accuracy Rate:} 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use.
+    \item \textbf{Response Time:} Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times.
+    \item \textbf{Batch Size:} 32 images per batch – Defines the number of images processed together during each training iteration.
+    \item \textbf{Learning Rate:} 0.001 – The step size during gradient descent, impacting model training speed.
+    \item \textbf{Number of Epochs:} 50 – The number of times the model processes the entire training dataset.
+    \item \textbf{Input Image Size:} 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail.
+    \item \textbf{Threshold for ROC Analysis:} 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity.
+    \item \textbf{Precision:} 92\% – Reflects the percentage of true positive cases among all cases predicted positive.
+    \item \textbf{Recall:} 88\% – Reflects the percentage of true positive cases among all actual positive cases.
+\end{itemize}
+
 
 \newpage
+
 \section{Introduction}
 
 Chest X-rays are one of the most common diagnostic imaging techniques used in clinical practice for evaluating respiratory and cardiac conditions. However, the interpretation of chest X-ray images can be complex and time-consuming that requires high-level expertise and experience. Misinterpretations can lead to wrong diagnoses and inappropriate treatment plans, increasing the healthcare costs.\\
@@ -293,14 +360,6 @@ The user of this software application will primarily be patients and physicians.
 \\
 5. Regulatory constraints: Delays in obtaining necessary approvals can hinder deployment and development stages.\\
 
-\subsection{Use Case Diagram}
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{UseCase.png}
-    \caption{Use Case Diagram of AI for chest X-ray read}
-    \label{fig:enter-label}
-\end{figure}
-
 \section{Specific System Description}
 This section first presents the problem description, which gives a high-level
 view of the problem to be solved.  This is followed by the solution characteristics
@@ -311,29 +370,6 @@ the instance models.
 Disease prediction via medical imaging continues to be one of the most important aspect of health-care. However, the health-care industry is still slowly catching up with current technology, making disease prediction and prevention processes labour-intensive and inefficient. With a prolong history in operation, countless images has been captured from CT Scanners and X-Ray machines, for medical and health-care research, but yet to be applied in hospital settings between physicians and patients.
 
 Our team, Neuralanalyzer, saw an opportunity to transform traditional health-care processes, by applying Machine Learning, and modern software engineering techniques; aiming to provide an optimized, unified, and HIPAA-compliant platform to predict diseases from chest X-Ray scans.
-\subsubsection{Terminology and  Definitions}
-
-This subsection provides a list of terms that are used in the subsequent
-sections and their meaning, with the purpose of reducing ambiguity and making it
-easier to correctly understand the requirements:
-
-\begin{itemize}
-
-\item \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
-\item \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
-\item \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
-\item \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
-\item \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
-\item \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
-\item \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
-\item \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
-\item \textbf{React}: A web front-end framework, written in Javascript.
-\item \textbf{Flask}: An HTTP-based server framework, written in Python.
-\item \textbf{ML}: Shorten for Machine Learning.
-\item \textbf{TorchXRayVision}: An open-source classifier model that can classify diseases based on chest X-Ray images. \href{https://github.com/mlmed/torchxrayvision}{Github Link}
-\item \textbf{SLA}: Shorten for Service-Level Agreement. A percentage metrics to signify the overall up-time of a system. For example, an SLA of 99\% means the system must be up 99\% of it's operational time.
-
-\end{itemize}
 
 \subsubsection{Goal Statements}
 \noindent Given the inputs and the constraints of the system, the goal statements are:
@@ -411,8 +447,17 @@ From the system perspective, the input data can be any image, of any size, in an
 
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
 In the context of our machine learning model, the absolute correct solution can not be calculated at run-time. However, A solution is considered good enough when during in the training and validation process,  the error rate of the system has been reduced to an agreeable number.
-
+\newpage
 \section{Required Behaviour Overview}
+\subsection{Use Case Diagram}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=1\linewidth]{UseCase.png}
+    \caption{Use Case Diagram of AI for chest X-ray read}
+    \label{fig:use-case-diagram}
+\end{figure}
+\vspace{-1em} 
+\newpage
 Neuralanalyzer's system is composed of 3 main sub-systems:
 \begin{itemize}
     \item \textbf{Neuralanalyzer Front-end}: Responsible for handling user's interaction via a web-based UI. The front-end will be responsible for core functionalities such as login, account registration, image uploading.
@@ -830,7 +875,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement LF2}
 \end{table}
-
+\newpage
 \subsubsection{Usability and Humanity Requirements}
 
 \begin{table}[h!]
@@ -868,7 +913,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement UH2}
 \end{table}
-
+\newpage
 \subsubsection{Performance Requirements}
 
 \begin{table}[h!]
@@ -962,7 +1007,6 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement OE2}
 \end{table}
-\clearpage
 \subsubsection{Security and Privacy Requirements}
 
 \begin{table}[h!]
@@ -1000,6 +1044,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement SR2}
 \end{table}
+\newpage
 \subsubsection{Maintainability and Support Requirements}
 
 \begin{table}[h!]
@@ -1504,22 +1549,24 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Limit initial support to English; add languages later.
     \end{itemize}
 \end{enumerate}
-
-\section{Values of Auxiliary Constants}
-
-\begin{itemize}
-    \item \textbf{Uptime:} 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics.
-    \item \textbf{Training Photos:} 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy.
-    \item \textbf{Accuracy Rate:} 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use.
-    \item \textbf{Response Time:} Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times.
-\end{itemize}
-
 \section{Impact Analysis}
-This project is primarily designed for rapid recognition of chest X-rays in the field of thoracic medicine through artificial intelligence. Its main significance lies in the ability to quickly display preliminary diagnostic results, thereby improving recognition efficiency and reducing patient wait times. Additionally, the system can be used for big data classification, gradually improving the accuracy of analyses, reducing misdiagnoses, and easing the workload of doctors. If this project can be deployed on a large scale, it will enhance productivity in the medical field, lower healthcare costs, and speed up medical services. Moreover, by utilizing cloud technology, it can help people living in remote areas to obtain basic assessments from X-rays without needing a doctor. \\
 
-According to updated data from the Canadian government in 2023, the average annual salary for doctors is CAD 233,726. Each chest examination requires approximately 15 minutes, while the average waiting time for each chest X-ray is between 1 to 2 days. If this technology can reduce the average analysis time to immediate results, it would decrease the analysis cost for each X-ray by about CAD 30. In Canada, there are approximately 20 million X-ray examinations conducted annually, with chest X-rays accounting for around 6 to 8 million of those. Based on these calculations, this could save between CAD 160 million and CAD 240 million. \\
+The primary benefit of this project lies in the ability to deliver preliminary diagnostic results quickly, thereby enhancing diagnostic efficiency and significantly reducing patient wait times. Moreover, the system’s capability for large-scale data classification can gradually improve the precision of analyses, reduce misdiagnoses, and alleviate the workload on medical professionals. When scaled effectively, this project has the potential to increase productivity within the medical sector, reduce healthcare costs, and accelerate service delivery. Additionally, by leveraging cloud-based deployment, this solution can extend diagnostic support to remote regions, providing preliminary assessments without the immediate need for in-person medical consultations.
 
-At the same time, automated data classification can be utilized in emergency situations. For example, during the COVID-19 pandemic, the healthcare system was severely overloaded, and there was a widespread shortage of doctors and nurses. If this technology can be employed to assist in classifying X-rays during the COVID-19 period, it would significantly increase efficiency and alleviate the burden on the healthcare system, while also helping more patients. This would enable the multifaceted benefits that come with technological advancements to be realized. \\
+\subsection{Economic Impact}
+The economic implications of this project are considerable. According to 2023 data from the Canadian government, the average annual salary for doctors is CAD 233,726 \cite{2}. With each chest X-ray analysis typically taking around 15 minutes and a wait time of 1 to 2 days for results \cite{1}, this AI tool has the potential to reduce analysis time to near-instantaneous levels, cutting costs by approximately CAD 30 per examination. Given that Canada conducts around 20 million X-ray examinations annually, with chest X-rays comprising about 6 to 8 million of these \cite{3}, the potential cost savings range from CAD 160 million to CAD 240 million annually. This economic benefit not only supports more efficient use of healthcare resources but also enables reinvestment into other critical areas of patient care.
+
+\subsection{Health and Safety Impact}
+From a health and safety perspective, the automated nature of this system can play a critical role in emergency situations. During the COVID-19 pandemic, the healthcare infrastructure faced unprecedented pressure, with a widespread shortage of medical professionals \cite{4}. In such scenarios, AI-assisted tools like this could be deployed to manage and classify X-ray data, significantly improving processing speed and relieving the burden on healthcare providers. This allows for more patients to receive timely care, which is crucial during high-demand periods.
+
+However, deploying AI for disease diagnosis involves considerations of accuracy and reliability. AI models, while efficient, produce probabilistic outcomes rather than absolute determinations. This inherent uncertainty can introduce risks, including ethical dilemmas and potential legal challenges, particularly if a misdiagnosis occurs \cite{5}. Thus, while the technology can accelerate diagnosis, integrating human oversight remains essential to mitigate these risks and ensure patient safety.
+
+\subsection{Cultural Impact}
+The introduction of AI-based diagnostic systems, such as this project, can influence the cultural landscape of healthcare delivery. In some cultures, there is a strong preference for direct consultations with healthcare professionals, where personal interaction and trust in human expertise are preferred. The adoption of AI in these contexts may require a cultural shift as patients adapt to receiving initial assessments through automated systems. However, in regions with limited access to healthcare professionals, such as remote or underserved areas, AI-based diagnostics can be perceived as an empowering tool. It offers a level of autonomy and timely access to healthcare information that was previously unavailable \cite{6}. This dual impact reflects the need to balance technological advancements with cultural sensitivity.
+
+\subsection{Overall Societal Impact}
+This project, when implemented at scale, has the potential to transform the delivery of healthcare. By reducing analysis time and increasing access to diagnostic support, it addresses critical issues such as the strain on healthcare systems and accessibility of medical services in remote areas. The use of cloud technology further ensures that the system can be deployed across a range of settings, from urban hospitals to rural clinics, providing consistent support regardless of location. As society increasingly embraces digital solutions in healthcare, this project stands to play a significant role in reshaping diagnostic practices, making them faster, more efficient, and more accessible.
+
 
 \newpage
 
