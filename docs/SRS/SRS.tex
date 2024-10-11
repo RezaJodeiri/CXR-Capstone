@@ -144,9 +144,7 @@
 \maketitle
 
 ~\newpage
-
-\pagenumbering{roman}
-
+\pagenumbering{arabic}
 \tableofcontents
 
 ~\newpage
@@ -447,11 +445,11 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   \item \textbf{Prediction:}
     \begin{align*}
       \hat{y}_i &= \begin{cases}
-        1 & \text{if } P(x_i) \geq 0.5 \\
-        0 & \text{if } P(x_i) < 0.5
+        1 & \text{if } P(x_i) \geq 0.85 \\
+        0 & \text{if } P(x_i) < 0.85
       \end{cases}
     \end{align*}
-    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.5, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
+    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.85, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
 
   \item \textbf{Evaluation:}
     \begin{align*}
@@ -471,9 +469,17 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \begin{itemize}
   \item The model \( M \) should achieve an accuracy of at least 85\% on the validation dataset.
   \item Each input image \( x_i \) should be preprocessed to a fixed size (e.g., 224x224 pixels) to ensure compatibility with the model.
-  \item The probability threshold for classification is set at 0.5, but it can be adjusted based on the desired sensitivity of the model.
+  \item The model should be trained on a diverse dataset that includes images from different demographics and disease categories.
 \end{itemize}
 \subsection{Finite State Machine Diagram}
+% addd the state.png file under finite state diagram subsection
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{state.png}
+    \caption{Finite State Machine Diagram}
+    \label{fig:enter-label}
+\end{figure}
+
 \newpage
 \subsection{Functional Requirements}
 \begin{table}[h!]
@@ -824,7 +830,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement LF2}
 \end{table}
-\clearpage
+
 \subsubsection{Usability and Humanity Requirements}
 
 \begin{table}[h!]
@@ -862,7 +868,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement UH2}
 \end{table}
-\clearpage
+
 \subsubsection{Performance Requirements}
 
 \begin{table}[h!]
@@ -918,7 +924,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement PR3}
 \end{table}
-\clearpage
+\newpage
 \subsubsection{Operational and Environmental Requirements}
 
 \begin{table}[h!]
@@ -994,7 +1000,6 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement SR2}
 \end{table}
-\clearpage
 \subsubsection{Maintainability and Support Requirements}
 
 \begin{table}[h!]
@@ -1032,7 +1037,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement MS2}
 \end{table}
-
+\newpage
 \subsubsection{Cultural Requirements}
 
 \begin{table}[h!]
@@ -1052,7 +1057,6 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement CR1}
 \end{table}
-\clearpage
 \subsubsection{Legal Requirements}
 
 \begin{table}[h!]
@@ -1090,7 +1094,7 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
 \end{tabular}
 \caption{Non-functional Requirement LR2}
 \end{table}
-\clearpage
+\newpage
 \subsubsection{Health and Safety Requirements}
 
 \begin{table}[h!]
@@ -1277,11 +1281,11 @@ Neuralanalyzer's system is composed of 3 main sub-systems:
   
   
 \clearpage
-\section{Likelihood of Changes for Functional Requirements}
+\section{Likelihood of Changes for Requirements}
 
 \subsection{Very Unlikely to Change}
 
-These requirements are core to our system's functionality and are essential for meeting the project's objectives. We do not anticipate any changes to these requirements.
+These requirements are core to our system's functionality and essential for meeting the project's objectives. We do not anticipate any changes to these requirements.
 
 \begin{enumerate}
     \item \textbf{FR1}: Accept chest X-ray images from authorized users.
@@ -1305,6 +1309,24 @@ These requirements are core to our system's functionality and are essential for 
     \item \textbf{FR13}: Support multiple user roles with appropriate access levels.
     \begin{itemize}[label=-]
         \item \textbf{Rationale}: Crucial for security and compliance with regulations.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{SR1}: Encrypt all patient data using AES-256 encryption.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Mandatory for data security and compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{SR2}: Implement role-based access control.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Critical for security and regulatory compliance.
+        \item \textbf{Possible Changes}: N/A
+    \end{itemize}
+
+    \item \textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Legal compliance is mandatory.
         \item \textbf{Possible Changes}: N/A
     \end{itemize}
 \end{enumerate}
@@ -1361,69 +1383,7 @@ These requirements are important but may undergo minor adjustments based on user
         \item \textbf{Rationale}: Important for continuous improvement; update processes may adjust.
         \item \textbf{Possible Changes}: Alter the frequency or method of updates.
     \end{itemize}
-\end{enumerate}
 
-\subsection{Likely to Change}
-
-These requirements may change due to technical challenges, resource constraints, or evolving project scope.
-
-\begin{enumerate}[resume]
-    \item \textbf{FR8}: Provide alerts for significant changes between scans.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Useful but not essential; may be deferred due to time constraints.
-        \item \textbf{Possible Changes}: Simplify the alert system or postpone implementation.
-    \end{itemize}
-
-    \item \textbf{FR10}: Integrate with EHR systems to import/export data.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Adds complexity; might be challenging within our timeline.
-        \item \textbf{Possible Changes}: Limit integration scope or schedule for future development.
-    \end{itemize}
-
-    \item \textbf{FR12}: Allow patients to upload images for self-diagnosis with disclaimers.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Raises legal and ethical concerns; may need alteration.
-        \item \textbf{Possible Changes}: Restrict feature access or require additional consent.
-    \end{itemize}
-
-    \item \textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: May exceed current project scope; could be deferred.
-        \item \textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.
-    \end{itemize}
-\end{enumerate}
-
-\section{Likelihood of Changes for Non-Functional Requirements}
-
-\subsection{Very Unlikely to Change}
-
-These requirements are essential for legal compliance, security, and core system performance.
-
-\begin{enumerate}
-    \item \textbf{SR1}: Encrypt all patient data using AES-256 encryption.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Mandatory for data security and compliance.
-        \item \textbf{Possible Changes}: N/A
-    \end{itemize}
-
-    \item \textbf{SR2}: Implement role-based access control.
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Critical for security and regulatory compliance.
-        \item \textbf{Possible Changes}: N/A
-    \end{itemize}
-
-    \item \textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).
-    \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Legal compliance is mandatory.
-        \item \textbf{Possible Changes}: N/A
-    \end{itemize}
-\end{enumerate}
-
-\subsection{Unlikely to Change}
-
-These requirements are important for system usability, maintainability, and reliability but may undergo minor adjustments.
-
-\begin{enumerate}[resume]
     \item \textbf{PR1}: Process and analyze images within 30 seconds.
     \begin{itemize}[label=-]
         \item \textbf{Rationale}: Critical for usability; performance targets might adjust slightly.
@@ -1484,6 +1444,30 @@ These requirements are important for system usability, maintainability, and reli
 These requirements may be adjusted due to resource constraints, technical challenges, or evolving user needs.
 
 \begin{enumerate}[resume]
+    \item \textbf{FR8}: Provide alerts for significant changes between scans.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Useful but not essential; may be deferred due to time constraints.
+        \item \textbf{Possible Changes}: Simplify the alert system or postpone implementation.
+    \end{itemize}
+
+    \item \textbf{FR10}: Integrate with EHR systems to import/export data.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Adds complexity; might be challenging within our timeline.
+        \item \textbf{Possible Changes}: Limit integration scope or schedule for future development.
+    \end{itemize}
+
+    \item \textbf{FR12}: Allow patients to upload images for self-diagnosis with disclaimers.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: Raises legal and ethical concerns; may need alteration.
+        \item \textbf{Possible Changes}: Restrict feature access or require additional consent.
+    \end{itemize}
+
+    \item \textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.
+    \begin{itemize}[label=-]
+        \item \textbf{Rationale}: May exceed current project scope; could be deferred.
+        \item \textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.
+    \end{itemize}
+
     \item \textbf{LF2}: Use color schemes and fonts that minimize eye strain.
     \begin{itemize}[label=-]
         \item \textbf{Rationale}: Aesthetic elements are subjective; may change with user feedback.
@@ -1521,11 +1505,30 @@ These requirements may be adjusted due to resource constraints, technical challe
     \end{itemize}
 \end{enumerate}
 
+\section{Values of Auxiliary Constants}
+
+\begin{itemize}
+    \item \textbf{Uptime:} 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics.
+    \item \textbf{Training Photos:} 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy.
+    \item \textbf{Accuracy Rate:} 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use.
+    \item \textbf{Response Time:} Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times.
+\end{itemize}
+
+\section{Impact Analysis}
+This project is primarily designed for rapid recognition of chest X-rays in the field of thoracic medicine through artificial intelligence. Its main significance lies in the ability to quickly display preliminary diagnostic results, thereby improving recognition efficiency and reducing patient wait times. Additionally, the system can be used for big data classification, gradually improving the accuracy of analyses, reducing misdiagnoses, and easing the workload of doctors. If this project can be deployed on a large scale, it will enhance productivity in the medical field, lower healthcare costs, and speed up medical services. Moreover, by utilizing cloud technology, it can help people living in remote areas to obtain basic assessments from X-rays without needing a doctor. \\
+
+According to updated data from the Canadian government in 2023, the average annual salary for doctors is CAD 233,726. Each chest examination requires approximately 15 minutes, while the average waiting time for each chest X-ray is between 1 to 2 days. If this technology can reduce the average analysis time to immediate results, it would decrease the analysis cost for each X-ray by about CAD 30. In Canada, there are approximately 20 million X-ray examinations conducted annually, with chest X-rays accounting for around 6 to 8 million of those. Based on these calculations, this could save between CAD 160 million and CAD 240 million. \\
+
+At the same time, automated data classification can be utilized in emergency situations. For example, during the COVID-19 pandemic, the healthcare system was severely overloaded, and there was a widespread shortage of doctors and nurses. If this technology can be employed to assist in classifying X-rays during the COVID-19 period, it would significantly increase efficiency and alleviate the burden on the healthcare system, while also helping more patients. This would enable the multifaceted benefits that come with technological advancements to be realized. \\
+
+\newpage
 
 
+\bibliographystyle {plainnat}
+\bibliography {../../refs/References}
 \afterpage{
 \begin{landscape}
-\section{Traceability Matrix}
+\section*{Appendix --- Traceability Matrix}
 \begin{table}[h!]
 \centering
 \scriptsize
@@ -1609,44 +1612,30 @@ These requirements may be adjusted due to resource constraints, technical challe
 \end{table}
 \end{landscape}
 }
-\section{Values of Auxiliary Constants}
-
-\begin{itemize}
-    \item \textbf{Uptime:} 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics.
-    \item \textbf{Training Photos:} 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy.
-    \item \textbf{Accuracy Rate:} 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use.
-    \item \textbf{Response Time:} Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times.
-\end{itemize}
-
-\section{Impact Analysis}
-This project is primarily designed for rapid recognition of chest X-rays in the field of thoracic medicine through artificial intelligence. Its main significance lies in the ability to quickly display preliminary diagnostic results, thereby improving recognition efficiency and reducing patient wait times. Additionally, the system can be used for big data classification, gradually improving the accuracy of analyses, reducing misdiagnoses, and easing the workload of doctors. If this project can be deployed on a large scale, it will enhance productivity in the medical field, lower healthcare costs, and speed up medical services. Moreover, by utilizing cloud technology, it can help people living in remote areas to obtain basic assessments from X-rays without needing a doctor. \\
-
-According to updated data from the Canadian government in 2023, the average annual salary for doctors is CAD 233,726. Each chest examination requires approximately 15 minutes, while the average waiting time for each chest X-ray is between 1 to 2 days. If this technology can reduce the average analysis time to immediate results, it would decrease the analysis cost for each X-ray by about CAD 30. In Canada, there are approximately 20 million X-ray examinations conducted annually, with chest X-rays accounting for around 6 to 8 million of those. Based on these calculations, this could save between CAD 160 million and CAD 240 million. \\
-
-At the same time, automated data classification can be utilized in emergency situations. For example, during the COVID-19 pandemic, the healthcare system was severely overloaded, and there was a widespread shortage of doctors and nurses. If this technology can be employed to assist in classifying X-rays during the COVID-19 period, it would significantly increase efficiency and alleviate the burden on the healthcare system, while also helping more patients. This would enable the multifaceted benefits that come with technological advancements to be realized. \\
-
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../refs/References}
-
 \newpage{}
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  
-
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable? \\\\
+We felt the SRS document provided us strong growth and structures as the content was comprehensive. We were able to gain a better understanding of the necessary elements like the scope, context diagrams, and nonfunctional requirements such as performance and safety. The clear delineation between normal operations and undesired event handling gave us confidence in its thoroughness. Overall, we felt that the SRS document provided us with a solid foundation to work from, especially in terms of its clarity, organization, and attention to detail. It gave us a clear picture of the system's requirements and made it easier to move forward with design and implementation.
+
+
   \item What pain points did you experience during this deliverable, and how did
-  you resolve them?
+  you resolve them? \\
+
+When writing the Software Requirements Specification document caused us few challenges that hindered our process. One common issue we faced was the ambiguity in the requirements this can create confusion for our team. We also felt that some things had incomplete requirements, as some aspects were overlooked or not thoroughly explored. Additionally, failing to gather input from all stakeholders, such as clients, end-users, and developers, can result in missing critical features or misunderstanding the true needs of the project. We resolved these pain points by talking with the teaching assistants of this course, whom of which helped us immensely.  
+
+
   \item How many of your requirements were inspired by speaking to your
-  client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
+  client(s) or their proxies (e.g. your peers, stakeholders, potential users)? \\
+  
+Many of our requirements came from us asking healthcare professionals as well as our supervisor. There was a big emphasises on the need for accuracy, reliability, and a user-friendly interface. These discussions helped shape key requirements, such as incorporating a robust AI model for detecting lung diseases, ensuring transparency in how the AI reaches its conclusions, and making the system accessible to users with varying levels of technical expertise.
+      
   \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
+  your team to be successful with your capstone project. \\
+
+  By taking courses such as Machine Learning, Human-Computer Interfaces (HCI), and previous taken software development will help us substantially. The Machine Learning course has equipped us to gain a better understanding and via taking 4ML3 we can develop an accurate AI model capable of analyzing chest X-rays and identifying potential lung diseases, including knowledge of various algorithms. Meanwhile, as for HCI, the course is teaching us the importance of creating intuitive, user-friendly interfaces that make complex AI results accessible to medical professionals and patients alike. By applying user-centered design principles, we aim to ensure seamless interaction with our system and enhance user trust through transparent communication of AI decisions. All in all, our previous software development courses have further solidified our programming skills and understanding of software architecture, enabling us to effectively integrate these elements into a cohesive application.
+  
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete this capstone project?  Examples of possible knowledge
   to acquire include domain specific knowledge from the domain of your
@@ -1657,7 +1646,35 @@ graduate attribute of Lifelong Learning.
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice? \\\\
+
+    The following Two quesitons have been answered below: \\\\
+
+\textbf{Assigned Team Members: All} \\
+All team members will be required to thoroughly understand the medical conditions and diseases related to chest X-rays that the AI model will be detecting. This knowledge will be acquired through reviewing medical literature, studying annotated chest X-ray datasets, and utilizing any available online medical resources or tutorials that explain chest X-ray interpretation and diagnosis. Every team member will be using all the discussed methods to gain expertise in this domain, as it is essential for everyone to understand the features of different lung conditions (such as pneumonia, tuberculosis, or lung cancer). The team will start by studying medical images and datasets, and then further enhance their knowledge by reading research papers and consulting with healthcare professionals to understand how chest X-rays reveal signs of disease.
+
+
+\textbf{Assigned Team Members: Patrick, Reza, and Kelly} \\
+Learning the fundamentals of PyTorch is essential for building AI models to analyze lung X-rays. Our primary focus will be gaining a better understanding of PyTorch's torch tensor data structure. Understanding automatic differentiation through PyTorch's autograd module will allow for efficient backpropagation during model training. Moreover, gaining knowledge on how to handle X-ray images, including resizing, normalization, and augmentation, will be crucial. This will involve using libraries like \texttt{torchvision} to apply image transformations and \texttt{DataLoader} to manage batching and loading data for training.
+
+
+\textbf{Assigned Team Members: Ayman} \\
+Data Visualization Analysis will require developers to understand users' expected data points, graphic representations, and what types of data need to be compared. Group members are required to have sufficient knowledge of Python data science libraries such as \texttt{Matplotlib}, \texttt{Seaborn}, \texttt{NumPy}, and \texttt{pandas} to create informative graphics and present accurate information to users efficiently. Ayman will be using online tutorials and documentation to gain expertise in data visualization and data analysis to find the most effective way to analyze the logs from the Game Engine and AI Agent.
+
+\subsection*{13.4 Web Creation}
+
+\textbf{Assigned Team Members: Nathan} \\
+The Angular Frontend Development will require developers to design and implement a user-friendly interface for our web application. The team will focus on creating a responsive and efficient UI that meets users' needs by ensuring optimal performance and accessibility. The frontend should effectively interact with the backend API for data retrieval and submission, enabling smooth integration of user interactions with the underlying server logic.
+
+This requires sufficient knowledge of Angular, TypeScript, HTML, and CSS. They must be proficient in Angular components, directives, services, routing, and form validation to build dynamic, modular, and maintainable applications. The team will utilize Angular Material or Bootstrap for UI components to create visually appealing and responsive designs.
+
+
+\textbf{Assigned Team Members: All} \\
+The main component of the AI model for chest X-ray analysis centers around comprehending the user’s expectations. Healthcare professionals, including radiologists, pulmonologists, and general practitioners, will be the main users of this application since they will need to use the tool for diagnosing lung diseases. Therefore, it is critical to gain an understanding of users and their information needs when designing the AI model and its interface, with the intention of providing relevant information that is precise and adequate.
+
+Furthermore, our application would be helpful for end-users, including junior doctors in medical school, who can use the application as an educational tool or supplemental diagnostic aid. Determining which users will be the target audience and their expectations will inform design choices ranging from how complex the expected output is to how user-friendly the user-interface design is. Everyone is expected to partake in user research, where they will seek feedback from potential end-users and consult healthcare professionals to ensure the tool caters to the specific needs of users from different disciplines. The team will also consider designs that may be more attractive to patients, such as picture-based diagnostic aids or X-ray interpretation rather than a plethora of diagnostic radiology information. This will involve creating a proper compromise between providing detailed diagnostic and analytical information.
+
+  
 \end{enumerate}
 
 \end{document}
