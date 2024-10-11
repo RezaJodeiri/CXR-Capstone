@@ -71,6 +71,11 @@
 \newcounter{assumpnum} %Assumption Number
 \newcommand{\atheassumpnum}{A\theassumpnum}
 \newcommand{\aref}[1]{A\ref{#1}}
+
+\newcounter{adrnum} %ADR Number
+\newcommand{\atheadrnum}{ADR\theadrnum}
+\newcommand{\aref}[1]{ADR\ref{#1}}
+
 \newcounter{goalnum} %Goal Number
 \newcommand{\gthegoalnum}{GS\thegoalnum}
 \newcommand{\gsref}[1]{GS\ref{#1}}
@@ -320,8 +325,17 @@ interfaces between the system and its environment, describes the user
 characteristics and lists the system constraints. \\
 
 \subsection{System Context}
+ 
+The below system context diagram shows that the system will take in an input(chest X-ray image) from the user after they login. The user upload the chest X-ray image to the system and then system will annotate and provide the interpretation of the X-ray image back to the user.
 
-The below system context diagram shows that the system will take in an input (chest X-ray image) from the user after they login. The user upload the chest X-ray image to the system and then system will annotate and provide the interpretation of the X-ray image back to the user.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{app-runtime.png}
+  \caption{Neuralanalyzer's Run-Time AWS Infrastructure}
+  \label{fig:overall-infra}
+\end{figure}
 
 
 
@@ -337,7 +351,7 @@ The below system context diagram shows that the system will take in an input (ch
 \item {Detect abnormalities / diseases in the chest X-ray images.}
 \item {Classify abnormalities / diseases into specific categories.}
 \item {Quantify size / degree / volume of abnormalities.}
-\item {Produce report with possiblee diagnosis and the above information.}
+\item {Produce report with possible diagnosis and the above information.}
 \end{itemize}
 \end{itemize}
 
@@ -359,6 +373,16 @@ The user of this software application will primarily be patients and physicians.
 4. Ethical considerations: If the training data lacks diversity, the AI may perform poorly for certain populations. \\
 \\
 5. Regulatory constraints: Delays in obtaining necessary approvals can hinder deployment and development stages.\\
+
+\subsection{Use Case Diagram}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{UseCase.png}
+    \caption{Use Case Diagram of AI for chest X-ray read}
+    \label{fig:enter-label}
+\end{figure}
+
+\pagebreak
 
 \section{Specific System Description}
 This section first presents the problem description, which gives a high-level
@@ -387,67 +411,125 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
 \end{itemize}
 
 \subsection{Solution Characteristics Specification}
-\subsubsection{Architectural Decisions}
+\subsubsection{Overall Solution Architecture}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{app-runtime.png}
+  \caption{Neuralanalyzer's Run-Time AWS Infrastructure}
+  \label{fig:overall-runtime-infra}
+\end{figure}
+
 \begin{itemize}
-\item A. Splitting up the AI-Models from the core Neuralanalyzer back-end service.
+    \item \textbf{API Gateway}: Act as an ingress service, responsible for routing the requests to the Layer 7 Load Balancer. All requests forwarded to the load-balancer must be authenticated via \textbf{AWS Cognito}.
+    \item \textbf{AWS Cognito}: Act as an authorization service, responsible for logins, registers, and reset passwords.
+    \item \textbf{Layer 7 Load Balancer}: Responsible for load balance Layer 7 traffic (HTTP in this case) on the the back-end service.
+    \item \textbf{Back-end Application}: Responsible for routing the requests to the correct ML services.
+    \item \textbf{ML Services}: Responsible for returning a prediction based on an image passed-in by the back-end service.
+    \item \textbf{Open-source ML Service}: Act as a back-up if the other services failed, responsible for returning a prediction based on an image passed-in by the back-end service.
+    \item \textbf{AWS Cloudwatch}: Act as a run-time monitoring service, responsible for storing logs, and alert the developers if any defined errors/ metrics has occurred.
+\end{itemize}
+
+\subsubsection{Overall Continuous Development and Delivery Pipeline}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{app-build-pipeline.png}
+  \caption{Neuralanalyzer's CI/CD Pipeline}
+  \label{fig:overall-ci-cd-infra}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Github Actions}: Triggered every time the code is merge onto the main-branch of our Github repository.
+    \item \textbf{AWS ECR}: Storing the versions of Neuralanalyzer application Docker Images. A new docker image will be tag as latest, after new source code is ready on Github.
+    \item \textbf{AWS ECS}: Orchestrate the run-time of the application containers.
+    \item \textbf{AWS Fargate}: The live containers that contains application and business logic of Neuralanalyzer.
+\end{itemize}
+
+
+\subsubsection{Architectural Decision Records}
+\begin{itemize}
+\item ADR\refstepcounter{adrnum}\theadrnum \label{ADR_AWS_for_prod}: Usage of Amazon Web Services.
     \begin{itemize}
-        \item Benefits:
+        \item \textbf{Rationale}: Our team has chosen to go with the popular AWS platform to host Neuralanalyzer.
+        \item \textbf{Benefits}:
+        \begin{itemize}
+            \item AWS is HIPPA compliance, making our application hosted on AWS HIPAA-compliance by default.
+            \item AWS is a mature platform with large catalog of services, and support from both the AWS team, and the community around it.
+            \item Team Members are familiar with AWS, making the development velocity straght-forward, and speedy.
+        \end{itemize}
+        \item \textbf{Drawbacks}:
+        \begin{itemize}
+            \item AWS can get expensive if not being utilized correctly.
+            \item Some functionalities (such as Authentication on AWS Cognito) are AWS-native, which encourage vendor-locked, and will require developer effort to move off AWS later on. 
+        \end{itemize}
+    \end{itemize}
+    
+    \item ADR\refstepcounter{adrnum}\theadrnum \label{ADR_splitting_AI_from_backend}: Splitting up the ML-Models from the core Neuralanalyzer back-end service.
+    \begin{itemize}
+        \item \textbf{Rationale}: Since the Machine Learning Models only serve the purpose of classifying, we refactored the models out as it's own services, allowing the back-end to handle authentication, and logic coordination.
+        \item \textbf{Benefits}:
         \begin{itemize}
             \item Allowing separate development and deployment of AI-Models, and other application logic (authentication, databases, etc.)
             \item Enabling the ability to connect multiple models, via plugins, onto the system, providing Neuralanalyzer with more flexibility.
         \end{itemize}
-        \item Drawbacks:
+        \item \textbf{Drawbacks}:
         \begin{itemize}
             \item Increase complexity in managing source code, and at run-time. For example: runtime security, availability, service discovery, etc.
         \end{itemize}
     \end{itemize}
     
-\item B. Training Neuralanalyzer ML Model on CAS Department's servers.
+    \item ADR\refstepcounter{adrnum}\theadrnum \label{ADR_train_on_cas}: Training Neuralanalyzer ML Model on CAS Department's servers.
     \begin{itemize}
-        \item Benefits:
+        \item \textbf{Rationale}: Training ML Models can be costly, through a quick calculation, training our in-house ML Model on AWS (with the lowest settings) for 10 hours can cost minimum of 150 dollars. For research and development purposes, we decided to kick-start the training process on CAS's Department servers.
+        \item \textbf{Benefits}:
         \begin{itemize}
             \item Massively speeds up research and development since department's servers are already set-up with student's MacID.
             \item Reducing cost for AI-Model training.
         \end{itemize}
-        \item Drawbacks:
+        \item \textbf{Drawbacks}:
         \begin{itemize}
             \item This separate training process makes this particular development workflow hard and time-consuming to automate.
         \end{itemize}
     \end{itemize}
     
-\item C. Including TorchXRayVision as a back-up model.
+    \item ADR\refstepcounter{adrnum}\theadrnum \label{ADR_torchxray_as_backup}: Including TorchXRayVision as a back-up model.
+    
     \begin{itemize}
-        \item Benefits:
+        \item \textbf{Rationale}: To negating the risk of our in-house ML Models not working as expected, using a stable open-source project to back up the core-functionality of the application can drastically improve the fault-tolerance of the system.
+        \item \textbf{Benefits}:
         \begin{itemize}
             \item Ability to quickly create a working and stable MVP, which contains the front-end, back-end, and the ML model.
             \item Ability to apply transfer-learning on to this model to fine-tune its accuracy.
             \item Ability to change the source code of this model to fit's our team's need.
         \end{itemize}
-        \item Drawbacks:
+        \item \textbf{Drawbacks}:
         \begin{itemize}
             \item Un-ability to re-train the model.
             \item Out-of-the-box model has low accuraccy score.
         \end{itemize}
     \end{itemize}
 \end{itemize}
+
 \subsubsection{Assumptions} \label{sec_assumpt}
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] Machine Learning Models Performance will be tracked via a standardized method, and this method will be publicly published after being developed. Reason being the accuracy of the ML model is vital for the end-user (physicians, patients), therefore this validation method needs transparency to the stakeholders, and users.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] All health-related data that are not publicly available, needs to be handled in a HIPPA-compliance manner. Reason being private PHI are sensitive are are protected under this act.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] ML Models validation process will have to be \textbf{publicly published and accepted by all stakeholders} after being developed. Reason being the accuracy of the ML model is vital for safety of the patient, as well as the sucesss of the project, therefore this validation method need to be transparent to all the stakeholders, and users.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] AWS will share the responsibility with Neuralanalyzer to protect the customer PHI in a law-compliance manner, as mentioned in this \href{https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/shared-responsibility-model.html}{share-responsibility blog post}.
+
+
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] McMaster Department's servers will be available for our group members to perform model training and development. Under another assumption that our group members, as users of department resources must follows department's guidelines.
 
 \end{itemize}
 
 \subsubsection{Input Data Constraints} \label{sec_DataConstraints} 
-From the system perspective, the input data can be any image, of any size, in any format. Our system will only output the correct label for images of chest x-ray scan. Example below.
+From our math formulation of the machine learning plugin, the input data will be in a form of an image binary, of size 224x224 pixels. The image being passed in into the ML model will be automatically transformed into gray-scale. Example below:
 \begin{center}
     \includegraphics[scale=0.3]{chest-x-ray.png}
 \end{center}
 
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
-In the context of our machine learning model, the absolute correct solution can not be calculated at run-time. However, A solution is considered good enough when during in the training and validation process,  the error rate of the system has been reduced to an agreeable number.
-\newpage
+In the context of our machine learning model, the absolute correct solution can not be calculated at run-time. However, A solution is considered good enough when during in the training and validation process, the error rate of the system has been reduced to an agreeable number before bringing it to production.
+
 \section{Required Behaviour Overview}
 \subsection{Use Case Diagram}
 \begin{figure}[H] 
