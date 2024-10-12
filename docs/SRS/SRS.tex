@@ -316,14 +316,35 @@ The scope of this project is to take in a chest X-ray image and output if any di
 The reader of this SRS document should possess undergraduate level of software development skill as it specifies the system constraints, functional and non-functional requirements. Reader should understand the theories of software development as this SRS contains sections about theoretical models and instance models. Readers should also have some basic experience with project management to understand the development plan and the traceability matrix. Ideally, user should have some fundamental understanding of Artificial Intelligence but this is not a required characteristic as the SRS focuses more on the requirements instead of the technical side. To understand input data types and other constraints on data, reader should have at least 1 year programming experiences.\\
 
 \subsection{Stakeholders}
-1. Healthcare Providers: they are the primary uses of the AI system, as the software will help them in interpreting chest X-rays more efficiently by detecting abnormalities and analyzing potential diseases. The use of this software as part of the diagnostic process will help improve efficiency and accuracy.
+\subsubsection{The Clients} 
+This refers to Dr. Moradi and his research team. They are responsible for the design, development and future changes of the AI system.
+\begin{enumerate}
+\textbf{Role:} Main decision makers of the scope, features, system design of the AI system. They will provide necessary feedback / area of improvements and approval of the AI system. 
+\end{enumerate}
+\subsubsection{The Customers:}
+This refers to healthcare providers, patients and medical facilities.\\
+\\
+Healthcare Providers includes physicians, radiologists, doctors etc. They are the primary uses of the AI system, as the software will help them in interpreting chest X-rays more efficiently by detecting abnormalities and analyzing potential diseases. The use of this software as part of the diagnostic process will help improve efficiency and accuracy.
+\begin{enumerate}
+\textbf{Role:} They will use the AI system to aid in clinical diagnosis and decision-making. They will upload the X-Ray and interpret the result produced by the AI system, making changes / adjustments if necessary. They will read chest X-rays faster and more accurately with the aid of AI, reducing workload and helping to make decisions on priorities.They can also help point out if the AI system makes any mistakes which helps it improve accuracy / cover rare diseases overtime.
+\end{enumerate}
 \\
 \\
-2. Patients: they benefit from faster, more accurate diagnoses with a improved healthcare accessibility. They also can get early detection of life-threatening diseases.\\
+Patients include people who has certain lung / cardiac diseases or people who thinks that they might have one. They benefit from faster, more accurate diagnoses with a improved healthcare accessibility. They also can get early detection of life-threatening diseases.\\
+\begin{enumerate}
+ \textbf{Role:} Upload X-ray images and receive results from the AI system. Patients provide the chest X-rays that the AI system analyzes, which are critical for the AI to perform its diagnostic function. Patient data (X-rays) might be used to improve AI system, so they are required to give consent for their X-ray images to be used in AI development.
+\end{enumerate}
 \\
-3. Hospitals and Clinics: Hospitals and clinics can integrate the software into their hospital systems, which can help them to improve efficiency, reduce diagnostic errors, manage costs.\\
+Medical facilities include hospitals and clinics. They can integrate the software into their hospital systems, which can help them to improve efficiency, reduce diagnostic errors, manage costs.\\
+\begin{enumerate}
+\textbf{Role:} They will integrate the AI system into their existing infrastructure (radiology departments, diagnostic tools etc). They are also responsible for validating the AI system's performance in their environment. They will monitor how well the AI is in diagnosing chest abnormalities and ensuring that the results align with clinical expectations. 
+\end{enumerate}
 \\
-4. Technical Support team: they are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy. \\
+\subsubsection{Other Stakeholders:} 
+This includes technical support team and technicians who works for hospital. they are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy. \\
+\begin{enumerate}
+\textbf{Role:} They help configure the AI system based on the  needs of the medical facility. They ensures compatibility of the AI system with the hospital’s workflow and making necessary adjustments to optimize performance.
+\end{enumerate}
 
 \subsection{Impact Analysis}
 
@@ -357,8 +378,8 @@ The below system context diagram shows that the system will take in an input(che
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{app-runtime.png}
-  \caption{Neuralanalyzer's Run-Time AWS Infrastructure}
+  \includegraphics[width=1\textwidth]{SystemContext.png}
+  \caption{Neuralanalyzer's System Context Diagram}
   \label{fig:overall-infra}
 \end{figure}
 
@@ -393,21 +414,69 @@ The software is typically used in medical and clinical contexts to support healt
 As observed in the use case diagram, the system begins with user input from either patients or radiologists, who upload chest X-ray images to be analyzed. These images can be stored locally or in the cloud for easy access. Once uploaded, the system processes the images using machine learning algorithms to detect abnormalities, annotate findings, and generate diagnostic reports. These reports include detailed analysis results and suggested diagnostic advice, which radiologists can review, edit, and compare with previous records if needed.The system also enables radiologists to refine patient treatment plans based on the AI-generated insights, ensuring a smooth and accurate workflow from image upload to delivering meaningful medical recommendations.
 \subsubsection{Undesired Event Handling}
 If an undesired event occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
-\subsection{User Characteristics} \label{SecUserCharacteristics}
 
-The user of this software application will primarily be patients and physicians. The end user should be able to read / understand middle school level English. The end user should also have a basic understanding of chest-related diseases, advanced knowledge is preferred but not required. Users can consult professionals if they have trouble interpreting the result. The user should also know to to upload X-ray images via web app from local machine and have basic knowledge of how to use computer / laptop. \\
+\subsection{User Characteristics} \label{SecUserCharacteristics}
+Physicians / Radiologists: 
+\begin{enumerate}
+ \item They expect the AI system to help them in improving diagnostic accuracy, reducing daily workload, and identify abnormalities that are hard to notice.
+ \item They want the system to be reliable and precise.
+ \item They need an intuitive and simple interface that integrates smoothly with their current workflow without advanced technical knowledge to use the AI system.
+ \item They need clear explanations of AI outputs, such as why certain abnormalities are marked. This would help them incorporate AI into their decision-making with more confident.
+ \item They need transparency in how the AI arrives at its conclusions.
+ \end{enumerate}
+ Patients:
+ \begin{enumerate}
+ \item They expect their data to be handled securely and confidentially by the AI system.
+ \item They would like to reduce the chance of missed diagnoses and get faster treatments.
+ \item May not completely trust in the results of the AI system. They may rely on professionals (doctors and radiologists) to explain how the AI system arrives to the conclusion.
+ \end{enumerate}
+Developers:
+ \begin{enumerate}
+ \item They has deep technical expertise as they work on creating and optimizing the AI system.
+ \item They need access to feedback from radiologists and physicians, as well as patient data and case studies. 
+ \item They has the ability to update the system on a regular basis, adding new features and incorporating new data based on other user's feedback.
+ \end{enumerate}
+Hospitals and Clinics:
+ \begin{enumerate}
+ \item May not interact with the AI system directly, but are interested in the performance (number of images processed, diagnostic accuracy rates, and the time saved etc). 
+ \item They focus on the operational efficiency of the AI system that improve overall workflow efficiency.
+ \item They focus on if the AI system follows regulatory and clinical standards. 
+ \end{enumerate}
+ \subsection{Personas}
+ \subsubsection{Physicians / Radiologists Persona:}\\
+
+Dr. Emily is a senior radiologist with over 10 years of professional experience in medical imaging. She specializes in diagnosing complex lung / cardiac conditions through chest X-rays and other medical tests. Her typical workday is fast-paced, as she needs to review numerous images while collaborating with colleagues to ensure diagnoses are sent out on time. With her professional skills, Dr. Carter can identify ambiguous patterns in X-rays but the increasing workload and complexity of cases can sometimes make it challenging to maintain high-quality standards.\\
+
+Dr.Emily is excited about how AI can help with diagnosis, especially with flagging and annotating potential abnormalities and providing help on decision-making, which she hopes to increase her overall working efficiency. However, Dr.Emily values transparency in X-ray results so she wants the AI to offer clear explanation instead of being a "black box" that makes decisions for her. She expects the AI system to integrate smoothly into her existing workflow with an intuitive user interface and not too much technology knowledge required. 
+
+\subsubsection{Patient Persona:}
+James is a construction site worker and a father of two who recently took a chest X-ray examination after experiencing consistent shortness of breath. As it takes around one week to get the result, he is anxious that it might be a serious condition and would like to know the results as soon as possible. He’s not familiar with medical imaging technology and doesn't know how would AI help with diagnosis. But he really wants to get an accurate and timely result regarding his health condition.\\
+
+James hopes that AI can help catch potential abnormalities that might be missed by human errors. Privacy and security are also important to James, and he wants to be sure that his personal medical data is handled confidentially and safely. He doesn't want his personal data shared with unauthorized organizations. 
+
+\subsubsection{Developer Persona:}
+Alex is an AI developer with proficiency in pyTorch and Python and has some fundamental knowledge in machine learning. Alex is currently working with Dr. Steve on building and optimizing AI models for medical imaging, focusing specifically on chest X-ray analysis.\\
+
+Alex is motivated to push the boundaries of AI in healthcare and he hope his contribution can make an impact in people's lives. Alex is primarily responsible for designing, training, and fine-tuning the AI models that support chest X-ray diagnosis. He also works closely with physicians and radiologists to get their feedback and improve the algorithms and interfaces. The main challenge for Alex is to ensure that the AI model produce high-accuracy results and explainable outputs at the same time for transparency.
+
+\subsubsection{Researcher Persona:}
+Dr. Steve is a postdoctoral researcher specializing in artificial intelligence and medical diagnostics. He focuses on advancing AI technologies that improve diagnostic accuracy and efficiency in radiology, particularly for chest X-rays.\\
+
+His day-to-day work involves working on researches on AI applications in healthcare, collaborating with other academic institutions / medical facilities  to validate AI models in real-world scenarios. He hopes to contribute to the AI community in a meaningful way. However, he finds that challenging to ensure the transparency of AI model when communicating the results to users. Despite that, his continuous collaboration with physicians and other AI developers helps to ensure that his research has practical improvements for improving efficiency and accuracy in diagnosing chest-related diseases.
 
 \subsection{System Constraints}
 
-1. Computational resources: Limited processing power and memory might affect the speed and efficiency of the AI algorithms.\\
+Government Regulations: The system must comply with healthcare regulations and approvals from bodies such as FDA and follow PHIPA and the certifications required before releasing the system into real-world use. This is an important constraint because non-compliance could lead to legal consequences, fines, or the inability to operate in certain regions.
 \\
-2. Data quality: Biased or blurry data can lead to inaccurate results.\\
+Data Usage Consent: The system is constrained by patients’ consent to use their data as in Canada there is the PIPEDA. In some jurisdictions, even anonymized data may require explicit patient approval, limiting the available training datasets. Even when data is anonymized, these laws may still apply because of the potential for re-identification through advanced techniques. Failing to abide by this can result in severe penalties, including fines, lawsuits, or even the suspension of the service.
 \\
-3. Compatibility: The software will only be supported on Windows 10 or higher and macOS 12 or higher. \\
+Cultural Sensitivity: Different regions and cultures may have varying comfort levels with AI making health decisions, restricting where or how the system can be rolled out. Some countries may prefer human oversight in every case. This is important as some regions will not welcome our technology so it's important to note who our target for this application should be. 
 \\
-4. Ethical considerations: If the training data lacks diversity, the AI may perform poorly for certain populations. \\
+Budget Limitations in Hospitals: The application may face constraints from healthcare organizations with limited budgets, meaning it must be affordable and sustainable. This may restrict access to cutting-edge hardware or limit the speed of the application. Without the resources to invest into our application our application will not be able to run in that hospital so it's important to make our application very light-weight and ensure that we can get some resources from the hospital it's being hosted/used in.
 \\
-5. Regulatory constraints: Delays in obtaining necessary approvals can hinder deployment and development stages.\\
+Legal Liability: In case of misdiagnosis, the liability for the application’s results may be constrained by local laws, requiring legal protections or disclaimers. It is important to have protection and get consent from the patient as not doing so may result in fines or legal action taken against our company. 
+\\
+Compatibility with Older Equipment: The system might need to work with older X-ray machines, limited computational resources, or restricted internet bandwidth in some hospitals. These are hard limits based on existing infrastructure that cannot be easily changed. This is essential as without the key input of the X-ray our system will not function. 
 \pagebreak
 
 \section{Specific System Description}
