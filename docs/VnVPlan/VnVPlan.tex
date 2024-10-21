@@ -299,64 +299,127 @@ Simulate failure conditions to verify error-handling mechanisms, such as incompl
 \end{itemize}
 \subsection{Verification and Validation Plan Verification Plan}
 
-
- 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
+This section provides guideline for Quality Assurance team to validate the Verification and Validation Plan document. The following steps will be used:
+\begin{itemize}
+  \item{Cross checking with Functional Requirements from SRS document: VnV documentation must objectively cover all business use-cases and functional requirements verification plan.}
+  \item{Review uncertenties with stakeholders: VnV plan must be reviewed by the stakeholders to ensure that the plan is feasible, realistic, and complete.}
+  \item{Each test case mentioned will have to state the following:}
+  \begin{itemize}
+    \item{What is the expected input and output of the test case.}
+    \item{How the test case is going to be implemented (Using what tools, techniques).}
+    \item{Which functional requirements, or non-functional requirements (from SRS document) does this test case belongs to.}
+    \item{Which system is being tested (Front-end, Back-end, ML model, etc.).}
+    \item{Which team is responsible for the test case. For example, a end-to-end test case might require everyone's effort}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Implementation Verification Plan}
-
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
+The following testing techniques will be used to verify the implementation our system:
+\begin{itemize}
+  \item{\textbf{Unit Testing}}
+  \begin{itemize}
+    \item{Individual units of the software are tested in isolation from the rest of a particular system. This is done to ensure that each unit of the software is working as designed in the business use-cases.}
+    \item{Examples of unit-test includes: testing the input validation, testing the output of a function, testing button clicks, testing authenticated web pages, etc.}
+    \item{All unit tests must cover the happy path and edge cases (boundary conditions, invalid input, etc.).}
+  \end{itemize}
+  
+  \item{\textbf{Integration Testing}}
+  \begin{itemize}
+    \item{Two Individual Systems's Integration are tested. This is done to ensure that the system is working together as designed in the business use-cases.}
+    \item{In the context of Neuralanalyzer, required integrations to test are: the front-end and the back-end, back-end with AWS Cognito, back-end with Neuralanalyzer ML model, back-end with TorchXRayVision etc.}
+    \item{Examples of system tests include: Testing back-end responses with different input from front-end , Testing ML prediction with different images input onto backend, etc.}
+    \item{All Integration tests are ideally to be tested in isolation, for example: front-end to back-end integration test should mock the ML model's responses.}
+    \item{All system tests must cover the happy path and edge cases (boundary conditions, invalid input, etc.).}
+  \end{itemize}
+  \item{\textbf{System/ End-to-End Testing}}
+  \begin{itemize}
+    \item{System testing is done to ensure that all systems are working together as designed in the business use-cases.}
+    \item{Example of 1 System test cases: Sign up on the front-end and validating the existing user on the back-end, etc.}
+    \item{All end-to-end tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction, etc.), and Functional Requirements.}
+  \end{itemize}
+  \item{\textbf{Periodic Health Checks}}
+  \begin{itemize}
+    \item{The front-end, back-end, and ML model will be checked periodically to measure system's uptime. Measured uptime must satisfy the agrred-upon SLA (95\%).}
+    \item{Periodic Health Checks will be performed regardless of the system' software version and state.}
+  \end{itemize}
+  \item{\textbf{Manual Testing}}
+  \begin{itemize}
+    \item{Manual testing will be performed by the team to ensure intuitive and simple UI/UX to the end-user.}
+    \item{Manual testing will only include interaction with the front-end on different devices (mobile, tablet, desktop).}
+    \item{All manual tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction, etc.).}
+  \end{itemize}
+  \item{\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{All the Chest X-Ray data available will be split into 3 diffrent sets: Training, Validation, and Testing.}
+    \item{The ML model will be trained on the Training set, and validated on the Validation set.}
+    \item{The ML model will be tested on the Testing set, and the accuracy will be measured. The accuracy of the models will be aggreed upon by the team, and the stakeholders.}
+  \end{itemize}
+  \item{\textbf{User Acceptance Testing}}
+  \begin{itemize}
+    \item{After the MVP is ready, the team will invite selected stakeholders to test out the system.}
+    \item{Based on the feedback, the team will make necessary changes to the system via GitHub Issues.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Automated Testing and Verification Tools}
+With many testing techniques in place, the following tools will be used to automate the testing process:
+\begin{itemize}
+  \item{\textbf{Tools for Unit Testing}}
+  \begin{itemize}
+    \item{\textbf{Front-end}: Utilizing \textbf{Jest} for testing React components, and front-end data fetching functions. Jest is capable of mocking API calls and other front-end modules, isolating front-end units at test-execution time, making it a perfect tool for React unit testing.}
+    \item{\textbf{Back-end and ML plugins}: Utilizing \textbf{Pytest} for testing individual functions and layers. Pytest is capable of mocking front-end input, external service calls, and other back-end modules.}
+  \end{itemize}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+  \item{\textbf{Tools for Integration Testing}}
+  \begin{itemize}
+    \item{Front-end and back-end integration will be tested with \textbf{Cypress}. Certain function that requires ML model's responses can be mocked with Cypress at the api layer.}
+    \item{Back-end and ML Plugins integration will be tested with \textbf{Pytest}. Certain function that requires Front-end input can be mocked at the API layer.}
+    \item{Back-end and AWS Cognito integration will be tested with \textbf{Pytest}. Certain functions that requires Front-end input and ML models output can be mocked.}
+  \end{itemize}
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+  \item{\textbf{Tools for End-to-End Testing}}
+  \begin{itemize}
+    \item{End-to-end testing can be done with \textbf{Cypress}. Without mocking any functions, end-to-end testing can be performed in a fashion that mimics the user's interaction with the system.}
+    \item{For example Cypress can create an account on the front-end, and validate if the account is created on AWS Cognito.}
+  \end{itemize}
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+  \item{\textbf{Tools for Periodic Health Checks}}
+  \begin{itemize}
+    \item{\textbf{Github Actions Schedules} will be used to run health checks on running front-end and back-end.}
+    \item{Since AWS Cognito's uptime is fully mamanged by AWS, perioid health check for this service is unnecessary.}
+  \end{itemize}
+
+  \item{\textbf{Test Automation Framework}}
+  \begin{itemize}
+    \item{\textbf{GitHub Actions} will be utilized to automate the testing process.}
+    \item{GitHub Actions will be configured to run all tests (All unit tests, integration tests, and system tests) on every Pull Request, and on every commit to the main branch.}
+  \end{itemize}
+
+  \item{\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{\textbf{Pytorch} will be used to test the ML model's accuracy on the Testing set.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Software Validation Plan}
+\begin{itemize}
+  \item{\textbf{Developers}: After a feature is developed, the internal validation plan will includes the following steps}
+  \begin{itemize}
+    \item{Developers will write tests, and come up with acceptance criteria for the feature.}
+    \item{The test caes then will be reviewd (on Github), and ran on Github Actions on every Pull Requests.}
+    \item{The software is consider validated, if all tests pass, including all old tests, and newly written tests.}
+    \item{If the test cases failed, the developer will need to fix the code, and notify the team to re-approve the Pull Requests.}
+  \end{itemize}
+  \item{\textbf{Dr.Mehdi Moradi}: Since Dr.Mehdi Moradi is the primary stakeholder of the project, the team will report project progress to him on a bi-weekly basis. The team will also invite Dr.Mehdi to internal testing sessions.}
+  \item{\textbf{Other Stakeholders}: During the development cycle of the application, User Acceptance Testing (UAT) will be performed periodically by the team. UATs will be performed to ensure that the system is working as expected and is ready for the stakeholders to test. The UAT will be performed in the following steps:}
+  \begin{itemize}
+    \item{Coming up with business use-cases, by stakeholders, that the system must satisfy.}
+    \item{Selected stakeholders will be invited to use and test the beta system.}
+    \item{Stakeholders interaction with the system will be observed and feedback will be collected.}
+    \item{If the interactions and feedbacks are positive, the current system will be deployed to production. However, if the feedbacks are mostly negative, the team will make necessary changes to the system via GitHub Issues, and perform another round of UAT.}
+  \end{itemize}
+\end{itemize}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
 
 \section{Unit Test Description}
 
