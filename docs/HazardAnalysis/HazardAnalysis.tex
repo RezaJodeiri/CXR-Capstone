@@ -82,7 +82,7 @@ This document presents a detailed hazard analysis of our AI-powered chest X-ray 
 
 \section{Scope and Purpose}
 
-The purpose of this hazard analysis is to identify potential hazards in our AI-based chest X-ray analysis system and to propose ways to mitigate them. We focus on specific system components and boundaries to enhance the safety and reliability of the system. While we recognize that certain external factors, like differences in input image quality or user environments, are beyond our control, our system is designed to handle standard digital chest X-ray images provided by qualified healthcare professionals.
+The purpose of this analysis is to identify potential hazards in our AI-based chest X-ray analysis system and to propose ways to mitigate them. We focus on specific system components and boundaries to enhance the safety and reliability of the system. While we recognize that certain external factors, like differences in input image quality or user environments, are beyond our control, our system is designed to handle standard digital chest X-ray images provided by qualified healthcare professionals.
 \newline
 We assume that all system functions—especially those related to image processing, AI analysis, and reporting results—are working as intended. With this in mind, we concentrate on strengthening key components, such as the user interface, backend servers, machine learning models, and data storage systems, to prevent potential failures. Our goal is to ensure that the system provides an accurate, secure, and reliable experience that supports healthcare professionals in diagnosing and managing chest diseases.
 
@@ -296,7 +296,7 @@ Our project is not responsible for the hazards listed above, as they are control
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for AI Module Component (FM7 and FM8)}
+    \caption{FMEA for AI Module Component (FM7-FM10)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -335,38 +335,17 @@ Our project is not responsible for the hazards listed above, as they are control
      \end{enumerate}
      & SR8 & FM8 \\ \hline
 
-    \end{tabular}
-    }
-    \end{table}
-\end{landscape}
-
-
-% Table 5: FMEA for Backend Services Component (FM9 and FM10)
-\begin{landscape}
-    \begin{table}[ht]
-    \centering
-    \caption{FMEA for Backend Services Component (FM9 and FM10)}
-    \renewcommand{\arraystretch}{1.1}
-    {
-    \setlength{\tabcolsep}{2pt}
-    \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{3cm}|p{5cm}|p{6cm}|p{1cm}|p{1cm}|}
-    \hline
-    \textbf{Component} & \textbf{Failure Mode} & \textbf{Effect} & \textbf{Cause} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} \\
-    \hline
-
-    Backend Services
+     Backend Services
      & Experiences slow response times or timeouts during image upload and analysis requests.
      & Users face delays, reducing efficiency in clinical workflow .
      &
      \begin{enumerate}[leftmargin=*, label={\alph*.}, itemsep=1pt]
          \item High server load due to multiple concurrent image processing requests overwhelms resources.
-         \item Inefficient code or algorithms cause bottlenecks, such as unoptimized database queries or synchronous processing.
          \item Insufficient server resources (CPU, memory) lead to lower performance.
      \end{enumerate}
      &
      \begin{enumerate}[leftmargin=*, label={\alph*.}, itemsep=1pt]
          \item Implement load balancing mechanisms to distribute requests, and optimize server configurations for concurrency.
-         \item Optimize backend code by profiling performance, improving algorithms, implementing asynchronous processing where appropriate, and optimizing database queries.
          \item Scale server resources dynamically using AWS Auto Scaling groups, and monitor resource utilization to adjust as needed.
      \end{enumerate}
      & SR9 & FM9 \\ \hline
@@ -390,6 +369,7 @@ Our project is not responsible for the hazards listed above, as they are control
     }
     \end{table}
 \end{landscape}
+
 
 % Table 6: FMEA for Data Storage Component (FM11 and FM12)
 \begin{landscape}
