@@ -20,10 +20,13 @@
 \usepackage{makecell}
 \usepackage{enumitem} 
 \usepackage{adjustbox}
-\usepackage{booktabs}  % For improved table formatting
+\usepackage{booktabs}
+\usepackage{hyperref}
 \setlength{\extrarowheight}{2pt} % For better row spacing
 % Define custom column types
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -53,18 +56,19 @@
 \pagenumbering{roman}
 
 \begin{table}[hp]
-\caption{Revision History} \label{TblRevisionHistory}
+    \caption{Revision History} \label{TblRevisionHistory}
 \begin{tabularx}{\textwidth}{llX}
 \toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change} \\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+October 15, 2024 & All & Scope and Introduction completed \\
+October 17, 2024 & All & Critical Assumptions and FMEA documented \\
+October 20, 2024 & All & FMEA tables developed and Safety and Security Requirements updated \\
+October 25, 2024 & All & Roadmap and References added \\
 \bottomrule
 \end{tabularx}
 \end{table}
-
+    
 ~\newpage
 
 \tableofcontents
@@ -76,7 +80,7 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Introduction}
 
-Following the principles outlined by \citet{leveson_engineering_2011}, a hazard in our AI-based chest X-ray analysis system is any condition or event that could negatively affect the system's operation, integrity, or safety. This includes software bugs, hardware failures, user mistakes, or external disruptions. A hazard becomes significant when it might interfere with the system's ability to provide accurate diagnostic support, protect patient confidentiality, or operate reliably in clinical settings.
+Following the principles outlined by \cite{leveson2011}, a hazard in our AI-based chest X-ray analysis system is any condition or event that could negatively affect the system's operation, integrity, or safety. This includes software bugs, hardware failures, user mistakes, or external disruptions. A hazard becomes significant when it might interfere with the system's ability to provide accurate diagnostic support, protect patient confidentiality, or operate reliably in clinical settings.
 \newline
 This document presents a detailed hazard analysis of our AI-powered chest X-ray analysis application. Throughout this document, we identify potential hazards and suggest ways to eliminate or reduce them. By examining different types of hazards, assessing how likely they are to happen and how severe they might be, and proposing actions to address them, we aim to improve the safety and security requirements for our project.
 
@@ -136,11 +140,11 @@ The Failure Modes and Effects Analysis (FMEA) was selected as the hazard analysi
 \end{itemize}
 Our project is not responsible for the hazards listed above, as they are controlled by third-party systems or external users. While we will take steps to minimize the impact of these hazards, complete mitigation cannot be guaranteed.
 
-% Table 1: FMEA for Image Input Component (FM1 and FM2)
+% Table 1: FMEA for Image Input Component (H1-1 and H1-2)
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for Image Input Component (FM1 and FM2)}
+    \caption{FMEA for Image Input Component (H1-1 and H1-2)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -162,7 +166,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Validate image files during upload by checking formats and integrity, and provide immediate error messages to guide users in resolving issues.
          \item Monitor server storage capacity regularly, and employ scalable storage solutions like AWS S3 to ensure adequate space is available.
      \end{enumerate}
-     & SR1 & FM1 \\ \hline
+     & none & H1-1 \\ \hline
 
     Image Input System
      & System fails to process or analyze uploaded images due to poor image quality.
@@ -181,7 +185,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Provide users with guidelines on acceptable image quality and instructions for obtaining better images if necessary.
          \item Train the AI model on a diverse dataset that includes variations in image quality to improve robustness.
      \end{enumerate}
-     & SR2 & FM2 \\ \hline
+     & SR2 \newline HS2 & H1-2 \\ \hline
 
     \end{tabular}
     }
@@ -189,11 +193,11 @@ Our project is not responsible for the hazards listed above, as they are control
 \end{landscape}
 
 
-% Table 2: FMEA for User Interface Component (FM3 and FM4)
+% Table 2: FMEA for User Interface Component (H2-1 and H2-2)
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for User Interface Component (FM3 and FM4)}
+    \caption{FMEA for User Interface Component (H2-1 and H2-2)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -217,7 +221,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Provide comprehensive training materials, including user manuals and tutorials, and offer ongoing support.
          \item Test the interface across various devices and screen sizes, optimizing responsive design to ensure accessibility.
      \end{enumerate}
-     & SR3 & FM3 \\ \hline
+     & HS3 & H2-1 \\ \hline
 
     User Interface
      & Displays incorrect or misleading analysis results.
@@ -234,18 +238,18 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Ensure data synchronization by using consistent data formats, implementing version checks, and validating data integrity between frontend and backend.
          \item Implement reliable data retrieval methods using robust APIs with error handling and providing user feedback during data loading.
      \end{enumerate}
-     & SR4 & FM4 \\ \hline
+     & HS3 \newline HS4 & H2-2 \\ \hline
 
     \end{tabular}
     }
     \end{table}
 \end{landscape}
 
-% Table 3: FMEA for Data Preprocessing Component (FM5 and FM6)
+% Table 3: FMEA for Data Preprocessing Component (H3-1 and H3-2)
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for Data Preprocessing Component (FM5 and FM6)}
+    \caption{FMEA for Data Preprocessing Component (H3-1 and H3-2)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -267,7 +271,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Implement strict preprocessing protocols and validate image dimensions using automated checks in the data pipeline.
          \item Utilize standardized libraries (e.g., PyTorch transforms) for image normalization, ensuring consistent preprocessing steps.
      \end{enumerate}
-     & SR5 & FM5 \\ \hline
+     & SR2 & H3-1 \\ \hline
 
     Data Preprocessing
      & Data augmentation introduces artifacts that mislead the AI model.
@@ -284,7 +288,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Verify and maintain accurate labels and metadata post-augmentation by automating checks and utilizing data integrity tools.
          \item Incorporate validation steps to assess the impact of augmentation on model performance, adjusting techniques based on results.
      \end{enumerate}
-     & SR6 & FM6 \\ \hline
+     & none & H3-2 \\ \hline
 
     \end{tabular}
     }
@@ -292,11 +296,11 @@ Our project is not responsible for the hazards listed above, as they are control
 \end{landscape}
 
 
-% Table 4: FMEA for AI Module Component (FM7 and FM8)
+% Table 4: FMEA for AI Module Component (H4-1 and H4-2)
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for AI Module Component (FM7-FM10)}
+    \caption{FMEA for AI Module Component (H4-1-H5-1)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -318,7 +322,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Levrage a high-quality, diverse training dataset, ensuring representation across demographics and conditions.
          \item Conduct thorough code reviews, unit tests, and integration tests on the AI model and preprocessing code.
      \end{enumerate}
-     & SR7 & FM7 \\ \hline
+     & HS1 \newline HS5 \newline HS6 & H4-1 \\ \hline
 
     AI Module
      & Model fails to improve over time despite updates.
@@ -333,7 +337,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Establish a continuous data collection pipeline.
          \item Create a feedback loop with clinicians to gather real-world performance data and insights.
      \end{enumerate}
-     & SR8 & FM8 \\ \hline
+     & HS2 & H4-2 \\ \hline
 
      Backend Services
      & Experiences slow response times or timeouts during image upload and analysis requests.
@@ -348,7 +352,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Implement load balancing mechanisms to distribute requests, and optimize server configurations for concurrency.
          \item Scale server resources dynamically using AWS Auto Scaling groups, and monitor resource utilization to adjust as needed.
      \end{enumerate}
-     & SR9 & FM9 \\ \hline
+     & SR6 \newline HS1 & H5-1 \\ \hline
 
     Backend Services
      & Experiences server downtime or crashes.
@@ -363,7 +367,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Adjust capacity based on demand, ensuring sufficient server instances are running during peak times.
          \item Schedule maintenance during off-peak hours with advance notifications to users, and test updates in staging environments before production.
      \end{enumerate}
-     & SR10 & FM10 \\ \hline
+     & SR6 & H5-2 \\ \hline
 
     \end{tabular}
     }
@@ -371,11 +375,11 @@ Our project is not responsible for the hazards listed above, as they are control
 \end{landscape}
 
 
-% Table 6: FMEA for Data Storage Component (FM11 and FM12)
+% Table 6: FMEA for Data Storage Component (H6-1 and H7-1)
 \begin{landscape}
     \begin{table}[ht]
     \centering
-    \caption{FMEA for Data Storage Component (FM11 and FM12)}
+    \caption{FMEA for Data Storage Component (H6-1 and H7-1)}
     \renewcommand{\arraystretch}{1.1}
     {
     \setlength{\tabcolsep}{2pt}
@@ -399,7 +403,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Enforce strict permissions, and provide training to prevent accidental deletions.
          \item Establish regular automated backups, and periodically test data recovery procedures to ensure they function correctly.
      \end{enumerate}
-     & SR11 & FM11 \\ \hline
+     & SR3 \newline HR4 \newline HR5 & H6-1 \\ \hline
 
     Security Modules
      & Suffers security issues leading to unauthorized access to personal information.
@@ -414,9 +418,9 @@ Our project is not responsible for the hazards listed above, as they are control
      \begin{enumerate}[leftmargin=*, label={\alph*.}, itemsep=1pt]
          \item Strengthen authentication using multi-factor authentication and enforce strong password policies.
          \item Encrypt data at rest using AWS KMS and enforce SSL/TLS protocols for data in transit to secure communications.
-         \item Implement role-based access control (RBAC), monitor activities using AWS CloudTrail, and set up alerts for suspicious activities.
+         \item Implement role-based access control (RBAC), and set up alerts for suspicious activities.
      \end{enumerate}
-     & SR12 & FM12 \\ \hline
+     & SR1 \newline SR4 \newline SR5 \newline HS6 & H7-1 \\ \hline
 
     \end{tabular}
     }
@@ -435,23 +439,38 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \subsection{Security and Privacy Requirements}
 
-\textbf{SR3}: The system shall anonymize all chest X-ray images and associated patient data before processing or storage, ensuring that no personally identifiable information (PII) is retained.
-
+\hspace{0.5cm}\textbf{SR1}:\hypertarget{SR1}{The system shall anonymize all chest X-ray images and associated patient data before processing or storage, ensuring that no personal information is retained.}
+\vspace{0.2cm}
 \emph{Rationale}: Anonymization protects patient privacy and complies with healthcare privacy regulations, preventing unauthorized access to sensitive information.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: Security audits confirm that all stored and processed data is anonymized; attempts to retrieve PII from the system yield no results.
+\emph{Fit Criterion}: Security audits confirm that all stored and processed data is anonymized; attempts to retrieve personal information from the system yield no results.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM15, FM19
+\emph{Traceability}: H7-1
 
 \vspace{0.5cm}
 
-\textbf{SR4}: The system shall define a data retention policy that specifies how long patient data is stored and ensures secure deletion procedures after the retention period expires.
+\textbf{SR2}: \hypertarget{SR2}{The system shall validate the quality of images upon upload, ensuring that only diagnostically valid images enter the system.}
+\vspace{0.2cm}
+\emph{Rationale}: Ensuring image quality prevents inaccurate diagnoses and maintains the system's reliability and effectiveness.
 
-\emph{Rationale}: Limiting data retention minimizes the risk of data breaches and complies with legal requirements for data protection.
+\vspace{0.2cm}
+
+\emph{Fit Criterion}: Automated quality checks must validate image resolution, contrast, and clarity before processing.
+
+\vspace{0.2cm}
+
+\emph{Traceability}: H1-2, H3-1
+
+\vspace{0.5cm}
+
+\textbf{SR3}:\hypertarget{SR3}{The system shall define a data preservation policy that specifies how long patient data is stored and ensures secure deletion procedures after the retention period expires.}
+\vspace{0.2cm}
+
+\emph{Rationale}: Limiting data retention minimizes the risk of data leaks and complies with legal requirements for data protection.
 
 \vspace{0.2cm}
 
@@ -459,55 +478,59 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM14, FM15
+\emph{Traceability}: H6-1
 
 \vspace{0.5cm}
 
-\textbf{SR5}: The system shall implement a consent management system that allows patients to control the use and sharing of their data, in accordance with relevant privacy regulations.
+\textbf{SR4}:\hypertarget{SR4}{The system shall implement a consent management system that allows patients to control the use and sharing of their data, in accordance with relevant privacy regulations.}
+\vspace{0.2cm}
 
-\emph{Rationale}: Obtaining and managing patient consent ensures ethical use of data and compliance with laws like HIPAA and GDPR.
+\emph{Rationale}: Obtaining and managing patient consent ensures ethical use of data and compliance with laws like HIPAA \cite{HIPAA} and GDPR \cite{GDPR}.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: Records show that patient consent is obtained and honored; audits confirm that data sharing aligns with patient preferences.
+\emph{Fit Criterion}: Records show that patient consent is given; audits confirm that data sharing aligns with patient preferences.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM15
+\emph{Traceability}: H7-1
 
 \vspace{0.5cm}
 
-\textbf{SR6}: The system shall create detailed audit trails that track all access to and modifications of patient data, enabling detection and investigation of unauthorized activities.
+\textbf{SR5}:\hypertarget{SR5}{The system shall create detailed audit trails that track all access to and modifications of patient data, enabling detection and investigation of unauthorized activities.}
+\vspace{0.2cm}
 
-\emph{Rationale}: Audit trails enhance security by providing accountability and facilitating incident response in case of security breaches.
+\emph{Rationale}: Audit trails enhance security by providing accountability and facilitating incident response in case of security issues.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: Audit logs are comprehensive and tamper-proof; security reviews confirm that all access and changes are properly recorded.
+\emph{Fit Criterion}: Audit logs are comprehensive; security reviews confirm that all access and changes are properly recorded.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM15, FM17
+\emph{Traceability}: H7-1
 
 \vspace{0.5cm}
 
-\textbf{SR7}: The system shall ensure compliance with all relevant healthcare privacy regulations, such as HIPAA, GDPR, and PIPEDA, by implementing necessary technical and administrative safeguards.
+\textbf{SR6}:\hypertarget{SR5}{The system shall implement security measures for API endpoints and service communications to protect against security vulnerabilities}
+\vspace{0.2cm}
 
-\emph{Rationale}: Compliance with legal regulations is mandatory to protect patient rights and avoid legal penalties.
+\emph{Rationale}: Secure APIs and communications prevent unauthorized access and data breaches, ensuring the system's integrity and confidentiality.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: Compliance assessments confirm adherence to regulations; certification from authorized bodies is obtained where applicable.
+\emph{Fit Criterion}: Implementation of security best practices for API endpoints; secure service communications are verified.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM13, FM15
+\emph{Traceability}: H5-1, H5-2
 
 \vspace{0.5cm}
 
 \subsection{Health and Safety Requirements}
 
-\textbf{HS3}: The system shall ensure that all AI-generated diagnoses are reviewed and confirmed by qualified medical professionals before being used in patient care decisions.
+\hspace{0.5cm}\textbf{HS1}:\hypertarget{HS1}{The system shall ensure that all AI-generated diagnoses are reviewed and confirmed by qualified medical professionals before being used in patient care decisions.}
+\vspace{0.2cm}
 
 \emph{Rationale}: To prevent misdiagnoses and ensure patient safety by involving human oversight in the diagnostic process.
 
@@ -517,11 +540,12 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM7, FM9
+\emph{Traceability}: H4-1, H5-1
 
 \vspace{0.5cm}
 
-\textbf{HS4}: The system shall provide clear warnings and notifications if the input data quality is insufficient for reliable analysis, prompting users to provide better data.
+\textbf{HS2}:\hypertarget{HS2}{The system shall provide clear warnings and notifications if the input data quality is insufficient for reliable analysis, prompting users to provide better data.}
+\vspace{0.2cm}
 
 \emph{Rationale}: Processing poor-quality images can lead to inaccurate diagnoses, potentially harming patients; users should be aware of data limitations.
 
@@ -531,41 +555,44 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM7, FM8
+\emph{Traceability}: H1-2, H4-2
 
 \vspace{0.5cm}
 
-\textbf{HS5}: The system shall maintain high availability and reliability, ensuring that critical functionalities are accessible with minimal downtime to support timely patient care.
+\textbf{HS3}:\hypertarget{HS3}{The system shall manage user fatigue to reduce errors from extended use.}
+\vspace{0.2cm}
 
-\emph{Rationale}: System outages or performance issues can delay diagnoses and treatments, negatively impacting patient health.
+\emph{Rationale}: Fatigue management improves focus, reducing mistakes during long-term system use by helping users maintain optimal physical and cognitive conditions.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: System uptime is maintained at 99.9\% or higher; performance metrics meet specified thresholds.
+\emph{Fit Criterion}: The system provides break reminders, eye-strain reduction settings, and session timeouts for inactivity.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM12, FM18
+\emph{Traceability}: H2-1, H2-2
 
 \vspace{0.5cm}
 
-\textbf{HS6}: The system shall provide clear and actionable error messages to users in the event of failures or crashes, including guidance on how to proceed.
+\textbf{HS4}:\hypertarget{HS4}{The system shall maintain essential medical information by displaying relevant patient history alongside current diagnostic outcomes.}
+\vspace{0.2cm}
 
-\emph{Rationale}: Informative error messages help users take appropriate actions quickly, reducing potential delays in patient care.
+\emph{Rationale}: Ensuring diagnostic background supports accurate decision-making by providing essential background for interpreting results.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: User acceptance testing confirms that error messages are clear and helpful; documentation provides further guidance.
+\emph{Fit Criterion}: Relevant patient history and prior analyses are displayed with current results, and missing data is clearly indicated.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM9, FM10
+\emph{Traceability}: H2-2, H6-1
 
 \vspace{0.5cm}
 
-\textbf{HS7}: The system shall include disclaimers indicating that AI analysis is a diagnostic aid and not a replacement for professional medical judgment.
+\textbf{HS5}:\hypertarget{HS5}{The system shall include disclaimers indicating that AI analysis is a diagnostic aid and not a replacement for professional medical use.}
+\vspace{0.2cm}
 
-\emph{Rationale}: Users must understand the limitations of AI to prevent overreliance and potential errors in patient care.
+\emph{Rationale}:Users must understand the limitations of AI to prevent overreliance and potential errors in patient care.
 
 \vspace{0.2cm}
 
@@ -573,33 +600,44 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM7, FM11
+\emph{Traceability}: H4-1, H6-1
 
 \vspace{0.5cm}
 
-\textbf{HS8}: The system shall ensure that user interfaces are responsive and intuitive, minimizing the potential for user error and enhancing efficiency in clinical workflows.
+\textbf{HS6}:\hypertarget{HS6}{The system shall monitor patient safety by conducting ongoing assessments and collecting user feedback.}
+\vspace{0.2cm}
 
-\emph{Rationale}: Poorly designed interfaces can lead to mistakes or delays, adversely affecting patient safety and care quality.
+\emph{Rationale}: Continuous monitoring ensures patient safety by identifying potential risks.
 
 \vspace{0.2cm}
 
-\emph{Fit Criterion}: Usability testing confirms that interfaces meet specified usability standards; user feedback is positive.
+\emph{Fit Criterion}: The system undergoes regular audits, collects user feedback on safety, and supports incident reporting mechanisms.
 
 \vspace{0.2cm}
 
-\emph{Traceability}: FM10, FM11
-
-\vspace{0.5cm}
-
+\emph{Traceability}: H4-1, H7-1
 
 
 \section{Roadmap}
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+In the hazard analysis and FMEA documentation for our chest X-ray diagnostic system, we have identified and prioritized a comprehensive set of safety and security requirements to mitigate potential hazards. These requirements aim to ensure the accuracy, reliability, and integrity of the system, while addressing essential privacy, safety, and usability concerns in a clinical environment.
 
+\vspace{0.2cm}
+
+\noindent Requirements focusing on fundamental safety and security priorities, such as ensuring the correctness of AI-generated diagnoses, preserving user privacy, and minimizing patient risk, are given the highest priority. These include \hyperlink{SR1}{SR1}, \hyperlink{SR2}{SR2}, \hyperlink{SR5}{SR5}, \hyperlink{HS1}{HS1}, \hyperlink{HS2}{HS2}, and \hyperlink{HS5}{HS5}. Implementing these will ensure that the core functionalities, such as diagnosis review by medical professionals and anonymization of sensitive data, are in place by the end of the capstone project to reduce the likelihood of critical errors and privacy breaches.
+\vspace{0.2cm}
+
+\noindent High-priority requirements focused on operational continuity, such as system availability during peak loads, responsive user interfaces, and the management of backend downtime, will also be addressed within the project timeline. These include \hyperlink{HS3}{HS3}, \hyperlink{SR6}{SR6}, \hyperlink{SR4}{SR4}, and \hyperlink{HS6}{HS6}, which are essential for sustaining a seamless clinical workflow and ensuring minimal disruptions during diagnosis.
+\vspace{0.2cm}
+
+\noindent Some requirements aimed at further enhancing the system’s long-term usability and performance will be postponed for future implementation. These include advanced quality monitoring of uploaded images (\hyperlink{SR2}{SR2}), integration of patient feedback mechanisms (\hyperlink{HS4}{HS4}), and additional fatigue management improvements for clinicians (\hyperlink{HS3}{HS3}). While these features are beneficial for improving efficiency and user satisfaction, they are considered medium priority and will be explored after the initial system is operational.
+\vspace{0.2cm}
+
+\noindent Given the scope and time constraints of the capstone project, the roadmap prioritizes essential safety, security, and operational requirements to be implemented during the course. The remaining non-critical requirements will be reserved for future iterations. This roadmap will ensure that our chest X-ray diagnostic system evolves towards meeting high standards of safety, usability, and compliance, aligning with clinical needs and regulatory requirements.
 \newpage{}
-
+\bibliographystyle{plainnat}
+\bibliography {../../refs/References}
+\newpage
 \section*{Appendix --- Reflection}
 
 \wss{Not required for CAS 741}
