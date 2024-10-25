@@ -295,26 +295,113 @@ How test will be performed:
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
 
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
+\textbf{NFR-LF1} \textbf{Type} Interactive Dynamic Manual\\
+         \indent {\textbf{Initial State}: The system must be installed and accessible.}\\
+         \indent {\textbf{Input / Condition}: Adjust window/level settings. Navigate between over tabs.Apply basic tools (zoom, pan, measure). Export or save images from the viewer.}\\
+         \indent {\textbf{Output}: The UI layout should be similar to standard medical imaging software (with menu positions, toolbar layout, and terminology consistent with common practices).}\\
+         \indent {\textbf{How test will be performed}: Ensure the system under test and reference medical imaging software are installed and configured. Launch the system under test and the reference software side-by-side. Compare the menu structure, toolbars, icons, panels, and overall layout. Verify whether the placement of key elements matches standard layouts. Review menu labels, tooltips, and buttons to ensure they use medical imaging terms. Adjust window/level settings. Use zoom, pan, and measurement tools.}\\
+        \\
+\textbf{NFR-LF2} \textbf{Type} Interactive Dynamic Manual \\
+        \indent \textbf{Initial State}: The system under test is installed and accessible on the target device. The monitor brightness is set to a comfortable level to ensure consistency during the test.\\
+        \indent \textbf{Input / Condition}: User Interaction with the interface for typical workflows.\\
+        \indent \textbf{Output}: color contrast ratio (is 4.5:1 or higher for text). Font sizes at least 12-14 points for normal text. \\
+        \indent \textbf{How test will be performed}: Launch the system and ensure the default color schemes and fonts are applied. Perform tasks continuously for 1-2 hours while interacting with different parts of the system interface (e.g., forms, menus). Check for signs of fatigue or frustration (e.g., rubbing eyes, slowing down). Use tools to measure the color contrast ratio.\\
+        \\
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+\noindent \textbf{NFR-UH1} \textbf{Type} Performance Dynamic Automated \\
+        \indent \textbf{Initial State}: User accounts and access credentials are prepared for all healthcare professionals participating in the test.Any required files or images are pre-loaded and accessible for the tasks.\\
+        \indent \textbf{Input / Condition}: Automated script with a list of specified tasks and user accounts\\
+        \indent \textbf{Output}: Percentage of user accounts that successfully completed all tasks without assistance: $\text{Success Rate} = \frac{\text{Number of Successful Participants}}{\text{Total Number of Participants}} \times 100$ \\
+        \indent \textbf{How test will be performed}: The automated script will perform the following tasks with each user account and calculate the success rate: Upload a Chest X-ray image to the system. View analysis results or processed reports. Adjust image settings (e.g., window/level, zoom). Export the analysis or report to a local folder. \\ 
+\\
+\textbf{NFR-UH2} \textbf{Type} Interactive Dynamic Automated \\
+        \indent \textbf{Initial State}: List of user accounts and access credentials are prepared. Full access to the user interface. Interface elements (buttons, icons, menus) are accessible for interaction.\\
+        \indent \textbf{Input / Condition}: Automated script with a list of interactions specified to interact with the tabs / other listed functionalities.\\
+        \indent \textbf{Output}: Log whether tool-tips and help content were displayed correctly for each element tested.\\
+        \indent \textbf{How test will be performed}: The test script will detect if the tool-tip appears after a short delay (0.5-1 second) when it hovers over an element. When it clicks on a help icon (e.g., “?” symbol) or help link, the test script checks if the system provides relevant information about that part of the interface. When the test script finished, it will provide a log including if tool-tips and help content were displayed correctly for each element tested. \\
+    
+\noindent \textbf{NFR-PR1} \textbf{Type} Structural Dynamic Automated \\
+        \indent \textbf{Initial State}: User is logged in. Standard chest X-ray images are available for testing in PNG/JPG format (depending on system requirements). \\
+        \indent \textbf{Input / Condition}: Automated test script interacts with the system.\\
+        \indent \textbf{Output}: Boolean, whether the chest X-ray image is analyzed correctly.\\
+        \indent \textbf{How test will be performed}: The test script will upload a X-ray image through the interface. It will monitor the system to ensure it processes and analyzes the image. The moment the results or report are displayed or the system indicates completion, it checks the timing (<30 seconds). The process is repeated multiple times (at least 5 trials) to account for variations in processing time. If all trials pass (duration < 30 seconds), the system returns True, else return False. \\
+\\
+\textbf{NFR-PR2} \textbf{Type} Performance Dynamic Automated \\
+        \indent \textbf{Initial State}: A monitoring system is set up to log availability metrics, such as downtime events, mean time to recovery, and up-time percentage.\\
+        \indent \textbf{Input / Condition}: Server outages / network issues / high number of concurrent users.\\
+        \indent \textbf{Output}: Up-time Percentage; Downtime Events (Log the number, duration, and cause of any disruptions or downtime.) Mean Time to Recovery.\\
+        \indent \textbf{How test will be performed}: Two Automated scripts will start the monitoring system for a defined period (e.g., 24 hours or 1 week). One will simulate server outages or network issues by disabling a service temporarily and record the downtime, mean time to recovery. The other will use load testing tools (like Apache JMeter or Locust) to simulate a high number of concurrent users during peak hours and monitor response times. Two scripts will combine their results and return the output once they all finished.\\
+\\
+\textbf{NFR-PR3} \textbf{Type} Performance Dynamic Automated\\
+        \indent \textbf{Initial State}: All dependencies (database, network, storage, and image processing engine) are configured and operational. Monitoring tools are available to track system performance, including: CPU and memory usage, Image processing times.\\
+        \indent \textbf{Input / Condition}: Collections of 20 identical or varied images, multiple user accounts. Baseline for each image processing is 20 seconds\\
+        \indent \textbf{Output}: Processing Time(Float), System Resource Utilization(Float), Images uploading success / fail (Boolean)\\
+        \indent \textbf{How test will be performed}: The automated script will simulate different users to upload 20 images simultaneously and start the stopwatch or monitoring tool when the uploads begin. It will keep track of the CPU, memory, and I/O usage during the processing of the 20 images. When images processing finished, it will calculate and return the average processing time for the 20 images, return CPU usage, memory usage and check for errors or failures.\\
+        \\
+\textbf{NFR-OE1} \textbf{Type} Structural Dynamic Manual\\
+        \indent \textbf{Initial State}: The AI system and the PACS are both connected to the same hospital network and the DICOM configuration  for both systems is correctly set.\\
+        \indent \textbf{Input / Condition}: AI-processed resuslts including annotations or diagnostic report as an image (in DICOM format). Metadata with patient ID (string) and instance number (string).\\
+        \indent \textbf{Output}: Boolean indicating whether the PACS successfully stores the AI-processed results with correct format (annotated image or report). The stored result is associated with the correct patient ID and instance number in the PACS.\\
+        \indent \textbf{How test will be performed}: Automated script will processes the retrieved chest X-ray image and generates an annotated image or diagnostic report in DICOM format. It will then send the annotated result to the PACS and verify the response from the PACS to ensure that the transfer was successful Then it will log into the PACS and search for the patient ID to confirm that the stored result is associated with the correct instance number. The automated scipt can be run multiple times depending on the need. \\
+        \\
+\textbf{NFR-OE2} \textbf{Type} Performance Dynamic Automated\\
+        \indent \textbf{Initial State}: The network is configured normally with minimal latency and no packet loss initially. Necessary patient data and chest X-ray studies are available for retrieval.\\
+        \indent \textbf{Input / Condition}:Retrieve and process a chest X-ray image, Store the processed result, and send the data to external.\\
+        \indent \textbf{Output}: Boolean indicating if latency is within a reasonable time (190ms~220ms), logs include latency and packet loss statistics.\\
+        \indent \textbf{How test will be performed}: The automated script will simulate Network Latency and Packet Loss using a network emulation tool. It will then processes the retrieved chest X-ray image and generates an annotated image or diagnostic report, meanwhile monitoring the time taken for operations and the number of retries and checking the system logs for any warnings or errors related to packet loss or latency. It will check if the system raises alerts if packet loss exceeds 1% or if latency impacts performance significantly and return the results.
+        \\
+        \\
+        
+\noindent \textbf{NFR-SR1} \textbf{Type} Security Dynamic Automated\\
+         \indent \textbf{Initial State}: AES-256 encryption libraries (such as OpenSSL or Cryptography in Python) are configured for the system. Patient data, (including DICOM images and reports), is stored on the system or transmitted over the network.\\
+         \indent \textbf{Input / Condition}:  X-ray image and diagnostic report with (Patient ID and instance number). Secret key and initialization vector (IV) for AES-256 encryption.\\
+         \indent \textbf{Output}: All patient data, including images and reports, is encrypted using AES-256 both during storage and transmission.\\
+         \indent \textbf{How test will be performed}: The automated system will trigger the AI system to retrieve a chest X-ray image and process it. It will check if transmitted data (images and reports) appears as encrypted bytes and no readable patient information or image data should be visible. After processing, the AI system stores the data and the automated script will try to open a stored DICOM image or report directly without using the decryption mechanism, which should appear as unreadable, encrypted content (random bytes). When AI system decrypt and access the stored image or report, the automated script will detect if the decrypted data matches the original data.\\
+         \\
+\textbf{NFR-SR2} \textbf{Type} Structural Dynamic Automated\\
+        \indent \textbf{Initial State}: The AI system has different user accounts with different assigned roles. Each role has specific permissions defined.\\
+        \indent \textbf{Input / Condition}: Role 1: Radiologist: Can view diagnostic results and patient images. Role 2: Administrator: Can manage user accounts and system configurations. (user\underline radiologist, user\underline admin)\\
+        \indent \textbf{Output}: Radiologist should be able to view diagnostic reports and images and should not be able to manage user accounts, Administrator should be able to create and manage user accounts and should not have access to patient diagnostic reports.\\
+        \indent \textbf{How test will be performed}: The automated script will login as either one of the user (user\underline radiologist or user\underline admin). For example, the automated script logged in user\underline radiologist and views diagnostic reports and download patient images, which should be successful, if not the system will terminated. It will then attempt to manage user accounts which the access should be denied. Same process is repeated for  user\underline admin.\\
+        \\
+\textbf{NFR-MS1} \textbf{Type} Structural Static Manual\\
+        \indent \textbf{Initial State}: The AI system code-base is deployed in a version-controlled environment. Documentation for each module (e.g., README files, API references, inline comments) is available in the repository.\\
+        \indent \textbf{Input / Condition}: All modules within the code repository is accessible.\\
+        \indent \textbf{Output}: All key functionalities (e.g., data ingestion, inference, reporting) are encapsulated in separate, well-defined modules. Modules can function independently with minimal coupling. Dependencies between modules are well-documented.\\
+        \indent \textbf{How test will be performed}: Test person should clone the repository of this AI system and identify and list all modules, review dependencies to ensure minimal coupling and make sure each module is self-contained and can be modified without breaking other parts of the system.\\
+        
+\noindent \textbf{NFR-MS2} \textbf{Type} Integration Dynamic Automated\\
+        \indent \textbf{Initial State}: Code repository contains the entire AI system, automated testing framework (e.g., JUnit, Pytest)  is installed and configured in the project. Tests include unit tests, integration tests, system tests and end-to-end tests. Code coverage tool (e.g., coverage.py, JaCoCo) is integrated.\\
+        \indent \textbf{Input / Condition}: Unit tests, integration tests, and end-to-end tests.\\
+        \indent \textbf{Output}: Code coverage report.\\
+        \indent \textbf{How test will be performed}: The automated test script will navigate to the project directory and execute the automated test suite using the testing framework (e.g., Pytest or JUnit).\\
+    
+\noindent \textbf{NFR-LR1} \textbf{Type} Non-Functional Dynamic Manual\\
+        \indent \textbf{Initial State}: The language options (English and French) are available in the settings menu.\\
+        \indent \textbf{Input / Condition}: Switch language between English and French. Generate report with English and French. \\
+        \indent \textbf{Output}: No untranslated or misaligned content should appear.
+        \indent \textbf{How test will be performed}: Person conducting the test will switch the language from English to French (and vice vera) in the settings menu and inspect Menus, Buttons/Labels, Error Messages and Notifications and other necessary elements for correctness. The test person will thenUse the system to generate a diagnostic report in English (and French) for a chest X-ray image. He / She will review the report for medical findings and patient info to verify that both reports contain the same findings but in the correct language. He / She will also trigger an error condition (e.g., entering invalid patient data) to verify that the error message appears in the selected language (English or French).\\
+        \\
+        
+\noindent \textbf{NFR-LR2} \textbf{Type} Static Manual\\
+        \indent \textbf{Initial State}: ISO 13485 documentation are in place, development artifacts are available. (verification and validation plans, risk analysis reports, requirements, design documents, test plans etc.)\\
+        \indent \textbf{Input / Condition}: Development artifacts, processes(Software lifecycle management process, design review process etc).\\
+        \indent \textbf{Output}: All development processes align with the requirements of ISO 13485 and if not, all software risks are identified, evaluated, and mitigated.\\
+        \indent \textbf{How test will be performed}: The person conducting the test will first review the development artifacts and processes to confirm that: development processes follow ISO 13485 guidelines and risk management procedures are aligned with ISO 14971. He / She will verify that requirements documents are available and cover all key system functionalities, and the system shall adhere to the ISO 13485 standard for medical device software development.\\
+\\
+\textbf{NFR-HS1} \textbf{Type} Interactive Dynamic Manual\\
+        \indent \textbf{Initial State}: User roles are configured within the system, including Radiologist, Clinician, etc.\\
+        \indent \textbf{Input / Condition}: AI-generated report, Radiologist User Account\\
+        \indent \textbf{Output}: Logs including radiologist’s review action (confirm/reject) with a timestamp.\\
+        \indent \textbf{How test will be performed}: The test person will login using a Radiologist User Account and upload a test chest X-ray image to the AI system. The AI system analyzes the image and generates a report (flagged as preliminary). The test person will then access the preliminary report through the system’s dashboard and confirm / reject the diagnosis. If confirmed, the report should be marked as final and made available to clinicians / patients. If rejected: The system should log the feedback and trigger a re-analysis request. \\
+    \\
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
+\noindent \textbf{NFR-HS2} \textbf{Type} Interactive Dynamic Manual\\
+        \indent \textbf{Initial State}: The AI system is deployed and accessible to radiologists, clinicians, and other users.\\
+        \indent \textbf{Input / Condition}: Access the AI-generated diagnostic report and view the user interface displaying AI results.\\
+        \indent \textbf{Output}: Disclaimer is prominently displayed and easy to read. \\
+        \indent \textbf{How test will be performed}: The test person should generate a generate a diagnostic report using the AI system and open the generated report. He / She should check if the disclaimer is present on the report, either at the top, bottom, or in a prominent section, and the disclaimer test matches the predefined wording. He / She should also access the user interface which display AI results and select a patient report, check if the disclaimer is clearly displayed alongside the AI result and cannot be dismissed. \\
 
 \subsubsection{Area of Testing1}
 		
