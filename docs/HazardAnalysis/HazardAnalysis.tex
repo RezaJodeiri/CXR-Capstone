@@ -651,9 +651,36 @@ In the hazard analysis and FMEA documentation for our chest X-ray diagnostic sys
     deliverable, and which did you think of while doing this deliverable? For
     the latter ones (ones you thought of while doing the Hazard Analysis), how
     did they come about?
-    \item Other than the risk of physical harm (some projects may not have any
-    appreciable risks of this form), list at least 2 other types of risk in
-    software products. Why are they important to consider?
+    \item Neuralanalyzer is a complex system with many components. However our team has considered the following two as ones of the \textbf{highest risks}:
+    \begin{enumerate}
+        \item \textbf{Unreliable prediction models lead to misdiagnoses}: This risk was identified as the highest risk since the product primary selling point is the accuracy of the AI models. There are many reasons for this risk to occur:
+        \begin{itemize}
+            \item \textbf{Model's ability to recognize chest-embedded medical device}: Devices such as chest tubes, pacemakers, or defibrillators can be misinterpreted as medical conditions by the model.
+            \item \textbf{Biased training data}: When the chest X-Ray data is only from a specific demographic, scanning machine, or hospital, the model will tend to over-fit to that specific data bias. This will lead to unreliable results on other demographics, machines, or hospitals.
+            \item \textbf{Insufficient training data}: When the model is trained on a small dataset, it will not be able to generalize well on new data, leading to unreliable results.
+            \item \textbf{Developer's operation errors}: When developers make mistakes with the model's architecture, training, or deployment, it will affect the downtime of the AI service.
+        \end{itemize}
+        Given the severity of this risk, our team has came up with a strategy to minimize this risk on production:
+        \begin{itemize}
+            \item \textbf{Gather big and diverse Chest X-ray images}, from multiple sources: Under the supervision of Dr. Mehdi, we will be training our model with \href{https://physionet.org/content/chest-imagenome/1.0.0/}{Imagenome} and \href{https://stanfordmlgroup.github.io/competitions/chexpert/}{ChexPert} datasets, which are well-known and massive datasets.
+            \item \textbf{Transfer Learning and tuning pre-trained models}: As mentioned within SRS, we will utilize the TorchXrayVision model as our back-up mechanism. Since this model is pre-trained on ChexPert, our team will be performing additional training with Imagenome on top of TorchXrayVision.
+            \item \textbf{Automate Developers workflow with CI/CD and automation scripts}: Developers operation such as data handling, version control, model deployment and model re-training should be automated to reduce human errors.
+        \end{itemize}
+        
+        
+        \item \textbf{System's SLA is not met due to unexpected downtime}: Hospitals when using Neuralanalyzer system will under the assumption that our system will be up, as agreed in the SLA, to serve patients diagnosis. However, there are multiple reasons for the system to go down unexpectedly:
+        \begin{itemize}
+            \item \textbf{Unreliable CI/CD pipeline}: When the CI/CD pipeline is not developed and tested thoroughly, buggy code can be deployed to production, leading to unexpected crashes and downtime.
+            \item \textbf{Unmonitored logs and resources}: Some operational issues might run through CI/CD undetected until very later on, such as spikes in traffic, high CPU usage, or memory leaks. These issues will lead to performance degradation and eventually system crashes.
+            \item \textbf{Deployment of major versions}: Minor versions changes are not considered as risky as major versions changes. Major versions changes usually introduce breaking changes that will affect production reliability if not tested properly. When major versions are introduce, the team must ensure egregious testing and provides backwards-compatibility analysis.
+        \end{itemize}
+        The risk of unexpected downtime can be handled in many ways, with many tools available on the markets, such as AWS CloudWatch, Datadog, PagerDuty, etc. In the context of Neuralanalyzer's Capstone implementation, we will negate downtime via the following methods:
+        \begin{itemize}
+            \item \textbf{Implementing log monitoring}: automatically notify developers when a certain level of errors had occurred via email/SMS. Developers will then come online to fix the problem.
+            \item \textbf{Implementing a manual rollback mechanism}: When a bug takes too long to trace and debug, developers should be able to rollback their changes to the previous stable working state.
+        \end{itemize}
+    \end{enumerate}
+
 \end{enumerate}
 
 \end{document}
