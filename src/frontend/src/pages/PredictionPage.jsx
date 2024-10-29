@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { uploadImage } from './services/api';
+import React, { useState } from "react";
+import { uploadImage } from "../services/api";
 
-function App() {
+function PredictionPage() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [prediction, setPrediction] = useState('');
+  const [prediction, setPrediction] = useState("");
   const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
@@ -27,13 +27,13 @@ function App() {
 
   return (
     <div>
-      <h1>Chest X-ray Prediction</h1>
+      <h1 className="text-red-300">Chest X-ray Prediction</h1>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleSubmit}>Upload and Predict</button>
       {prediction && <h3>Prediction: {prediction}</h3>}
-      {error && <p style={{color: 'red'}}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
 
-export default App;
+export default PredictionPage;
