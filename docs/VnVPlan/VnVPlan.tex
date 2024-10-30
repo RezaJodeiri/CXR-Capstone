@@ -579,6 +579,52 @@ How test will be performed:
 
 \subsection{Traceability Between Test Cases and Modules}
 
+\begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
+  \hline
+  \multicolumn{1}{|c|}{NFR ID} & \multicolumn{2}{c|}{LF} & \multicolumn{2}{c|}{UH} & \multicolumn{3}{c|}{PR} & \multicolumn{2}{c|}{OE} & \multicolumn{2}{c|}{SR} & \multicolumn{2}{c|}{M} & CR & \multicolumn{2}{c|}{LR} & \multicolumn{2}{c|}{HS} \\ 
+  \hline
+  & 1 & 2 & 1 & 2 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & S1 & S2 & 1 & 1 & 2 & 1 & 2 \\ 
+  \hline
+  LF 1 & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  LF 2 &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  UH 1 &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  UH 2 &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 1 &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 2 &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 3 &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  OE 1 &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  OE 2 &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  SR 1 &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  \\ 
+  \hline
+  SR 2 &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  \\ 
+  \hline
+  MS1 &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  \\ 
+  \hline
+  MS2 &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  \\ 
+  \hline
+  CR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  \\ 
+  \hline
+  LR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  \\ 
+  \hline
+  LR 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  \\ 
+  \hline
+  HS 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  \\ 
+  \hline
+  HS 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x \\ 
+  \hline
+  \caption{Non-functional requirements traceability}
+  \label{tab:nf_requirements}
+  \end{tabular}
+
 \wss{Provide evidence that all of the modules have been considered.}
 				
 \bibliographystyle{plainnat}
