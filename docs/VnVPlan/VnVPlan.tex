@@ -220,6 +220,60 @@ Understanding user expectations is critical for verifying that the final product
 
 \subsection{Design Verification Plan}
 
+The design verification plan outlines the strategies and procedures that the team will use to verify the correctness and reliability of the design of our X-ray analysis and disease prediction application. This plan will serve as a guideline during the testing phase to ensure that the design meets the intended requirements and can mitigate potential risks identified by the team. The following procedures will be undertaken by the testing team during the verification process:
+
+\subsubsection{Document Review}
+The system's design documentation and related materials will be reviewed by each member of the testing team after the initial draft is produced. During the document review process, the testing team will:
+\begin{itemize}
+\item Ensure that the design of the system aligns with all functional and non-functional requirements, particularly those related to medical accuracy, data security, and regulatory compliance.
+\item Assess if the documentation accurately describes the intended functionalities and behavior of the system, including its ability to analyze X-rays, classify diseases, and provide accurate predictions. Any discrepancies between the design and requirements should be recorded and discussed further.
+\end{itemize}
+
+\subsubsection{Prototype Testing}
+After the scheduled Proof of Concept (POC) demonstration, a prototype for each major system component should be completed. The prototypes will be assembled for system testing. During this phase, the testing team will:
+\begin{itemize}
+\item Verify the application’s ability to process X-ray images accurately and consistently.
+Assess system performance under different load conditions, such as batch processing multiple images simultaneously.
+\item Test the robustness of disease prediction algorithms under various scenarios, including rare and complex cases.
+\item Evaluate the application's user interface for healthcare professionals, ensuring it is intuitive, provides clear predictions, and integrates well with clinical workflows.
+Simulate failure conditions to verify error-handling mechanisms, such as incomplete data, corrupted files, or system downtime.
+\end{itemize}
+
+
+\subsubsection{Design Verification Checklist}
+
+\textbf{Document Review}
+    \begin{itemize}
+        \item Ensure design aligns with all functional and non-functional requirements.
+        \item Confirm documentation accuracy for image processing, classification, and prediction.
+        \item Record any discrepancies from requirements.
+    \end{itemize}
+\textbf{Prototype Testing}
+\begin{itemize}
+    \item \textbf{System Performance}
+    \begin{itemize}
+        \item Verify accurate X-ray image processing.
+        \item Test performance under various load conditions.
+        \item Check response time for predictions.
+        \item Ensure scalability for future usage.
+    \end{itemize}
+\item \textbf{Disease Prediction Accuracy}
+    \begin{itemize}
+        \item Test accuracy with a benchmark dataset.
+        \item Evaluate algorithm on rare and complex cases.
+        \item Check consistency of predictions across runs.
+    \end{itemize}
+
+    \item \textbf{User Interface (UI)}
+    \begin{itemize}
+        \item Confirm UI is intuitive for healthcare professionals.
+        \item Ensure clear display of disease predictions.
+        \item Verify data visualization tools are easy to interpret.
+        \item Check seamless integration with clinical systems.
+    \end{itemize}
+\end{itemize}
+\subsection{Verification and Validation Plan Verification Plan}
+
 \wss{Plans for design verification}
 
 \wss{The review will include reviews by your classmates}
