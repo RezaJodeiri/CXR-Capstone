@@ -128,6 +128,7 @@ export function RegisterFlowView3({
   currentStep,
   setCurrentStep,
   totalSteps,
+  onSubmit,
 }) {
   return (
     <div id="login-form" className="w-4/5 h-4/5 flex flex-col justify-between">
@@ -163,7 +164,7 @@ export function RegisterFlowView3({
         }
       />
 
-      <PrimaryButton text="Submit" onClick={() => console.log("Continue")} />
+      <PrimaryButton text="Submit" onClick={onSubmit} />
     </div>
   );
 }
