@@ -1,5 +1,5 @@
 \documentclass[12pt, titlepage]{article}
-
+\usepackage{lscape}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -232,69 +232,375 @@ as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
 
-\section{System Tests}
+\section{Unit Test Description}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
+\wss{This section should not be filled in until after the MIS (detailed design
+  document) has been completed.}
+
+\wss{Reference your MIS (detailed design document) and explain your overall
+philosophy for test case selection.}  
+\\ Document is not completed yet.
+
+\wss{To save space and time, it may be an option to provide less detail in this section.  
+For the unit tests you can potentially layout your testing strategy here.  That is, you 
+can explain how tests will be selected for each module.  For instance, your test building 
+approach could be test cases for each access program, including one test for normal behaviour 
+and as many tests as needed for edge cases.  Rather than create the details of the input 
+and output here, you could point to the unit testing code.  For this to work, you code 
+needs to be well-documented, with meaningful names for all of the tests.}
+
+\subsection{Unit Testing Scope}
+
+\wss{What modules are outside of the scope.  If there are modules that are
+  developed by someone else, then you would say here if you aren't planning on
+  verifying them.  There may also be modules that are part of your software, but
+  have a lower priority for verification than others.  If this is the case,
+  explain your rationale for the ranking of module importance.}
+\subsection{Unit Testing Scope}
+The modules which the unit test focuses on will be divided into two categories: \textbf{Front-end} and \textbf{Back-end}.\\\\
+The following modules are considered outside the scope of unit testing:\\\\
+\textbf{Third-Party Modules}: 
+Any third-party libraries or frameworks integrated into the application will not be subjected to unit testing. This includes modules developed by external sources, such as libraries for data visualization or authentication. These modules will be relied upon for their documented functionality, but no direct verification will be performed.
+
+
+\subsection{Rationale for Ranking}
+The prioritization of modules for testing is based on the following criteria:
+\begin{itemize}
+    \item \textbf{Impact on Core Functionality}: Modules that are integral to the application’s main features will receive higher priority for unit testing.
+    \item \textbf{User Experience}: Features that directly affect user interactions and overall experience will be tested more rigorously.
+    \item \textbf{Risk Assessment}: Modules with higher associated risks, such as security and data handling, will be prioritized to mitigate potential issues.
+\end{itemize}
+
+By focusing our testing efforts on high-impact modules, we aim to ensure a robust and reliable application while efficiently utilizing our resources.
+
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+\wss{Most of the verification will be through automated unit testing.  If
+  appropriate specific modules can be verified by a non-testing based
+  technique.  That can also be documented in this section.}\\\\
+For unit testing, we’re dividing the process into frontend and backend sections. UI/UX interactions, such as buttons and links, will be tested manually to ensure they function as expected. Backend functions, especially those involving data fetching, will be tested automatically.\\\\
+Frontend testing: UI/UX elements such as buttons, links, and other interactive components will undergo manual testing to confirm that they work as intended from a user perspective. This includes verifying that each interactive element responds accurately and meets usability standards.\\\\
+Backend testing: functions that handle data fetching and processing will be validated through automated tests. These tests will simulate various scenarios to ensure that data retrieval, processing, and any associated logic work as expected, helping us catch issues early and maintain data integrity. This combination of manual and automated testing ensures comprehensive coverage and reliability across the application. (Possibly by Pytest library)
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\subsubsection{Front End}
 
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
-
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}\\\\
+  The frontend testing will encompass all possible user interactions, covering any element that the user can click or interact with. This includes, but is not limited to, buttons, links, dropdowns, modals, and form fields. Each interactive element will be manually tested to confirm that it behaves as expected in various scenarios, such as different screen sizes and user flows. This ensures that the user experience is smooth, intuitive, and functional across all devices and use cases. Anything that deals with username/password/upload/download should be securely designed.
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{FR-FE-1\\} (FR-7, FR-13)
 
-Control: Manual versus Automatic
+Type: Manual
+			
+Initial State:  Automated
 					
-Initial State: 
+Input: Username \& Password
 					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
+Output: User is successfully logged in and redirected to the home page if the username and password are correct. If incorrect, an error message is displayed, preventing login.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Test Case Derivation: The output is expected to confirm whether the login process works correctly. A successful login with correct credentials should redirect the user to the home page, while incorrect credentials should display an error message, preventing access. This expected outcome ensures that the system only grants access to users with valid login information, maintaining security and usability standards.
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+How test will be performed: An automated
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+[Refrence to Login Form UI]
 
-How test will be performed: 
+\item{FR-FE-2\\} (FR-7, FR-13)
+
+Type: Automated
+					
+Initial State: Register Page
+					
+Input: All form fields: Include but not limited to username/email, first name, last name, occupation, organization, location, password and confirmed password.
+					
+Output: User is successfully registered and redirected to the login page if all fields are valid; otherwise, appropriate error messages are displayed for invalid inputs.
+
+Test Case Derivation: This test verifies that the registration functionality correctly processes all required fields. The expected output is based on whether the provided data meets validation criteria and does not contain duplicates.
+
+How test will be performed: Automated scripts will fill in all form fields with valid and invalid data, submitting the registration form. The outputs will be checked to ensure successful registration for valid data and the correct error messages for invalid inputs.
+[Refrence to Register Form UI]
+
+\item{FR-FE-3\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page 
+					
+Input: One or more pictures in various formats (e.g., JPG, PNG, etc.) and within constrained size.
+					
+Output: Images are successfully uploaded, and confirmation messages are displayed. For unsupported formats, appropriate error messages are shown.
+
+Test Case Derivation: This test verifies the image upload functionality, ensuring that the system accepts valid image formats while rejecting unsupported ones. The expected outcome is determined by the format and size of the uploaded images.
+
+How test will be performed: Automated scripts will upload a mix of supported and unsupported image formats and sizes to the upload page. The results will be checked for successful uploads or correct error messages for unsupported formats.
+[Refrence to Upload Page UI]
+
+\item{FR-FE-4\\} (FR-3)
+
+Type: Automated
+					
+Initial State: Upload Page (After Upload)
+					
+Input: Symptoms
+					
+Output: Symptoms are successfully recorded and displayed on the user interface, confirming submission; an error message appears for invalid input.
+
+Test Case Derivation: This test verifies that the system correctly processes and records user-submitted symptoms after an image upload.
+
+How test will be performed: Automated scripts will input various symptom descriptions, including valid and invalid examples, to the appropriate field. The results will be checked to ensure successful recording or the display of correct error messages for invalid entries.
+
+\item{FR-FE-5\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page (Any)
+					
+Input: Delete, Save or Submit
+					
+Output: User’s symptoms and uploaded images are deleted, User’s symptoms and uploaded images are saved under profile; User's symptoms and uploaded images are submitted to backed. Confirmation message will be displayed or if there are validation errors, appropriate error messages are shown.
+
+Test Case Derivation: The expected output depends on the action taken, ensuring that data is either saved locally or submitted to the backend as appropriate.
+
+How test will be performed: Automated scripts will execute the Save or Submit actions and subsequently assess the actual outcomes against the expected results to ensure compliance with the specified requirements.
+
+
+\item{FR-FE-6\\} (FR-13)
+
+Type: Manual
+					
+Initial State: Home Page 
+					
+Input: Actions to navigate to other pages. (Upload, Profile, Logout-redirects to Login page etc)
+					
+Output: The user is successfully redirected to the selected page.
+
+Test Case Derivation: This test ensures that navigation actions from the Home Page function correctly, leading users to the appropriate pages without errors.
+
+How test will be performed: All the buttons will be manually tested, and observed for functionality.
+
+\item{FR-FE-7\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: Report page will be deleted or Report page will go to submitted state.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed: Automated scripts will simulate the selection of "Delete" and "Submit" actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-8\\} (FR-5 FR-6 FR-7 FR-11 FR-13)
+
+Type: Automated
+					
+Initial State: Report Page (Submitted)
+					
+Input: N/A
+					
+Output: Fetch and display the report from the database; otherwise, an error message indicates an invalid or expired session.
+
+Test Case Derivation: This test ensures the system retrieves and displays reports correctly and handles invalid Session ID scenarios (Security).
+
+How test will be performed: Automated scripts will input valid and invalid datasets, verifying the correct report display.
+
+\item{FR-FE-9\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: If 'Delete' is selected, the report page is removed with confirmation. If 'Submit' is selected, it transitions to a submitted state with confirmation.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed:Automated scripts will simulate the selection of Delete and Submit actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-10\\} (FR-7 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Patient)
+					
+Input: N/A
+					
+Output: Displays all relevant information, such as the treatment plan and reports.
+
+Test Case Derivation: This test verifies that the Profile Page correctly displays all pertinent patient information, ensuring data accuracy and completeness.
+
+How test will be performed: Automated scripts will access the Profile Page and check that all expected information, including the treatment plan and reports, is displayed correctly.
+
+\item{FR-FE-11\\} (FR-4 FR-7 FR-8 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Doctor)
+					
+Input: Actions to edit a patient's profile, including treatment plan, comments, etc.
+					
+Output: Displays all patients and their respective information.
+
+Test Case Derivation: This test ensures that the Profile Page for the doctor accurately displays all patients and their details after any editing actions are performed.
+
+How test will be performed: Automated scripts will simulate actions to edit patient profiles and verify that the updated information is displayed correctly for all patients.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Back End}
 
-...
+The backend testing will focus on validating the accuracy, reliability, and performance of all server-side functions and data processes. This includes testing data-fetching endpoints, ensuring secure and correct handling of requests and responses, and verifying data integrity in various scenarios. Automated tests will simulate multiple use cases to ensure that business logic, such as data processing, authentication, and error handling, works as expected. Performance tests will also be conducted to confirm that the backend maintains speed and efficiency under load, supporting seamless interactions between the frontend and backend components. This comprehensive backend testing aims to prevent data inconsistencies and ensure robust, secure, and scalable operations.
 
-\subsection{Tests for Nonfunctional Requirements}
+\begin{enumerate}
 
+\item{FR-BE-1\\} (FR-16)
+
+Type: Automated 
+					
+Initial State: Start
+					
+Input: N/A
+					
+Output: Initialize backed systems and returns result.
+
+Test Case Derivation: This test verifies that the backend systems initialize correctly and that the expected result  is returned, indicating successful setup. (Go to S0)
+
+How test will be performed: Automated scripts will execute the initialization process and validate that the system returns the expected results without errors.
+
+\item{FR-BE-2\\} (FR-1 FR-2 FR-12)
+
+Type: Automated 
+					
+Initial State: S0
+					
+Input: Unloaded Form data (Images, symptoms etc)
+					
+Output: Transition to S1 if the upload is successful; otherwise, remain at S0.
+
+Test Case Derivation: This test verifies that the system successfully transitions from S0 to S1 upon a successful upload of form data and stays at S0 if the upload fails.
+
+How test will be performed: Automated scripts will simulate the upload of form data and check for the correct transition to S1 when the upload is successful or confirm that the system remains at S0 when the upload fails.
+
+\item{FR-BE-3\\} (FR-7 FR-15)
+
+Type: Automated 
+					
+Initial State: S1
+					
+Input: Uploaded Form data
+					
+Output: If the form data is valid, transition to S2; otherwise, return to S0.
+
+Test Case Derivation: This test verifies that the upload form processes data correctly, ensuring successful transitions between states based on the upload outcome.
+
+How test will be performed: Automated scripts will simulate form submissions with valid and invalid data, checking that the system transitions and returns the appropriate error code for failures.
+
+\item{FR-BE-4\\} (FR-14)
+
+Type: Automated 
+					
+Initial State: S2
+					
+Input: Valid Form data
+					
+Output: Processed and normalized form data (in the case of image data) if success transition into S3, else failure state.
+
+Test Case Derivation: This test verifies that the system accurately processes and normalizes valid form data, ensuring that the output meets the specified requirements for further use.
+
+How test will be performed: Automated scripts will input valid form data and verify that the system produces correctly processed and normalized output, checking for data integrity and conformity to expected formats.
+
+\item{FR-BE-5\\} (FR-3)
+
+Type: Automated
+					
+Initial State: S3
+					
+Input: Normalized data
+					
+Output: Diagnosis prediction data if success transition into S4, else failure state.
+
+Test Case Derivation: If the normalized data is successfully processed by the model, transition to S4; otherwise, enter a failure state.
+
+How test will be performed: Automated scripts will input normalized data into the model and verify that the diagnosis prediction data is produced correctly. The scripts will check for a successful transition to S4 or confirm entry into a failure state based on the processing outcome.
+
+\item{FR-BE-6\\} (FR-4 FR-5 FR-6 FR-8)
+
+Type: Automated 
+					
+Initial State: S4
+					
+Input: Diagnosis prediction data
+					
+Output: Generated report data if sucess transition into S5, else failure state.
+
+Test Case Derivation: This test will generate a concise report based on the diagnosis prediction data provided.
+
+How test will be performed: Automated scripts will input the diagnosis prediction data and verify that a report is generated successfully. The scripts will check for a successful transition to S5 or confirm entry into a failure state if the report generation fails.
+
+\item{FR-BE-7\\} (FR3)
+
+Type: Automated 
+					
+Initial State: Failure
+					
+Input: Error code
+					
+Output: Appropriate error message and system logs.
+
+Test Case Derivation: This is the exit state of the process, indicating that an error has occurred, and the system should provide relevant feedback based on the error code received.
+
+How test will be performed: Automated scripts will input various error codes and verify that the system generates the correct error messages and logs the details appropriately. The test will ensure that the system behaves as expected in the failure state.
+
+\item{FR-BE-8\\} (FR-11 FR-13)
+
+Type: Automated 
+					
+Initial State: S5
+					
+Input: Generated report data
+					
+Output: A confidence score; if low, transition to S6 (if the user is under a doctor); otherwise, proceed to End (if the doctor has approved or the user is not under any doctor).
+
+Test Case Derivation: The confidence score is derived from the generated report data, determining the subsequent state based on its value and the user's doctor status.
+
+How test will be performed: Automated scripts will process the generated report data, calculate the confidence score, and verify the correct state transition based on the score and user status.
+
+\item{FR-BE-9\\} (FR-9 FR-13)
+
+Type: Automated
+					
+Initial State: S6
+					
+Input: Edited data (Doctor)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will depend on the doctor's assessment of the confidence score and the generated report data, resulting in manually annotated information.
+
+How test will be performed: Automated scripts will submit the confidence score and generated report data for manual review, verifying that the doctor’s annotations are accurately recorded and linked to the corresponding report.
+
+\item{FR-BE-10\\} (FR-3 FR7)
+
+Type: Automated 
+					
+Initial State: End
+					
+Input: Approval/Disapproval (1/0)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will vary based on the input (1 or 0), returns nothing or include all pertinent report and diagnosis information.
+
+How test will be performed: Automated scripts will input approval/disapproval and validate that the returned JSON data matches the expected format and includes all relevant details.
+
+\end{enumerate}
+\subsection{Tests for Non-Functional Requirements}
 
 This section contains tests for the Non-Functional Requirements. The subsections of this part were created based on the subsections of Non-functional Requirements listed in the SRS. Each test was created based on the Fit Criterion of the requirements that they covered. 
 \subsection{Look and Feel}
@@ -415,169 +721,38 @@ This section contains tests for the Non-Functional Requirements. The subsections
         \indent \textbf{Output}: Disclaimer is prominently displayed and easy to read. \\
         \indent \textbf{How test will be performed}: The test person should generate a generate a diagnostic report using the AI system and open the generated report. He / She should check if the disclaimer is present on the report, either at the top, bottom, or in a prominent section, and the disclaimer test matches the predefined wording. He / She should also access the user interface which display AI results and select a patient report, check if the disclaimer is clearly displayed alongside the AI result and cannot be dismissed. \\
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
-
-\subsection{Traceability Between Test Cases and Requirements}
-
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
-
-\section{Unit Test Description}
-
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
-
-\subsection{Unit Testing Scope}
-
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
-
-\subsection{Tests for Functional Requirements}
-
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
-
-\subsubsection{Module 1}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
-
 \subsection{Traceability Between Test Cases and Modules}
+This section provides evidence that all modules have been considered in the test case design. Each test case is mapped to its corresponding module to ensure comprehensive coverage and verification of functionality.
+\wss{Provide evidence that all of the modules have been considered.}
+\begin{landscape}
+\begin{table}[h]
+    \centering
+    \caption{Traceability Matrix}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Module} & \textbf{Description} & \textbf{Status} \\
+        \hline
+        test-id1 & Module A (e.g., Upload) & Tests the upload functionality & Pending \\
+        \hline
+        test-id2 & Module B (e.g., Profile) & Verifies profile editing capabilities & In Progress \\
+        \hline
+        test-id3 & Module C (e.g., Reports) & Confirms report generation accuracy & Completed \\
+        \hline
+        test-id4 & Module D (e.g., Diagnosis) & Assesses diagnosis prediction output & Pending \\
+        \hline
+    \end{tabular}
+\end{table}
+\end{landscape}
+
+
+\textbf{Analysis:}
+\begin{itemize}
+    \item Each test case directly corresponds to specific modules within the application, ensuring that all critical functionalities are covered.
+    \item The status of each test case reflects its current progress, allowing for easy tracking of testing efforts.
+    \item System logs will be generated during the execution of each test case to provide a detailed record of operations. These logs will capture input parameters, output results, and any errors encountered, aiding in debugging and validation.
+    \item By correlating the test case outcomes with system logs, we can ensure accountability and traceability in the testing process, making it easier to identify and address issues.
+\end{itemize}
+				
 
 \begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
   \hline
@@ -625,8 +800,6 @@ How test will be performed:
   \label{tab:nf_requirements}
   \end{tabular}
 
-\wss{Provide evidence that all of the modules have been considered.}
-				
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
