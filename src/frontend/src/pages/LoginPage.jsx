@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { PrimaryButton, SecondaryButton } from "../components/Buttons";
 import { PrimaryTextInputWithLabel } from "../components/Inputs";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function LoginPage() {
+  const navigate = useNavigate();
   const [loginFormValue, setLoginFormValue] = useState({
     email: "",
     password: "",
@@ -31,13 +35,19 @@ function LoginPage() {
               placeholder="Password"
               value={loginFormValue.password}
               onChange={(e) =>
-                setLoginFormValue({ ...loginFormValue, password: e.target.value })
+                setLoginFormValue({
+                  ...loginFormValue,
+                  password: e.target.value,
+                })
               }
             />
 
             <PrimaryButton
               text="Sign In"
-              onClick={() => console.log("Sign in")}
+              onClick={() => {
+                // TODO: Login logic here
+                navigate("/dashboard", { replace: true });
+              }}
             />
             <div className="flex items-center gap-2">
               <input
@@ -45,7 +55,10 @@ function LoginPage() {
                 className="accent-primary w-5 h-5 cursor-pointer"
                 checked={loginFormValue.rememberMe}
                 onChange={(e) =>
-                  setLoginFormValue({ ...loginFormValue, rememberMe: e.target.checked })
+                  setLoginFormValue({
+                    ...loginFormValue,
+                    rememberMe: e.target.checked,
+                  })
                 }
               />
               <h3
@@ -66,10 +79,9 @@ function LoginPage() {
         <div className="h-full w-1/2 bg-gradient-to-br from-primary to-[#00B6AD] flex flex-col items-center justify-center gap-4">
           <h1 className="text-white text-4xl font-medium">Neuralanalyzer.</h1>
           <h4 className="text-white">Don't have an account?</h4>
-          <SecondaryButton
-            text="Sign Up"
-            onClick={() => console.log("Sign up")}
-          />
+          <Link to="/register">
+            <SecondaryButton text="Sign Up" onClick={() => void 0} />
+          </Link>
         </div>
       </div>
     </div>
