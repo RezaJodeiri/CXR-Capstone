@@ -89,7 +89,7 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 \section{General Information}
 
 \subsection{Summary}
-There are multiple software components that are required for us to complete our end goal, as previously mentioned in SRS, we need to test each of these components to ensure accuracy and reliability in our product. More of the specifics can be found below.  
+There are multiple software components that are required for us to complete our end goal, as previously mentioned in SRS and Hazard Analysis, we need to test each of these components to ensure accuracy and reliability in our product. More of the specifics can be found below.  
 \subsubsection{User Interface (UI)}
 \textbf{Function}: Ensure that the interface is easy to navigate for users like radiologists, doctors, or technicians. This includes testing for intuitive layouts, clear labels, and smooth workflows.
 \begin{itemize}
@@ -120,11 +120,11 @@ There are multiple software components that are required for us to complete our 
             \item \textbf{Functionality of Automated Reporting}: Upon completing the analysis, the software can generate the report showing the probabilities of diseases and save that information onto the patients hospital data or user data of that hospital.
     \end{itemize}
     \subsection{Objectives}
-
+% add a more general paragraph on the top.
 \subsubsection{Ensure Software Accuracy or Correctness (In scope)}
 \begin{itemize}
     \item The primary objective of this project is to build confidence in the correctness of the AI-powered diagnostic tool for lung diseases. 
-    \item The software should be able to consistently and accurately predict the with a score of a minimum of 80$\%$ accuracy. 
+    \item The software should be able to consistently and accurately predict the with a score of a minimum of 85$\%$ accuracy. 
     \item This probability will be derived from the model estimating the odds of  various lung conditions for example,  pneumonia or lung cancer from X-ray images. 
     \item Verifying the correctness of the AI's predictions is essential to ensure reliable clinical decision-making.
 \end{itemize}
@@ -151,25 +151,32 @@ There are multiple software components that are required for us to complete our 
 \begin{itemize}
     \item Ensuring we do adequate usability testing is a priority, however going further than that is a  problem for the longer future as we have limited resources, only basic usability testing will be done to ensure the software meets general usability standards. 
 \end{itemize}
-\subsubsection{European Regulatory Compliance (Out of scope)}
+\subsubsection{Non Canadian/American Regulatory Compliance (Out of scope)}
 \begin{itemize}
-    \item The project will not focus on ensuring compliance with European health data privacy regulation, for example, the General Data Protection Regulation in the European Union. As we are currently only looking to launch this application for North America more specifically Canada and the United States. 
+    \item The project will not focus on ensuring compliance with other  health data privacy regulation, for example, the General Data Protection Regulation in the European Union. As we are currently only looking to launch this application for North America more specifically Canada and the United States. 
 \end{itemize}
 
 \subsection{Challenge Level and Extras}
 
 \subsubsection{Challenge Level}
 
-My team and I believe the challenge level for this project to be advanced. This classification is based on the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the need to develop a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of Tensors, Linear Algebra, machine learning, and image processing will be essential for this application to function effectively. \\
+Our team believes the challenge level for this project to be advanced. This classification is based on the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the need to develop a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of Tensors, Linear Algebra, machine learning, and image processing will be essential for this application to function effectively. \\
 In terms of feasibility, our approach includes specific strategies to handle data privacy and large-scale data management. We plan to adhere to compliance regulations (such as HIPAA guidelines) and use anonymized datasets where necessary. Additionally, our team has access to sufficient computational resources and relevant medical datasets, ensuring we can manage the data and AI components of the project effectively. Links to some resources are below:\\
 \url{https://youtu.be/lvXc3O2n56w?si=CdYoJH9WRrPKQU3i}
 \url{https://stanfordmlgroup.github.io/competitions/chexpert/} \\ 
-We have also identified several "extras" to enhance the application, such as incorporating a user feedback loop and additional image processing features that could benefit medical professionals and future development phases. Our VnV will include cross-validation and real-world testing scenarios to ensure accuracy and reliability in a clinical context. \\
+We have also identified several "extras" to enhance the application, such as incorporating a user feedback loop and additional image processing features that could benefit medical professionals and future development phases. Our System Verification and VAlidation plan will include cross-validation and real-world testing scenarios to ensure accuracy and reliability in a clinical context. \\
 \subsubsection{Extras}
-As mentioned in SRS and in the previous sections: Basic usability testing will be conducted to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will include gathering feedback from potential users to identify any usability issues and make necessary adjustments.
+
+\textbf{Extra Testing:}
+As mentioned in SRS and in the previous sections: Basic usability testing will be conducted to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will include gathering feedback from potential users to identify any usability issues and make necessary adjustments. \\\\  
+\textbf{Feature one:}
+One additional feature we plan to add, is a quick notification system to the people who are responsible patient. For instance, if the patient was to have a serious condition, for example, benign cancer in that region of his lungs, his physician would be immediately updated via SMS or other communication platforms. \\\\  
+\textbf{Feature Two:}
+Another feature we can look to add to our application is a checklist of the patients symptoms this would be used in a verification role. For example, if the patient facilitated his symptoms to be shortness of breath, the application would use this information and incorporate in the AI trained model, returning diseases which could have this potential symptom.\\  
+
 \subsection{Relevant Documentation}
 
-The two main relevant documentation that helped guide us in System Verification and Validation Plan (VnV) was Software Requirements Specification (SRS) and development plan. SRS was crucial for the successful development of the AI-powered diagnostic tool for lung diseases, as it clearly outlines the software’s intended functionality, performance requirements, and design constraints, providing a roadmap for us developers and aiding us understand our stakeholders. The problem statement identifies the specific challenges to be addressed, while the development plan documented helped us by outlining what approach and resources were needed to achieve our project goals. These documents are very relevant as they helped ensure that the SRS aligns with the project’s objectives, guiding the VnV process by defining acceptance criteria, enabling the creation of test cases linked to specific requirements, and establishing a traceability matrix to ensure all functionalities are tested. Additionally, the SRS aids in managing changes, identifying risks, and ensuring compliance with regulations like PIPEDA or HIPAA, ultimately enhancing quality assurance practices and helping to deliver a reliable and effective software product.
+The three main relevant documentation that helped guide us in System Verification and Validation Plan (VnV) was Software Requirements Specification (SRS), Hazard Analysis (HA), and development plan. SRS was crucial for the successful development of the AI-powered diagnostic tool for lung diseases, as it clearly outlines the software’s intended functionality, performance requirements, and design constraints, providing a road map for us developers and aiding us understand our stakeholders.  The problem statement identifies the specific challenges to be addressed, while the development plan documented helped us by outlining what approach and resources were needed to achieve our project goals. Lastly, Hazard Analysis helped us identify security and safety requirements, with that in mind we were able to test the system more thoroughly. As HA helped us derive requirements for our implementation plan by creating by additional mitigation of health and safety risks. For example, if our server went down, we would not potentially fulfill the Service Level Agreement due to the downtime of the system. However, through HA we were able to create counter measures to ensure when things like that happen, those risks are mitigated.These documents are very relevant as they helped ensure that the SRS aligns with the project’s objectives, guiding the VnV process by defining acceptance criteria, enabling the creation of test cases linked to specific requirements, and establishing a traceability matrix to ensure all functionalities are tested. Additionally, the SRS aids in managing changes, identifying risks, and ensuring compliance with regulations like PIPEDA or HIPAA, ultimately enhancing quality assurance practices and helping to deliver a reliable and effective software product.
 
 
 
@@ -259,6 +266,7 @@ Simulate failure conditions to verify error-handling mechanisms, such as incompl
         \item Check response time for predictions.
         \item Ensure scalability for future usage.
     \end{itemize}
+
 \item \textbf{Disease Prediction Accuracy}
     \begin{itemize}
         \item Test accuracy with a benchmark dataset.
@@ -273,17 +281,26 @@ Simulate failure conditions to verify error-handling mechanisms, such as incompl
         \item Verify data visualization tools are easy to interpret.
         \item Check seamless integration with clinical systems.
     \end{itemize}
+
+    \item \textbf{Failure Handling}
+    \begin{itemize}
+        \item Test response to incomplete or corrupted data.
+        \item Verify clarity of error messages.
+        \item Simulate network failures for recovery and integrity.
+        \item Check logging for error tracking.
+    \end{itemize}
+
+    \item \textbf{Security and Compliance}
+    \begin{itemize}
+        \item Confirm encryption and patient privacy protections.
+        \item Verify compliance with healthcare data regulations.
+        \item Ensure access control mechanisms are in place.
+    \end{itemize}
 \end{itemize}
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{Plans for design verification}
 
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
-
-\subsection{Verification and Validation Plan Verification Plan}
-
+ 
 \wss{The verification and validation plan is an artifact that should also be
 verified.  Techniques for this include review and mutation testing.}
 
