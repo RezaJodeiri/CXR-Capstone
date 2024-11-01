@@ -316,6 +316,12 @@ This section provides guideline for Quality Assurance team to validate the Verif
 \subsection{Implementation Verification Plan}
 The following testing techniques will be used to verify the implementation our system:
 \begin{itemize}
+  \item{\textbf{Static Code and Documentation walkthroughs}}
+  \begin{itemize}
+    \item{Documentation walkthroughs will be performed by the team members, as a group, to verify that business use-cases and functional requirements are all covered.}
+    \item{Code walkthroughs/ Peer reviews will be performed by the team to ensure that the code is written as per the design documents (VNV Plan, SRS, and Development Plan).}
+  \end{itemize}
+
   \item{\textbf{Unit Testing}}
   \begin{itemize}
     \item{Individual units of the software are tested in isolation from the rest of a particular system. This is done to ensure that each unit of the software is working as designed in the business use-cases.}
@@ -364,6 +370,19 @@ The following testing techniques will be used to verify the implementation our s
 \subsection{Automated Testing and Verification Tools}
 With many testing techniques in place, the following tools will be used to automate the testing process:
 \begin{itemize}
+  \item{\textbf{Static Code/ Document Review via Github Pull Requests}}
+  \begin{itemize}
+    \item{During development phase, every line of code ideally would have to be reviewd, per \textbf{Github Pull Requests}, by the team. As mentioned, pull requests onto main branch must be approved by all 4 team members.}
+    \item{If a pull request is way too long (ie: more than 500 lines of code), the pull request owner will have to break down the pull request into smaller pull requests, or the team will have a meeting to review the code.}
+    \item{Since the documentation is also version controlled, the team will review documents similar to code review via \textbf{Github Pull Requests}.}
+  \end{itemize}
+
+  \item{\textbf{Static Code Analysis Tools}}
+  \begin{itemize}
+    \item{Utilizing \textbf{Pylint} for Python code, and \textbf{ESLint} for JavaScript code To ensure that the code is written as per the PEP8 standards.}
+    \item{Pylint and ESLint will be integrated into the development environment, and will be run on every commit to the main branch via \textbf{Gtihub Actions}.}
+  \end{itemize}
+
   \item{\textbf{Tools for Unit Testing}}
   \begin{itemize}
     \item{\textbf{Front-end}: Utilizing \textbf{Jest} for testing React components, and front-end data fetching functions. Jest is capable of mocking API calls and other front-end modules, isolating front-end units at test-execution time, making it a perfect tool for React unit testing.}
