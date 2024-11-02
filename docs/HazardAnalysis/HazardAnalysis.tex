@@ -153,7 +153,7 @@ Our project is not responsible for the hazards listed above, as they are control
     \textbf{Component} & \textbf{Failure Mode} & \textbf{Effect} & \textbf{Cause} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} \\
     \hline
 
-    Image Input System
+    \multirow{2}{*}{} 
      & Failure to upload chest X-ray images to the system.
      & Delays in diagnosis and analysis, affecting clinical workflow.
      &
@@ -166,9 +166,9 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Validate image files during upload by checking formats and integrity, and provide immediate error messages to guide users in resolving issues.
          \item Monitor server storage capacity regularly, and employ scalable storage solutions like AWS S3 to ensure adequate space is available.
      \end{enumerate}
-     & none & H1-1 \\ \hline
+     & none & H1-1 \\ \cline{2-7}
 
-    Image Input System
+    Input System
      & System fails to process or analyze uploaded images due to poor image quality.
      & Inaccurate AI analysis leading to misdiagnosis.
      &
@@ -206,7 +206,7 @@ Our project is not responsible for the hazards listed above, as they are control
     \textbf{Component} & \textbf{Failure Mode} & \textbf{Effect} & \textbf{Cause} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} \\
     \hline
 
-    User Interface
+    \multirow{2}{*}{} 
      & Interface is non-intuitive or difficult to navigate for healthcare professionals.
      & Decreased efficiency and user frustration
      &
@@ -221,7 +221,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Provide comprehensive training materials, including user manuals and tutorials, and offer ongoing support.
          \item Test the interface across various devices and screen sizes, optimizing responsive design to ensure accessibility.
      \end{enumerate}
-     & HS3 & H2-1 \\ \hline
+     & HS3 & H2-1 \\ \cline{2-7}
 
     User Interface
      & Displays incorrect or misleading analysis results.
@@ -258,7 +258,7 @@ Our project is not responsible for the hazards listed above, as they are control
     \textbf{Component} & \textbf{Failure Mode} & \textbf{Effect} & \textbf{Cause} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} \\
     \hline
 
-    Data Preprocessing
+    \multirow{2}{*}{} 
      & Incorrect preprocessing of chest X-ray images before AI analysis.
      & AI model receives improperly formatted data, leading to reduced accuracy or errors.
      &
@@ -271,7 +271,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Implement strict preprocessing protocols and validate image dimensions using automated checks in the data pipeline.
          \item Utilize standardized libraries (e.g., PyTorch transforms) for image normalization, ensuring consistent preprocessing steps.
      \end{enumerate}
-     & SR2 & H3-1 \\ \hline
+     & SR2 & H3-1 \\ \cline{2-7}
 
     Data Preprocessing
      & Data augmentation introduces artifacts that mislead the AI model.
@@ -309,7 +309,7 @@ Our project is not responsible for the hazards listed above, as they are control
     \textbf{Component} & \textbf{Failure Mode} & \textbf{Effect} & \textbf{Cause} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} \\
     \hline
 
-    AI Module
+    \multirow{2}{*}{} 
      & AI model misclassifies chest X-ray images, providing incorrect diagnoses.
      & Potential misdiagnosis leading to inappropriate treatment plans and patient harm.
      &
@@ -322,7 +322,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Levrage a high-quality, diverse training dataset, ensuring representation across demographics and conditions.
          \item Conduct thorough code reviews, unit tests, and integration tests on the AI model and preprocessing code.
      \end{enumerate}
-     & HS1 \newline HS5 \newline HS6 & H4-1 \\ \hline
+     & HS1 \newline HS5 \newline HS6 & H4-1 \\ \cline{2-7}
 
     AI Module
      & Model fails to improve over time despite updates.
@@ -339,7 +339,7 @@ Our project is not responsible for the hazards listed above, as they are control
      \end{enumerate}
      & HS2 & H4-2 \\ \hline
 
-     Backend Services
+     \multirow{2}{*}{}
      & Experiences slow response times or timeouts during image upload and analysis requests.
      & Users face delays, reducing efficiency in clinical workflow .
      &
@@ -352,7 +352,7 @@ Our project is not responsible for the hazards listed above, as they are control
          \item Implement load balancing mechanisms to distribute requests, and optimize server configurations for concurrency.
          \item Scale server resources dynamically using AWS Auto Scaling groups, and monitor resource utilization to adjust as needed.
      \end{enumerate}
-     & SR6 \newline HS1 & H5-1 \\ \hline
+     & SR6 \newline HS1 & H5-1 \\ \cline{2-7}
 
     Backend Services
      & Experiences server downtime or crashes.
@@ -640,20 +640,67 @@ In the hazard analysis and FMEA documentation for our chest X-ray diagnostic sys
 \newpage
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
-
 
 \begin{enumerate}
-    \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-    \item Which of your listed risks had your team thought of before this
+    
+    \item \textbf{What went well while writing this deliverable?}
+
+    Writing this hazard analysis allowed us to think more critically and in specific layers about our AI-based chest X-ray analysis system. By breaking down the project into major components like the user interface, backend servers, machine learning models, and data storage, we were able to systematically identify and analyze potential hazards associated with each part. This detailed examination enabled us to anticipate risks ahead of the implementation phase and develop effective mitigation strategies. The process not only deepened our understanding of the system's nuances but also ensured that we considered a wide range of failure modes and their effects through a comprehensive FMEA analysis. Additionally, aligning our safety and security requirements with industry standards and regulations such as HIPAA and GDPR helped strengthen the overall quality and compliance of the deliverable.
+    \item \textbf{What pain points did you experience during this deliverable, and how
+    did you resolve them?}
+
+    One of the main challenges was ensuring that we captured all relevant hazards, especially those that are not immediately obvious, such as ethical biases in AI models or regulatory compliance issues. Initially, our focus was mostly on technical failures and user interface problems. To overcome this, we broadened our perspective by consulting additional resources and engaging with our supervisor Dr. Mehdi Mordadi who is an experts in the field of medical imaging. This helped us identify and incorporate hazards related to data privacy, AI bias, and user training into our analysis. Another pain point was managing the complexity of interrelated system components. We resolved this by clearly defining system boundaries and assumptions, which streamlined our analysis process.
+    \item \textbf{Which of your listed risks had your team thought of before this
     deliverable, and which did you think of while doing this deliverable? For
     the latter ones (ones you thought of while doing the Hazard Analysis), how
-    did they come about?
-    \item Other than the risk of physical harm (some projects may not have any
+    did they come about?}
+
+    Before this deliverable, we had already considered risks such as incorrect AI diagnoses due to model inaccuracies (\hyperlink{H4-1}{H4-1}), data loss or corruption (\hyperlink{H6-1}{H6-1}), and security breaches leading to unauthorized access of patient data (\hyperlink{H7-1}{H7-1}). These risks were apparent due to the critical nature of healthcare data and diagnostics.
+
+    While conducting the hazard analysis, we identified additional risks, including:
+
+    \begin{itemize}
+        \item[-] \emph{AI model failing to improve over time} (\hyperlink{H4-2}{H4-2}): We identified that without continuous learning and updates, the AI model might become outdated, especially as new medical findings are discovered.
+        \item[-]\emph{Failure to handle poor-quality images} (\hyperlink{H1-2}{H1-2}): We realized that image quality significantly impacts AI analysis accuracy. This hazard emerged when examining the image input component and considering real-world scenarios where image quality might vary.
+        \item[-]\emph{User interface challenges leading to misinterpretation of results} (\hyperlink{H2-2}{H2-2}): During the FMEA, we recognized that even if the AI model is accurate, a confusing UI could mislead users, causing misdiagnosis.
+    \end{itemize}
+
+    These hazards came to light as we methodically assessed each component's failure modes and their potential effects, encouraging us to think beyond initial assumptions.
+    \item \textbf{Other than the risk of physical harm (some projects may not have any
     appreciable risks of this form), list at least 2 other types of risk in
     software products. Why are they important to consider?
+    software products. Why are they important to consider?}
+    
+    Neuralanalyzer is a complex system with many components. However our team has considered the following two as ones of the \textbf{highest risks}:
+    \begin{enumerate}
+        \item Unreliable prediction models lead to misdiagnoses: This risk was identified as the highest risk since the product primary selling point is the accuracy of the AI models. There are many reasons for this risk to occur:
+        \begin{itemize}
+            \item[-] \emph{Model's ability to recognize chest-embedded medical device}: Devices such as chest tubes, pacemakers, or defibrillators can be misinterpreted as medical conditions by the model.
+            \item[-] \emph{Biased training data}: When the chest X-Ray data is only from a specific demographic, scanning machine, or hospital, the model will tend to over-fit to that specific data bias. This will lead to unreliable results on other demographics, machines, or hospitals.
+            \item[-] \emph{Insufficient training data}: When the model is trained on a small dataset, it will not be able to generalize well on new data, leading to unreliable results.
+            \item[-] \emph{Developer's operation errors}: When developers make mistakes with the model's architecture, training, or deployment, it will affect the downtime of the AI service.
+        \end{itemize}
+        Given the severity of this risk, our team has came up with a strategy to minimize this risk on production:
+        \begin{itemize}
+            \item[-] \emph{Gather big and diverse Chest X-ray images}, from multiple sources: Under the supervision of Dr. Mehdi, we will be training our model with \href{https://physionet.org/content/chest-imagenome/1.0.0/}{Imagenome} and \href{https://stanfordmlgroup.github.io/competitions/chexpert/}{ChexPert} datasets, which are well-known and massive datasets.
+            \item[-] \emph{Transfer Learning and tuning pre-trained models}: As mentioned within SRS, we will utilize the TorchXrayVision model as our back-up mechanism. Since this model is pre-trained on ChexPert, our team will be performing additional training with Imagenome on top of TorchXrayVision.
+            \item[-] \emph{Automate Developers workflow with CI/CD and automation scripts}: Developers operation such as data handling, version control, model deployment and model re-training should be automated to reduce human errors.
+        \end{itemize}
+        
+        
+        \item System's SLA is not met due to unexpected downtime: Hospitals when using Neuralanalyzer system will under the assumption that our system will be up, as agreed in the SLA, to serve patients diagnosis. However, there are multiple reasons for the system to go down unexpectedly:
+        \begin{itemize}
+            \item[-] \emph{Unreliable CI/CD pipeline}: When the CI/CD pipeline is not developed and tested thoroughly, buggy code can be deployed to production, leading to unexpected crashes and downtime.
+            \item[-] \emph{Unmonitored logs and resources}: Some operational issues might run through CI/CD undetected until very later on, such as spikes in traffic, high CPU usage, or memory leaks. These issues will lead to performance degradation and eventually system crashes.
+            \item[-] \emph{Deployment of major versions}: Minor versions changes are not considered as risky as major versions changes. Major versions changes usually introduce breaking changes that will affect production reliability if not tested properly. When major versions are introduce, the team must ensure egregious testing and provides backwards-compatibility analysis.
+        \end{itemize}
+        The risk of unexpected downtime can be handled in many ways, with many tools available on the markets, such as AWS CloudWatch, Datadog, PagerDuty, etc. In the context of Neuralanalyzer's Capstone implementation, we will negate downtime via the following methods:
+        \begin{itemize}
+            \item[-] \emph{Implementing log monitoring}: automatically notify developers when a certain level of errors had occurred via email/SMS. Developers will then come online to fix the problem.
+            \item[-] \emph{Implementing a manual rollback mechanism}: When a bug takes too long to trace and debug, developers should be able to rollback their changes to the previous stable working state.
+        \end{itemize}
+    \end{enumerate}
+
 \end{enumerate}
 
 \end{document}
