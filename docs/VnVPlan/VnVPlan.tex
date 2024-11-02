@@ -1,5 +1,5 @@
 \documentclass[12pt, titlepage]{article}
-
+\usepackage{lscape}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -12,8 +12,9 @@
 }
 \usepackage[round]{natbib}
 
-\input{../Comments}
-\input{../Common}
+\input{packages/Comments}
+\input{packages/Comments}
+\input{packages/Reflection}
 
 \begin{document}
 
@@ -88,52 +89,96 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 \section{General Information}
 
 \subsection{Summary}
+There are multiple software components that are required for us to complete our end goal, as previously mentioned in SRS and Hazard Analysis, we need to test each of these components to ensure accuracy and reliability in our product. More of the specifics can be found below.  
+\subsubsection{User Interface (UI)}
+\textbf{Function}: Ensure that the interface is easy to navigate for users like radiologists, doctors, or technicians. This includes testing for intuitive layouts, clear labels, and smooth workflows.
+\begin{itemize}
+    \item \textbf{Functionality}: Check if every UI element this includes: buttons, drop downs, the menu and ensure the software front ended system responds correctly to user input.
+    \item \textbf{Performance}: Verify the UI’s responsiveness and loading times, particularly when displaying large medical images like X-rays.
+\end{itemize}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+\subsubsection{Image Preprocessing and Enhancement}
+\textbf{Function}: Before analysis, the X-ray images undergo preprocessing steps to enhance image quality and ensure consistent inputs for the AI model.
+\begin{itemize}
+    \item \textbf{Accuracy of Noise Reduction}: Removes artifacts and noise from X-rays, improving image clarity. This is usually done by making the image grey scale or removing color from the image to ensure further accuracy when reading the image. 
+    \item \textbf{Normalization}: Standardizes the pixel values across images to ensure uniformity, allowing the AI model to better detect subtle differences.
+\end{itemize}
 
-\subsection{Objectives}
+\subsubsection{Processing The Image}
+\textbf{Function}: The AI model reads the image and looks at the features or patterns from the X-ray images that are indicative of various lung conditions.
+\begin{itemize}
+    \item \textbf{Accuarcy of Texture and Shape Analysis}: System analyzes shape and density of lung tissues by looking at tensor values and identifying anomalies.
+\end{itemize}
+\subsubsection{Disease Classification}
+\textbf{Function}: Once features are extracted, using AI classification system categorizes pattern  into different diseases; returning the probabilities.
+    \begin{itemize}
+        \item \textbf{Accuracy and speed of Disease Models}: Model is trained on large datasets of labeled X-ray images specifically CheXRPT, aiding it to recognize the patterns associated with diseases, this includes: Pneumonia, Lung Cancer, Tuberculosis and more.
+        \item \textbf{Accuracy  of Probability Scores}: It provides a probability or confidence score for each disease, indicating the likelihood of the condition being present.
+    \end{itemize}
+    \textbf{Function}: Integrate our application hospital systems and hospital imaging software  for seamless data flow.
+    \begin{itemize}
+            \item \textbf{Functionality of Automated Reporting}: Upon completing the analysis, the software can generate the report showing the probabilities of diseases and save that information onto the patients hospital data or user data of that hospital.
+    \end{itemize}
+    \subsection{Objectives}
+% add a more general paragraph on the top.
+\subsubsection{Ensure Software Accuracy or Correctness (In scope)}
+\begin{itemize}
+    \item The primary objective of this project is to build confidence in the correctness of the AI-powered diagnostic tool for lung diseases. 
+    \item The software should be able to consistently and accurately predict the with a score of a minimum of 85$\%$ accuracy. 
+    \item This probability will be derived from the model estimating the odds of  various lung conditions for example,  pneumonia or lung cancer from X-ray images. 
+    \item Verifying the correctness of the AI's predictions is essential to ensure reliable clinical decision-making.
+\end{itemize}
+\subsubsection{Demonstrate Adequate Usability (In scope)}
+\begin{itemize}
+    \item Given that medical professionals, such as radiologists, students, and doctors, will use the tool, the UI needs to be intuitive and efficient. 
+    \item The focus will be on ensuring the tool’s interface is easy to navigate, with clear access to essential features such as uploading X-rays, viewing probabilities, and generating reports.
+    \item This probability will be derived from the model estimating the odds of  various lung conditions for example,  pneumonia or lung cancer from X-ray images. 
+    \item  The goal of the application is to ensure correct results and not create an inner challenge to use the software itself, so users can quickly perform key tasks.
+\end{itemize}
+\subsubsection{Security of Patient Data (In scope)}
+\begin{itemize}
+    \item Since the software will handle sensitive patient information, it must comply with privacy regulations such as PIPEDA for Canada or HIPAA if used in the US. 
+    \item This objective will focus on verifying that patient data is securely stored and transferred, and that access control mechanisms are in place to protect against unauthorized use.
+\end{itemize}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
-
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
-
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+\subsubsection{Verification of External Libraries and APIs (Out of scope)}
+\begin{itemize}
+    \item  The system relies on pre-existing libraries and APIs for tasks such as image processing, patient data handling, and possibly pre-trained AI models.
+    \item The quality of these external dependencies will not be verified in this project.
+    \item Our team believes that the External libraries and APIs will be assumed to have been tested by their implementation teams.
+\end{itemize}
+\subsubsection{Extensive Usability Testing (Out of scope)}
+\begin{itemize}
+    \item Ensuring we do adequate usability testing is a priority, however going further than that is a  problem for the longer future as we have limited resources, only basic usability testing will be done to ensure the software meets general usability standards. 
+\end{itemize}
+\subsubsection{Non Canadian/American Regulatory Compliance (Out of scope)}
+\begin{itemize}
+    \item The project will not focus on ensuring compliance with other  health data privacy regulation, for example, the General Data Protection Regulation in the European Union. As we are currently only looking to launch this application for North America more specifically Canada and the United States. 
+\end{itemize}
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
+\subsubsection{Challenge Level}
 
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+Our team believes the challenge level for this project to be advanced. This classification is based on the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the need to develop a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of Tensors, Linear Algebra, machine learning, and image processing will be essential for this application to function effectively. \\
+In terms of feasibility, our approach includes specific strategies to handle data privacy and large-scale data management. We plan to adhere to compliance regulations (such as HIPAA guidelines) and use anonymized datasets where necessary. Additionally, our team has access to sufficient computational resources and relevant medical datasets, ensuring we can manage the data and AI components of the project effectively. Links to some resources are below:\\
+\url{https://youtu.be/lvXc3O2n56w?si=CdYoJH9WRrPKQU3i}
+\url{https://stanfordmlgroup.github.io/competitions/chexpert/} \\ 
+We have also identified several "extras" to enhance the application, such as incorporating a user feedback loop and additional image processing features that could benefit medical professionals and future development phases. Our System Verification and VAlidation plan will include cross-validation and real-world testing scenarios to ensure accuracy and reliability in a clinical context. \\
+\subsubsection{Extras}
+
+\textbf{Extra Testing:}
+As mentioned in SRS and in the previous sections: Basic usability testing will be conducted to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will include gathering feedback from potential users to identify any usability issues and make necessary adjustments. \\\\  
+\textbf{Feature one:}
+One additional feature we plan to add, is a quick notification system to the people who are responsible patient. For instance, if the patient was to have a serious condition, for example, benign cancer in that region of his lungs, his physician would be immediately updated via SMS or other communication platforms. \\\\  
+\textbf{Feature Two:}
+Another feature we can look to add to our application is a checklist of the patients symptoms this would be used in a verification role. For example, if the patient facilitated his symptoms to be shortness of breath, the application would use this information and incorporate in the AI trained model, returning diseases which could have this potential symptom.\\  
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+The three main relevant documentation that helped guide us in System Verification and Validation Plan (VnV) was Software Requirements Specification (SRS), Hazard Analysis (HA), and development plan. SRS was crucial for the successful development of the AI-powered diagnostic tool for lung diseases, as it clearly outlines the software’s intended functionality, performance requirements, and design constraints, providing a road map for us developers and aiding us understand our stakeholders.  The problem statement identifies the specific challenges to be addressed, while the development plan documented helped us by outlining what approach and resources were needed to achieve our project goals. Lastly, Hazard Analysis helped us identify security and safety requirements, with that in mind we were able to test the system more thoroughly. As HA helped us derive requirements for our implementation plan by creating by additional mitigation of health and safety risks. For example, if our server went down, we would not potentially fulfill the Service Level Agreement due to the downtime of the system. However, through HA we were able to create counter measures to ensure when things like that happen, those risks are mitigated.These documents are very relevant as they helped ensure that the SRS aligns with the project’s objectives, guiding the VnV process by defining acceptance criteria, enabling the creation of test cases linked to specific requirements, and establishing a traceability matrix to ensure all functionalities are tested. Additionally, the SRS aids in managing changes, identifying risks, and ensuring compliance with regulations like PIPEDA or HIPAA, ultimately enhancing quality assurance practices and helping to deliver a reliable and effective software product.
+
+
 
 \citet{SRS}
 
@@ -151,211 +196,249 @@ how they relate to your VnV efforts.}
   You should do more than list names.  You should say what each person's role is
   for the project's verification.  A table is a good way to summarize this information.}
 
+\subsubsection{Understanding Medical Conditions}
+\textbf{Assigned Team Members: All} \\\\
+For the verification process to ensure that the AI accurately detects lung diseases in chest X-rays, all team members must gain a deep understanding of the relevant medical conditions. This is essential for assessing whether the AI outputs align with real-world clinical expectations. To achieve this, the team needs to thoroughly review annotated chest X-ray datasets and medical literature. Without this foundational knowledge, the team cannot effectively validate the model’s diagnostic accuracy. During verification, each member must be capable of recognizing potential errors in the model’s predictions and correlating them with known medical indicators, ensuring the AI delivers clinically relevant results.
+\subsubsection{Learning PyTorch Fundamentals}
+\textbf{Assigned Team Members: Patrick, Reza, and Kelly}\\\\
+To achieve high-quality verification of the AI model, the team must master PyTorch’s core functionalities, particularly related to the data flow and training process. The team needs to understand how to verify that the model is not just functioning, but also learning and improving in a meaningful way. This includes using PyTorch’s tensor operations and autograd features to test whether gradients are being calculated and applied correctly during backpropagation. Additionally, the team must verify that the preprocessing steps—such as resizing, normalizing, and augmenting X-ray images—are executed properly, as incorrect data handling could introduce significant errors during model training. High-quality verification requires confirming that all data transformations support the model’s learning objectives and that the AI is robust across different image variations.
+\subsubsection{Data Visualization Analysis}
+\textbf{Assigned Team Members: Ayman and Nathan}\\\\ 
+For effective verification, the team must ensure that data visualizations clearly reflect the AI model’s performance, making it easier to spot anomalies or trends that might indicate issues. Ayman needs to focus on developing visuals that accurately represent both the training progress and the diagnostic results from the AI model. The team must verify that these visualizations allow for easy comparison between predicted outcomes and the actual clinical diagnoses. Ensuring that the plots are interpretable and correctly display model metrics (e.g., accuracy, loss over time, false positives/negatives) is key to validating the AI’s reliability. Without this verification, it would be difficult to pinpoint areas where the model may require refinement.
+
+
+\subsubsection{Web Creation}
+\textbf{Assigned Team Members: Ayman and Nathan} \\\\
+To meet the high standards for user experience and functionality, the Nathan and Ayman must rigorously verify that the frontend interface is not only visually appealing but also fully functional and responsive. Nathan needs to verify that the UI design facilitates a seamless interaction with the AI model, ensuring that healthcare professionals can input data and interpret results with ease. It is critical to validate the integration between the frontend and backend, ensuring that data is accurately retrieved, processed, and displayed without errors. Usability testing must be a priority during verification, as any gaps in the user interface could hinder the adoption of the tool by medical professionals. Ensuring accessibility and performance across various devices is also essential to meet the project’s quality standards.
+
+\subsubsection{Users of the Application}
+\textbf{Assigned Team Members: All} \\\\
+Understanding user expectations is critical for verifying that the final product meets the needs of its primary users—healthcare professionals. The team must ensure that the AI model's outputs are not only accurate but also presented in a format that healthcare users find intuitive and actionable. Verification must include gathering feedback from potential users to assess whether the AI-generated diagnostics align with clinical workflows. Additionally, the team needs to verify that the interface provides relevant and precise information without overwhelming the user with unnecessary details. Ensuring that the tool is user-friendly and caters to both specialists and general practitioners is key to validating its practicality and effectiveness in real-world scenarios.
+
+
 \subsection{SRS Verification Plan}
-
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
-
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
-
-\wss{Maybe create an SRS checklist?}
+\subsubsection{Peer Review}
+\begin{itemize}
+    \item \textbf{Ad Hoc Feedback:} We will conduct peer reviews where classmates and our primary reviewer provide feedback. 
+    \item \textbf{Creating Issues:} Each team member will be responsible for reading the SRS, evaluating its clarity, and checking for missing requirements and for anything missing that team member will required to make a github issue entailing that we need to look to add or fix a section of SRS. 
+    \item \textbf{Peer reviews:} Supervisor, stakeholders, and other peers will read our the document and give use feedback by doing this we can ensure its understandable to all stakeholders, especially those unfamiliar with the project.
+    \item \textbf{Pre-Meeting Preparation:} Before meeting with the supervisor, the team will ensure that the SRS is updated and ready for review. We would this by going through the rubric and creating a checklist. This checklist would include: Questions like are all the functional and non-functional requirements included? Are the constraints in scope or outside scope constraints are they truly constraints. Making a checklist with questions similar to these will help verify that the project is coherent and comprehensive.
+    \item \textbf{Post-Meeting Notes:} we will take notes on what the supervisor or TA told us and ensure that we look to add or fix whatever was mentioned during the meeting. This will be another checklist of things we must fix not like the previous checklist that is primarily focused on asking questions. 
+    \item \textbf{Questions for the Supervisor $\&$ TA's:} We will ask key questions that would focus on verifying the scope, clarity, and feasibility of our SRS document. An example, could be asking if the NFRs or non-functional requirements align with the project’s quality objectives.
+\end{itemize}
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+The design verification plan outlines the strategies and procedures that the team will use to verify the correctness and reliability of the design of our X-ray analysis and disease prediction application. This plan will serve as a guideline during the testing phase to ensure that the design meets the intended requirements and can mitigate potential risks identified by the team. The following procedures will be undertaken by the testing team during the verification process:
 
-\wss{The review will include reviews by your classmates}
+\subsubsection{Document Review}
+The system's design documentation and related materials will be reviewed by each member of the testing team after the initial draft is produced. During the document review process, the testing team will:
+\begin{itemize}
+\item Ensure that the design of the system aligns with all functional and non-functional requirements, particularly those related to medical accuracy, data security, and regulatory compliance.
+\item Assess if the documentation accurately describes the intended functionalities and behavior of the system, including its ability to analyze X-rays, classify diseases, and provide accurate predictions. Any discrepancies between the design and requirements should be recorded and discussed further.
+\end{itemize}
 
-\wss{Create a checklists?}
+\subsubsection{Prototype Testing}
+After the scheduled Proof of Concept (POC) demonstration, a prototype for each major system component should be completed. The prototypes will be assembled for system testing. During this phase, the testing team will:
+\begin{itemize}
+\item Verify the application’s ability to process X-ray images accurately and consistently.
+Assess system performance under different load conditions, such as batch processing multiple images simultaneously.
+\item Test the robustness of disease prediction algorithms under various scenarios, including rare and complex cases.
+\item Evaluate the application's user interface for healthcare professionals, ensuring it is intuitive, provides clear predictions, and integrates well with clinical workflows.
+Simulate failure conditions to verify error-handling mechanisms, such as incomplete data, corrupted files, or system downtime.
+\end{itemize}
 
+
+\subsubsection{Design Verification Checklist}
+
+\textbf{Document Review}
+    \begin{itemize}
+        \item Ensure design aligns with all functional and non-functional requirements.
+        \item Confirm documentation accuracy for image processing, classification, and prediction.
+        \item Record any discrepancies from requirements.
+    \end{itemize}
+\textbf{Prototype Testing}
+\begin{itemize}
+    \item \textbf{System Performance}
+    \begin{itemize}
+        \item Verify accurate X-ray image processing.
+        \item Test performance under various load conditions.
+        \item Check response time for predictions.
+        \item Ensure scalability for future usage.
+    \end{itemize}
+
+\item \textbf{Disease Prediction Accuracy}
+    \begin{itemize}
+        \item Test accuracy with a benchmark dataset.
+        \item Evaluate algorithm on rare and complex cases.
+        \item Check consistency of predictions across runs.
+    \end{itemize}
+
+    \item \textbf{User Interface (UI)}
+    \begin{itemize}
+        \item Confirm UI is intuitive for healthcare professionals.
+        \item Ensure clear display of disease predictions.
+        \item Verify data visualization tools are easy to interpret.
+        \item Check seamless integration with clinical systems.
+    \end{itemize}
+
+    \item \textbf{Failure Handling}
+    \begin{itemize}
+        \item Test response to incomplete or corrupted data.
+        \item Verify clarity of error messages.
+        \item Simulate network failures for recovery and integrity.
+        \item Check logging for error tracking.
+    \end{itemize}
+
+    \item \textbf{Security and Compliance}
+    \begin{itemize}
+        \item Confirm encryption and patient privacy protections.
+        \item Verify compliance with healthcare data regulations.
+        \item Ensure access control mechanisms are in place.
+    \end{itemize}
+\end{itemize}
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
+This section provides guideline for Quality Assurance team to validate the Verification and Validation Plan document. The following steps will be used:
+\begin{itemize}
+  \item{Cross checking with Functional Requirements from SRS document: VnV documentation must objectively cover all business use-cases and functional requirements verification plan.}
+  \item{Review uncertenties with stakeholders: VnV plan must be reviewed by the stakeholders to ensure that the plan is feasible, realistic, and complete.}
+  \item{Each test case mentioned will have to state the following:}
+  \begin{itemize}
+    \item{What is the expected input and output of the test case.}
+    \item{How the test case is going to be implemented (Using what tools, techniques).}
+    \item{Which functional requirements, or non-functional requirements (from SRS document) does this test case belongs to.}
+    \item{Which system is being tested (Front-end, Back-end, ML model, etc.).}
+    \item{Which team is responsible for the test case. For example, a end-to-end test case might require everyone's effort}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Implementation Verification Plan}
+The following testing techniques will be used to verify the implementation our system:
+\begin{itemize}
+  \item{\textbf{Static Code and Documentation walkthroughs}}
+  \begin{itemize}
+    \item{Documentation walkthroughs will be performed by the team members, as a group, to verify that business use-cases and functional requirements are all covered.}
+    \item{Code walkthroughs/ Peer reviews will be performed by the team to ensure that the code is written as per the design documents (VNV Plan, SRS, and Development Plan).}
+  \end{itemize}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
+  \item{\textbf{Unit Testing}}
+  \begin{itemize}
+    \item{Individual units of the software are tested in isolation from the rest of a particular system. This is done to ensure that each unit of the software is working as designed in the business use-cases.}
+    \item{Examples of unit-test includes: testing the input validation, testing the output of a function, testing button clicks, testing authenticated web pages, etc.}
+    \item{All unit tests must cover the happy path and edge cases (boundary conditions, invalid input, etc.).}
+  \end{itemize}
+  
+  \item{\textbf{Integration Testing}}
+  \begin{itemize}
+    \item{Two Individual Systems's Integration are tested. This is done to ensure that the system is working together as designed in the business use-cases.}
+    \item{In the context of Neuralanalyzer, required integrations to test are: the front-end and the back-end, back-end with AWS Cognito, back-end with Neuralanalyzer ML model, back-end with TorchXRayVision etc.}
+    \item{Examples of system tests include: Testing back-end responses with different input from front-end , Testing ML prediction with different images input onto backend, etc.}
+    \item{All Integration tests are ideally to be tested in isolation, for example: front-end to back-end integration test should mock the ML model's responses.}
+    \item{All system tests must cover the happy path and edge cases (boundary conditions, invalid input, etc.).}
+  \end{itemize}
+  \item{\textbf{System/ End-to-End Testing}}
+  \begin{itemize}
+    \item{System testing is done to ensure that all systems are working together as designed in the business use-cases.}
+    \item{Example of 1 System test cases: Sign up on the front-end and validating the existing user on the back-end, etc.}
+    \item{All end-to-end tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction, etc.), and Functional Requirements.}
+  \end{itemize}
+  \item{\textbf{Periodic Health Checks}}
+  \begin{itemize}
+    \item{The front-end, back-end, and ML model will be checked periodically to measure system's uptime. Measured uptime must satisfy the agrred-upon SLA (95\%).}
+    \item{Periodic Health Checks will be performed regardless of the system' software version and state.}
+  \end{itemize}
+  \item{\textbf{Manual Testing}}
+  \begin{itemize}
+    \item{Manual testing will be performed by the team to ensure intuitive and simple UI/UX to the end-user.}
+    \item{Manual testing will only include interaction with the front-end on different devices (mobile, tablet, desktop).}
+    \item{All manual tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction, etc.).}
+  \end{itemize}
+  \item{\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{All the Chest X-Ray data available will be split into 3 diffrent sets: Training, Validation, and Testing.}
+    \item{The ML model will be trained on the Training set, and validated on the Validation set.}
+    \item{The ML model will be tested on the Testing set, and the accuracy will be measured. The accuracy of the models will be aggreed upon by the team, and the stakeholders.}
+  \end{itemize}
+  \item{\textbf{User Acceptance Testing}}
+  \begin{itemize}
+    \item{After the MVP is ready, the team will invite selected stakeholders to test out the system.}
+    \item{Based on the feedback, the team will make necessary changes to the system via GitHub Issues.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Automated Testing and Verification Tools}
+With many testing techniques in place, the following tools will be used to automate the testing process:
+\begin{itemize}
+  \item{\textbf{Static Code/ Document Review via Github Pull Requests}}
+  \begin{itemize}
+    \item{During development phase, every line of code ideally would have to be reviewd, per \textbf{Github Pull Requests}, by the team. As mentioned, pull requests onto main branch must be approved by all 4 team members.}
+    \item{If a pull request is way too long (ie: more than 500 lines of code), the pull request owner will have to break down the pull request into smaller pull requests, or the team will have a meeting to review the code.}
+    \item{Since the documentation is also version controlled, the team will review documents similar to code review via \textbf{Github Pull Requests}.}
+  \end{itemize}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+  \item{\textbf{Static Code Analysis Tools}}
+  \begin{itemize}
+    \item{Utilizing \textbf{Pylint} for Python code, and \textbf{ESLint} for JavaScript code To ensure that the code is written as per the PEP8 standards.}
+    \item{Pylint and ESLint will be integrated into the development environment, and will be run on every commit to the main branch via \textbf{Gtihub Actions}.}
+  \end{itemize}
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+  \item{\textbf{Tools for Unit Testing}}
+  \begin{itemize}
+    \item{\textbf{Front-end}: Utilizing \textbf{Jest} for testing React components, and front-end data fetching functions. Jest is capable of mocking API calls and other front-end modules, isolating front-end units at test-execution time, making it a perfect tool for React unit testing.}
+    \item{\textbf{Back-end and ML plugins}: Utilizing \textbf{Pytest} for testing individual functions and layers. Pytest is capable of mocking front-end input, external service calls, and other back-end modules.}
+  \end{itemize}
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+  \item{\textbf{Tools for Integration Testing}}
+  \begin{itemize}
+    \item{Front-end and back-end integration will be tested with \textbf{Cypress}. Certain function that requires ML model's responses can be mocked with Cypress at the api layer.}
+    \item{Back-end and ML Plugins integration will be tested with \textbf{Pytest}. Certain function that requires Front-end input can be mocked at the API layer.}
+    \item{Back-end and AWS Cognito integration will be tested with \textbf{Pytest}. Certain functions that requires Front-end input and ML models output can be mocked.}
+  \end{itemize}
+
+  \item{\textbf{Tools for End-to-End Testing}}
+  \begin{itemize}
+    \item{End-to-end testing can be done with \textbf{Cypress}. Without mocking any functions, end-to-end testing can be performed in a fashion that mimics the user's interaction with the system.}
+    \item{For example Cypress can create an account on the front-end, and validate if the account is created on AWS Cognito.}
+  \end{itemize}
+
+  \item{\textbf{Tools for Periodic Health Checks}}
+  \begin{itemize}
+    \item{\textbf{Github Actions Schedules} will be used to run health checks on running front-end and back-end.}
+    \item{Since AWS Cognito's uptime is fully mamanged by AWS, perioid health check for this service is unnecessary.}
+  \end{itemize}
+
+  \item{\textbf{Test Automation Framework}}
+  \begin{itemize}
+    \item{\textbf{GitHub Actions} will be utilized to automate the testing process.}
+    \item{GitHub Actions will be configured to run all tests (All unit tests, integration tests, and system tests) on every Pull Request, and on every commit to the main branch.}
+  \end{itemize}
+
+  \item{\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{\textbf{Pytorch} will be used to test the ML model's accuracy on the Testing set.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Software Validation Plan}
+\begin{itemize}
+  \item{\textbf{Developers}: After a feature is developed, the internal validation plan will includes the following steps}
+  \begin{itemize}
+    \item{Developers will write tests, and come up with acceptance criteria for the feature.}
+    \item{The test caes then will be reviewd (on Github), and ran on Github Actions on every Pull Requests.}
+    \item{The software is consider validated, if all tests pass, including all old tests, and newly written tests.}
+    \item{If the test cases failed, the developer will need to fix the code, and notify the team to re-approve the Pull Requests.}
+  \end{itemize}
+  \item{\textbf{Dr.Mehdi Moradi}: Since Dr.Mehdi Moradi is the primary stakeholder of the project, the team will report project progress to him on a bi-weekly basis. The team will also invite Dr.Mehdi to internal testing sessions.}
+  \item{\textbf{Other Stakeholders}: During the development cycle of the application, User Acceptance Testing (UAT) will be performed periodically by the team. UATs will be performed to ensure that the system is working as expected and is ready for the stakeholders to test. The UAT will be performed in the following steps:}
+  \begin{itemize}
+    \item{Coming up with business use-cases, by stakeholders, that the system must satisfy.}
+    \item{Selected stakeholders will be invited to use and test the beta system.}
+    \item{Stakeholders interaction with the system will be observed and feedback will be collected.}
+    \item{If the interactions and feedbacks are positive, the current system will be deployed to production. However, if the feedbacks are mostly negative, the team will make necessary changes to the system via GitHub Issues, and perform another round of UAT.}
+  \end{itemize}
+\end{itemize}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
-
-\section{System Tests}
-
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
-
-\subsection{Tests for Functional Requirements}
-
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
-
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
-
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
-
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
-
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
-
-\subsection{Traceability Between Test Cases and Requirements}
-
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
 
 \section{Unit Test Description}
 
@@ -364,6 +447,7 @@ How test will be performed:
 
 \wss{Reference your MIS (detailed design document) and explain your overall
 philosophy for test case selection.}  
+\\ Document is not completed yet.
 
 \wss{To save space and time, it may be an option to provide less detail in this section.  
 For the unit tests you can potentially layout your testing strategy here.  That is, you 
@@ -380,107 +464,382 @@ needs to be well-documented, with meaningful names for all of the tests.}
   verifying them.  There may also be modules that are part of your software, but
   have a lower priority for verification than others.  If this is the case,
   explain your rationale for the ranking of module importance.}
+\subsection{Unit Testing Scope}
+The modules which the unit test focuses on will be divided into two categories: \textbf{Front-end} and \textbf{Back-end}.\\\\
+The following modules are considered outside the scope of unit testing:\\\\
+\textbf{Third-Party Modules}: 
+Any third-party libraries or frameworks integrated into the application will not be subjected to unit testing. This includes modules developed by external sources, such as libraries for data visualization or authentication. These modules will be relied upon for their documented functionality, but no direct verification will be performed.
+
+
+\subsection{Rationale for Ranking}
+The prioritization of modules for testing is based on the following criteria:
+\begin{itemize}
+    \item \textbf{Impact on Core Functionality}: Modules that are integral to the application’s main features will receive higher priority for unit testing.
+    \item \textbf{User Experience}: Features that directly affect user interactions and overall experience will be tested more rigorously.
+    \item \textbf{Risk Assessment}: Modules with higher associated risks, such as security and data handling, will be prioritized to mitigate potential issues.
+\end{itemize}
+
+By focusing our testing efforts on high-impact modules, we aim to ensure a robust and reliable application while efficiently utilizing our resources.
+
 
 \subsection{Tests for Functional Requirements}
 
 \wss{Most of the verification will be through automated unit testing.  If
   appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+  technique.  That can also be documented in this section.}\\\\
+For unit testing, we’re dividing the process into frontend and backend sections. UI/UX interactions, such as buttons and links, will be tested manually to ensure they function as expected. Backend functions, especially those involving data fetching, will be tested automatically.\\\\
+Frontend testing: UI/UX elements such as buttons, links, and other interactive components will undergo manual testing to confirm that they work as intended from a user perspective. This includes verifying that each interactive element responds accurately and meets usability standards.\\\\
+Backend testing: functions that handle data fetching and processing will be validated through automated tests. These tests will simulate various scenarios to ensure that data retrieval, processing, and any associated logic work as expected, helping us catch issues early and maintain data integrity. This combination of manual and automated testing ensures comprehensive coverage and reliability across the application. (Possibly by Pytest library)
 
-\subsubsection{Module 1}
+\subsubsection{Front End}
 
 \wss{Include a blurb here to explain why the subsections below cover the module.
   References to the MIS would be good.  You will want tests from a black box
   perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+  tests were selected.}\\\\
+  The frontend testing will encompass all possible user interactions, covering any element that the user can click or interact with. This includes, but is not limited to, buttons, links, dropdowns, modals, and form fields. Each interactive element will be manually tested to confirm that it behaves as expected in various scenarios, such as different screen sizes and user flows. This ensures that the user experience is smooth, intuitive, and functional across all devices and use cases. Anything that deals with username/password/upload/download should be securely designed.
+\begin{enumerate}
+
+\item{FR-FE-1\\} (FR-7, FR-13)
+
+Type: Manual
+			
+Initial State:  Automated
+					
+Input: Username \& Password
+					
+Output: User is successfully logged in and redirected to the home page if the username and password are correct. If incorrect, an error message is displayed, preventing login.
+
+Test Case Derivation: The output is expected to confirm whether the login process works correctly. A successful login with correct credentials should redirect the user to the home page, while incorrect credentials should display an error message, preventing access. This expected outcome ensures that the system only grants access to users with valid login information, maintaining security and usability standards.
+
+How test will be performed: An automated
+
+[Refrence to Login Form UI]
+
+\item{FR-FE-2\\} (FR-7, FR-13)
+
+Type: Automated
+					
+Initial State: Register Page
+					
+Input: All form fields: Include but not limited to username/email, first name, last name, occupation, organization, location, password and confirmed password.
+					
+Output: User is successfully registered and redirected to the login page if all fields are valid; otherwise, appropriate error messages are displayed for invalid inputs.
+
+Test Case Derivation: This test verifies that the registration functionality correctly processes all required fields. The expected output is based on whether the provided data meets validation criteria and does not contain duplicates.
+
+How test will be performed: Automated scripts will fill in all form fields with valid and invalid data, submitting the registration form. The outputs will be checked to ensure successful registration for valid data and the correct error messages for invalid inputs.
+[Refrence to Register Form UI]
+
+\item{FR-FE-3\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page 
+					
+Input: One or more pictures in various formats (e.g., JPG, PNG, etc.) and within constrained size.
+					
+Output: Images are successfully uploaded, and confirmation messages are displayed. For unsupported formats, appropriate error messages are shown.
+
+Test Case Derivation: This test verifies the image upload functionality, ensuring that the system accepts valid image formats while rejecting unsupported ones. The expected outcome is determined by the format and size of the uploaded images.
+
+How test will be performed: Automated scripts will upload a mix of supported and unsupported image formats and sizes to the upload page. The results will be checked for successful uploads or correct error messages for unsupported formats.
+[Refrence to Upload Page UI]
+
+\item{FR-FE-4\\} (FR-3)
+
+Type: Automated
+					
+Initial State: Upload Page (After Upload)
+					
+Input: Symptoms
+					
+Output: Symptoms are successfully recorded and displayed on the user interface, confirming submission; an error message appears for invalid input.
+
+Test Case Derivation: This test verifies that the system correctly processes and records user-submitted symptoms after an image upload.
+
+How test will be performed: Automated scripts will input various symptom descriptions, including valid and invalid examples, to the appropriate field. The results will be checked to ensure successful recording or the display of correct error messages for invalid entries.
+
+\item{FR-FE-5\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page (Any)
+					
+Input: Delete, Save or Submit
+					
+Output: User’s symptoms and uploaded images are deleted, User’s symptoms and uploaded images are saved under profile; User's symptoms and uploaded images are submitted to backed. Confirmation message will be displayed or if there are validation errors, appropriate error messages are shown.
+
+Test Case Derivation: The expected output depends on the action taken, ensuring that data is either saved locally or submitted to the backend as appropriate.
+
+How test will be performed: Automated scripts will execute the Save or Submit actions and subsequently assess the actual outcomes against the expected results to ensure compliance with the specified requirements.
+
+\item{FR-FE-6\\} (FR-13)
+
+Type: Manual
+					
+Initial State: Home Page 
+					
+Input: Actions to navigate to other pages. (Upload, Profile, Logout-redirects to Login page etc)
+					
+Output: The user is successfully redirected to the selected page.
+
+Test Case Derivation: This test ensures that navigation actions from the Home Page function correctly, leading users to the appropriate pages without errors.
+
+How test will be performed: All the buttons will be manually tested, and observed for functionality.
+
+\item{FR-FE-7\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: Report page will be deleted or Report page will go to submitted state.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed: Automated scripts will simulate the selection of "Delete" and "Submit" actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-8\\} (FR-5 FR-6 FR-7 FR-11 FR-13)
+
+Type: Automated
+					
+Initial State: Report Page (Submitted)
+					
+Input: N/A
+					
+Output: Fetch and display the report from the database; otherwise, an error message indicates an invalid or expired session.
+
+Test Case Derivation: This test ensures the system retrieves and displays reports correctly and handles invalid Session ID scenarios (Security).
+
+How test will be performed: Automated scripts will input valid and invalid datasets, verifying the correct report display.
+
+\item{FR-FE-9\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: If 'Delete' is selected, the report page is removed with confirmation. If 'Submit' is selected, it transitions to a submitted state with confirmation.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed:Automated scripts will simulate the selection of Delete and Submit actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-10\\} (FR-7 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Patient)
+					
+Input: N/A
+					
+Output: Displays all relevant information, such as the treatment plan and reports.
+
+Test Case Derivation: This test verifies that the Profile Page correctly displays all pertinent patient information, ensuring data accuracy and completeness.
+
+How test will be performed: Automated scripts will access the Profile Page and check that all expected information, including the treatment plan and reports, is displayed correctly.
+
+\item{FR-FE-11\\} (FR-4 FR-7 FR-8 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Doctor)
+					
+Input: Actions to edit a patient's profile, including treatment plan, comments, etc.
+					
+Output: Displays all patients and their respective information.
+
+Test Case Derivation: This test ensures that the Profile Page for the doctor accurately displays all patients and their details after any editing actions are performed.
+
+How test will be performed: Automated scripts will simulate actions to edit patient profiles and verify that the updated information is displayed correctly for all patients.
+
+\end{enumerate}
+
+\subsubsection{Back End}
+
+The backend testing will focus on validating the accuracy, reliability, and performance of all server-side functions and data processes. This includes testing data-fetching endpoints, ensuring secure and correct handling of requests and responses, and verifying data integrity in various scenarios. Automated tests will simulate multiple use cases to ensure that business logic, such as data processing, authentication, and error handling, works as expected. Performance tests will also be conducted to confirm that the backend maintains speed and efficiency under load, supporting seamless interactions between the frontend and backend components. This comprehensive backend testing aims to prevent data inconsistencies and ensure robust, secure, and scalable operations.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{FR-BE-1\\} (FR-16)
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Type: Automated 
 					
-Initial State: 
+Initial State: Start
 					
-Input: 
+Input: N/A
 					
-Output: \wss{The expected result for the given inputs}
+Output: Initialize backed systems and returns result.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: This test verifies that the backend systems initialize correctly and that the expected result  is returned, indicating successful setup. (Go to S0)
 
-How test will be performed: 
+How test will be performed: Automated scripts will execute the initialization process and validate that the system returns the expected results without errors.
+
+\item{FR-BE-2\\} (FR-1 FR-2 FR-12)
+
+Type: Automated 
 					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Initial State: S0
 					
-Initial State: 
+Input: Unloaded Form data (Images, symptoms etc)
 					
-Input: 
+Output: Transition to S1 if the upload is successful; otherwise, remain at S0.
+
+Test Case Derivation: This test verifies that the system successfully transitions from S0 to S1 upon a successful upload of form data and stays at S0 if the upload fails.
+
+How test will be performed: Automated scripts will simulate the upload of form data and check for the correct transition to S1 when the upload is successful or confirm that the system remains at S0 when the upload fails.
+
+\item{FR-BE-3\\} (FR-7 FR-15)
+
+Type: Automated 
 					
-Output: \wss{The expected result for the given inputs}
+Initial State: S1
+					
+Input: Uploaded Form data
+					
+Output: If the form data is valid, transition to S2; otherwise, return to S0.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: This test verifies that the upload form processes data correctly, ensuring successful transitions between states based on the upload outcome.
 
-How test will be performed: 
+How test will be performed: Automated scripts will simulate form submissions with valid and invalid data, checking that the system transitions and returns the appropriate error code for failures.
 
-\item{...\\}
-    
+\item{FR-BE-4\\} (FR-14)
+
+Type: Automated 
+					
+Initial State: S2
+					
+Input: Valid Form data
+					
+Output: Processed and normalized form data (in the case of image data) if success transition into S3, else failure state.
+
+Test Case Derivation: This test verifies that the system accurately processes and normalizes valid form data, ensuring that the output meets the specified requirements for further use.
+
+How test will be performed: Automated scripts will input valid form data and verify that the system produces correctly processed and normalized output, checking for data integrity and conformity to expected formats.
+
+\item{FR-BE-5\\} (FR-3)
+
+Type: Automated
+					
+Initial State: S3
+					
+Input: Normalized data
+					
+Output: Diagnosis prediction data if success transition into S4, else failure state.
+
+Test Case Derivation: If the normalized data is successfully processed by the model, transition to S4; otherwise, enter a failure state.
+
+How test will be performed: Automated scripts will input normalized data into the model and verify that the diagnosis prediction data is produced correctly. The scripts will check for a successful transition to S4 or confirm entry into a failure state based on the processing outcome.
+
+\item{FR-BE-6\\} (FR-4 FR-5 FR-6 FR-8)
+
+Type: Automated 
+					
+Initial State: S4
+					
+Input: Diagnosis prediction data
+					
+Output: Generated report data if sucess transition into S5, else failure state.
+
+Test Case Derivation: This test will generate a concise report based on the diagnosis prediction data provided.
+
+How test will be performed: Automated scripts will input the diagnosis prediction data and verify that a report is generated successfully. The scripts will check for a successful transition to S5 or confirm entry into a failure state if the report generation fails.
+
+\item{FR-BE-7\\} (FR3)
+
+Type: Automated 
+					
+Initial State: Failure
+					
+Input: Error code
+					
+Output: Appropriate error message and system logs.
+
+Test Case Derivation: This is the exit state of the process, indicating that an error has occurred, and the system should provide relevant feedback based on the error code received.
+
+How test will be performed: Automated scripts will input various error codes and verify that the system generates the correct error messages and logs the details appropriately. The test will ensure that the system behaves as expected in the failure state.
+
+\item{FR-BE-8\\} (FR-11 FR-13)
+
+Type: Automated 
+					
+Initial State: S5
+					
+Input: Generated report data
+					
+Output: A confidence score; if low, transition to S6 (if the user is under a doctor); otherwise, proceed to End (if the doctor has approved or the user is not under any doctor).
+
+Test Case Derivation: The confidence score is derived from the generated report data, determining the subsequent state based on its value and the user's doctor status.
+
+How test will be performed: Automated scripts will process the generated report data, calculate the confidence score, and verify the correct state transition based on the score and user status.
+
+\item{FR-BE-9\\} (FR-9 FR-13)
+
+Type: Automated
+					
+Initial State: S6
+					
+Input: Edited data (Doctor)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will depend on the doctor's assessment of the confidence score and the generated report data, resulting in manually annotated information.
+
+How test will be performed: Automated scripts will submit the confidence score and generated report data for manual review, verifying that the doctor’s annotations are accurately recorded and linked to the corresponding report.
+
+\item{FR-BE-10\\} (FR-3 FR7)
+
+Type: Automated 
+					
+Initial State: End
+					
+Input: Approval/Disapproval (1/0)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will vary based on the input (1 or 0), returns nothing or include all pertinent report and diagnosis information.
+
+How test will be performed: Automated scripts will input approval/disapproval and validate that the returned JSON data matches the expected format and includes all relevant details.
+
 \end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
+\subsection{Tests for Non-Functional Requirements}
 
 \subsection{Traceability Between Test Cases and Modules}
+This section provides evidence that all modules have been considered in the test case design. Each test case is mapped to its corresponding module to ensure comprehensive coverage and verification of functionality.
 
-\wss{Provide evidence that all of the modules have been considered.}
+\begin{landscape}
+\begin{table}[h]
+    \centering
+    \caption{Traceability Matrix}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Module} & \textbf{Description} & \textbf{Status} \\
+        \hline
+        test-id1 & Module A (e.g., Upload) & Tests the upload functionality & Pending \\
+        \hline
+        test-id2 & Module B (e.g., Profile) & Verifies profile editing capabilities & In Progress \\
+        \hline
+        test-id3 & Module C (e.g., Reports) & Confirms report generation accuracy & Completed \\
+        \hline
+        test-id4 & Module D (e.g., Diagnosis) & Assesses diagnosis prediction output & Pending \\
+        \hline
+    \end{tabular}
+\end{table}
+\end{landscape}
+
+
+\textbf{Analysis:}
+\begin{itemize}
+    \item Each test case directly corresponds to specific modules within the application, ensuring that all critical functionalities are covered.
+    \item The status of each test case reflects its current progress, allowing for easy tracking of testing efforts.
+    \item System logs will be generated during the execution of each test case to provide a detailed record of operations. These logs will capture input parameters, output results, and any errors encountered, aiding in debugging and validation.
+    \item By correlating the test case outcomes with system logs, we can ensure accountability and traceability in the testing process, making it easier to identify and address issues.
+\end{itemize}
 				
 \bibliographystyle{plainnat}
 
@@ -509,7 +868,6 @@ Their values are defined in this section for easy maintenance.
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
 
-\input{../Reflection.tex}
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
