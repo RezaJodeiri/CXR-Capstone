@@ -18,9 +18,9 @@
 }
 \usepackage[round]{natbib}
 
-\input{packages/Comments}
-\input{packages/Comments}
-\input{packages/Reflection}
+\input{../packages/Comments.tex}
+\input{../packages/Common.tex}
+\input{../packages/Reflection.tex}
 
 \begin{document}
 
@@ -426,6 +426,166 @@ With many testing techniques in place, the following tools will be used to autom
   \end{itemize}
 \end{itemize}
 
+\wss{What tools are you using for automated testing.  Likely a unit testing
+  framework and maybe a profiling tool, like ValGrind.  Other possible tools
+  include a static analyzer, make, continuous integration tools, test coverage
+  tools, etc.  Explain your plans for summarizing code coverage metrics.
+  Linters are another important class of tools.  For the programming language
+  you select, you should look at the available linters.  There may also be tools
+  that verify that coding standards have been respected, like flake9 for
+  Python.}
+
+\wss{If you have already done this in the development plan, you can point to
+that document.}
+
+\wss{The details of this section will likely evolve as you get closer to the
+  implementation.}
+
+\subsection{Software Validation Plan}
+
+\wss{If there is any external data that can be used for validation, you should
+  point to it here.  If there are no plans for validation, you should state that
+  here.}
+
+\wss{You might want to use review sessions with the stakeholder to check that
+the requirements document captures the right requirements.  Maybe task based
+inspection?}
+
+\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
+be used as an opportunity to validate the requirements.  You should plan on 
+demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
+The feedback from your supervisor will be very useful for improving your project.}
+
+\wss{For teams without an external supervisor, user testing can serve the same purpose 
+as a Rev 0 demo for the supervisor.}
+
+\wss{This section might reference back to the SRS verification section.}
+
+\section{System Tests}
+
+\subsection{Tests for Functional Requirements}
+
+This section contains the tests for the Functional Requirements. The subsections for these tests were created based on the Functional Requirements listed in the SRS document. Each test was created according to the Fit Criterion of the requirements they were covering. Traceability for these requirements and tests can be found in the traceability matrix.
+
+\subsubsection{X-ray Image Input Tests}
+
+This subsection covers Requirement \#1 of the SRS document by testing that the system is able to accept chest X-ray images as input from authorized users, including healthcare professionals and patients.
+
+\begin{enumerate}
+
+\item \textbf{test-FR1-1} \label{test-FR1-1}
+
+Control: Automatic
+
+Initial State: The system is operational, and the user is logged in as an authorized healthcare professional.
+
+Input: Uploading a valid chest X-ray image in DICOM format (\texttt{sample\_image.dcm}).
+
+Output: The system accepts the image without errors and displays a confirmation message indicating successful upload.
+
+Test Case Derivation: Authorized users should be able to upload images in supported formats without issues.
+
+How the test will be performed: The test will be conducted automatically using the Cypress testing framework.
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will simulate a user logging into the system as an authorized healthcare professional using valid credentials (\texttt{username: doctor\_user}, \texttt{password: SecurePass123}).
+  \item[-] \textit{Step 2}: Upon successful authentication, the script will navigate to the image upload section located at \texttt{/upload}.
+  \item[-] \textit{Step 3}: The script will simulate the user clicking the ``Upload Image'' button and selecting the file \texttt{sample\_image.dcm} from the directory \texttt{./test\_data/}.
+  \item[-] \textit{Step 4}: The script will simulate the user confirming the upload by clicking the ``Submit'' button.
+  \item[-] \textit{Step 5}: After the upload action, the script will verify that the system displays a confirmation message on the user interface, such as ``Image uploaded successfully.''
+  \end{itemize}
+
+
+\item \textbf{test-FR1-2} \label{test-FR1-2}
+
+Control: Automatic
+
+Initial State: The system is operational, and the user is logged in as an authorized healthcare professional.
+
+Input: Uploading a valid chest X-ray image in DICOM format (\texttt{sample\_image.dcm}).
+
+Output: The system stores the image correctly on the server and the API endpoint returns a success status code.
+
+Test Case Derivation: The backend must accurately store uploaded images and respond appropriately to API requests.
+
+How the test will be performed: 
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will perform the same steps as in \textbf{test-FR1-1} to upload \texttt{sample\_image.dcm}.
+  \item[-] \textit{Step 2}: The network traffic will be monitored to capture the API request sent to the server during the image upload.
+  \item[-] \textit{Step 3}: The script will verify that the API request includes the correct payload, ensuring that the file \texttt{sample\_image.dcm} is included under the correct parameter name (e.g., \texttt{image\_file}).
+  \item[-] \textit{Step 4}: The server's response to the API request will be checked by the automated test, confirming it returns a success status code (HTTP 200 OK) and a response body with a success message (e.g., \texttt{\{"message": "Upload successful", "image\_id": 12345\}}).
+  \item[-] \textit{Step 5}: The script will access the server's storage directory (e.g., \texttt{.../images/uploads/}) to verify that \texttt{sample\_image.dcm} is stored correctly. It will check:
+    \begin{itemize}
+      \item The file exists in the expected directory.
+      \item The file name matches the expected naming convention (e.g., \texttt{image\_\{image\_id\}.dcm}).
+      \item The file size and checksum match those of the original file to ensure integrity.
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Patient Symptom for diagnosis verification }
+
+This subsection covers Requirement \#2 of the SRS document by testing that the system enables users to input additional patient symptoms, such as cough, chest pain, or fever.
+
+\begin{enumerate}
+
+\item \textbf{test-FR2-1} \label{test-FR2-1}
+
+Control: Manual
+
+Initial State: The user has successfully uploaded a chest X-ray image and is on the patient information page.
+
+Input: Entering patient symptoms into the symptom input fields.
+
+Output: The system accepts the symptoms and associates them correctly with the uploaded X-ray image.
+
+Test Case Derivation: The system should allow input of symptoms and link them to the corresponding image.
+
+How the test will be performed: 
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester uploads \texttt{patient\_xray\_01.dcm} and waits for the AI model to complete analysis.
+  \item[-] \textit{Step 2}: On the patient information page, the tester enters symptoms such as  ``cough,'' ``chest pain,'' and ``fever'' into the symptom fields.
+  \item[-] \textit{Step 3}: The tester submits the symptoms by clicking the ``Save'' button.
+  \item[-] \textit{Step 4}: The system processes the symptoms and updates the patient's record.
+  \item[-] \textit{Step 5}: The tester views the generated report to verify that:
+    \begin{itemize}
+      \item The symptoms are listed and associated with the diagnosis.
+      \item The report highlights the consistency between the symptoms and the diagnosis.
+    \end{itemize}
+  \end{itemize}
+
+\end{enumerate}
+
+\subsubsection{AI Model Inferece Tests}
+
+This subsection covers Requirement \#3 of the SRS document by testing that the system analyzes chest X-ray images using a convolutional neural network (CNN)-based AI model to detect the presence or absence of specific diseases with an accuracy of 85\% or higher.
+
+\begin{enumerate}
+
+\item \textbf{test-FR3-1} \label{test-FR3-1}
+
+Type: Functional, Dynamic, Automatic
+
+Initial State: The AI model is deployed and integrated into the system, ready for analysis.
+
+Input: A test dataset of 1,000 chest X-ray images with known diagnoses (500 positive cases, 500 negative cases).
+
+Output: The AI model achieves an accuracy of at least 85\%, correctly identifying at least 850 out of 1,000 cases.
+
+Test Case Derivation: The AI model must meet or exceed the specified accuracy threshold to be considered effective.
+
+How the test will be performed:
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will load the test dataset from \texttt{./test\_data/test\_set/}.
+  \item[-] \textit{Step 2}: Preprocess each image according to FR17 requirements (e.g., resize to 224x224 pixels, normalize pixel values).
+  \item[-] \textit{Step 3}: Feed the preprocessed images into the AI model in batches (e.g., batch size of 32).
+  \item[-] \textit{Step 4}: Record the AI model's predictions for each image.
+  \item[-] \textit{Step 5}: Compare the predictions with the ground truth labels from \texttt{fr3\_test\_set\_labels.csv}.
+  \item[-] \textit{Step 6}: Calculate performance metrics including accuracy, precision, recall, and ROC curves.
+  \item[-] \textit{Step 7}: Verify that the accuracy is at least 85\%, using assertions.
+\end{itemize}
+
+\end{enumerate}
+
 \subsection{Software Validation Plan}
 \begin{itemize}
   \item{\textbf{Developers}: After a feature is developed, the internal validation plan will includes the following steps}
@@ -445,6 +605,771 @@ With many testing techniques in place, the following tools will be used to autom
   \end{itemize}
 \end{itemize}
 
+\subsubsection{Patient Condition Progression Between Scans}
+
+This subsection covers Requirement \#4 of the SRS document by testing that the system indicates whether a patient's condition has improved, worsened, or remained stable between scans.
+
+\begin{enumerate}
+
+\item \textbf{test-FR4-1} \label{test-FR4-1}
+
+Type: Functional, Dynamic, Manual
+
+Initial State: The patient has previous chest X-ray images and analysis results stored in the system.
+
+Input: Uploading a new chest X-ray image for the same patient.
+
+Output: The system analyzes the new image, compares it with previous scans, and indicates the progression status (improved, worsened, or stable).
+
+Test Case Derivation: The system should accurately assess and report changes in the patient's condition over time.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester logs into the system as a healthcare professional and selects the patient with prior scans.
+  \item[-] \textit{Step 2}: Upload the new chest X-ray image \texttt{xray\_current.dcm}.
+  \item[-] \textit{Step 3}: Wait for the system to analyze the new image and retrieve previous analysis results.
+  \item[-] \textit{Step 4}: The system compares the new image with the previous one using progression algorithms.
+  \item[-] \textit{Step 5}: Review the progression status indicated by the system (e.g., "Condition has worsened").
+  \item[-] \textit{Step 6}: Verify the accuracy of the assessment by comparing it with known and reliable clinical data.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{ Visual Aid Generation Tests}
+
+This subsection covers Requirement \#5 of the SRS document by testing that the system generates visual aids by highlighting affected areas on the chest X-ray images.
+
+\begin{enumerate}
+
+\item \textbf{test-FR5-1} \label{test-FR5-1}
+
+Type: Functional, Dynamic, Manual
+
+Initial State: The system has completed analysis on a chest X-ray image with detected abnormalities.
+
+Input: Accessing the analysis results and viewing the image.
+
+Output: The image displays highlighted areas indicating the locations of the detected abnormalities.
+
+Test Case Derivation: Visual aids help clinicians quickly identify areas of concern on the images.
+
+How the test will be performed:
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester logs into the system and navigates to the patient's analysis results for \texttt{abnormal\_xray.dcm}.
+  \item[-] \textit{Step 2}: Open the analyzed image with visual aids.
+  \item[-] \textit{Step 3}: Examine the highlighted areas on the image.
+  \item[-] \textit{Step 4}: Compare the highlighted areas with expected abnormalities based on known data.
+  \item[-] \textit{Step 5}: Assess whether the visual aids accurately represent the detected abnormalities.
+  \item[-] \textit{Step 6}: Document observations and any discrepancies.
+\end{itemize}
+
+\item \textbf{test-FR5-2} \label{test-FR5-2}
+
+Control: Automatic
+
+Initial State: The system has completed analysis on a chest X-ray image (\texttt{normal\_patient\_xray.dcm}) with no detected abnormalities.
+
+Input: Accessing the analysis results for \texttt{normal\_patient\_xray.dcm}.
+
+Output: The image displays no highlights or visual markers.
+
+Test Case Derivation: The system should not produce false positives by highlighting areas in normal images.
+
+How the test will be performed:
+\begin{itemize}
+\item[-] \textit{Step 1}: The automated test script will process \texttt{normal\_patient\_xray.dcm} through the system.
+\item[-] \textit{Step 2}: The system analyzes the image and generates an output image.
+\item[-] \textit{Step 3}: The script retrieves the output image from \texttt{.../images/outputs/}.
+\item[-] \textit{Step 4}: The script uses image comparison techniques to compare the output image with the original.
+\item[-] \textit{Step 5}: The script checks for any added visual markers or differences.
+\item[-] \textit{Step 6}: The script asserts that no highlights are present.
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Structured Report Generation Tests}
+
+This subsection covers Requirement \#6 of the SRS document by testing that the system produces a structured, human-readable report summarizing key findings, disease detection results, and progression status.
+
+\begin{enumerate}
+
+\item \textbf{test-FR6-1} \label{test-FR6-1}
+
+  Control: Automatic
+  
+  Initial State: The system has completed analysis on a patient's chest X-ray image, and all relevant data is available. The report generation module is integrated and configured to use an LLM API (e.g., BERT).
+  
+  Input: Request to generate a structured report summarizing the analysis.
+  
+  Output: A human-readable report containing key findings, detected diseases with confidence levels, progression status, and any input symptoms.
+  
+  Test Case Derivation: The system should produce comprehensive reports without errors, leveraging LLMs where appropriate.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will initiate the report generation process via the API endpoint \texttt{/generate\_report} and corresponding patient ID.
+  \item[-] \textit{Step 2}: The script will monitor the API call to the LLM service, ensuring that:
+    \begin{itemize}
+      \item The API token is included and valid.
+      \item The prompt sent to the LLM is correctly formatted and contains all necessary information.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script will check the response from the LLM service, verifying:
+    \begin{itemize}
+      \item The response status code is success (e.g., HTTP 200 OK).
+      \item The content includes the structured report.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script will parse the generated report to ensure it includes:
+    \begin{itemize}
+      \item Key findings from the AI analysis.
+      \item Detected diseases with confidence levels.
+      \item Progression status compared to previous scans.
+      \item Input symptoms provided by the user.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script will verify that the report format adheres to predefined templates or standards (e.g., headings, sections).
+  \item[-] \textit{Step 6}: The script will check for any placeholders or missing information that could indicate issues with LLM integration.
+  \item[-] \textit{Step 7}: The test passes if the report is complete, accurate, and correctly formatted; otherwise, it fails.
+  \end{itemize}
+  
+  \item \textbf{test-FR6-2} \label{test-FR6-2}
+  
+  Control: Manual
+  
+  Initial State: The system is operational, and a report has been generated for a patient using the LLM integration.
+  
+  Input: The generated report for review.
+  
+  Output: Confirmation that the report does not contain misinformation and accurately reflects the patient's analysis results.
+  
+  Test Case Derivation: Reports must be accurate and free from misinformation to ensure patient safety.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The tester (a qualified healthcare professional) will retrieve the generated report for patient ID \texttt{12345}.
+  \item[-] \textit{Step 2}: The tester will review the report in detail, verifying:
+    \begin{itemize}
+      \item All clinical findings are accurately reported.
+      \item Diagnoses match the AI model's outputs.
+      \item Confidence levels are correctly stated.
+      \item Progression status aligns with the comparative analysis.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The tester will cross-reference the report with the raw data and analysis results.
+  \item[-] \textit{Step 4}: The tester will check for any signs of misinformation, such as incorrect interpretations or unsupported conclusions.
+  \item[-] \textit{Step 5}: The tester will document any discrepancies or errors found.
+  \item[-] \textit{Step 6}: The test passes if the report is accurate and free of misinformation; otherwise, it fails.
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Patient Data Storage Tests}
+
+This subsection covers Requirement \#7 of the SRS document by testing that the system securely stores patient data, including images and analysis results, for future reference.
+
+\begin{enumerate}
+
+  \item \textbf{test-FR7-1} \label{test-FR7-1}
+
+  Control: Automatic
+  
+  Initial State: The system's secure database and storage solutions are operational. Access to patient data is regulated by role-based access controls.
+  
+  Input: Patient data including images (\texttt{test\_patient\_image.dcm}), analysis results, and reports to be stored.
+  
+  Output: Data is securely stored in the database and can be retrieved accurately by authorized users. Unauthorized access is prevented.
+  
+  Test Case Derivation: The system must ensure data integrity and security for patient information.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will simulate a user with appropriate permissions uploading patient data:
+    \begin{itemize}
+      \item Image file: \texttt{test\_patient\_image.dcm}.
+      \item Analysis results: Generated by the AI model.
+      \item Report: Generated as per FR6.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script will verify that the data is stored in the secure database:
+    \begin{itemize}
+      \item Confirm entries in the database tables for patients, images, analyses, and reports.
+      \item Verify that images are stored in the secure storage directory (e.g., \texttt{/secure\_storage/patient\_images/}).
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script will retrieve the stored data using authorized credentials and compare it with the original inputs to ensure integrity:
+    \begin{itemize}
+      \item Check that the image file retrieved matches the original file (e.g., via checksum comparison).
+      \item Verify that analysis results and reports are accurate.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script will attempt to access the data using unauthorized credentials or as an unauthorized user:
+    \begin{itemize}
+      \item Expect access to be denied.
+      \item Verify that appropriate error messages are displayed.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script will check security measures:
+    \begin{itemize}
+      \item Data at rest is encrypted (e.g., verify encryption settings in the database).
+      \item Access logs are updated with the retrieval attempts.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The test passes if data integrity is maintained, authorized access is successful, and unauthorized access is prevented.
+  \end{itemize}
+  
+  \end{enumerate}
+
+\subsubsection{Alert Mechanism Tests}
+
+This subsection covers Requirement \#8 of the SRS document by testing that the system generates alerts to clinicians when significant changes in a patient's condition are detected.
+
+\begin{enumerate}
+
+  \item \textbf{test-FR8-1} \label{test-FR8-1}
+  
+  Control: Automatic
+  
+  Initial State: The system has prior scans and analysis results for corresponding patient ID. Alerting mechanisms via email, SMS, and in-app notifications are configured.
+  
+  Input: A new scan (\texttt{patient\_xray\_alert.dcm}) showing significant changes exceeding predefined thresholds.
+  
+  Output: The system generates and delivers alerts to clinicians indicating the significant change.
+  
+  Test Case Derivation: Clinicians should be promptly notified of critical changes in a patient's condition.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will upload \texttt{xray\_alert.dcm}.
+  \item[-] \textit{Step 2}: The system analyzes the new scan and compares it with previous scans.
+  \item[-] \textit{Step 3}: The system detects changes exceeding thresholds (e.g., lesion size increase by 30\%).
+  \item[-] \textit{Step 4}: The system generates an alert message containing:
+    \begin{itemize}
+      \item Patient ID and relevant details.
+      \item Description of the significant change.
+      \item Urgency level or recommended actions.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The system sends the alert via configured channels:
+    \begin{itemize}
+      \item Email to the clinician's registered email address.
+      \item SMS to the clinician's registered phone number.
+      \item In-app notification within the clinician's dashboard.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script will monitor each channel to verify delivery:
+    \begin{itemize}
+      \item Check the email inbox for the alert message.
+      \item Use a mock SMS gateway to confirm SMS delivery.
+      \item Log into the system as the clinician to verify the in-app notification.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The script will record the time taken from detection to alert delivery to ensure it meets timeliness requirements (e.g., within 5 minutes).
+  \end{itemize}
+  
+  \end{enumerate}  
+
+\subsubsection{Treatment Plan Adjustment Tests}
+
+This subsection covers Requirement \#9 of the SRS document by testing that the system allows healthcare professionals to adjust a patient's treatment plan based on analysis results.
+
+\begin{enumerate}
+
+\item \textbf{test-FR9-1} \label{test-FR9-1}
+
+Control: Manual
+
+Initial State: A healthcare professional is logged into the system and has access to patient ID \texttt{12345}'s analysis results.
+
+Input: Adjustment to the patient's treatment plan based on the analysis results.
+
+Output: The system allows the professional to modify the treatment plan, linking the changes to the corresponding X-ray analysis results.
+
+Test Case Derivation: Clinicians should be able to update treatment plans within the system, ensuring continuity of care.
+
+How the test will be performed:
+
+\begin{itemize}
+\item[-] \textit{Step 1}: The tester logs into the system as a clinician with credentials.
+\item[-] \textit{Step 2}: The tester navigates to patient's profile and reviews the analysis results.
+\item[-] \textit{Step 3}: The tester accesses the treatment plan section and makes adjustments:
+  \begin{itemize}
+    \item Changes medication dosage.
+    \item Adds a new therapy recommendation.
+  \end{itemize}
+\item[-] \textit{Step 4}: The tester saves the changes.
+\item[-] \textit{Step 5}: The system validates the changes according to clinical guidelines.
+\item[-] \textit{Step 6}: The system updates the patient's treatment plan and logs the changes with timestamps and the clinician's ID.
+\item[-] \textit{Step 7}: The tester verifies that the updated treatment plan is correctly reflected in the patient's records.
+\item[-] \textit{Step 8}: The tester checks that the changes are linked to the latest analysis results.
+\item[-] \textit{Step 9}: The test passes if the treatment plan is updated accurately and linked appropriately; otherwise, it fails.
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Disclaimer Message Tests}
+
+This subsection covers Requirement \#10 of the SRS document by testing that the system allows patients to upload their own chest X-ray images for analysis, providing appropriate disclaimers.
+
+\begin{enumerate}
+
+\item \textbf{test-FR10-1} \label{test-FR10-1}
+
+Control: Automatic
+
+Initial State: A patient user account (\texttt{username: patient\_user}, \texttt{password: PatientPass123}) is registered and the user is logged out.
+
+Input: The patient logs in, uploads a chest X-ray image (\texttt{patient\_image.dcm}), and requests analysis.
+
+Output: The system displays an appropriate disclaimer, requires acknowledgment before proceeding, accepts the image, and provides analysis results.
+
+Test Case Derivation: Patients should be informed about limitations and must consent before using the service.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script simulates the patient logging into the system.
+  \item[-] \textit{Step 2}: The script navigates to the "Upload Image" section and uploads an image 
+  \item[-] \textit{Step 4}: The script verifies that a disclaimer is presented:
+    \begin{itemize}
+      \item Check that a modal or page displays the disclaimer text, including:
+        \begin{itemize}
+          \item The analysis is not a substitute for professional medical advice.
+          \item The need to consult a healthcare professional.
+          \item Information about data usage and privacy.
+        \end{itemize}
+      \item Ensure that the "I Agree" or acknowledgment checkbox/button is present.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script attempts to proceed without acknowledging the disclaimer:
+    \begin{itemize}
+      \item Click "Continue" without checking "I Agree".
+      \item Verify that the system prevents progression and displays a prompt to acknowledge the disclaimer.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script acknowledges the disclaimer:
+    \begin{itemize}
+      \item Check the "I Agree" box.
+      \item Click "Continue".
+      \item Verify that the system accepts the acknowledgment and proceeds to process the image.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The script monitors the analysis process:
+    \begin{itemize}
+      \item Check for a progress indicator or status message.
+      \item Wait for the analysis to complete.
+    \end{itemize}
+  \item[-] \textit{Step 8}: After analysis completion, the script verifies that results are displayed:
+    \begin{itemize}
+      \item Confirm that detected diseases and confidence levels are shown.
+      \item Ensure that a reminder is present advising consultation with a healthcare professional.
+    \end{itemize}
+  \item[-] \textit{Step 9}: The script attempts to access features restricted to clinicians:
+    \begin{itemize}
+      \item Try to access the "Patient Records" section.
+      \item Verify that access is denied with an appropriate message.
+    \end{itemize}
+  \item[-] \textit{Step 10}: The test passes if all steps function as expected and the disclaimer process cannot be bypassed; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Role Based Access Control Tests}
+
+This subsection covers Requirement \#11 of the SRS document by testing that the system enforces role-based access control, ensuring users only access permitted features.
+
+\begin{enumerate}
+
+\item \textbf{test-FR11-1} \label{test-FR11-1}
+
+Control: Automatic
+
+Initial State: The system is operational with user accounts assigned different roles:
+\begin{itemize}
+  \item Physician: \texttt{username: physician\_user}, \texttt{password: PhysicianPass123}.
+  \item Radiologist: \texttt{username: radiologist\_user}, \texttt{password: RadiologistPass123}.
+  \item Patient: \texttt{username: patient\_user}, \texttt{password: PatientPass123}.
+\end{itemize}
+
+Input: Users attempt to access features outside their permissions.
+
+Output: Access is granted only to features appropriate for each role; unauthorized access is denied with an appropriate error message.
+
+Test Case Derivation: Role-based access control is essential for security and compliance.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: For each user role, the automated test script will perform the following steps:
+    \begin{itemize}
+      \item[-] \textbf{Physician User}:
+        \begin{itemize}
+          \item Log in using physician credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View and edit assigned patient records.
+              \item Adjust treatment plans.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Administrative settings.
+              \item Other clinicians' patient records.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+      \item[-] \textbf{Radiologist User}:
+        \begin{itemize}
+          \item Log in using radiologist credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View imaging studies.
+              \item Perform image analyses.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Modify treatment plans.
+              \item Access administrative settings.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+      \item[-] \textbf{Patient User}:
+        \begin{itemize}
+          \item Log in using patient credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View own medical records.
+              \item Upload images for analysis.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Other patients' records.
+              \item Clinical tools and analysis features.
+              \item Administrative settings.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script will record all access attempts and the system's responses.
+  \item[-] \textit{Step 3}: The script will verify that:
+    \begin{itemize}
+      \item Authorized actions are allowed without errors.
+      \item Unauthorized actions are blocked with clear error messages.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The test passes if access controls function correctly for all roles; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Preservation of Original Data Tests}
+
+This subsection covers Requirement \#12 of the SRS document by testing that the system preserves the original chest X-ray images by creating copies for analysis.
+
+\begin{enumerate}
+
+\item \textbf{test-FR12-1} \label{test-FR12-1}
+
+Control: Automatic
+
+Initial State: A chest X-ray image (\texttt{original\_image.dcm}) is uploaded and stored in the system's image repository (\texttt{/var/www/images/uploads/}).
+
+Input: Initiation of the AI model analysis on the uploaded image.
+
+Output: The system creates a new copy of the image for analysis, preserving the original unaltered.
+
+Test Case Derivation: Data integrity is maintained by not altering original images.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script uploads \texttt{original\_image.dcm} to the system:
+    \begin{itemize}
+      \item Use API endpoint \texttt{/api/upload} with authorized credentials.
+      \item Record the file size and compute the checksum of \texttt{original\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script initiates the analysis process:
+    \begin{itemize}
+      \item Call the analysis API endpoint \texttt{/api/analyze} with the image ID returned from the upload.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script monitors the processing directory (\texttt{.../images/processing/}):
+    \begin{itemize}
+      \item Verify that a copy of the image (\texttt{processing\_image.dcm}) is created for analysis.
+      \item Record the file size and compute the checksum of \texttt{processing\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script compares the original and copied images:
+    \begin{itemize}
+      \item Confirm that the checksums of the two files match, ensuring the copy is identical before processing.
+    \end{itemize}
+  \item[-] \textit{Step 5}: After analysis completion, the script re-computes the checksum of \texttt{original\_image.dcm}:
+    \begin{itemize}
+      \item Verify that the checksum matches the original value from Step 1.
+      \item Confirm that the file size remains unchanged.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script verifies that all processing operations were performed on \texttt{processing\_image.dcm}:
+    \begin{itemize}
+      \item Check logs or metadata to confirm the processed image's ID matches \texttt{processing\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The test passes if the original image is unmodified and a copy was used for analysis; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Multiple Modality Support Tests}
+
+This subsection covers Requirement \#13 of the SRS document by testing that the system supports multiple medical imaging modalities beyond chest X-rays.
+
+\begin{enumerate}
+
+\item \textbf{test-FR13-1} \label{test-FR13-1}
+
+Control: Automatic
+
+Initial State: The system is configured to accept multiple medical imaging modalities, and processing modules for CT and MRI images are operational.
+
+Input: Uploading a CT scan image (\texttt{sample\_ct\_scan.dcm}) and an MRI image (\texttt{sample\_mri\_image.dcm}).
+
+Output: The system accepts and processes each image correctly, providing accurate analysis results specific to each modality.
+
+Test Case Derivation: The system should handle different imaging modalities appropriately.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script logs into the system with clinician credentials.
+  \item[-] \textit{Step 2}: The script uploads \texttt{sample\_ct\_scan.dcm}:
+    \begin{itemize}
+      \item Use the API endpoint \texttt{/api/upload} with the image file.
+      \item Include metadata indicating the modality (if not automatically detected).
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script verifies that the system recognizes the image as a CT scan:
+    \begin{itemize}
+      \item Check the response from the server for confirmation.
+      \item Verify that the image is stored in the appropriate directory (e.g., \texttt{/images/ct\_scans/}).
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script initiates the analysis process for the CT scan:
+    \begin{itemize}
+      \item Call the analysis API endpoint \texttt{/api/analyze} with the CT image ID.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script monitors the analysis pipeline to ensure the CT-specific processing module is used:
+    \begin{itemize}
+      \item Check logs or system messages indicating the module invoked.
+    \end{itemize}
+  \item[-] \textit{Step 6}: Upon analysis completion, the script retrieves the results:
+    \begin{itemize}
+      \item Verify that the results are appropriate for CT images.
+      \item Compare results against expected findings for \texttt{sample\_ct\_scan.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The script repeats Steps 2-6 for \texttt{sample\_mri\_image.dcm}, ensuring that:
+    \begin{itemize}
+      \item The MRI image is correctly recognized.
+      \item The MRI-specific analysis module is used.
+      \item Results are accurate and modality-specific.
+    \end{itemize}
+  \item[-] \textit{Step 8}: The test passes if both images are processed correctly with accurate results; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Regular AI Model Update Tests}
+
+This subsection covers Requirement \#14 of the SRS document by testing that the system can update the AI model regularly without disrupting ongoing services.
+
+\begin{enumerate}
+
+\item \textbf{test-FR14-1} \label{test-FR14-1}
+
+Control: Automatic, <anual
+
+Initial State: The system is functional with the current AI model version (\texttt{model\_v1.0}). A new AI model version (\texttt{model\_v1.1}) is ready for deployment.
+
+Input: Deployment of the updated AI model to the system generated by the .ipynb file.
+
+Output: The system integrates the new AI model seamlessly without disrupting ongoing services and continues processing user requests during the update.
+
+Test Case Derivation: Regular updates should not impact system availability.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script triggers the deployment of \texttt{model\_v1.1} via the CI/CD pipeline:
+    \begin{itemize}
+      \item Use deployment scripts to initiate the update.
+    \end{itemize}
+  \item[-] \textit{Step 2}: While the deployment is in progress, the script simulates continuous user activity:
+    \begin{itemize}
+      \item Upload test images at regular intervals (e.g., every 30 seconds).
+      \item Initiate analysis requests for each uploaded image.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script monitors system performance metrics:
+    \begin{itemize}
+      \item Response times for API calls.
+      \item Error rates or any failed requests.
+      \item Server resource utilization (CPU, GPU, memory).
+    \end{itemize}
+  \item[-] \textit{Step 4}: After deployment completion, the script verifies that the new model is active:
+    \begin{itemize}
+      \item Check the model version via a dedicated API endpoint (\texttt{/api/model\_version}).
+      \item Confirm that \texttt{model\_v1.1} is returned.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script analyzes the results from test images submitted during deployment:
+    \begin{itemize}
+      \item Verify that all analysis requests were processed successfully.
+      \item Compare results before and after the model update for consistency or expected improvements.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script checks for any logged errors or warnings during deployment.
+  \item[-] \textit{Step 7}: The test passes if there are no service disruptions, the new model is correctly integrated, and all user requests are handled successfully; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Image Preprocessing Tests}
+
+This subsection covers Requirement \#15 of the SRS document by testing that the system preprocesses chest X-ray images by normalizing pixel values and resizing images to the input dimensions required by the AI model.
+
+\begin{enumerate}
+
+\item \textbf{test-FR15-1} \label{test-FR15-1}
+
+Control: Automatic
+
+Initial State: The preprocessing module is operational and correctly configured.
+
+Input: A batch of raw chest X-ray images with varying resolutions and pixel intensity ranges, located in \texttt{./test\_data/preprocessing\_test\_set/}.
+
+Output: Preprocessed images resized to 224x224 pixels with normalized pixel values suitable for input into the AI model.
+
+Test Case Derivation: Proper preprocessing ensures consistency and compatibility with the AI model.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script loads the batch of raw images:
+    \begin{itemize}
+      \item Read images from \texttt{./test\_data/preprocessing\_test\_set/}.
+      \item Record original metadata for each image (dimensions, pixel value ranges).
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script passes each image through the preprocessing module:
+    \begin{itemize}
+      \item Use the preprocessing API or function.
+      \item Capture any preprocessing logs or outputs.
+    \end{itemize}
+  \item[-] \textit{Step 3}: For each preprocessed image, the script verifies:
+    \begin{itemize}
+      \item Image Dimensions:
+        \begin{itemize}
+          \item Confirm that the image dimensions are 224x224 pixels.
+        \end{itemize}
+      \item Pixel Value Normalization:
+        \begin{itemize}
+          \item Check that pixel values are within the expected range (e.g., 0 to 1).
+        \end{itemize}
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script compares the preprocessed images to expected outputs:
+    \begin{itemize}
+      \item Use reference images or calculated expected values.
+      \item Compute the difference between preprocessed images and references.
+      \item Verify that any differences are within acceptable tolerances.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The test passes if all images meet the specified preprocessing requirements; otherwise, it fails.
+\end{itemize}
+
+\item \textbf{test-FR15-2} \label{test-FR15-2}
+
+Control: Automatic
+
+Initial State: The preprocessing module is operational.
+
+Input: An image file with an unsupported format (\texttt{invalid\_image.bmp}) and a corrupted image file (\texttt{corrupted\_image.dcm}).
+
+Output: The system handles the errors gracefully without crashing and logs informative error messages.
+
+Test Case Derivation: The system should be robust against invalid inputs and maintain stability.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script attempts to preprocess \texttt{invalid\_image.bmp}:
+    \begin{itemize}
+      \item Pass the file to the preprocessing module.
+      \item Monitor the module's response.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script verifies that the preprocessing module:
+    \begin{itemize}
+      \item Detects the unsupported file format.
+      \item Does not crash or throw unhandled exceptions.
+      \item Logs an error message indicating the issue, including the file name and reason (e.g., "Unsupported file format: .bmp").
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script repeats the process with \texttt{corrupted\_image.dcm}:
+    \begin{itemize}
+      \item Attempt to preprocess the corrupted file.
+      \item Monitor for exceptions or errors.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script verifies that the preprocessing module:
+    \begin{itemize}
+      \item Detects the file corruption.
+      \item Handles the error without crashing.
+      \item Logs an informative error message (e.g., "Failed to read image data: corrupted or incomplete file").
+    \end{itemize}
+\end{itemize}
+
+\end{enumerate}
+
+
+\subsection{Tests for Nonfunctional Requirements}
+
+\wss{The nonfunctional requirements for accuracy will likely just reference the
+  appropriate functional tests from above.  The test cases should mention
+  reporting the relative error for these tests.  Not all projects will
+  necessarily have nonfunctional requirements related to accuracy.}
+
+\wss{For some nonfunctional tests, you won't be setting a target threshold for
+passing the test, but rather describing the experiment you will do to measure
+the quality for different inputs.  For instance, you could measure speed versus
+the problem size.  The output of the test isn't pass/fail, but rather a summary
+table or graph.}
+
+\wss{Tests related to usability could include conducting a usability test and
+  survey.  The survey will be in the Appendix.}
+
+\wss{Static tests, review, inspections, and walkthroughs, will not follow the
+format for the tests given below.}
+
+\wss{If you introduce static tests in your plan, you need to provide details.
+How will they be done?  In cases like code (or document) walkthroughs, who will
+be involved? Be specific.}
+
+\subsubsection{Area of Testing1}
+		
+\paragraph{Title for Test}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input/Condition: 
+					
+Output/Result: 
+					
+How test will be performed: 
+					
+\item{test-id2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\subsubsection{Area of Testing2}
+
+...
+
+\subsection{Traceability Between Test Cases and Requirements}
+
+\wss{Provide a table that shows which test cases are supporting which
+  requirements.}
 
 \section{Unit Test Description}
 
