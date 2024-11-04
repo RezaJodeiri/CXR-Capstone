@@ -1769,6 +1769,531 @@ The prioritization of modules for testing is based on the following criteria:
 
 \noindent By focusing our testing efforts on high-impact modules, we aim to ensure a robust and reliable application while efficiently utilizing our resources.
 
+
+\subsection{Tests for Functional Requirements}
+
+\wss{Most of the verification will be through automated unit testing.  If
+  appropriate specific modules can be verified by a non-testing based
+  technique.  That can also be documented in this section.}\\\\
+For unit testing, we’re dividing the process into frontend and backend sections. UI/UX interactions, such as buttons and links, will be tested manually to ensure they function as expected. Backend functions, especially those involving data fetching, will be tested automatically.\\\\
+Frontend testing: UI/UX elements such as buttons, links, and other interactive components will undergo manual testing to confirm that they work as intended from a user perspective. This includes verifying that each interactive element responds accurately and meets usability standards.\\\\
+Backend testing: functions that handle data fetching and processing will be validated through automated tests. These tests will simulate various scenarios to ensure that data retrieval, processing, and any associated logic work as expected, helping us catch issues early and maintain data integrity. This combination of manual and automated testing ensures comprehensive coverage and reliability across the application. (Possibly by Pytest library)
+
+\subsubsection{Front End}
+
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}\\\\
+  The frontend testing will encompass all possible user interactions, covering any element that the user can click or interact with. This includes, but is not limited to, buttons, links, dropdowns, modals, and form fields. Each interactive element will be manually tested to confirm that it behaves as expected in various scenarios, such as different screen sizes and user flows. This ensures that the user experience is smooth, intuitive, and functional across all devices and use cases. Anything that deals with username/password/upload/download should be securely designed.
+\begin{enumerate}
+
+\item{FR-FE-1\\} (FR-7, FR-13)
+
+Type: Manual
+			
+Initial State:  Automated
+					
+Input: Username \& Password
+					
+Output: User is successfully logged in and redirected to the home page if the username and password are correct. If incorrect, an error message is displayed, preventing login.
+
+Test Case Derivation: The output is expected to confirm whether the login process works correctly. A successful login with correct credentials should redirect the user to the home page, while incorrect credentials should display an error message, preventing access. This expected outcome ensures that the system only grants access to users with valid login information, maintaining security and usability standards.
+
+How test will be performed: An automated
+
+[Refrence to Login Form UI]
+
+\item{FR-FE-2\\} (FR-7, FR-13)
+
+Type: Automated
+					
+Initial State: Register Page
+					
+Input: All form fields: Include but not limited to username/email, first name, last name, occupation, organization, location, password and confirmed password.
+					
+Output: User is successfully registered and redirected to the login page if all fields are valid; otherwise, appropriate error messages are displayed for invalid inputs.
+
+Test Case Derivation: This test verifies that the registration functionality correctly processes all required fields. The expected output is based on whether the provided data meets validation criteria and does not contain duplicates.
+
+How test will be performed: Automated scripts will fill in all form fields with valid and invalid data, submitting the registration form. The outputs will be checked to ensure successful registration for valid data and the correct error messages for invalid inputs.
+[Refrence to Register Form UI]
+
+\item{FR-FE-3\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page 
+					
+Input: One or more pictures in various formats (e.g., JPG, PNG, etc.) and within constrained size.
+					
+Output: Images are successfully uploaded, and confirmation messages are displayed. For unsupported formats, appropriate error messages are shown.
+
+Test Case Derivation: This test verifies the image upload functionality, ensuring that the system accepts valid image formats while rejecting unsupported ones. The expected outcome is determined by the format and size of the uploaded images.
+
+How test will be performed: Automated scripts will upload a mix of supported and unsupported image formats and sizes to the upload page. The results will be checked for successful uploads or correct error messages for unsupported formats.
+[Refrence to Upload Page UI]
+
+\item{FR-FE-4\\} (FR-3)
+
+Type: Automated
+					
+Initial State: Upload Page (After Upload)
+					
+Input: Symptoms
+					
+Output: Symptoms are successfully recorded and displayed on the user interface, confirming submission; an error message appears for invalid input.
+
+Test Case Derivation: This test verifies that the system correctly processes and records user-submitted symptoms after an image upload.
+
+How test will be performed: Automated scripts will input various symptom descriptions, including valid and invalid examples, to the appropriate field. The results will be checked to ensure successful recording or the display of correct error messages for invalid entries.
+
+\item{FR-FE-5\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Upload Page (Any)
+					
+Input: Delete, Save or Submit
+					
+Output: User’s symptoms and uploaded images are deleted, User’s symptoms and uploaded images are saved under profile; User's symptoms and uploaded images are submitted to backed. Confirmation message will be displayed or if there are validation errors, appropriate error messages are shown.
+
+Test Case Derivation: The expected output depends on the action taken, ensuring that data is either saved locally or submitted to the backend as appropriate.
+
+How test will be performed: Automated scripts will execute the Save or Submit actions and subsequently assess the actual outcomes against the expected results to ensure compliance with the specified requirements.
+
+\item{FR-FE-6\\} (FR-13)
+
+Type: Manual
+					
+Initial State: Home Page 
+					
+Input: Actions to navigate to other pages. (Upload, Profile, Logout-redirects to Login page etc)
+					
+Output: The user is successfully redirected to the selected page.
+
+Test Case Derivation: This test ensures that navigation actions from the Home Page function correctly, leading users to the appropriate pages without errors.
+
+How test will be performed: All the buttons will be manually tested, and observed for functionality.
+
+\item{FR-FE-7\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: Report page will be deleted or Report page will go to submitted state.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed: Automated scripts will simulate the selection of "Delete" and "Submit" actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-8\\} (FR-5 FR-6 FR-7 FR-11 FR-13)
+
+Type: Automated
+					
+Initial State: Report Page (Submitted)
+					
+Input: N/A
+					
+Output: Fetch and display the report from the database; otherwise, an error message indicates an invalid or expired session.
+
+Test Case Derivation: This test ensures the system retrieves and displays reports correctly and handles invalid Session ID scenarios (Security).
+
+How test will be performed: Automated scripts will input valid and invalid datasets, verifying the correct report display.
+
+\item{FR-FE-9\\} (FR-1, FR-12, FR-15)
+
+Type: Automated
+					
+Initial State: Report Page (Saved)
+					
+Input: Delete or Submit
+					
+Output: If 'Delete' is selected, the report page is removed with confirmation. If 'Submit' is selected, it transitions to a submitted state with confirmation.
+
+Test Case Derivation: This test verifies that the system correctly processes the actions of deleting or submitting a report, ensuring appropriate status changes and user feedback.
+
+How test will be performed:Automated scripts will simulate the selection of Delete and Submit actions, checking for the expected outcomes—either the removal of the report or the confirmation of submission.
+
+\item{FR-FE-10\\} (FR-7 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Patient)
+					
+Input: N/A
+					
+Output: Displays all relevant information, such as the treatment plan and reports.
+
+Test Case Derivation: This test verifies that the Profile Page correctly displays all pertinent patient information, ensuring data accuracy and completeness.
+
+How test will be performed: Automated scripts will access the Profile Page and check that all expected information, including the treatment plan and reports, is displayed correctly.
+
+\item{FR-FE-11\\} (FR-4 FR-7 FR-8 FR-10 FR-13)
+
+Type: Automated
+					
+Initial State: Profile Page (Doctor)
+					
+Input: Actions to edit a patient's profile, including treatment plan, comments, etc.
+					
+Output: Displays all patients and their respective information.
+
+Test Case Derivation: This test ensures that the Profile Page for the doctor accurately displays all patients and their details after any editing actions are performed.
+
+How test will be performed: Automated scripts will simulate actions to edit patient profiles and verify that the updated information is displayed correctly for all patients.
+
+\end{enumerate}
+
+\subsubsection{Back End}
+
+The backend testing will focus on validating the accuracy, reliability, and performance of all server-side functions and data processes. This includes testing data-fetching endpoints, ensuring secure and correct handling of requests and responses, and verifying data integrity in various scenarios. Automated tests will simulate multiple use cases to ensure that business logic, such as data processing, authentication, and error handling, works as expected. Performance tests will also be conducted to confirm that the backend maintains speed and efficiency under load, supporting seamless interactions between the frontend and backend components. This comprehensive backend testing aims to prevent data inconsistencies and ensure robust, secure, and scalable operations.
+
+\begin{enumerate}
+
+\item{FR-BE-1\\} (FR-16)
+
+Type: Automated 
+					
+Initial State: Start
+					
+Input: N/A
+					
+Output: Initialize backed systems and returns result.
+
+Test Case Derivation: This test verifies that the backend systems initialize correctly and that the expected result  is returned, indicating successful setup. (Go to S0)
+
+How test will be performed: Automated scripts will execute the initialization process and validate that the system returns the expected results without errors.
+
+\item{FR-BE-2\\} (FR-1 FR-2 FR-12)
+
+Type: Automated 
+					
+Initial State: S0
+					
+Input: Unloaded Form data (Images, symptoms etc)
+					
+Output: Transition to S1 if the upload is successful; otherwise, remain at S0.
+
+Test Case Derivation: This test verifies that the system successfully transitions from S0 to S1 upon a successful upload of form data and stays at S0 if the upload fails.
+
+How test will be performed: Automated scripts will simulate the upload of form data and check for the correct transition to S1 when the upload is successful or confirm that the system remains at S0 when the upload fails.
+
+\item{FR-BE-3\\} (FR-7 FR-15)
+
+Type: Automated 
+					
+Initial State: S1
+					
+Input: Uploaded Form data
+					
+Output: If the form data is valid, transition to S2; otherwise, return to S0.
+
+Test Case Derivation: This test verifies that the upload form processes data correctly, ensuring successful transitions between states based on the upload outcome.
+
+How test will be performed: Automated scripts will simulate form submissions with valid and invalid data, checking that the system transitions and returns the appropriate error code for failures.
+
+\item{FR-BE-4\\} (FR-14)
+
+Type: Automated 
+					
+Initial State: S2
+					
+Input: Valid Form data
+					
+Output: Processed and normalized form data (in the case of image data) if success transition into S3, else failure state.
+
+Test Case Derivation: This test verifies that the system accurately processes and normalizes valid form data, ensuring that the output meets the specified requirements for further use.
+
+How test will be performed: Automated scripts will input valid form data and verify that the system produces correctly processed and normalized output, checking for data integrity and conformity to expected formats.
+
+\item{FR-BE-5\\} (FR-3)
+
+Type: Automated
+					
+Initial State: S3
+					
+Input: Normalized data
+					
+Output: Diagnosis prediction data if success transition into S4, else failure state.
+
+Test Case Derivation: If the normalized data is successfully processed by the model, transition to S4; otherwise, enter a failure state.
+
+How test will be performed: Automated scripts will input normalized data into the model and verify that the diagnosis prediction data is produced correctly. The scripts will check for a successful transition to S4 or confirm entry into a failure state based on the processing outcome.
+
+\item{FR-BE-6\\} (FR-4 FR-5 FR-6 FR-8)
+
+Type: Automated 
+					
+Initial State: S4
+					
+Input: Diagnosis prediction data
+					
+Output: Generated report data if sucess transition into S5, else failure state.
+
+Test Case Derivation: This test will generate a concise report based on the diagnosis prediction data provided.
+
+How test will be performed: Automated scripts will input the diagnosis prediction data and verify that a report is generated successfully. The scripts will check for a successful transition to S5 or confirm entry into a failure state if the report generation fails.
+
+\item{FR-BE-7\\} (FR3)
+
+Type: Automated 
+					
+Initial State: Failure
+					
+Input: Error code
+					
+Output: Appropriate error message and system logs.
+
+Test Case Derivation: This is the exit state of the process, indicating that an error has occurred, and the system should provide relevant feedback based on the error code received.
+
+How test will be performed: Automated scripts will input various error codes and verify that the system generates the correct error messages and logs the details appropriately. The test will ensure that the system behaves as expected in the failure state.
+
+\item{FR-BE-8\\} (FR-11 FR-13)
+
+Type: Automated 
+					
+Initial State: S5
+					
+Input: Generated report data
+					
+Output: A confidence score; if low, transition to S6 (if the user is under a doctor); otherwise, proceed to End (if the doctor has approved or the user is not under any doctor).
+
+Test Case Derivation: The confidence score is derived from the generated report data, determining the subsequent state based on its value and the user's doctor status.
+
+How test will be performed: Automated scripts will process the generated report data, calculate the confidence score, and verify the correct state transition based on the score and user status.
+
+\item{FR-BE-9\\} (FR-9 FR-13)
+
+Type: Automated
+					
+Initial State: S6
+					
+Input: Edited data (Doctor)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will depend on the doctor's assessment of the confidence score and the generated report data, resulting in manually annotated information.
+
+How test will be performed: Automated scripts will submit the confidence score and generated report data for manual review, verifying that the doctor’s annotations are accurately recorded and linked to the corresponding report.
+
+\item{FR-BE-10\\} (FR-3 FR7)
+
+Type: Automated 
+					
+Initial State: End
+					
+Input: Approval/Disapproval (1/0)
+					
+Output: JSON data containing relevant details of reports, diagnosis data, and status.
+
+Test Case Derivation: The output will vary based on the input (1 or 0), returns nothing or include all pertinent report and diagnosis information.
+
+How test will be performed: Automated scripts will input approval/disapproval and validate that the returned JSON data matches the expected format and includes all relevant details.
+
+\end{enumerate}
+\subsection{Tests for Non-Functional Requirements}
+
+This section contains tests for the Non-Functional Requirements. The subsections of this part were created based on the subsections of Non-functional Requirements listed in the SRS. Each test was created based on the Fit Criterion of the requirements that they covered. 
+\subsection{Look and Feel}
+\textbf{NFR-LF1} \textbf{Type} Non-Functional Dynamic Manual\\
+         \indent {\textbf{Initial State}: The system must be installed and accessible.}\\
+         \indent {\textbf{Input / Condition}: Adjust window/level settings. Navigate between over tabs.Apply basic tools (zoom, pan, measure). Export or save images from the viewer.}\\
+         \indent {\textbf{Output}: The UI layout should be similar to standard medical imaging software (with menu positions, toolbar layout, and terminology consistent with common practices).}\\
+         \indent {\textbf{How test will be performed}: Ensure the system under test and reference medical imaging software are installed and configured. Launch the system under test and the reference software side-by-side. Compare the menu structure, toolbars, icons, panels, and overall layout. Verify whether the placement of key elements matches standard layouts. Review menu labels, tooltips, and buttons to ensure they use medical imaging terms. Adjust window/level settings. Use zoom, pan, and measurement tools.}\\
+        \\
+\textbf{NFR-LF2} \textbf{Type} Non-Functional Dynamic Manual \\
+        \indent \textbf{Initial State}: The system under test is installed and accessible on the target device. The monitor brightness is set to a comfortable level to ensure consistency during the test.\\
+        \indent \textbf{Input / Condition}: User Interaction with the interface for typical workflows.\\
+        \indent \textbf{Output}: color contrast ratio (is 4.5:1 or higher for text). Font sizes at least 12-14 points for normal text. \\
+        \indent \textbf{How test will be performed}: Launch the system and ensure the default color schemes and fonts are applied. Perform tasks continuously for 1-2 hours while interacting with different parts of the system interface (e.g., forms, menus). Check for signs of fatigue or frustration (e.g., rubbing eyes, slowing down). Use tools to measure the color contrast ratio.\\
+        \\
+\subsection{Usability and Humanity}
+\noindent \textbf{NFR-UH1} \textbf{Type} Non-Functional Dynamic Automated \\
+        \indent \textbf{Initial State}: User accounts and access credentials are prepared for all healthcare professionals participating in the test.Any required files or images are pre-loaded and accessible for the tasks.\\
+        \indent \textbf{Input / Condition}: Automated script with a list of specified tasks and user accounts\\
+        \indent \textbf{Output}: Percentage of user accounts that successfully completed all tasks without assistance: $\text{Success Rate} = \frac{\text{Number of Successful Participants}}{\text{Total Number of Participants}} \times 100$ \\
+        \indent \textbf{How test will be performed}: The automated script will perform the following tasks with each user account and calculate the success rate: Upload a Chest X-ray image to the system. View analysis results or processed reports. Adjust image settings (e.g., window/level, zoom). Export the analysis or report to a local folder. \\ 
+\\
+\textbf{NFR-UH2} \textbf{Type} Non-Functional Dynamic Automated \\
+        \indent \textbf{Initial State}: List of user accounts and access credentials are prepared. Full access to the user interface. Interface elements (buttons, icons, menus) are accessible for interaction.\\
+        \indent \textbf{Input / Condition}: Automated script with a list of interactions specified to interact with the tabs / other listed functionalities.\\
+        \indent \textbf{Output}: Log whether tool-tips and help content were displayed correctly for each element tested.\\
+        \indent \textbf{How test will be performed}: The test script will detect if the tool-tip appears after a short delay (0.5-1 second) when it hovers over an element. When it clicks on a help icon (e.g., “?” symbol) or help link, the test script checks if the system provides relevant information about that part of the interface. When the test script finished, it will provide a log including if tool-tips and help content were displayed correctly for each element tested. \\
+\subsection{Performance}
+\noindent \textbf{NFR-PR1} \textbf{Type} Non-Functional Dynamic Automated \\
+        \indent \textbf{Initial State}: User is logged in. Standard chest X-ray images are available for testing in PNG/JPG format (depending on system requirements). \\
+        \indent \textbf{Input / Condition}: Automated test script interacts with the system.\\
+        \indent \textbf{Output}: Percentage of the number of the chest X-ray image that are analyzed correctly.\\
+        \indent \textbf{How test will be performed}: The test script will upload a X-ray image through the interface. It will monitor the system to ensure it processes and analyzes the image. The moment the results or report are displayed or the system indicates completion, it checks the timing (<30 seconds). The process is repeated multiple times (at least 5 trials) to account for variations in processing time. \\
+\\
+\textbf{NFR-PR2} \textbf{Type} Non-Functional Dynamic Automated \\
+        \indent \textbf{Initial State}: A monitoring system is set up to log availability metrics, such as downtime events, mean time to recovery, and up-time percentage.\\
+        \indent \textbf{Input / Condition}: Server outages / network issues / high number of concurrent users.\\
+        \indent \textbf{Output}: Up-time Percentage; Downtime Events (Log the number, duration, and cause of any disruptions or downtime.) Mean Time to Recovery.\\
+        \indent \textbf{How test will be performed}: Two Automated scripts will start the monitoring system for a defined period (e.g., 24 hours or 1 week). One will simulate server outages or network issues by disabling a service temporarily and record the downtime, mean time to recovery. The other will use load testing tools (like Apache JMeter or Locust) to simulate a high number of concurrent users during peak hours and monitor response times. Two scripts will combine their results and return the output once they all finished.\\
+\\
+\textbf{NFR-PR3} \textbf{Type} Non-Functional Dynamic Automated\\
+        \indent \textbf{Initial State}: All dependencies (database, network, storage, and image processing engine) are configured and operational. Monitoring tools are available to track system performance, including: CPU and memory usage, Image processing times.\\
+        \indent \textbf{Input / Condition}: Collections of 20 identical or varied images, multiple user accounts. Baseline for each image processing is 20 seconds\\
+        \indent \textbf{Output}: Processing Time(Float), System Resource Utilization(Float), Images uploading success / fail (Boolean)\\
+        \indent \textbf{How test will be performed}: The automated script will simulate different users to upload 20 images simultaneously and start the stopwatch or monitoring tool when the uploads begin. It will keep track of the CPU, memory, and I/O usage during the processing of the 20 images. When images processing finished, it will calculate and return the average processing time for the 20 images, return CPU usage, memory usage and check for errors or failures.\\
+        \\
+\subsection{Operational and Environmental}
+\textbf{NFR-OE1} \textbf{Type} Non-Functional Dynamic Manual\\
+        \indent \textbf{Initial State}: The AI system and the PACS are both connected to the same hospital network and the DICOM configuration  for both systems is correctly set.\\
+        \indent \textbf{Input / Condition}: AI-processed results including annotations or diagnostic report as an image (in DICOM format). Metadata with patient ID (string) and instance number (string).\\
+        \indent \textbf{Output}: Boolean indicating whether the PACS successfully stores the AI-processed results with correct format (annotated image or report). The stored result is associated with the correct patient ID and instance number in the PACS.\\
+        \indent \textbf{How test will be performed}: Automated script will processes the retrieved chest X-ray image and generates an annotated image or diagnostic report in DICOM format. It will then send the annotated result to the PACS and verify the response from the PACS to ensure that the transfer was successful Then it will log into the PACS and search for the patient ID to confirm that the stored result is associated with the correct instance number. The automated scipt can be run multiple times depending on the need. \\
+        \\
+\textbf{NFR-OE2} \textbf{Type} Non-Functional Dynamic Automated\\
+        \indent \textbf{Initial State}: The network is configured normally with minimal latency and no packet loss initially. Necessary patient data and chest X-ray studies are available for retrieval.\\
+        \indent \textbf{Input / Condition}:Retrieve and process a chest X-ray image, Store the processed result, and send the data to external.\\
+        \indent \textbf{Output}: Boolean indicating if latency is within a reasonable time (190ms~220ms), logs include latency and packet loss statistics.\\
+        \indent \textbf{How test will be performed}: The automated script will simulate Network Latency and Packet Loss using a network emulation tool. It will then processes the retrieved chest X-ray image and generates an annotated image or diagnostic report, meanwhile monitoring the time taken for operations and the number of retries and checking the system logs for any warnings or errors related to packet loss or latency. It will check if the system raises alerts if packet loss exceeds 1% or if latency impacts performance significantly and return the results.
+        \\
+        \\
+\subsection{Security and Privacy}
+\noindent \textbf{NFR-SR1} \textbf{Type} Non-Functional Dynamic Automated\\
+         \indent \textbf{Initial State}: AES-256 encryption libraries (such as OpenSSL or Cryptography in Python) are configured for the system. Patient data, (including DICOM images and reports), is stored on the system or transmitted over the network.\\
+         \indent \textbf{Input / Condition}:  X-ray image and diagnostic report with (Patient ID and instance number). Secret key and initialization vector (IV) for AES-256 encryption.\\
+         \indent \textbf{Output}: All patient data, including images and reports, is encrypted using AES-256 both during storage and transmission.\\
+         \indent \textbf{How test will be performed}: The automated system will trigger the AI system to retrieve a chest X-ray image and process it. It will check if transmitted data (images and reports) appears as encrypted bytes and no readable patient information or image data should be visible. After processing, the AI system stores the data and the automated script will try to open a stored DICOM image or report directly without using the decryption mechanism, which should appear as unreadable, encrypted content (random bytes). When AI system decrypt and access the stored image or report, the automated script will detect if the decrypted data matches the original data.\\
+         \\
+\textbf{NFR-SR2} \textbf{Type} Non-Functional Dynamic Automated\\
+        \indent \textbf{Initial State}: The AI system has different user accounts with different assigned roles. Each role has specific permissions defined.\\
+        \indent \textbf{Input / Condition}: Role 1: Radiologist: Can view diagnostic results and patient images. Role 2: Administrator: Can manage user accounts and system configurations. (user\underline radiologist, user\underline admin)\\
+        \indent \textbf{Output}: Radiologist should be able to view diagnostic reports and images and should not be able to manage user accounts, Administrator should be able to create and manage user accounts and should not have access to patient diagnostic reports.\\
+        \indent \textbf{How test will be performed}: The automated script will login as either one of the user (user\underline radiologist or user\underline admin). For example, the automated script logged in user\underline radiologist and views diagnostic reports and download patient images, which should be successful, if not the system will terminated. It will then attempt to manage user accounts which the access should be denied. Same process is repeated for  user\underline admin.\\
+        \\
+\subsection{Maintainability and Support}
+\textbf{NFR-MS1} \textbf{Type} Non-Functional Static Manual\\
+        \indent \textbf{Initial State}: The AI system code-base is deployed in a version-controlled environment. Documentation for each module (e.g., README files, API references, inline comments) is available in the repository.\\
+        \indent \textbf{Input / Condition}: All modules within the code repository is accessible.\\
+        \indent \textbf{Output}: All key functionalities (e.g., data ingestion, inference, reporting) are encapsulated in separate, well-defined modules. Modules can function independently with minimal coupling. Dependencies between modules are well-documented.\\
+        \indent \textbf{How test will be performed}: Test person should clone the repository of this AI system and identify and list all modules, review dependencies to ensure minimal coupling and make sure each module is self-contained and can be modified without breaking other parts of the system.\\
+
+\noindent \textbf{NFR-MS2} \textbf{Type} Non-Functional Dynamic Automated\\
+        \indent \textbf{Initial State}: Code repository contains the entire AI system, automated testing framework (e.g., JUnit, Pytest)  is installed and configured in the project. Tests include unit tests, integration tests, system tests and end-to-end tests. Code coverage tool (e.g., coverage.py, JaCoCo) is integrated.\\
+        \indent \textbf{Input / Condition}: Unit tests, integration tests, and end-to-end tests.\\
+        \indent \textbf{Output}: Code coverage report.\\
+        \indent \textbf{How test will be performed}: The automated test script will navigate to the project directory and execute the automated test suite using the testing framework (e.g., Pytest or JUnit).\\
+\subsection{Cultural}
+\noindent \textbf{NFR-CR1} \textbf{Type} Non-Functional Dynamic Manual\\
+        \indent \textbf{Initial State}: The language options (English and French) are available in the settings menu.\\
+        \indent \textbf{Input / Condition}: Switch language between English and French. Generate report with English and French. \\
+        \indent \textbf{Output}: No untranslated or misaligned content should appear.\\
+        \indent \textbf{How test will be performed}: Person conducting the test will switch the language from English to French (and vice vera) in the settings menu and inspect Menus, Buttons/Labels, Error Messages and Notifications and other necessary elements for correctness. The test person will thenUse the system to generate a diagnostic report in English (and French) for a chest X-ray image. He / She will review the report for medical findings and patient info to verify that both reports contain the same findings but in the correct language. He / She will also trigger an error condition (e.g., entering invalid patient data) to verify that the error message appears in the selected language (English or French).\\
+        \\
+\subsection{Legal}
+\noindent \textbf{NFR-LR1} \textbf{Type} Non-Functional Static Manual\\
+        \indent \textbf{Initial State}: HIPAA and PIPEDA documentation are in place, development artifacts and source code are available. \\
+        \indent \textbf{Input / Condition}: Development artifacts, system design documentation.\\
+        \indent \textbf{Output}: System design aligns with the requirements of HIPAA (US) and PIPEDA (Canada). If not, all software risks are identified, evaluated, and mitigated.\\
+        \indent \textbf{How test will be performed}: Compliance audits will verify the system design and related documentation, to see if the AI system meets data protection and regulation requirements.\\
+    \\
+
+\noindent \textbf{NFR-LR2} \textbf{Type} Non-Functional Static Manual\\
+        \indent \textbf{Initial State}: ISO 13485 documentation are in place, development artifacts are available. (verification and validation plans, risk analysis reports, requirements, design documents, test plans etc.)\\
+        \indent \textbf{Input / Condition}: Development artifacts, processes(Software lifecycle management process, design review process etc).\\
+        \indent \textbf{Output}: All development processes align with the requirements of ISO 13485 and if not, all software risks are identified, evaluated, and mitigated.\\
+        \indent \textbf{How test will be performed}: The person conducting the test will first review the development artifacts and processes to confirm that: development processes follow ISO 13485 guidelines and risk management procedures are aligned with ISO 14971. He / She will verify that requirements documents are available and cover all key system functionalities, and the system shall adhere to the ISO 13485 standard for medical device software development.\\
+\\
+\subsection{Health and Safety}
+\textbf{NFR-HS1} \textbf{Type} Non-Functional Dynamic Manual\\
+        \indent \textbf{Initial State}: User roles are configured within the system, including Radiologist, Clinician, etc.\\
+        \indent \textbf{Input / Condition}: AI-generated report, Radiologist User Account\\
+        \indent \textbf{Output}: Logs including radiologist’s review action (confirm/reject) with a timestamp.\\
+        \indent \textbf{How test will be performed}: The test person will login using a Radiologist User Account and upload a test chest X-ray image to the AI system. The AI system analyzes the image and generates a report (flagged as preliminary). The test person will then access the preliminary report through the system’s dashboard and confirm / reject the diagnosis. If confirmed, the report should be marked as final and made available to clinicians / patients. If rejected: The system should log the feedback and trigger a re-analysis request. \\
+    \\
+
+\noindent \textbf{NFR-HS2} \textbf{Type} Non-Functional Dynamic Manual\\
+        \indent \textbf{Initial State}: The AI system is deployed and accessible to radiologists, clinicians, and other users.\\
+        \indent \textbf{Input / Condition}: Access the AI-generated diagnostic report and view the user interface displaying AI results.\\
+        \indent \textbf{Output}: Disclaimer is prominently displayed and easy to read. \\
+        \indent \textbf{How test will be performed}: The test person should generate a generate a diagnostic report using the AI system and open the generated report. He / She should check if the disclaimer is present on the report, either at the top, bottom, or in a prominent section, and the disclaimer test matches the predefined wording. He / She should also access the user interface which display AI results and select a patient report, check if the disclaimer is clearly displayed alongside the AI result and cannot be dismissed. \\
+
+\subsection{Traceability Between Test Cases and Modules}
+This section provides evidence that all modules have been considered in the test case design. Each test case is mapped to its corresponding module to ensure comprehensive coverage and verification of functionality.
+
+\begin{landscape}
+\begin{table}[h]
+    \centering
+    \caption{Traceability Matrix}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Module} & \textbf{Description} & \textbf{Status} \\
+        \hline
+        test-id1 & Module A (e.g., Upload) & Tests the upload functionality & Pending \\
+        \hline
+        test-id2 & Module B (e.g., Profile) & Verifies profile editing capabilities & In Progress \\
+        \hline
+        test-id3 & Module C (e.g., Reports) & Confirms report generation accuracy & Completed \\
+        \hline
+        test-id4 & Module D (e.g., Diagnosis) & Assesses diagnosis prediction output & Pending \\
+        \hline
+    \end{tabular}
+\end{table}
+\end{landscape}
+
+
+\textbf{Analysis:}
+\begin{itemize}
+    \item Each test case directly corresponds to specific modules within the application, ensuring that all critical functionalities are covered.
+    \item The status of each test case reflects its current progress, allowing for easy tracking of testing efforts.
+    \item System logs will be generated during the execution of each test case to provide a detailed record of operations. These logs will capture input parameters, output results, and any errors encountered, aiding in debugging and validation.
+    \item By correlating the test case outcomes with system logs, we can ensure accountability and traceability in the testing process, making it easier to identify and address issues.
+\end{itemize}
+				
+\begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
+  \hline
+  \multicolumn{1}{|c|}{NFR ID} & \multicolumn{2}{c|}{LF} & \multicolumn{2}{c|}{UH} & \multicolumn{3}{c|}{PR} & \multicolumn{2}{c|}{OE} & \multicolumn{2}{c|}{SR} & \multicolumn{2}{c|}{M} & CR & \multicolumn{2}{c|}{LR} & \multicolumn{2}{c|}{HS} \\ 
+  \hline
+  & 1 & 2 & 1 & 2 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & S1 & S2 & 1 & 1 & 2 & 1 & 2 \\ 
+  \hline
+  LF 1 & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  LF 2 &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  UH 1 &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  UH 2 &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 1 &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 2 &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  PR 3 &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  OE 1 &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  OE 2 &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  \\ 
+  \hline
+  SR 1 &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  \\ 
+  \hline
+  SR 2 &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  \\ 
+  \hline
+  MS1 &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  \\ 
+  \hline
+  MS2 &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  \\ 
+  \hline
+  CR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  \\ 
+  \hline
+  LR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  \\ 
+  \hline
+  LR 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  \\ 
+  \hline
+  HS 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  \\ 
+  \hline
+  HS 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x \\ 
+  \hline
+  \caption{Non-functional requirements traceability}
+  \label{tab:nf_requirements}
+  \end{tabular}
+
 \newpage
 
 \subsection{Tests for Functional Requirements}
