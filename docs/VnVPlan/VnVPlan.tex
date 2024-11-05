@@ -42,37 +42,26 @@
 \section*{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\toprule
+{\bf Date} & {\bf Version} & {\bf Notes} \\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+October 22 & 1.0 & Ayman completed section 2. \\
+October 27 & 1.1 & Nathan completed sections 3.4–3.7. \\
+October 27 & 1.2 & Kelly completed Nonfunctional Requirement tests. \\
+October 28 & 1.3 & Reza completed Functional Requirement tests. \\
+October 29 & 1.4 & Ayman completed sections 3.1–3.3. \\
+November 3 & 1.5 & Patrick completed the appendix and usability questions. \\
 \bottomrule
 \end{tabularx}
 
-~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
 
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
+~\\
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
-
-\listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -148,7 +137,7 @@ This subsection provides a list of terms that are used in the subsequent section
   AI & Artificial Intelligence\\
   CNN & Convolutional Neural Network\\
   DICOM & Digital Imaging and Communications in Medicine\\
-  IVDDs & In Vitro Diagnostic Devices\\
+  VnV & Verification and Validation\\
   ML & Machine Learning\\
   PACS & Picture Archiving and Communication System\\
   SaMD & Software as a Medical Device\\
@@ -165,38 +154,6 @@ This subsection provides a list of terms that are used in the subsequent section
   ECR & Elastic Container Registry\\
   \bottomrule
 \end{tabular}
-\newpage
-\subsection{Values of Auxiliary Constants}
-
-\renewcommand{\arraystretch}{1.3}
-\noindent \begin{tabular}{|p{3.5cm}|p{9.5cm}|}
-    \hline
-    \rowcolor{lightgray} \textbf{Parameter} & \textbf{Description} \\
-    \hline
-    Uptime & 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics. \\
-    \hline
-    Training Photos & 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy. \\
-    \hline
-    Accuracy Rate & 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use. \\
-    \hline
-    Response Time & Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times. \\
-    \hline
-    Batch Size & 32 images per batch – Defines the number of images processed together during each training iteration. \\
-    \hline
-    Learning Rate & 0.001 – The step size during gradient descent, impacting model training speed. \\
-    \hline
-    Number of Epochs & 50 – The number of times the model processes the entire training dataset. \\
-    \hline
-    Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
-    \hline
-    Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
-    \hline
-    Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
-    \hline
-    Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
-    \hline
-\end{tabular}
-
 \newpage
 
 \pagenumbering{arabic}
@@ -281,17 +238,26 @@ After the AI model completes the analysis of medical images, the system automati
 
 \subsubsection{Challenge Level}
 
-Our team believes the challenge level for this project to be general to advanced. This classification is based on the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the need to develop a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of Tensors, Linear Algebra, machine learning, and image processing will be essential for this application to function effectively. \\
-In terms of feasibility, our approach includes specific strategies to handle data privacy and large-scale data management. We plan to adhere to compliance regulations (such as HIPAA guidelines) and use anonymized datasets where necessary. Additionally, our team has access to sufficient computational resources and relevant medical datasets, ensuring we can manage the data and AI components of the project effectively. \\
+The challenge level of this project is classified as general, reflecting the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the development of a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of tensors, linear algebra, machine learning, and image processing will be essential for this application to function effectively.
+
+\noindent In terms of feasibility, our approach includes specific strategies to handle data privacy and large-scale data management. We plan to adhere to compliance regulations such as HIPAA guidelines and use anonymized datasets where necessary. Additionally, our team has access to sufficient computational resources from the Computing and Software department and relevant medical datasets, ensuring we can manage the data and AI components of the project effectively.
 
 \subsubsection{Extras}
-We have also identified several "extras" to enhance the application, such as incorporating a user feedback loop and additional image processing features that could benefit medical professionals and future development phases. Our System Verification and Validation plan will include cross-validation and real-world testing scenarios to ensure accuracy and reliability in a clinical context. \\\\
-\textbf{Extra Testing:}
-As mentioned in SRS and in the previous sections: Basic usability testing will be conducted to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will include gathering feedback from potential users to identify any usability issues and make necessary adjustments. \\\\  
-\textbf{Feature one:}
-One additional feature we plan to add, is a quick notification system to the people who are responsible patient. For instance, if the patient was to have a serious condition, for example, benign cancer in that region of his lungs, his physician would be immediately updated via SMS or other communication platforms. \\\\  
-\textbf{Feature Two:}
-Another feature we can look to add to our application is a checklist of the patients symptoms this would be used in a verification role. For example, if the patient facilitated his symptoms to be shortness of breath, the application would use this information and incorporate in the AI trained model, returning diseases which could have this potential symptom.\\  
+
+As integral parts of our project plan, we have identified several additional features to enhance the application and provide extra layers of verification for our AI model. These features are designed to improve the system's functionality and are not afterthoughts but essential components of our strategy.\\
+
+\noindent \textbf{Feature One: Automatic Structured Reporting}
+
+\noindent We plan to implement an Automatic Structured Reporting feature that generates comprehensive, human-readable reports summarizing key findings, disease detection results, and progression status. This feature adds an extra layer of verification by ensuring that the AI model's analysis is accurately and consistently communicated to healthcare professionals. The feasibility of this feature is high, as it leverages existing natural language generation techniques and can be integrated with the AI model's output data.\\
+
+\noindent \textbf{Feature Two: Disease Monitoring and Progression Analysis}
+
+\noindent Another key feature is the inclusion of Disease Monitoring and Progression Analysis. This functionality will assess whether a patient's condition has improved or worsened over time by comparing current and previous imaging studies. By providing visual aids and progression metrics, we add an extra layer of verification to our AI model's predictions.\\
+
+\noindent \textbf{Usability Testing (Secondary Feature)}
+
+\noindent Additionally, we plan to conduct usability testing to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will involve gathering feedback from potential users to identify any usability issues and make necessary adjustments. If time allows, we will include more extensive usability testing as a secondary feature, recognizing its importance in enhancing the overall user experience.
+
 
 \subsection{Relevant Documentation}
 
@@ -325,10 +291,10 @@ This section introduces the verification and validation team with their associat
 The verification and validation process is a collective responsibility within the team,
 with each member actively participating.
 
-\subsubsection{Understanding Medical Conditions}
+\subsubsection{Medical Data Analysis}
 \textbf{Assigned Team Members: All} \\\\
 For the verification process to ensure that the AI accurately detects lung diseases in chest X-rays, all team members must gain a deep understanding of the relevant medical conditions. This is essential for assessing whether the AI outputs align with real-world clinical expectations. To achieve this, the team needs to thoroughly review annotated chest X-ray datasets and medical literature. Without this foundational knowledge, the team cannot effectively validate the model’s diagnostic accuracy. During verification, each member must be capable of recognizing potential errors in the model’s predictions and correlating them with known medical indicators, ensuring the AI delivers clinically relevant results.
-\subsubsection{Learning PyTorch Fundamentals}
+\subsubsection{PyTorch Model Verification} 
 \textbf{Assigned Team Members: Patrick, Reza, and Kelly}\\\\
 To achieve high-quality verification of the AI model, the team must master PyTorch’s core functionalities, particularly related to the data flow and training process. The team needs to understand how to verify that the model is not just functioning, but also learning and improving in a meaningful way. This includes using PyTorch’s tensor operations and autograd features to test whether gradients are being calculated and applied correctly during backpropagation. Additionally, the team must verify that the preprocessing steps—such as resizing, normalizing, and augmenting X-ray images—are executed properly, as incorrect data handling could introduce significant errors during model training. High-quality verification requires confirming that all data transformations support the model’s learning objectives and that the AI is robust across different image variations.
 \subsubsection{Data Visualization Analysis}
@@ -336,7 +302,7 @@ To achieve high-quality verification of the AI model, the team must master PyTor
 For effective verification, the team must ensure that data visualizations clearly reflect the AI model’s performance, making it easier to spot anomalies or trends that might indicate issues. Ayman needs to focus on developing visuals that accurately represent both the training progress and the diagnostic results from the AI model. The team must verify that these visualizations allow for easy comparison between predicted outcomes and the actual clinical diagnoses. Ensuring that the plots are interpretable and correctly display model metrics (e.g., accuracy, loss over time, false positives/negatives) is key to validating the AI’s reliability. Without this verification, it would be difficult to pinpoint areas where the model may require refinement.
 
 
-\subsubsection{Web Creation}
+\subsubsection{Web Interface Verification}
 \textbf{Assigned Team Members: Ayman and Nathan} \\\\
 To meet the high standards for user experience and functionality, the Nathan and Ayman must rigorously verify that the frontend interface is not only visually appealing but also fully functional and responsive. Nathan needs to verify that the UI design facilitates a seamless interaction with the AI model, ensuring that healthcare professionals can input data and interpret results with ease. It is critical to validate the integration between the frontend and backend, ensuring that data is accurately retrieved, processed, and displayed without errors. Usability testing must be a priority during verification, as any gaps in the user interface could hinder the adoption of the tool by medical professionals. Ensuring accessibility and performance across various devices is also essential to meet the project’s quality standards.
 
@@ -346,64 +312,88 @@ Understanding user expectations is critical for verifying that the final product
 
 
 \subsection{SRS Verification Plan}
-\subsubsection{Peer Review}
+
+To ensure the Software Requirements Specification (SRS) document is comprehensive, clear, and meets all stakeholder needs, we have developed a structured verification plan. This plan includes peer reviews, consultations with supervisors and teaching assistants (TAs), and a detailed SRS checklist to guide the verification process.
+
+\subsubsection{Review Process}
+
+Our peer review process involves multiple stages to gather feedback and ensure the SRS document is of high quality:
+
 \begin{itemize}
-    \item \textbf{Ad Hoc Feedback:} We will conduct peer reviews where classmates and our primary reviewer provide feedback. 
-    \item \textbf{Creating Issues:} Each team member will be responsible for reading the SRS, evaluating its clarity, and checking for missing requirements and for anything missing that team member will required to make a github issue entailing that we need to look to add or fix a section of SRS. 
-    \item \textbf{Peer reviews:} Supervisor, stakeholders, and other peers will read our the document and give use feedback by doing this we can ensure its understandable to all stakeholders, especially those unfamiliar with the project.
-    \item \textbf{Pre-Meeting Preparation:} Before meeting with the supervisor, the team will ensure that the SRS is updated and ready for review. We would this by going through the rubric and creating a checklist. This checklist would include: Questions like are all the functional and non-functional requirements included? Are the constraints in scope or outside scope constraints are they truly constraints. Making a checklist with questions similar to these will help verify that the project is coherent and comprehensive.
-    \item \textbf{Post-Meeting Notes:} we will take notes on what the supervisor or TA told us and ensure that we look to add or fix whatever was mentioned during the meeting. This will be another checklist of things we must fix not like the previous checklist that is primarily focused on asking questions. 
-    \item \textbf{Questions for the Supervisor $\&$ TA's:} We will ask key questions that would focus on verifying the scope, clarity, and feasibility of our SRS document. An example, could be asking if the NFRs or non-functional requirements align with the project’s quality objectives.
+    \item[-] \textbf{Ad Hoc Feedback:} Team members will initially review the SRS document internally, providing immediate feedback on content, structure, and clarity. This step allows for quick identification of obvious issues or omissions.
+    
+    \item[-] \textbf{Individual Review and Issue Creation:} Each team member is responsible for thoroughly reading the SRS, evaluating its clarity, and checking for missing or conflicting requirements. For any identified issues, team members will create GitHub issues detailing the concerns and suggesting improvements or additions. This systematic approach ensures all potential problems are documented and addressed.
+    
+    \item[-] \textbf{External Peer Reviews:} We will invite classmates, our supervisor, stakeholders, and other peers to review the SRS document. Their feedback will provide diverse perspectives, ensuring the document is understandable to all stakeholders, including those unfamiliar with technical aspects of the project.
+    
+    \item[-] \textbf{Pre-Meeting Preparation:} Before meetings with the supervisor or TAs, the team will update the SRS based on internal reviews and ensure it is ready for external feedback. We will create a checklist based on the project rubric and key questions, such as:
+    \begin{itemize}
+        \item Are all functional and non-functional requirements included and clearly defined?
+        \item Are the constraints appropriately identified and in scope?
+        \item Does the document address all stakeholder needs and regulatory requirements?
+    \end{itemize}
+    This preparation ensures productive meetings and focused feedback sessions.
+    
+    \item[-] \textbf{Consultation and Feedback Sessions:} During meetings with the supervisor and TAs, we will present the SRS and actively seek their input on scope, clarity, and feasibility. We will ask targeted questions to verify alignment with project objectives, such as:
+    \begin{itemize}
+        \item Do the non-functional requirements align with the project's quality objectives?
+        \item Are there any concerns regarding the feasibility of the proposed AI models and techniques?
+        \item Is the level of detail sufficient for each requirement?
+    \end{itemize}
+    
+    \item[-] \textbf{Post-Meeting Actions:} After each consultation, the team will compile notes and feedback into a prioritized action list. This list will serve as a checklist of items to address, ensuring that all suggestions and concerns are systematically incorporated into the SRS.
 \end{itemize}
 
 \subsubsection{SRS Checklist}
 \textbf{1. Completeness}
 \begin{itemize}
-    \item \textbf{Purpose and Scope:} Clearly outlines the project’s goal to predict diseases from X-ray images using AI models. 
-    \item \textbf{Stakeholders:} Identifies and defines relevant stakeholders, including healthcare professionals, patients, and regulatory bodies. 
-    \item \textbf{Functional Requirements:} Describes core functionalities like image processing, disease prediction accuracy, and report generation. 
-    \item \textbf{Non-Functional Requirements:} Covers essential factors such as system performance, data security, and regulatory compliance. 
+    \item[-] \textbf{Purpose and Scope:} Clearly outlines the project’s goal to predict diseases from X-ray images using AI models. 
+    \item[-] \textbf{Stakeholders:} Identifies and defines relevant stakeholders, including healthcare professionals, patients, and regulatory bodies. 
+    \item[-] \textbf{Functional Requirements:} Describes core functionalities like image processing, disease prediction accuracy, and report generation. 
+    \item[-] \textbf{Non-Functional Requirements:} Covers essential factors such as system performance, data security, and regulatory compliance. 
 \end{itemize}
 \textbf{2. Clarity} 
 \begin{itemize}
-    \item \textbf{Clear Terminology:} Ensures that technical terms (e.g., deep learning, classification, X-ray modalities) are defined and used consistently. 
-    \item \textbf{Glossary Completeness:} Includes all necessary acronyms and terminology relevant to AI, healthcare, and radiology. 
+    \item[-] \textbf{Clear Terminology:} Ensures that technical terms (e.g., deep learning, classification, X-ray modalities) are defined and used consistently. 
+    \item[-] \textbf{Glossary Completeness:} Includes all necessary acronyms and terminology relevant to AI, healthcare, and radiology. 
 \end{itemize}
 \textbf{3. Consistency} 
 \begin{itemize}
-    \item \textbf{Consistent Terminology:} Uses standardized language across all documentation to avoid misinterpretation. 
-    \item \textbf{No Conflicting Requirements:} Checks for conflicts, especially between performance and security constraints. 
+    \item[-] \textbf{Consistent Terminology:} Uses standardized language across all documentation to avoid misinterpretation. 
+    \item[-] \textbf{No Conflicting Requirements:} Checks for conflicts, especially between performance and security constraints. 
 \end{itemize}
 \textbf{4. Verifiability} 
 \begin{itemize}
-    \item \textbf{Testable Requirements:} Ensures all functions, such as prediction accuracy and response time, are measurable and testable. 
-    \item \textbf{Acceptance Criteria:} Establishes specific benchmarks for model performance and prediction reliability. 
+    \item[-] \textbf{Testable Requirements:} Ensures all functions, such as prediction accuracy and response time, are measurable and testable. 
+    \item[-] \textbf{Acceptance Criteria:} Establishes specific benchmarks for model performance and prediction reliability. 
 \end{itemize}
 \textbf{5. Traceability} 
 \begin{itemize}
-    \item \textbf{Unique Identifiers:} Assigns identifiers to each requirement for tracking through development. 
-    \item \textbf{Source of Requirements:} Links each requirement back to stakeholder needs and healthcare standards. 
+    \item[-] \textbf{Unique Identifiers:} Assigns identifiers to each requirement for tracking through development. 
+    \item[-] \textbf{Source of Requirements:} Links each requirement back to stakeholder needs and healthcare standards. 
 \end{itemize}
 \textbf{6. Feasibility} 
 \begin{itemize}
-    \item \textbf{Technical Feasibility:} Confirms that AI model and image processing techniques are achievable within the project's scope. 
-    \item \textbf{Practical Constraints:} Assesses budget, data availability, and timeline constraints to ensure project viability. 
+    \item[-] \textbf{Technical Feasibility:} Confirms that AI model and image processing techniques are achievable within the project's scope. 
+    \item[-] \textbf{Practical Constraints:} Assesses budget, data availability, and timeline constraints to ensure project viability. 
 \end{itemize}
 
-\textbf{7. Security and Privacy} 
+\noindent \textbf{7. Security and Privacy} 
 \begin{itemize}
-    \item \textbf{Data Retention Policy:} Aligns with data privacy laws, focusing on secure handling of patient X-ray images. 
-    \item \textbf{Access Control Requirements:} Specifies requirements for user authentication, ensuring only authorized access to sensitive data. 
+    \item[-] \textbf{Data Retention Policy:} Aligns with data privacy laws, focusing on secure handling of patient X-ray images. 
+    \item[-] \textbf{Access Control Requirements:} Specifies requirements for user authentication, ensuring only authorized access to sensitive data. 
 \end{itemize}
 \textbf{8. Modifiability} 
 \begin{itemize}
-    \item \textbf{Organized Structure:} Structures requirements logically to allow future updates and integration of new AI models. 
-    \item \textbf{Avoiding Redundancy:} Ensures there are no duplicate or conflicting requirements to streamline modifications. 
+    \item[-] \textbf{Organized Structure:} Structures requirements logically to allow future updates and integration of new AI models. 
+    \item[-] \textbf{Avoiding Redundancy:} Ensures there are no duplicate or conflicting requirements to streamline modifications. 
 \end{itemize}
 \textbf{9. Compliance and Ethics} 
 \begin{itemize}
-    \item \textbf{Ethical and Legal Standards:} Addresses compliance with healthcare standards, patient privacy, and ethical AI usage. 
+    \item[-] \textbf{Ethical and Legal Standards:} Addresses compliance with healthcare standards, patient privacy, and ethical AI usage. 
 \end{itemize}
+
+By systematically applying this checklist during the SRS verification process, we aim to produce a high-quality, comprehensive, and reliable specification document that will guide the successful development of the project.
 
 \subsection{Design Verification Plan}
 
@@ -429,50 +419,51 @@ Simulate failure conditions to verify error-handling mechanisms, such as incompl
 
 \subsubsection{Design Verification Checklist}
 
-\textbf{Document Review}
-    \begin{itemize}
-        \item Ensure design aligns with all functional and non-functional requirements.
-        \item Confirm documentation accuracy for image processing, classification, and prediction.
-        \item Record any discrepancies from requirements.
-    \end{itemize}
-\textbf{Prototype Testing}
+\textbf{1. Document Review}
 \begin{itemize}
-    \item \textbf{System Performance}
+    \item[-] \textbf{Design Alignment:} Ensure the design aligns with all functional and non-functional requirements specified in the SRS.
+    \item[-] \textbf{Documentation Accuracy:} Confirm that all documentation accurately reflects the implementation details for image processing, classification, and prediction algorithms.
+    \item[-] \textbf{Discrepancy Recording:} Record any discrepancies between the design documents and the requirements for resolution.
+\end{itemize}
+
+\noindent \textbf{2. Prototype Testing}
+\begin{itemize}
+    \item[-] \textbf{System Performance}
     \begin{itemize}
-        \item Verify accurate X-ray image processing.
-        \item Test performance under various load conditions.
-        \item Check response time for predictions.
-        \item Ensure scalability for future usage.
+        \item[-] \textbf{X-ray Image Processing:} Verify accurate processing of X-ray images, ensuring they meet the input specifications of the AI model.
+        \item[-] \textbf{Performance Under Load:} Test system performance under various load conditions to assess scalability and reliability.
+        \item[-] \textbf{Prediction Response Time:} Check that the response time for generating predictions meets the specified performance requirements.
+        \item[-] \textbf{Scalability:} Ensure the system can scale to accommodate future increases in user demand and data volume.
     \end{itemize}
 
-\item \textbf{Disease Prediction Accuracy}
+    \item[-] \textbf{Disease Prediction Accuracy}
     \begin{itemize}
-        \item Test accuracy with a benchmark dataset.
-        \item Evaluate algorithm on rare and complex cases.
-        \item Check consistency of predictions across runs.
+        \item[-] \textbf{Benchmark Testing:} Test the AI model's accuracy using a benchmark dataset to validate performance metrics.
+        \item[-] \textbf{Complex Case Evaluation:} Evaluate the algorithm's effectiveness on rare and complex cases to ensure robustness.
+        \item[-] \textbf{Prediction Consistency:} Check for consistency of predictions across multiple runs with the same input data.
     \end{itemize}
 
-    \item \textbf{User Interface (UI)}
+    \item[-] \textbf{User Interface (UI)}
     \begin{itemize}
-        \item Confirm UI is intuitive for healthcare professionals.
-        \item Ensure clear display of disease predictions.
-        \item Verify data visualization tools are easy to interpret.
-        \item Check seamless integration with clinical systems.
+        \item[-] \textbf{Intuitiveness:} Confirm that the UI is intuitive and user-friendly for healthcare professionals.
+        \item[-] \textbf{Clear Display:} Ensure that disease predictions and analysis results are displayed clearly and concisely.
+        \item[-] \textbf{Data Visualization:} Verify that data visualization tools (e.g., charts, highlighted images) are easy to interpret.
+        \item[-] \textbf{System Integration:} Check for seamless integration with existing clinical systems and workflows.
     \end{itemize}
 
-    \item \textbf{Failure Handling}
+    \item[-] \textbf{Failure Handling}
     \begin{itemize}
-        \item Test response to incomplete or corrupted data.
-        \item Verify clarity of error messages.
-        \item Simulate network failures for recovery and integrity.
-        \item Check logging for error tracking.
+        \item[-] \textbf{Incomplete Data Response:} Test the system's response to incomplete or corrupted data inputs.
+        \item[-] \textbf{Error Messages:} Verify that error messages are clear, informative, and guide the user towards corrective action.
+        \item[-] \textbf{Network Failure Simulation:} Simulate network failures to assess system recovery capabilities and data integrity.
+        \item[-] \textbf{Error Logging:} Check that errors are properly logged for troubleshooting and auditing purposes.
     \end{itemize}
 
-    \item \textbf{Security and Compliance}
+    \item[-] \textbf{Security and Compliance}
     \begin{itemize}
-        \item Confirm encryption and patient privacy protections.
-        \item Verify compliance with healthcare data regulations.
-        \item Ensure access control mechanisms are in place.
+        \item[-] \textbf{Encryption and Privacy:} Confirm that patient data is encrypted during transmission and storage, adhering to privacy protections.
+        \item[-] \textbf{Regulatory Compliance:} Verify compliance with healthcare data regulations such as HIPAA and PIPEDA.
+        \item[-] \textbf{Access Control:} Ensure that access control mechanisms are in place, restricting data access to authorized users only.
     \end{itemize}
 \end{itemize}
 \subsection{Verification and Validation Plan Verification Plan}
@@ -1729,26 +1720,57 @@ How this test will be performed: The test person should generate a diagnostic re
   \end{table}
   
   \begin{table}[H]
-  \centering
-  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-  \hline
-  \textbf{Test ID} & \textbf{LF1} & \textbf{LF2} & \textbf{UH1} & \textbf{UH2} & \textbf{PR1} & \textbf{PR2} & \textbf{OE1} & \textbf{SR1} & \textbf{HS1} \\ \hline
-  test-NFR-LF1-\ref{NFR-LF1} & $\times$ & & & & & & & & \\ \hline
-  test-NFR-LF2-\ref{NFR-LF2} & & $\times$ & & & & & & & \\ \hline
-  test-NFR-UH1-\ref{NFR-UH1} & & & $\times$ & & & & & & \\ \hline
-  test-NFR-UH2-\ref{NFR-UH2} & & & & $\times$ & & & & & \\ \hline
-  test-NFR-PR1-\ref{NFR-PR1} & & & & & $\times$ & & & & \\ \hline
-  test-NFR-PR2-\ref{NFR-PR2} & & & & & & $\times$ & & & \\ \hline
-  test-NFR-OE1-\ref{NFR-OE1} & & & & & & & $\times$ & & \\ \hline
-  test-NFR-SR1-\ref{NFR-SR1} & & & & & & & & $\times$ & \\ \hline
-  test-NFR-HS1-\ref{NFR-HS1} & & & & & & & & & $\times$ \\ \hline
-  \end{tabular}
-  \caption{\textbf{Nonfunctional Requirements Traceability}}
-  \end{table}
+    \centering
+    \begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{NFR ID}} & \multicolumn{2}{c|}{\textbf{LF}} & \multicolumn{2}{c|}{\textbf{UH}} & \multicolumn{3}{c|}{\textbf{PR}} & \multicolumn{2}{c|}{\textbf{OE}} & \multicolumn{2}{c|}{\textbf{SR}} & \multicolumn{2}{c|}{\textbf{MS}} & \textbf{CR} & \multicolumn{2}{c|}{\textbf{LR}} & \multicolumn{2}{c|}{\textbf{HS}} \\ 
+      \hline
+      & 1 & 2 & 1 & 2 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 1 & 2 & 1 & 2 \\ 
+      \hline
+      LF 1 & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      LF 2 &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      UH 1 &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      UH 2 &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 1 &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 2 &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 3 &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      OE 1 &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      OE 2 &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      SR 1 &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  \\ 
+      \hline
+      SR 2 &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  \\ 
+      \hline
+      MS1  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  \\ 
+      \hline
+      MS2  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  \\ 
+      \hline
+      CR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  \\ 
+      \hline
+      LR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  \\ 
+      \hline
+      LR 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  \\ 
+      \hline
+      HS 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  \\ 
+      \hline
+      HS 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x \\ 
+      \hline
+    \end{tabular}
+    \caption{\textbf{Nonfunctional Requirements Traceability Matrix}}
+    \label{tab:nf_requirements}
+  \end{table}  
   \end{landscape}
   
 \section{Unit Test Description}
-PLease note that this section is a placeholder for the unit test description. The unit test modules will be updated as the project progresses and Module Interface Specification (MIS) documents are developed.
+Please note that this section is a placeholder for the unit test description. The unit test modules will be updated as the project progresses and Module Interface Specification (MIS) documents are developed.
 \subsection{Unit Testing Scope}
 The modules which the unit test focuses on will be divided into two categories: \textbf{Front-end} and \textbf{Back-end}.\\\\
 The following modules are considered outside the scope of unit testing:\\\\
@@ -1775,39 +1797,183 @@ The prioritization of modules for testing is based on the following criteria:
 
 \section{Appendix}
 
-This is where you can place additional information.
-
 \subsection{Symbolic Parameters}
+\renewcommand{\arraystretch}{1.3}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+\begin{table}[H]
+  \centering
+  \noindent
+  \begin{tabular}{|p{3.5cm}|p{9.5cm}|}
+      \hline
+      \rowcolor{lightgray} \textbf{Parameter} & \textbf{Description} \\
+      \hline
+      Uptime & 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics. \\
+      \hline
+      Training Photos & 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy. \\
+      \hline
+      Accuracy Rate & 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use. \\
+      \hline
+      Response Time & Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times. \\
+      \hline
+      Batch Size & 32 images per batch – Defines the number of images processed together during each training iteration. \\
+      \hline
+      Learning Rate & 0.001 – The step size during gradient descent, impacting model training speed. \\
+      \hline
+      Number of Epochs & 50 – The number of times the model processes the entire training dataset. \\
+      \hline
+      Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
+      \hline
+      Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
+      \hline
+      Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
+      \hline
+      Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
+      \hline
+  \end{tabular}
+  \caption{\textbf{Symbolic Parameters for AI System}}
+\end{table}
 
-\subsection{Usability Survey Questions?}
 
-\wss{This is a section that would be appropriate for some projects.}
+\subsection{Usability Survey Questions}
+
+\begin{enumerate}
+  \item On a scale of 1 to 5, how would you rate your overall experience with the chest X-ray analysis product?
+  \item On a scale of 1 to 5, how would you rate the ease of use and navigation of the interface?
+  \item On a scale of 1 to 5, how satisfied are you with the accuracy of the product's disease detection and report generation?
+  \item How confident are you in the reliability of the predictions provided by the product? (1 = Not confident, 5 = Very confident)
+  \item Are there any specific features you would like added to improve the accuracy or relevance of the analysis?
+  \item What feature of the product do you find most helpful in interpreting the chest X-ray images and understanding the diagnosis?
+  \item Which feature, if any, did you find least helpful or unnecessary for your workflow?
+  \item How likely are you to recommend this product to other healthcare professionals? (1 = Not likely, 5 = Very likely)
+  \item How intuitive do you find the product’s interface for navigating and analyzing X-ray images? (1 = Not intuitive, 5 = Very intuitive)
+  \item On a scale of 1 to 5, how well do the generated reports and predictions align with your expectations and clinical experience?
+  \item Did you encounter any difficulties in completing diagnostic tasks or viewing the analysis results? If yes, please describe.
+  \item On a scale of 1 to 5, how useful do you find the automated report summaries in supporting your decision-making?
+  \item How secure do you feel using this product in terms of patient data privacy? (1 = Not secure, 5 = Very secure)
+  \item Are there any other medical conditions or features you would like the product to detect or analyze in future updates?
+\end{enumerate}
+
 
 \newpage{}
 \section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.
-
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item What knowledge and skills will the team collectively need to acquire to
+  \item \textbf{What went well while writing this deliverable?}
+  
+  Writing this deliverable enabled us to delve deeply into the design and verification aspects of our AI-based chest X-ray analysis system.The abundance of ongoing research in the medical imaging domain and machine learning provided us with access to established validation frameworks and testing tools specifically designed for medical imaging applications and AI models. This made it straightforward to develop detailed system tests for both functional and non-functional requirements, ensuring that we thoroughly examined the core functionalities of our system.
+  \item \textbf{What pain points did you experience during this deliverable, and how
+    did you resolve them?}
+    
+  One of the main challenges we encountered was designing comprehensive system tests that effectively validate both the core functionalities and the additional features of our system. Ensuring that each functional requirement was adequately tested required great attention to detail and a thorough understanding of the system's expected behavior. Initially, we found it difficult to formulate test cases for complex features like AI model integration, security protocols, and handling of patient data. To overcome this, we revisited our System Requirements Specification (SRS) to clarify the requirements and ensure a precise alignment between requirements and tests. We also faced difficulties in balancing the scope of our extras, particularly the secondary features, within our project timeline and resource constraints. To resolve these issues, we held team discussions to prioritize features based on their feasibility and impact. We incorporated a traceability matrix to systematically link test cases to requirements, which greatly improved our ability to identify gaps and redundancies. Additionally, seeking feedback from our supervisor, Dr.Moradi, helped us refine our testing strategies and address any overlooked areas. 
+  \item \textbf{What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
-  identify at least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
+  identify at least one item for each team member.}
+
+  \item \textbf{For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice?}
+\end{enumerate}
+The following 2 questions are answered here for each team member:
+
+\begin{enumerate}
+  \item Patrick
+
+  \begin{itemize}
+      \item[-]Responsibility: Implementing and validating PyTorch models, ensuring model robustness and accuracy.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item[-] Advanced proficiency in PyTorch for deep learning model development and testing.
+          \item[-] Dynamic testing techniques for AI models, including unit testing and integration testing.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Online Courses and Tutorials: Enrolling in advanced PyTorch courses (e.g., Coursera, Udemy) focusing on model testing and validation, such as "Deep Learning with PyTorch" or "AI Testing with PyTorch."
+          \item PyTorch Documentation and Community Forums: Studying official documentation and engaging with the PyTorch community to learn best practices in model validation and debugging.
+      \end{enumerate}
+      \item[-] Chosen Approach: Patrick will pursue the Online Courses and Tutorials approach.
+      \item[-] Reason for Choice: Structured courses provide comprehensive coverage of advanced topics and include hands-on projects that reinforce learning. This method allows Patrick to systematically build upon his existing knowledge and directly apply new skills to our project, ensuring the AI model meets the required standards for accuracy and reliability in the V\&V plan.
+  \end{itemize}
+
+  \item Reza
+
+  \begin{itemize}
+      \item[-] Responsibility: Conducting static code analysis and maintaining code quality across the project.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in static code analysis tools (e.g., Pylint for Python, SonarQube).
+          \item Understanding of coding standards and best practices for maintainability and security.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Hands-on Practice with Tools: Installing and experimenting with static analysis tools on sample codebases to gain practical experience.
+          \item Workshops and Webinars: Participating in workshops focused on code quality and static analysis techniques.
+      \end{enumerate}
+      \item[-] Chosen Approach: Reza will pursue the Hands-on Practice with Tools approach.
+      \item[-] Reason for Choice: Practical experience is essential for mastering static analysis tools, and applying them directly to our project's codebase will provide immediate benefits. This approach allows Reza to tailor his learning to the specific tools and languages used in our project, ensuring that code quality and security are upheld in accordance with the V\&V plan.
+  \end{itemize}
+
+  \item Kelly
+
+  \begin{itemize}
+      \item[-] Responsibility: Setting up and managing continuous integration (CI) and automation workflows using GitHub Actions.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in CI/CD pipelines and GitHub Actions.
+          \item Automation of testing procedures and deployment processes.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item GitHub Learning Lab Courses: Completing interactive courses specifically focused on GitHub Actions and CI/CD practices.
+          \item Project-Based Learning: Implementing CI/CD pipelines in a controlled environment or sample projects to gain practical experience.
+      \end{enumerate}
+      \item[-] Chosen Approach: Kelly will combine both approaches but will focus on the GitHub Learning Lab Courses first.
+      \item[-] Reason for Choice: The structured courses provide essential knowledge and best practices, after which she will apply this knowledge through project-based learning to reinforce and expand her skills. This dual approach ensures that our V\&V processes are automated efficiently and effectively.
+  \end{itemize}
+
+  \item \textbf{Ayman}
+
+  \begin{itemize}
+      \item[-] Responsibility: Developing effective data visualization techniques for medical data analysis and assisting in web interface development.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in data visualization libraries (e.g., Matplotlib, Seaborn, Plotly).
+          \item Understanding of usability testing methodologies for web applications.
+          \item Frontend development skills (e.g., React, Angular) for web interface testing.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Online Tutorials and Documentation: Learning visualization libraries through official documentation and community tutorials.
+          \item Case Studies and Best Practices: Studying case studies on effective medical data visualization and user interface design.
+      \end{enumerate}
+      \item[-] Chosen Approach: Ayman will pursue the Case Studies and Best Practices approach.
+      \item[-] Reason for Choice: By understanding how visualization is effectively used in existing medical applications, Ayman can apply proven techniques to our project. This approach also aids in designing user-friendly interfaces, crucial for the V\&V plan's usability testing component.
+  \end{itemize}
+
+  \item Nathan 
+
+  \begin{itemize}
+      \item[-] Responsibility: Conducting usability testing to ensure the web application is user-friendly and meets the needs of healthcare professionals.
+      
+      \item[-]Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Understanding of usability testing methodologies and best practices.
+          \item Proficiency in designing and conducting user surveys and interviews.
+          \item Ability to analyze user feedback and identify areas for improvement.
+      \end{itemize}
+      
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item User Research and Surveys: Engaging in user research activities to gather insights into user needs and preferences.
+          \item Usability Testing Workshops: Participating in workshops focused on usability testing techniques and user-centered design principles.
+      \end{enumerate}
+      
+      \item[-] Chosen Approach: Nathan will pursue the Usability Testing Workshops approach.
+      
+      \item[-] Reason for Choice: Attending workshops will provide Nathan with structured training and hands-on experience in usability testing, enabling him to effectively evaluate and enhance the user interface based on real user feedback. This approach ensures that Nathan can apply best practices directly to our V\&V plan, improving the overall user experience for healthcare professionals.
+  \end{itemize}
+
 \end{enumerate}
 
 \end{document}
