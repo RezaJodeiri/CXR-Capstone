@@ -1,8 +1,21 @@
 \documentclass[12pt, titlepage]{article}
-
+\usepackage{lscape}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{colortbl}
 \usepackage{hyperref}
+\usepackage{colortbl} 
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{ulem} % For strikeout (\sout{})
+\usepackage{float}
+\usepackage{pdflscape}
+\definecolor{lightgray}{gray}{0.9}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -12,8 +25,9 @@
 }
 \usepackage[round]{natbib}
 
-\input{../Comments}
-\input{../Common}
+\input{../packages/Comments.tex}
+\input{../packages/Common.tex}
+\input{../packages/Reflection.tex}
 
 \begin{document}
 
@@ -28,460 +42,1753 @@
 \section*{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\toprule
+{\bf Date} & {\bf Version} & {\bf Notes} \\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+October 22 & 1.0 & Ayman completed section 2. \\
+October 27 & 1.1 & Nathan completed sections 3.4–3.7. \\
+October 27 & 1.2 & Kelly completed Nonfunctional Requirement tests. \\
+October 28 & 1.3 & Reza completed Functional Requirement tests. \\
+October 29 & 1.4 & Ayman completed sections 3.1–3.3. \\
+November 3 & 1.5 & Patrick completed the appendix and usability questions. \\
 \bottomrule
 \end{tabularx}
 
-~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
 
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
+~\\
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
-
-\listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
+This section records information for easy reference and aims to reduce ambiguity in understanding key concepts used in the project.
+
+\subsection{Table of Units}
+
+Throughout this document, SI (Système International d'Unités) is employed as the unit system. In addition to basic units, several derived units are used as described below. For each unit, the symbol is given, followed by a description of the unit and the SI name.
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
+\noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Unit} & \textbf{SI}\\
+    \midrule 
+    \si{\second} & Time & Second\\
+    \si{GB} & Data & Gigabyte\\
+    \si{MB} & Data & Megabyte\\
+    \si{LOC} & Quantity & Lines of Code\\
+    \bottomrule
+\end{tabular}
+
+\subsection{Definitions}
+This subsection provides a list of terms that are used in the subsequent sections and their meanings, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements:
+
+\begin{itemize}
+    
+    
+    \item[-] \textbf{Artificial Intelligence (AI) Model}: A program that analyzes datasets to identify patterns and make predictions. Used extensively in medical image analysis for automating diagnostics. 
+    
+    \item[-] \textbf{Convolutional Neural Network (CNN)}: A deep learning algorithm that processes images by assigning weights and biases, allowing it to identify patterns and features in medical images such as chest X-rays.
+    
+    \item[-] \textbf{DICOM (Digital Imaging and Communications in Medicine)}: The international standard for medical images, defining formats for image exchange that ensure clinical quality.
+    
+    \item[-] \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
+  
+    \item[-] \textbf{Machine Learning (ML)}: A subset of AI focusing on using data and algorithms to mimic human learning, improving accuracy over time.
+    \item[-] \textbf{Picture Archiving and Communication System (PACS)}: A system for acquiring, storing, transmitting, and displaying medical images digitally, providing a filmless clinical environment.
+    \item[-] \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
+    \item[-] \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
+    \item[-] \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
+    \item[-] \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
+    \item[-] \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
+    \item[-] \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
+    \item[-] \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
+    \item[-] \textbf{React}: A web front-end framework, written in Javascript.
+    \item[-] \textbf{Flask}: An HTTP-based server framework, written in Python.
+    \item[-] \textbf{Finite State Machine (FSM)}: A computation model that simulates sequential logic using state transitions, applied in processes like user authentication and backend workflows.
+    
+    \item[-] \textbf{ROC Curve (Receiver Operating Characteristic Curve)}: A graph that shows the performance of a classification model by plotting the true positive rate against the false positive rate at various threshold levels.
+    
+    \item[-] \textbf{Service-Level Agreement (SLA)}: Defines the guaranteed uptime of the system, such as ensuring the availability of the AI service for 99.99\% of operational hours.
+    
+    \item[-] \textbf{Software as a Medical Device (SaMD)}: Software classified as a medical device under regulatory frameworks, such as those defined by the Food and Drugs Act.
+    
+    \item[-] \textbf{TorchXRAYVision}: An open-source library for classifying diseases based on chest X-ray images, offering pre-trained models to accelerate the development process.
+    
+    \item[-] \textbf{X-ray}: A form of high-energy electromagnetic radiation used in medical imaging to produce images of the inside of the body, enabling the diagnosis of conditions through radiographic film or digital detectors.
+    
+    \item[-] \textbf{MIT License}: An open-source software license that allows for the free use, modification, and distribution of software.
+    
+    \item[-] \textbf{Training Data}: Refers to the dataset of labeled chest X-ray images used to train the AI model. In this project, the dataset size is approximately 471.12 GB.
+    
+\end{itemize}
+
+\subsection{Abbreviations and Acronyms}
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol} & \textbf{Description}\\
   \midrule 
-  T & Test\\
+  SRS & Software Requirements Specification\\
+  AI & Artificial Intelligence\\
+  CNN & Convolutional Neural Network\\
+  DICOM & Digital Imaging and Communications in Medicine\\
+  VnV & Verification and Validation\\
+  ML & Machine Learning\\
+  PACS & Picture Archiving and Communication System\\
+  SaMD & Software as a Medical Device\\
+  ROC & Receiver Operating Characteristic Curve\\
+  SLA & Service-Level Agreement\\
+  FR & Functional Requirement\\
+  NFR & Non-Functional Requirement\\
+  FSM & Finite State Machine\\
+  CXR & Chest X-Ray Project\\
+  POC & Proof of Concept\\
+  TM & Theoretical Model\\
+  AWS & Amazon Web Services\\
+  ECS & Elastic Container Service\\
+  ECR & Elastic Container Registry\\
   \bottomrule
-\end{tabular}\\
-
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
-
+\end{tabular}
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
-
 \section{General Information}
 
 \subsection{Summary}
+There are multiple software components that are required for the team to complete our end goal, as previously mentioned in SRS and Hazard Analysis, we need to test each of these components to ensure accuracy and reliability in our product. More of the specifics can be found below.  
+\subsubsection{User Interface (UI)}
+Ensure that the interface is easy to navigate for users like radiologists, doctors, or technicians. This includes testing for intuitive layouts, clear labels, and smooth workflows.
+\begin{itemize}
+    \item[-] Functionality: Check if every UI element this includes: buttons, drop downs, the menu and ensure the software front ended system responds correctly to user input.
+    \item[-] Performance: Verify the UI’s responsiveness and loading times, particularly when displaying large medical images like X-rays.
+\end{itemize}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+\subsubsection{Image Preprocessing and Enhancement}
+Before analysis, the X-ray images undergo preprocessing steps to enhance image quality and ensure consistent inputs for the AI model.
+\begin{itemize}
+    \item[-] Accuracy of Noise Reduction: Removes artifacts and noise from X-rays, improving image clarity. This is usually done by making the image grey scale or removing color from the image to ensure further accuracy when reading the image. 
+    \item[-] Normalization: Standardizes the pixel values across images to ensure uniformity, allowing the AI model to better detect subtle differences.
+\end{itemize}
 
-\subsection{Objectives}
+\subsubsection{Processing The Image}
+The AI model reads the image and looks at the features or patterns from the X-ray images that are indicative of various lung or cardiovascular conditions.
+\begin{itemize}
+    \item[-] Accuarcy of Texture and Shape Analysis: System analyzes shape and density of lung tissues by looking at tensor values and identifying anomalies.
+\end{itemize}
+\subsubsection{Disease Classification}
+Once features are extracted, using AI classification system categorizes pattern  into different diseases; returning the probabilities.
+    \begin{itemize}
+        \item[-] Accuracy and speed of Disease Models: Model is trained on large datasets of labeled X-ray images specifically CheXRPT, aiding it to recognize the patterns associated with diseases, this includes: Pneumonia, Lung Cancer, Tuberculosis and more.
+        \item[-] Accuracy  of Probability Scores: It provides a probability or confidence score for each disease, indicating the likelihood of the condition being present.
+    \end{itemize}
+\subsubsection{Automated Reporting}
+After the AI model completes the analysis of medical images, the system automatically generates structured, human-readable reports.
+    \begin{itemize}
+            \item[-] Functionality of Automated Reporting: Upon completing the analysis, the software can generate the report showing the probabilities of diseases and save that information onto the patients hospital data or user data of that hospital.
+    \end{itemize}
+    \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
-
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
-
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+    Referring back to the critical assumptions and system boundaries mentioned in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis} \citep{HA}
+    document, we have identified both in-scope and out-of-scope objectives that will be considered in the VnV plan.The main focus will be on the AI model and the software components developed by our team, which revolve around the Functional and Nonfunctional requirements described in \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+    document. External components to our project, such as the libraries (e.g., TorchXRayVision) and APIs or quality of the X-Ray images, will not be tested as they are assumed to have been verified by their implementation teams. Below is further justification for the objectives:
+    
+    \subsubsection{Ensure Model Accuracy or Correctness (In scope)}
+    \begin{itemize}
+        \item[-] The primary objective of this project is to build confidence in the correctness of the AI-powered diagnostic tool for lung diseases.
+        \item[-] The software should be able to consistently and accurately predict with a score of a minimum of 85\% accuracy.
+        \item[-] This probability will be derived from the model estimating the odds of various lung conditions, for example, pneumonia or lung cancer from X-ray images.
+        \item[-] Verifying the correctness of the AI's predictions is essential to ensure reliable clinical decision-making.
+    \end{itemize}
+    
+    \subsubsection{Demonstrate Adequate Usability (In scope)}
+    \begin{itemize}
+        \item[-] Given that medical professionals, such as radiologists, students, and doctors, will use the tool, the UI needs to be intuitive and efficient.
+        \item[-] The focus will be on ensuring the tool’s interface is easy to navigate, with clear access to essential features such as uploading X-rays, viewing probabilities, and generating reports.
+        \item[-] The goal of the application is to ensure correct results and not create an inner challenge to use the software itself, so users can quickly perform key tasks.
+    \end{itemize}
+    
+    \subsubsection{Security of Patient Data (In scope)}
+    \begin{itemize}
+        \item[-] Since the software will handle sensitive patient information, it must comply with privacy regulations such as PIPEDA for Canada or HIPAA if used in the US.
+        \item[-] This objective will focus on verifying that patient data is securely stored and transferred, and that access control mechanisms are in place to protect against unauthorized use.
+    \end{itemize}
+    
+    \subsubsection{Verification of External Libraries and APIs (Out of scope)}
+    \begin{itemize}
+        \item[-] The system relies on pre-existing libraries and APIs for tasks such as image processing, patient data handling, and possibly pre-trained AI models.
+        \item[-] The quality of these external dependencies will not be verified in this project.
+        \item[-] Our team believes that the external libraries and APIs will be assumed to have been tested by their implementation teams.
+    \end{itemize}
+    
+    \subsubsection{Control Over Patient Data Quality (Out of scope)}
+    \begin{itemize}
+        \item[-] We acknowledge that we do not have control over the quality of patient-provided data, such as X-ray images that may vary in quality due to different equipment or imaging conditions.
+        \item[-] The software may receive images with artifacts, poor resolution, or other quality issues that could affect the accuracy of the AI model's predictions.
+        \item[-] Ensuring the quality of the input data is beyond the scope of this project; our focus is on processing and analyzing the data as received.
+        \item[-] Users should be aware that the accuracy of the analysis may be impacted by the quality of the input images, and appropriate disclaimers will be provided.
+    \end{itemize}
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
+\subsubsection{Challenge Level}
 
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+The challenge level of this project is classified as general, reflecting the complexity of integrating AI for diagnostic purposes, the necessity for robust data handling and privacy compliance, and the development of a user-friendly interface for medical professionals. The project requires a solid understanding of machine learning principles, software development practices, and compliance with health data regulations. Our knowledge of tensors, linear algebra, machine learning, and image processing will be essential for this application to function effectively.
+
+\noindent In terms of feasibility, our approach includes specific strategies to handle data privacy and large-scale data management. We plan to adhere to compliance regulations such as HIPAA guidelines and use anonymized datasets where necessary. Additionally, our team has access to sufficient computational resources from the Computing and Software department and relevant medical datasets, ensuring we can manage the data and AI components of the project effectively.
+
+\subsubsection{Extras}
+
+As integral parts of our project plan, we have identified several additional features to enhance the application and provide extra layers of verification for our AI model. These features are designed to improve the system's functionality and are not afterthoughts but essential components of our strategy.\\
+
+\noindent \textbf{Feature One: Automatic Structured Reporting}
+
+\noindent We plan to implement an Automatic Structured Reporting feature that generates comprehensive, human-readable reports summarizing key findings, disease detection results, and progression status. This feature adds an extra layer of verification by ensuring that the AI model's analysis is accurately and consistently communicated to healthcare professionals. The feasibility of this feature is high, as it leverages existing natural language generation techniques and can be integrated with the AI model's output data.\\
+
+\noindent \textbf{Feature Two: Disease Monitoring and Progression Analysis}
+
+\noindent Another key feature is the inclusion of Disease Monitoring and Progression Analysis. This functionality will assess whether a patient's condition has improved or worsened over time by comparing current and previous imaging studies. By providing visual aids and progression metrics, we add an extra layer of verification to our AI model's predictions.\\
+
+\noindent \textbf{Usability Testing (Secondary Feature)}
+
+\noindent Additionally, we plan to conduct usability testing to ensure that the user interface is intuitive and easy for healthcare professionals to navigate. This will involve gathering feedback from potential users to identify any usability issues and make necessary adjustments. If time allows, we will include more extensive usability testing as a secondary feature, recognizing its importance in enhancing the overall user experience.
+
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+The three main relevant documentation that helped guide us in System Verification and Validation Plan (VnV) was \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan}, \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{Software Requirements and Specification}, and 
+\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis}.
+\\\\
+\textbf{Development Plan}:\\
 
-\citet{SRS}
+\noindent This document outlined the approach and resources needed to achieve our project goals, providing a clear roadmap for the development team. The problem statement within the development plan identified the specific challenges to be addressed, helping us focus on critical areas and allocate tasks efficiently. By defining milestones, deliverables, and timelines, the development plan ensured that all team members were aligned and aware of their responsibilities throughout the project lifecycle.\\
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+\noindent \textbf{Software Requirements Specification (SRS)}:\\
+
+\noindent The SRS clearly outlined the software’s intended functionality, performance requirements, and design constraints, providing a comprehensive guide for developers and helping us understand our stakeholders' needs. The SRS specified both functional and non-functional requirements, ensuring that the system met user expectations and complied with regulatory standards. It served as a foundational document that informed the design and implementation phases, allowing for a structured and organized development process.\\
+
+\noindent \textbf{Hazard Analysis (HA)}:\\
+
+\noindent  By systematically analyzing possible hazards, we were able to incorporate additional mitigation strategies into our implementation plan. For example, we recognized that server downtime could impact the Service Level Agreement due to system unavailability. Through the HA, we developed countermeasures to ensure that such risks were mitigated, such as implementing failover mechanisms and robust backup solutions. This proactive approach helped us design a more resilient and secure system.\\
+
+
+\noindent These documents significantly impacted the Verification and Validation (VnV) process by providing clear guidelines and objectives for testing. The SRS helped ensure that the project’s objectives were well-defined, guiding the VnV process by defining acceptance criteria and enabling the creation of test cases linked to specific requirements. The establishment of a traceability matrix allowed us to ensure that all functionalities were thoroughly tested. The HA contributed by highlighting potential risks that needed to be addressed during testing, leading to more comprehensive and robust test scenarios. Additionally, the SRS and HA aided in managing changes, identifying risks, and ensuring compliance with regulations like PIPEDA or HIPAA \citep{HIPAA}.
 
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
-
+This section introduces the verification and validation team with their associated
+ responsibilities, and provides verification plans for SRS, system design, VnV plan,
+ and system implementation. In addition, it introduces several automated testing
+ and verification tools that are planned to be utilized by the testing team during the
+ verification and validation process.
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+The verification and validation process is a collective responsibility within the team,
+with each member actively participating.
+
+\subsubsection{Medical Data Analysis}
+\textbf{Assigned Team Members: All} \\\\
+For the verification process to ensure that the AI accurately detects lung diseases in chest X-rays, all team members must gain a deep understanding of the relevant medical conditions. This is essential for assessing whether the AI outputs align with real-world clinical expectations. To achieve this, the team needs to thoroughly review annotated chest X-ray datasets and medical literature. Without this foundational knowledge, the team cannot effectively validate the model’s diagnostic accuracy. During verification, each member must be capable of recognizing potential errors in the model’s predictions and correlating them with known medical indicators, ensuring the AI delivers clinically relevant results.
+\subsubsection{PyTorch Model Verification} 
+\textbf{Assigned Team Members: Patrick, Reza, and Kelly}\\\\
+To achieve high-quality verification of the AI model, the team must master PyTorch’s core functionalities, particularly related to the data flow and training process. The team needs to understand how to verify that the model is not just functioning, but also learning and improving in a meaningful way. This includes using PyTorch’s tensor operations and autograd features to test whether gradients are being calculated and applied correctly during backpropagation. Additionally, the team must verify that the preprocessing steps—such as resizing, normalizing, and augmenting X-ray images—are executed properly, as incorrect data handling could introduce significant errors during model training. High-quality verification requires confirming that all data transformations support the model’s learning objectives and that the AI is robust across different image variations.
+\subsubsection{Data Visualization Analysis}
+\textbf{Assigned Team Members: Ayman and Nathan}\\\\ 
+For effective verification, the team must ensure that data visualizations clearly reflect the AI model’s performance, making it easier to spot anomalies or trends that might indicate issues. Ayman needs to focus on developing visuals that accurately represent both the training progress and the diagnostic results from the AI model. The team must verify that these visualizations allow for easy comparison between predicted outcomes and the actual clinical diagnoses. Ensuring that the plots are interpretable and correctly display model metrics (e.g., accuracy, loss over time, false positives/negatives) is key to validating the AI’s reliability. Without this verification, it would be difficult to pinpoint areas where the model may require refinement.
+
+
+\subsubsection{Web Interface Verification}
+\textbf{Assigned Team Members: Ayman and Nathan} \\\\
+To meet the high standards for user experience and functionality, the Nathan and Ayman must rigorously verify that the frontend interface is not only visually appealing but also fully functional and responsive. Nathan needs to verify that the UI design facilitates a seamless interaction with the AI model, ensuring that healthcare professionals can input data and interpret results with ease. It is critical to validate the integration between the frontend and backend, ensuring that data is accurately retrieved, processed, and displayed without errors. Usability testing must be a priority during verification, as any gaps in the user interface could hinder the adoption of the tool by medical professionals. Ensuring accessibility and performance across various devices is also essential to meet the project’s quality standards.
+
+\subsubsection{Users of the Application}
+\textbf{Assigned Team Members: All} \\\\
+Understanding user expectations is critical for verifying that the final product meets the needs of its primary users—healthcare professionals. The team must ensure that the AI model's outputs are not only accurate but also presented in a format that healthcare users find intuitive and actionable. Verification must include gathering feedback from potential users to assess whether the AI-generated diagnostics align with clinical workflows. Additionally, the team needs to verify that the interface provides relevant and precise information without overwhelming the user with unnecessary details. Ensuring that the tool is user-friendly and caters to both specialists and general practitioners is key to validating its practicality and effectiveness in real-world scenarios.
+
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
+To ensure the Software Requirements Specification (SRS) document is comprehensive, clear, and meets all stakeholder needs, we have developed a structured verification plan. This plan includes peer reviews, consultations with supervisors and teaching assistants (TAs), and a detailed SRS checklist to guide the verification process.
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
+\subsubsection{Review Process}
 
-\wss{Maybe create an SRS checklist?}
+Our peer review process involves multiple stages to gather feedback and ensure the SRS document is of high quality:
+
+\begin{itemize}
+    \item[-] \textbf{Ad Hoc Feedback:} Team members will initially review the SRS document internally, providing immediate feedback on content, structure, and clarity. This step allows for quick identification of obvious issues or omissions.
+    
+    \item[-] \textbf{Individual Review and Issue Creation:} Each team member is responsible for thoroughly reading the SRS, evaluating its clarity, and checking for missing or conflicting requirements. For any identified issues, team members will create GitHub issues detailing the concerns and suggesting improvements or additions. This systematic approach ensures all potential problems are documented and addressed.
+    
+    \item[-] \textbf{External Peer Reviews:} We will invite classmates, our supervisor, stakeholders, and other peers to review the SRS document. Their feedback will provide diverse perspectives, ensuring the document is understandable to all stakeholders, including those unfamiliar with technical aspects of the project.
+    
+    \item[-] \textbf{Pre-Meeting Preparation:} Before meetings with the supervisor or TAs, the team will update the SRS based on internal reviews and ensure it is ready for external feedback. We will create a checklist based on the project rubric and key questions, such as:
+    \begin{itemize}
+        \item Are all functional and non-functional requirements included and clearly defined?
+        \item Are the constraints appropriately identified and in scope?
+        \item Does the document address all stakeholder needs and regulatory requirements?
+    \end{itemize}
+    This preparation ensures productive meetings and focused feedback sessions.
+    
+    \item[-] \textbf{Consultation and Feedback Sessions:} During meetings with the supervisor and TAs, we will present the SRS and actively seek their input on scope, clarity, and feasibility. We will ask targeted questions to verify alignment with project objectives, such as:
+    \begin{itemize}
+        \item Do the non-functional requirements align with the project's quality objectives?
+        \item Are there any concerns regarding the feasibility of the proposed AI models and techniques?
+        \item Is the level of detail sufficient for each requirement?
+    \end{itemize}
+    
+    \item[-] \textbf{Post-Meeting Actions:} After each consultation, the team will compile notes and feedback into a prioritized action list. This list will serve as a checklist of items to address, ensuring that all suggestions and concerns are systematically incorporated into the SRS.
+\end{itemize}
+
+\subsubsection{SRS Checklist}
+\textbf{1. Completeness}
+\begin{itemize}
+    \item[-] \textbf{Purpose and Scope:} Clearly outlines the project’s goal to predict diseases from X-ray images using AI models. 
+    \item[-] \textbf{Stakeholders:} Identifies and defines relevant stakeholders, including healthcare professionals, patients, and regulatory bodies. 
+    \item[-] \textbf{Functional Requirements:} Describes core functionalities like image processing, disease prediction accuracy, and report generation. 
+    \item[-] \textbf{Non-Functional Requirements:} Covers essential factors such as system performance, data security, and regulatory compliance. 
+\end{itemize}
+\textbf{2. Clarity} 
+\begin{itemize}
+    \item[-] \textbf{Clear Terminology:} Ensures that technical terms (e.g., deep learning, classification, X-ray modalities) are defined and used consistently. 
+    \item[-] \textbf{Glossary Completeness:} Includes all necessary acronyms and terminology relevant to AI, healthcare, and radiology. 
+\end{itemize}
+\textbf{3. Consistency} 
+\begin{itemize}
+    \item[-] \textbf{Consistent Terminology:} Uses standardized language across all documentation to avoid misinterpretation. 
+    \item[-] \textbf{No Conflicting Requirements:} Checks for conflicts, especially between performance and security constraints. 
+\end{itemize}
+\textbf{4. Verifiability} 
+\begin{itemize}
+    \item[-] \textbf{Testable Requirements:} Ensures all functions, such as prediction accuracy and response time, are measurable and testable. 
+    \item[-] \textbf{Acceptance Criteria:} Establishes specific benchmarks for model performance and prediction reliability. 
+\end{itemize}
+\textbf{5. Traceability} 
+\begin{itemize}
+    \item[-] \textbf{Unique Identifiers:} Assigns identifiers to each requirement for tracking through development. 
+    \item[-] \textbf{Source of Requirements:} Links each requirement back to stakeholder needs and healthcare standards. 
+\end{itemize}
+\textbf{6. Feasibility} 
+\begin{itemize}
+    \item[-] \textbf{Technical Feasibility:} Confirms that AI model and image processing techniques are achievable within the project's scope. 
+    \item[-] \textbf{Practical Constraints:} Assesses budget, data availability, and timeline constraints to ensure project viability. 
+\end{itemize}
+
+\noindent \textbf{7. Security and Privacy} 
+\begin{itemize}
+    \item[-] \textbf{Data Retention Policy:} Aligns with data privacy laws, focusing on secure handling of patient X-ray images. 
+    \item[-] \textbf{Access Control Requirements:} Specifies requirements for user authentication, ensuring only authorized access to sensitive data. 
+\end{itemize}
+\textbf{8. Modifiability} 
+\begin{itemize}
+    \item[-] \textbf{Organized Structure:} Structures requirements logically to allow future updates and integration of new AI models. 
+    \item[-] \textbf{Avoiding Redundancy:} Ensures there are no duplicate or conflicting requirements to streamline modifications. 
+\end{itemize}
+\textbf{9. Compliance and Ethics} 
+\begin{itemize}
+    \item[-] \textbf{Ethical and Legal Standards:} Addresses compliance with healthcare standards, patient privacy, and ethical AI usage. 
+\end{itemize}
+
+By systematically applying this checklist during the SRS verification process, we aim to produce a high-quality, comprehensive, and reliable specification document that will guide the successful development of the project.
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+The design verification plan outlines the strategies and procedures that the team will use to verify the correctness and reliability of the design of our X-ray analysis and disease prediction application. This plan will serve as a guideline during the testing phase to ensure that the design meets the intended requirements and can mitigate potential risks identified by the team. The following procedures will be undertaken by the testing team during the verification process:
 
-\wss{The review will include reviews by your classmates}
+\subsubsection{Document Review}
+The system's design documentation and related materials will be reviewed by each member of the testing team after the initial draft is produced. During the document review process, the testing team will:
+\begin{itemize}
+\item[-] Ensure that the design of the system aligns with all functional and non-functional requirements, particularly those related to medical accuracy, data security, and regulatory compliance.
+\item[-] Assess if the documentation accurately describes the intended functionalities and behavior of the system, including its ability to analyze X-rays, classify diseases, and provide accurate predictions. Any discrepancies between the design and requirements should be recorded and discussed further.
+\end{itemize}
 
-\wss{Create a checklists?}
+\subsubsection{Prototype Testing}
+After the scheduled Proof of Concept (POC) demonstration, a prototype for each major system component should be completed. The prototypes will be assembled for system testing. During this phase, the testing team will:
+\begin{itemize}
+\item[-] Verify the application’s ability to process X-ray images accurately and consistently.
+Assess system performance under different load conditions, such as batch processing multiple images simultaneously.
+\item[-] Test the robustness of disease prediction algorithms under various scenarios, including rare and complex cases.
+\item[-] Evaluate the application's user interface for healthcare professionals, ensuring it is intuitive, provides clear predictions, and integrates well with clinical workflows.
+Simulate failure conditions to verify error-handling mechanisms, such as incomplete data, corrupted files, or system downtime.
+\end{itemize}
 
+
+\subsubsection{Design Verification Checklist}
+
+\textbf{1. Document Review}
+\begin{itemize}
+    \item[-] \textbf{Design Alignment:} Ensure the design aligns with all functional and non-functional requirements specified in the SRS.
+    \item[-] \textbf{Documentation Accuracy:} Confirm that all documentation accurately reflects the implementation details for image processing, classification, and prediction algorithms.
+    \item[-] \textbf{Discrepancy Recording:} Record any discrepancies between the design documents and the requirements for resolution.
+\end{itemize}
+
+\noindent \textbf{2. Prototype Testing}
+\begin{itemize}
+    \item[-] \textbf{System Performance}
+    \begin{itemize}
+        \item[-] \textbf{X-ray Image Processing:} Verify accurate processing of X-ray images, ensuring they meet the input specifications of the AI model.
+        \item[-] \textbf{Performance Under Load:} Test system performance under various load conditions to assess scalability and reliability.
+        \item[-] \textbf{Prediction Response Time:} Check that the response time for generating predictions meets the specified performance requirements.
+        \item[-] \textbf{Scalability:} Ensure the system can scale to accommodate future increases in user demand and data volume.
+    \end{itemize}
+
+    \item[-] \textbf{Disease Prediction Accuracy}
+    \begin{itemize}
+        \item[-] \textbf{Benchmark Testing:} Test the AI model's accuracy using a benchmark dataset to validate performance metrics.
+        \item[-] \textbf{Complex Case Evaluation:} Evaluate the algorithm's effectiveness on rare and complex cases to ensure robustness.
+        \item[-] \textbf{Prediction Consistency:} Check for consistency of predictions across multiple runs with the same input data.
+    \end{itemize}
+
+    \item[-] \textbf{User Interface (UI)}
+    \begin{itemize}
+        \item[-] \textbf{Intuitiveness:} Confirm that the UI is intuitive and user-friendly for healthcare professionals.
+        \item[-] \textbf{Clear Display:} Ensure that disease predictions and analysis results are displayed clearly and concisely.
+        \item[-] \textbf{Data Visualization:} Verify that data visualization tools (e.g., charts, highlighted images) are easy to interpret.
+        \item[-] \textbf{System Integration:} Check for seamless integration with existing clinical systems and workflows.
+    \end{itemize}
+
+    \item[-] \textbf{Failure Handling}
+    \begin{itemize}
+        \item[-] \textbf{Incomplete Data Response:} Test the system's response to incomplete or corrupted data inputs.
+        \item[-] \textbf{Error Messages:} Verify that error messages are clear, informative, and guide the user towards corrective action.
+        \item[-] \textbf{Network Failure Simulation:} Simulate network failures to assess system recovery capabilities and data integrity.
+        \item[-] \textbf{Error Logging:} Check that errors are properly logged for troubleshooting and auditing purposes.
+    \end{itemize}
+
+    \item[-] \textbf{Security and Compliance}
+    \begin{itemize}
+        \item[-] \textbf{Encryption and Privacy:} Confirm that patient data is encrypted during transmission and storage, adhering to privacy protections.
+        \item[-] \textbf{Regulatory Compliance:} Verify compliance with healthcare data regulations such as HIPAA and PIPEDA.
+        \item[-] \textbf{Access Control:} Ensure that access control mechanisms are in place, restricting data access to authorized users only.
+    \end{itemize}
+\end{itemize}
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
+This section provides guideline for Quality Assurance team to validate the Verification and Validation Plan document. The following steps will be used:
+\begin{itemize}
+  \item{Cross checking with Functional Requirements from SRS document: VnV documentation must objectively cover all business use-cases and functional requirements verification plan.}
+  \item{Review uncertenties with stakeholders: VnV plan must be reviewed by the stakeholders to ensure that the plan is feasible, realistic, and complete.}
+  \item{Each test case mentioned will have to state the following:}
+  \begin{itemize}
+    \item{What is the expected input and output of the test case.}
+    \item{How the test case is going to be implemented (Using what tools, techniques).}
+    \item{Which functional requirements, or non-functional requirements (from SRS document) does this test case belongs to.}
+    \item{Which system is being tested (Front-end, Back-end, ML model, etc.).}
+    \item{Which team is responsible for the test case. For example, a end-to-end test case might require everyone's effort}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Implementation Verification Plan}
+The following testing techniques will be used to verify the implementation our system:
+\begin{itemize}
+  \item[] {\textbf{Static Code and Documentation walkthroughs}}
+  \begin{itemize}
+    \item{Documentation walkthroughs will be performed by the team members, as a group, to verify that business use-cases and functional requirements are all covered.}
+    \item{Code walkthroughs/ Peer reviews will be performed by the team to ensure that the code is written as per the design documents (VNV Plan, SRS, and Development Plan).}
+  \end{itemize}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
+  \item[]{\textbf{Unit Testing}}
+  \begin{itemize}
+    \item{Individual units of the software are tested in isolation from the rest of a particular system. This is done to ensure that each unit of the software is working as designed in the business use-cases.}
+    \item{Examples of unit-test includes: testing the input validation, testing the output of a function, testing button clicks, testing authenticated web pages, etc.}
+    \item{All unit tests must cover the happy path and edge cases (boundary conditions, invalid input.).}
+  \end{itemize}
+  
+  \item[]{\textbf{Integration Testing}}
+  \begin{itemize}
+    \item{Two Individual Systems's Integration are tested. This is done to ensure that the system is working together as designed in the business use-cases.}
+    \item{In the context of Neuralanalyzer, required integrations to test are: the front-end and the back-end, back-end with AWS Cognito, back-end with Neuralanalyzer ML model, back-end with TorchXRayVision etc.}
+    \item{Examples of system tests include: Testing back-end responses with different input from front-end , Testing ML prediction with different images input onto backend, etc.}
+    \item{All Integration tests are ideally to be tested in isolation, for example: front-end to back-end integration test should mock the ML model's responses.}
+    \item{All system tests must cover the happy path and edge cases (boundary conditions, invalid input.).}
+  \end{itemize}
+  \item[]{\textbf{System/ End-to-End Testing}}
+  \begin{itemize}
+    \item{System testing is done to ensure that all systems are working together as designed in the business use-cases.}
+    \item{Example of 1 System test cases: Sign up on the front-end and validating the existing user on the back-end, etc.}
+    \item{All end-to-end tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction.), and Functional Requirements.}
+  \end{itemize}
+  \item[]{\textbf{Periodic Health Checks}}
+  \begin{itemize}
+    \item{The front-end, back-end, and ML model will be checked periodically to measure system's uptime. Measured uptime must satisfy the agrred-upon SLA (95\%).}
+    \item{Periodic Health Checks will be performed regardless of the system' software version and state.}
+  \end{itemize}
+  \item[]{\textbf{Manual Testing}}
+  \begin{itemize}
+    \item{Manual testing will be performed by the team to ensure intuitive and simple UI/UX to the end-user.}
+    \item{Manual testing will only include interaction with the front-end on different devices (mobile, tablet, desktop).}
+    \item{All manual tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction.).}
+  \end{itemize}
+  \item[]{\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{All the Chest X-Ray data available will be split into 3 diffrent sets: Training, Validation, and Testing.}
+    \item{The ML model will be trained on the Training set, and validated on the Validation set.}
+    \item{The ML model will be tested on the Testing set, and the accuracy will be measured. The accuracy of the models will be aggreed upon by the team, and the stakeholders.}
+  \end{itemize}
+  \item[]{\textbf{User Acceptance Testing}}
+  \begin{itemize}
+    \item{After the MVP is ready, the team will invite selected stakeholders to test out the system.}
+    \item{Based on the feedback, the team will make necessary changes to the system via GitHub Issues.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Automated Testing and Verification Tools}
+With many testing techniques in place, the following tools will be used to automate the testing process:
+\begin{itemize}
+  \item[] {\textbf{Static Code/ Document Review via Github Pull Requests}}
+  \begin{itemize}
+    \item{During development phase, every line of code ideally would have to be reviewd, per \textbf{Github Pull Requests}, by the team. As mentioned, pull requests onto main branch must be approved by all 4 team members.}
+    \item{If a pull request is way too long (ie: more than 500 lines of code), the pull request owner will have to break down the pull request into smaller pull requests, or the team will have a meeting to review the code.}
+    \item{Since the documentation is also version controlled, the team will review documents similar to code review via \textbf{Github Pull Requests}.}
+  \end{itemize}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+  \item[] {\textbf{Static Code Analysis Tools}}
+  \begin{itemize}
+    \item{Utilizing \textbf{Pylint} for Python code, and \textbf{ESLint} for JavaScript code To ensure that the code is written as per the PEP8 standards.}
+    \item{Pylint and ESLint will be integrated into the development environment, and will be run on every commit to the main branch via \textbf{Gtihub Actions}.}
+  \end{itemize}
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+  \item[] {\textbf{Tools for Unit Testing}}
+  \begin{itemize}
+    \item{\textbf{Front-end}: Utilizing \textbf{Jest} for testing React components, and front-end data fetching functions. Jest is capable of mocking API calls and other front-end modules, isolating front-end units at test-execution time, making it a perfect tool for React unit testing.}
+    \item{\textbf{Back-end and ML plugins}: Utilizing \textbf{Pytest} for testing individual functions and layers. Pytest is capable of mocking front-end input, external service calls, and other back-end modules.}
+  \end{itemize}
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+  \item[] {\textbf{Tools for Integration Testing}}
+  \begin{itemize}
+    \item{Front-end and back-end integration will be tested with \textbf{Cypress}. Certain function that requires ML model's responses can be mocked with Cypress at the api layer.}
+    \item{Back-end and ML Plugins integration will be tested with \textbf{Pytest}. Certain function that requires Front-end input can be mocked at the API layer.}
+    \item{Back-end and AWS Cognito integration will be tested with \textbf{Pytest}. Certain functions that requires Front-end input and ML models output can be mocked.}
+  \end{itemize}
+
+  \item[] {\textbf{Tools for End-to-End Testing}}
+  \begin{itemize}
+    \item{End-to-end testing can be done with \textbf{Cypress}. Without mocking any functions, end-to-end testing can be performed in a fashion that mimics the user's interaction with the system.}
+    \item{For example Cypress can create an account on the front-end, and validate if the account is created on AWS Cognito.}
+  \end{itemize}
+
+  \item[] {\textbf{Tools for Periodic Health Checks}}
+  \begin{itemize}
+    \item{\textbf{Github Actions Schedules} will be used to run health checks on running front-end and back-end.}
+    \item{Since AWS Cognito's uptime is fully mamanged by AWS, perioid health check for this service is unnecessary.}
+  \end{itemize}
+
+  \item[] {\textbf{Test Automation Framework}}
+  \begin{itemize}
+    \item{\textbf{GitHub Actions} will be utilized to automate the testing process.}
+    \item{GitHub Actions will be configured to run all tests (All unit tests, integration tests, and system tests) on every Pull Request, and on every commit to the main branch.}
+  \end{itemize}
+
+  \item[] {\textbf{Machine Learning Model Validation and Testing}}
+  \begin{itemize}
+    \item{\textbf{Pytorch} will be used to test the ML model's accuracy on the Testing set.}
+  \end{itemize}
+\end{itemize}
 
 \subsection{Software Validation Plan}
-
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
+\begin{itemize}
+  \item[]{\textbf{Developers}: After a feature is developed, the internal validation plan will includes the following steps}
+  \begin{itemize}
+    \item{Developers will write tests, and come up with acceptance criteria for the feature.}
+    \item{The test caes then will be reviewd (on Github), and ran on Github Actions on every Pull Requests.}
+    \item{The software is consider validated, if all tests pass, including all old tests, and newly written tests.}
+    \item{If the test cases failed, the developer will need to fix the code, and notify the team to re-approve the Pull Requests.}
+  \end{itemize}
+  \item[]{\textbf{Dr.Mehdi Moradi}: Since Dr.Mehdi Moradi is the primary stakeholder and supervisor of the project, the team will report project progress to him on a bi-weekly basis. The team will also invite Dr.Mehdi to internal testing sessions.}
+  \item[]{\textbf{Other Stakeholders}: During the development cycle of the application, User Acceptance Testing (UAT) will be performed periodically by the team. UATs will be performed to ensure that the system is working as expected and is ready for the stakeholders to test. The UAT will be performed in the following steps:}
+  \begin{itemize}
+    \item{Coming up with business use-cases, by stakeholders, that the system must satisfy.}
+    \item{Selected stakeholders will be invited to use and test the beta system.}
+    \item{Stakeholders interaction with the system will be observed and feedback will be collected.}
+    \item{If the interactions and feedbacks are positive, the current system will be deployed to production. However, if the feedbacks are mostly negative, the team will make necessary changes to the system via GitHub Issues, and perform another round of UAT.}
+  \end{itemize}
+\end{itemize}
 
 \section{System Tests}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
-
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+This section contains the tests for the Functional Requirements. The subsections for these tests were created based on the Functional Requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ document. Each test was created according to the Fit Criterion of the requirements they were covering. Traceability for these requirements and tests can be found in the traceability matrix.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\subsubsection{X-ray Image Input Tests}
 
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+This subsection covers Requirement \#1 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system is able to accept chest X-ray images as input from authorized users, including healthcare professionals and patients.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item \textbf{test-FR1-1} \label{test-FR1-1}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
+Control: Automatic
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Initial State: The system is operational, and the user is logged in as an authorized healthcare professional.
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Input: Uploading a valid chest X-ray image in DICOM format (\texttt{sample\_image.dcm}).
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Output: The system accepts the image without errors and displays a confirmation message indicating successful upload.
 
-How test will be performed: 
+Test Case Derivation: Authorized users should be able to upload images in supported formats without issues.
+
+How the test will be performed: The test will be conducted automatically using the Cypress testing framework.
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will simulate a user logging into the system as an authorized healthcare professional using valid credentials (\texttt{username: doctor\_user}, \texttt{password: SecurePass123}).
+  \item[-] \textit{Step 2}: Upon successful authentication, the script will navigate to the image upload section located at \texttt{/upload}.
+  \item[-] \textit{Step 3}: The script will simulate the user clicking the ``Upload Image'' button and selecting the file \texttt{sample\_image.dcm} from the directory \texttt{./test\_data/}.
+  \item[-] \textit{Step 4}: The script will simulate the user confirming the upload by clicking the ``Submit'' button.
+  \item[-] \textit{Step 5}: After the upload action, the script will verify that the system displays a confirmation message on the user interface, such as ``Image uploaded successfully.''
+  \end{itemize}
+
+
+\item \textbf{test-FR1-2} \label{test-FR1-2}
+
+Control: Automatic
+
+Initial State: The system is operational, and the user is logged in as an authorized healthcare professional.
+
+Input: Uploading a valid chest X-ray image in DICOM format (\texttt{sample\_image.dcm}).
+
+Output: The system stores the image correctly on the server and the API endpoint returns a success status code.
+
+Test Case Derivation: The backend must accurately store uploaded images and respond appropriately to API requests.
+
+How the test will be performed: 
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will perform the same steps as in \textbf{test-FR1-1} to upload \texttt{sample\_image.dcm}.
+  \item[-] \textit{Step 2}: The network traffic will be monitored to capture the API request sent to the server during the image upload.
+  \item[-] \textit{Step 3}: The script will verify that the API request includes the correct payload, ensuring that the file \texttt{sample\_image.dcm} is included under the correct parameter name (e.g., \texttt{image\_file}).
+  \item[-] \textit{Step 4}: The server's response to the API request will be checked by the automated test, confirming it returns a success status code (HTTP 200 OK) and a response body with a success message (e.g., \texttt{\{"message": "Upload successful", "image\_id": 12345\}}).
+  \item[-] \textit{Step 5}: The script will access the server's storage directory (e.g., \texttt{.../images/uploads/}) to verify that \texttt{sample\_image.dcm} is stored correctly. It will check:
+    \begin{itemize}
+      \item The file exists in the expected directory.
+      \item The file name matches the expected naming convention (e.g., \texttt{image\_\{image\_id\}.dcm}).
+      \item The file size and checksum match those of the original file to ensure integrity.
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Patient Symptom for diagnosis verification }
+
+This subsection covers Requirement \#2 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system enables users to input additional patient symptoms, such as cough, chest pain, or fever.
+
+\begin{enumerate}
+
+\item \textbf{test-FR2-1} \label{test-FR2-1}
+
+Control: Manual
+
+Initial State: The user has successfully uploaded a chest X-ray image and is on the patient information page.
+
+Input: Entering patient symptoms into the symptom input fields.
+
+Output: The system accepts the symptoms and associates them correctly with the uploaded X-ray image.
+
+Test Case Derivation: The system should allow input of symptoms and link them to the corresponding image.
+
+How the test will be performed: 
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester uploads \texttt{patient\_xray\_01.dcm} and waits for the AI model to complete analysis.
+  \item[-] \textit{Step 2}: On the patient information page, the tester enters symptoms such as  ``cough,'' ``chest pain,'' and ``fever'' into the symptom fields.
+  \item[-] \textit{Step 3}: The tester submits the symptoms by clicking the ``Save'' button.
+  \item[-] \textit{Step 4}: The system processes the symptoms and updates the patient's record.
+  \item[-] \textit{Step 5}: The tester views the generated report to verify that:
+    \begin{itemize}
+      \item The symptoms are listed and associated with the diagnosis.
+      \item The report highlights the consistency between the symptoms and the diagnosis.
+    \end{itemize}
+  \end{itemize}
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{AI Model Inferece Tests}
 
-...
+This subsection covers Requirement \#3 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system analyzes chest X-ray images using a convolutional neural network (CNN)-based AI model to detect the presence or absence of specific diseases with an accuracy of 85\% or higher.
+
+\begin{enumerate}
+
+\item \textbf{test-FR3-1} \label{test-FR3-1}
+
+Control: Automatic
+
+Initial State: The AI model is deployed and integrated into the system, ready for analysis.
+
+Input: A test dataset of 1,000 chest X-ray images with known diagnoses (500 positive cases, 500 negative cases).
+
+Output: The AI model achieves an accuracy of at least 85\%, correctly identifying at least 850 out of 1,000 cases.
+
+Test Case Derivation: The AI model must meet or exceed the specified accuracy threshold to be considered effective.
+
+How the test will be performed:
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will load the test dataset from \texttt{./test\_data/test\_set/}.
+  \item[-] \textit{Step 2}: Preprocess each image according to FR17 requirements (e.g., resize to 224x224 pixels, normalize pixel values).
+  \item[-] \textit{Step 3}: Feed the preprocessed images into the AI model in batches (e.g., batch size of 32).
+  \item[-] \textit{Step 4}: Record the AI model's predictions for each image.
+  \item[-] \textit{Step 5}: Compare the predictions with the ground truth labels from \texttt{fr3\_test\_set\_labels.csv}.
+  \item[-] \textit{Step 6}: Calculate performance metrics including accuracy, precision, recall, and ROC curves.
+  \item[-] \textit{Step 7}: Verify that the accuracy is at least 85\%, using assertions.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Patient Condition Progression Tests}
+
+This subsection covers Requirement \#4 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system indicates whether a patient's condition has improved, worsened, or remained stable between scans.
+
+\begin{enumerate}
+
+\item \textbf{test-FR4-1} \label{test-FR4-1}
+
+Control: Manual
+
+Initial State: The patient has previous chest X-ray images and analysis results stored in the system.
+
+Input: Uploading a new chest X-ray image for the same patient.
+
+Output: The system analyzes the new image, compares it with previous scans, and indicates the progression status (improved, worsened, or stable).
+
+Test Case Derivation: The system should accurately assess and report changes in the patient's condition over time.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester logs into the system as a healthcare professional and selects the patient with prior scans.
+  \item[-] \textit{Step 2}: Upload the new chest X-ray image \texttt{xray\_current.dcm}.
+  \item[-] \textit{Step 3}: Wait for the system to analyze the new image and retrieve previous analysis results.
+  \item[-] \textit{Step 4}: The system compares the new image with the previous one using progression algorithms.
+  \item[-] \textit{Step 5}: Review the progression status indicated by the system (e.g., "Condition has worsened").
+  \item[-] \textit{Step 6}: Verify the accuracy of the assessment by comparing it with known and reliable clinical data.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{ Visual Aid Generation Tests}
+
+This subsection covers Requirement \#5 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system generates visual aids by highlighting affected areas on the chest X-ray images.
+
+\begin{enumerate}
+
+\item \textbf{test-FR5-1} \label{test-FR5-1}
+
+Type: Functional, Dynamic, Manual
+
+Initial State: The system has completed analysis on a chest X-ray image with detected abnormalities.
+
+Input: Accessing the analysis results and viewing the image.
+
+Output: The image displays highlighted areas indicating the locations of the detected abnormalities.
+
+Test Case Derivation: Visual aids help clinicians quickly identify areas of concern on the images.
+
+How the test will be performed:
+\begin{itemize}
+  \item[-] \textit{Step 1}: The tester logs into the system and navigates to the patient's analysis results for \texttt{abnormal\_xray.dcm}.
+  \item[-] \textit{Step 2}: Open the analyzed image with visual aids.
+  \item[-] \textit{Step 3}: Examine the highlighted areas on the image.
+  \item[-] \textit{Step 4}: Compare the highlighted areas with expected abnormalities based on known data.
+  \item[-] \textit{Step 5}: Assess whether the visual aids accurately represent the detected abnormalities.
+  \item[-] \textit{Step 6}: Document observations and any discrepancies.
+\end{itemize}
+
+\item \textbf{test-FR5-2} \label{test-FR5-2}
+
+Control: Automatic
+
+Initial State: The system has completed analysis on a chest X-ray image (\texttt{normal\_patient\_xray.dcm}) with no detected abnormalities.
+
+Input: Accessing the analysis results for \texttt{normal\_patient\_xray.dcm}.
+
+Output: The image displays no highlights or visual markers.
+
+Test Case Derivation: The system should not produce false positives by highlighting areas in normal images.
+
+How the test will be performed:
+\begin{itemize}
+\item[-] \textit{Step 1}: The automated test script will process \texttt{normal\_patient\_xray.dcm} through the system.
+\item[-] \textit{Step 2}: The system analyzes the image and generates an output image.
+\item[-] \textit{Step 3}: The script retrieves the output image from \texttt{.../images/outputs/}.
+\item[-] \textit{Step 4}: The script uses image comparison techniques to compare the output image with the original.
+\item[-] \textit{Step 5}: The script checks for any added visual markers or differences.
+\item[-] \textit{Step 6}: The script asserts that no highlights are present.
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Structured Report Generation Tests}
+
+This subsection covers Requirement \#6 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system produces a structured, human-readable report summarizing key findings, disease detection results, and progression status.
+
+\begin{enumerate}
+
+\item \textbf{test-FR6-1} \label{test-FR6-1}
+
+  Control: Automatic
+  
+  Initial State: The system has completed analysis on a patient's chest X-ray image, and all relevant data is available. The report generation module is integrated and configured to use an LLM API (e.g., BERT).
+  
+  Input: Request to generate a structured report summarizing the analysis.
+  
+  Output: A human-readable report containing key findings, detected diseases with confidence levels, progression status, and any input symptoms.
+  
+  Test Case Derivation: The system should produce comprehensive reports without errors, leveraging LLMs where appropriate.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will initiate the report generation process via the API endpoint \texttt{/generate\_report} and corresponding patient ID.
+  \item[-] \textit{Step 2}: The script will monitor the API call to the LLM service, ensuring that:
+    \begin{itemize}
+      \item The API token is included and valid.
+      \item The prompt sent to the LLM is correctly formatted and contains all necessary information.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script will check the response from the LLM service, verifying:
+    \begin{itemize}
+      \item The response status code is success (e.g., HTTP 200 OK).
+      \item The content includes the structured report.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script will parse the generated report to ensure it includes:
+    \begin{itemize}
+      \item Key findings from the AI analysis.
+      \item Detected diseases with confidence levels.
+      \item Progression status compared to previous scans.
+      \item Input symptoms provided by the user.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script will verify that the report format adheres to predefined templates or standards (e.g., headings, sections).
+  \item[-] \textit{Step 6}: The script will check for any placeholders or missing information that could indicate issues with LLM integration.
+  \item[-] \textit{Step 7}: The test passes if the report is complete, accurate, and correctly formatted; otherwise, it fails.
+  \end{itemize}
+  
+  \item \textbf{test-FR6-2} \label{test-FR6-2}
+  
+  Control: Manual
+  
+  Initial State: The system is operational, and a report has been generated for a patient using the LLM integration.
+  
+  Input: The generated report for review.
+  
+  Output: Confirmation that the report does not contain misinformation and accurately reflects the patient's analysis results.
+  
+  Test Case Derivation: Reports must be accurate and free from misinformation to ensure patient safety.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The tester (a qualified healthcare professional) will retrieve the generated report for patient ID \texttt{12345}.
+  \item[-] \textit{Step 2}: The tester will review the report in detail, verifying:
+    \begin{itemize}
+      \item All clinical findings are accurately reported.
+      \item Diagnoses match the AI model's outputs.
+      \item Confidence levels are correctly stated.
+      \item Progression status aligns with the comparative analysis.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The tester will cross-reference the report with the raw data and analysis results.
+  \item[-] \textit{Step 4}: The tester will check for any signs of misinformation, such as incorrect interpretations or unsupported conclusions.
+  \item[-] \textit{Step 5}: The tester will document any discrepancies or errors found.
+  \item[-] \textit{Step 6}: The test passes if the report is accurate and free of misinformation; otherwise, it fails.
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Patient Data Storage Tests}
+
+This subsection covers Requirement \#7 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system securely stores patient data, including images and analysis results, for future reference.
+
+\begin{enumerate}
+
+  \item \textbf{test-FR7-1} \label{test-FR7-1}
+
+  Control: Automatic
+  
+  Initial State: The system's secure database and storage solutions are operational. Access to patient data is regulated by role-based access controls.
+  
+  Input: Patient data including images (\texttt{test\_patient\_image.dcm}), analysis results, and reports to be stored.
+  
+  Output: Data is securely stored in the database and can be retrieved accurately by authorized users. Unauthorized access is prevented.
+  
+  Test Case Derivation: The system must ensure data integrity and security for patient information.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will simulate a user with appropriate permissions uploading patient data:
+    \begin{itemize}
+      \item Image file: \texttt{test\_patient\_image.dcm}.
+      \item Analysis results: Generated by the AI model.
+      \item Report: Generated as per FR6.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script will verify that the data is stored in the secure database:
+    \begin{itemize}
+      \item Confirm entries in the database tables for patients, images, analyses, and reports.
+      \item Verify that images are stored in the secure storage directory (e.g., \texttt{/secure\_storage/patient\_images/}).
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script will retrieve the stored data using authorized credentials and compare it with the original inputs to ensure integrity:
+    \begin{itemize}
+      \item Check that the image file retrieved matches the original file (e.g., via checksum comparison).
+      \item Verify that analysis results and reports are accurate.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script will attempt to access the data using unauthorized credentials or as an unauthorized user:
+    \begin{itemize}
+      \item Expect access to be denied.
+      \item Verify that appropriate error messages are displayed.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script will check security measures:
+    \begin{itemize}
+      \item Data at rest is encrypted (e.g., verify encryption settings in the database).
+      \item Access logs are updated with the retrieval attempts.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The test passes if data integrity is maintained, authorized access is successful, and unauthorized access is prevented.
+  \end{itemize}
+  
+  \end{enumerate}
+
+\subsubsection{Alert Mechanism Tests}
+
+This subsection covers Requirement \#8 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system generates alerts to clinicians when significant changes in a patient's condition are detected.
+
+\begin{enumerate}
+
+  \item \textbf{test-FR8-1} \label{test-FR8-1}
+  
+  Control: Automatic
+  
+  Initial State: The system has prior scans and analysis results for corresponding patient ID. Alerting mechanisms via email, SMS, and in-app notifications are configured.
+  
+  Input: A new scan (\texttt{patient\_xray\_alert.dcm}) showing significant changes exceeding predefined thresholds.
+  
+  Output: The system generates and delivers alerts to clinicians indicating the significant change.
+  
+  Test Case Derivation: Clinicians should be promptly notified of critical changes in a patient's condition.
+  
+  How the test will be performed:
+  
+  \begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will upload \texttt{xray\_alert.dcm}.
+  \item[-] \textit{Step 2}: The system analyzes the new scan and compares it with previous scans.
+  \item[-] \textit{Step 3}: The system detects changes exceeding thresholds (e.g., lesion size increase by 30\%).
+  \item[-] \textit{Step 4}: The system generates an alert message containing:
+    \begin{itemize}
+      \item Patient ID and relevant details.
+      \item Description of the significant change.
+      \item Urgency level or recommended actions.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The system sends the alert via configured channels:
+    \begin{itemize}
+      \item Email to the clinician's registered email address.
+      \item SMS to the clinician's registered phone number.
+      \item In-app notification within the clinician's dashboard.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script will monitor each channel to verify delivery:
+    \begin{itemize}
+      \item Check the email inbox for the alert message.
+      \item Use a mock SMS gateway to confirm SMS delivery.
+      \item Log into the system as the clinician to verify the in-app notification.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The script will record the time taken from detection to alert delivery to ensure it meets timeliness requirements (e.g., within 5 minutes).
+  \end{itemize}
+  
+  \end{enumerate}  
+
+\subsubsection{Treatment Plan Adjustment Tests}
+
+This subsection covers Requirement \#9 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system allows healthcare professionals to adjust a patient's treatment plan based on analysis results.
+
+\begin{enumerate}
+
+\item \textbf{test-FR9-1} \label{test-FR9-1}
+
+Control: Manual
+
+Initial State: A healthcare professional is logged into the system and has access to patient ID \texttt{12345}'s analysis results.
+
+Input: Adjustment to the patient's treatment plan based on the analysis results.
+
+Output: The system allows the professional to modify the treatment plan, linking the changes to the corresponding X-ray analysis results.
+
+Test Case Derivation: Clinicians should be able to update treatment plans within the system, ensuring continuity of care.
+
+How the test will be performed:
+
+\begin{itemize}
+\item[-] \textit{Step 1}: The tester logs into the system as a clinician with credentials.
+\item[-] \textit{Step 2}: The tester navigates to patient's profile and reviews the analysis results.
+\item[-] \textit{Step 3}: The tester accesses the treatment plan section and makes adjustments:
+  \begin{itemize}
+    \item Changes medication dosage.
+    \item Adds a new therapy recommendation.
+  \end{itemize}
+\item[-] \textit{Step 4}: The tester saves the changes.
+\item[-] \textit{Step 5}: The system validates the changes according to clinical guidelines.
+\item[-] \textit{Step 6}: The system updates the patient's treatment plan and logs the changes with timestamps and the clinician's ID.
+\item[-] \textit{Step 7}: The tester verifies that the updated treatment plan is correctly reflected in the patient's records.
+\item[-] \textit{Step 8}: The tester checks that the changes are linked to the latest analysis results.
+\item[-] \textit{Step 9}: The test passes if the treatment plan is updated accurately and linked appropriately; otherwise, it fails.
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Role Based Access Control Tests}
+
+This subsection covers Requirement \#10 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system enforces role-based access control, ensuring users only access permitted features.
+
+\begin{enumerate}
+
+\item \textbf{test-FR10-1} \label{test-FR10-1}
+
+Control: Automatic
+
+Initial State: The system is operational with user accounts assigned different roles:
+\begin{itemize}
+  \item Physician: \texttt{username: physician\_user}, \texttt{password: PhysicianPass123}.
+  \item Radiologist: \texttt{username: radiologist\_user}, \texttt{password: RadiologistPass123}.
+  \item Patient: \texttt{username: patient\_user}, \texttt{password: PatientPass123}.
+\end{itemize}
+
+Input: Users attempt to access features outside their permissions.
+
+Output: Access is granted only to features appropriate for each role; unauthorized access is denied with an appropriate error message.
+
+Test Case Derivation: Role-based access control is essential for security and compliance.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: For each user role, the automated test script will perform the following steps:
+    \begin{itemize}
+      \item[-] \textbf{Physician User}:
+        \begin{itemize}
+          \item Log in using physician credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View and edit assigned patient records.
+              \item Adjust treatment plans.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Administrative settings.
+              \item Other clinicians' patient records.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+      \item[-] \textbf{Radiologist User}:
+        \begin{itemize}
+          \item Log in using radiologist credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View imaging studies.
+              \item Perform image analyses.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Modify treatment plans.
+              \item Access administrative settings.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+      \item[-] \textbf{Patient User}:
+        \begin{itemize}
+          \item Log in using patient credentials.
+          \item Access permitted features:
+            \begin{itemize}
+              \item View own medical records.
+              \item Upload images for analysis.
+              \item Verify access is granted and functions correctly.
+            \end{itemize}
+          \item Attempt to access restricted features:
+            \begin{itemize}
+              \item Other patients' records.
+              \item Clinical tools and analysis features.
+              \item Administrative settings.
+              \item Verify access is denied with appropriate error messages.
+            \end{itemize}
+          \item Log out.
+        \end{itemize}
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script will record all access attempts and the system's responses.
+  \item[-] \textit{Step 3}: The script will verify that:
+    \begin{itemize}
+      \item Authorized actions are allowed without errors.
+      \item Unauthorized actions are blocked with clear error messages.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The test passes if access controls function correctly for all roles; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Preservation of Original Data Tests}
+
+This subsection covers Requirement \#11 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system preserves the original chest X-ray images by creating copies for analysis.
+
+\begin{enumerate}
+
+\item \textbf{test-FR11-1} \label{test-FR11-1}
+
+Control: Automatic
+
+Initial State: A chest X-ray image (\texttt{original\_image.dcm}) is uploaded and stored in the system's image repository (\texttt{/var/www/images/uploads/}).
+
+Input: Initiation of the AI model analysis on the uploaded image.
+
+Output: The system creates a new copy of the image for analysis, preserving the original unaltered.
+
+Test Case Derivation: Data integrity is maintained by not altering original images.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script uploads \texttt{original\_image.dcm} to the system:
+    \begin{itemize}
+      \item Use API endpoint \texttt{/api/upload} with authorized credentials.
+      \item Record the file size and compute the checksum of \texttt{original\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script initiates the analysis process:
+    \begin{itemize}
+      \item Call the analysis API endpoint \texttt{/api/analyze} with the image ID returned from the upload.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script monitors the processing directory (\texttt{.../images/processing/}):
+    \begin{itemize}
+      \item Verify that a copy of the image (\texttt{processing\_image.dcm}) is created for analysis.
+      \item Record the file size and compute the checksum of \texttt{processing\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script compares the original and copied images:
+    \begin{itemize}
+      \item Confirm that the checksums of the two files match, ensuring the copy is identical before processing.
+    \end{itemize}
+  \item[-] \textit{Step 5}: After analysis completion, the script re-computes the checksum of \texttt{original\_image.dcm}:
+    \begin{itemize}
+      \item Verify that the checksum matches the original value from Step 1.
+      \item Confirm that the file size remains unchanged.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script verifies that all processing operations were performed on \texttt{processing\_image.dcm}:
+    \begin{itemize}
+      \item Check logs or metadata to confirm the processed image's ID matches \texttt{processing\_image.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The test passes if the original image is unmodified and a copy was used for analysis; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Multiple Modality Support Tests}
+
+This subsection covers Requirement \#12 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system supports multiple medical imaging modalities beyond chest X-rays.
+
+\begin{enumerate}
+
+\item \textbf{test-FR12-1} \label{test-FR12-1}
+
+Control: Automatic
+
+Initial State: The system is configured to accept multiple medical imaging modalities, and processing modules for CT and MRI images are operational.
+
+Input: Uploading a CT scan image (\texttt{sample\_ct\_scan.dcm}) and an MRI image (\texttt{sample\_mri\_image.dcm}).
+
+Output: The system accepts and processes each image correctly, providing accurate analysis results specific to each modality.
+
+Test Case Derivation: The system should handle different imaging modalities appropriately.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script logs into the system with clinician credentials.
+  \item[-] \textit{Step 2}: The script uploads \texttt{sample\_ct\_scan.dcm}:
+    \begin{itemize}
+      \item Use the API endpoint \texttt{/api/upload} with the image file.
+      \item Include metadata indicating the modality (if not automatically detected).
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script verifies that the system recognizes the image as a CT scan:
+    \begin{itemize}
+      \item Check the response from the server for confirmation.
+      \item Verify that the image is stored in the appropriate directory (e.g., \texttt{/images/ct\_scans/}).
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script initiates the analysis process for the CT scan:
+    \begin{itemize}
+      \item Call the analysis API endpoint \texttt{/api/analyze} with the CT image ID.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script monitors the analysis pipeline to ensure the CT-specific processing module is used:
+    \begin{itemize}
+      \item Check logs or system messages indicating the module invoked.
+    \end{itemize}
+  \item[-] \textit{Step 6}: Upon analysis completion, the script retrieves the results:
+    \begin{itemize}
+      \item Verify that the results are appropriate for CT images.
+      \item Compare results against expected findings for \texttt{sample\_ct\_scan.dcm}.
+    \end{itemize}
+  \item[-] \textit{Step 7}: The script repeats Steps 2-6 for \texttt{sample\_mri\_image.dcm}, ensuring that:
+    \begin{itemize}
+      \item The MRI image is correctly recognized.
+      \item The MRI-specific analysis module is used.
+      \item Results are accurate and modality-specific.
+    \end{itemize}
+  \item[-] \textit{Step 8}: The test passes if both images are processed correctly with accurate results; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Regular AI Model Update Tests}
+
+This subsection covers Requirement \#13 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system can update the AI model regularly without disrupting ongoing services.
+
+\begin{enumerate}
+
+\item \textbf{test-FR13-1} \label{test-FR13-1}
+
+Control: Automatic, <anual
+
+Initial State: The system is functional with the current AI model version (\texttt{model\_v1.0}). A new AI model version (\texttt{model\_v1.1}) is ready for deployment.
+
+Input: Deployment of the updated AI model to the system generated by the .ipynb file.
+
+Output: The system integrates the new AI model seamlessly without disrupting ongoing services and continues processing user requests during the update.
+
+Test Case Derivation: Regular updates should not impact system availability.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script triggers the deployment of \texttt{model\_v1.1} via the CI/CD pipeline:
+    \begin{itemize}
+      \item Use deployment scripts to initiate the update.
+    \end{itemize}
+  \item[-] \textit{Step 2}: While the deployment is in progress, the script simulates continuous user activity:
+    \begin{itemize}
+      \item Upload test images at regular intervals (e.g., every 30 seconds).
+      \item Initiate analysis requests for each uploaded image.
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script monitors system performance metrics:
+    \begin{itemize}
+      \item Response times for API calls.
+      \item Error rates or any failed requests.
+      \item Server resource utilization (CPU, GPU, memory).
+    \end{itemize}
+  \item[-] \textit{Step 4}: After deployment completion, the script verifies that the new model is active:
+    \begin{itemize}
+      \item Check the model version via a dedicated API endpoint (\texttt{/api/model\_version}).
+      \item Confirm that \texttt{model\_v1.1} is returned.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The script analyzes the results from test images submitted during deployment:
+    \begin{itemize}
+      \item Verify that all analysis requests were processed successfully.
+      \item Compare results before and after the model update for consistency or expected improvements.
+    \end{itemize}
+  \item[-] \textit{Step 6}: The script checks for any logged errors or warnings during deployment.
+  \item[-] \textit{Step 7}: The test passes if there are no service disruptions, the new model is correctly integrated, and all user requests are handled successfully; otherwise, it fails.
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{Image Preprocessing Tests}
+
+This subsection covers Requirement \#14 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system preprocesses chest X-ray images by normalizing pixel values and resizing images to the input dimensions required by the AI model.
+
+\begin{enumerate}
+
+\item \textbf{test-FR14-1} \label{test-FR14-1}
+
+Control: Automatic
+
+Initial State: The preprocessing module is operational and correctly configured.
+
+Input: A batch of raw chest X-ray images with varying resolutions and pixel intensity ranges, located in \texttt{./test\_data/preprocessing\_test\_set/}.
+
+Output: Preprocessed images resized to 224x224 pixels with normalized pixel values suitable for input into the AI model.
+
+Test Case Derivation: Proper preprocessing ensures consistency and compatibility with the AI model.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script loads the batch of raw images:
+    \begin{itemize}
+      \item Read images from \texttt{./test\_data/preprocessing\_test\_set/}.
+      \item Record original metadata for each image (dimensions, pixel value ranges).
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script passes each image through the preprocessing module:
+    \begin{itemize}
+      \item Use the preprocessing API or function.
+      \item Capture any preprocessing logs or outputs.
+    \end{itemize}
+  \item[-] \textit{Step 3}: For each preprocessed image, the script verifies:
+    \begin{itemize}
+      \item Image Dimensions:
+        \begin{itemize}
+          \item Confirm that the image dimensions are 224x224 pixels.
+        \end{itemize}
+      \item Pixel Value Normalization:
+        \begin{itemize}
+          \item Check that pixel values are within the expected range (e.g., 0 to 1).
+        \end{itemize}
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script compares the preprocessed images to expected outputs:
+    \begin{itemize}
+      \item Use reference images or calculated expected values.
+      \item Compute the difference between preprocessed images and references.
+      \item Verify that any differences are within acceptable tolerances.
+    \end{itemize}
+  \item[-] \textit{Step 5}: The test passes if all images meet the specified preprocessing requirements; otherwise, it fails.
+\end{itemize}
+
+\item \textbf{test-FR14-2} \label{test-FR14-2}
+
+Control: Automatic
+
+Initial State: The preprocessing module is operational.
+
+Input: An image file with an unsupported format (\texttt{invalid\_image.bmp}) and a corrupted image file (\texttt{corrupted\_image.dcm}).
+
+Output: The system handles the errors gracefully without crashing and logs informative error messages.
+
+Test Case Derivation: The system should be robust against invalid inputs and maintain stability.
+
+How the test will be performed:
+
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script attempts to preprocess \texttt{invalid\_image.bmp}:
+    \begin{itemize}
+      \item Pass the file to the preprocessing module.
+      \item Monitor the module's response.
+    \end{itemize}
+  \item[-] \textit{Step 2}: The script verifies that the preprocessing module:
+    \begin{itemize}
+      \item Detects the unsupported file format.
+      \item Does not crash or throw unhandled exceptions.
+      \item Logs an error message indicating the issue, including the file name and reason (e.g., "Unsupported file format: .bmp").
+    \end{itemize}
+  \item[-] \textit{Step 3}: The script repeats the process with \texttt{corrupted\_image.dcm}:
+    \begin{itemize}
+      \item Attempt to preprocess the corrupted file.
+      \item Monitor for exceptions or errors.
+    \end{itemize}
+  \item[-] \textit{Step 4}: The script verifies that the preprocessing module:
+    \begin{itemize}
+      \item Detects the file corruption.
+      \item Handles the error without crashing.
+      \item Logs an informative error message (e.g., "Failed to read image data: corrupted or incomplete file").
+    \end{itemize}
+\end{itemize}
+
+\end{enumerate}
+
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
+This section contains tests for the Nonfunctional Requirements. The subsections for these tests were created based on the subsections of the Nonfunctional Requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+. Each test was created based on the Fit Criterion of the requirements that they covered.
 
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
+\subsubsection{Look and Feel}
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+This subsection's tests cover all Look and Feel requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying that the user interface matches standard medical imaging software layouts and ensuring that the interface is comfortable and accessible for users during typical workflows.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{NFR-LF1\\}\label{NFR-LF1}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Type: Non-Functional, Dynamic, Manual
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+Initial State: The system must be installed and accessible.
+
+Input/Condition: Adjust window/level settings. Navigate between other tabs. Apply basic tools (zoom, pan, measure). Export or save images from the viewer.
+
+Output/Result: The UI layout should be similar to standard medical imaging software (with menu positions, toolbar layout, and terminology consistent with common practices).
+
+How this test will be performed: Ensure the system under test and reference medical imaging software are installed and configured. Launch the system under test and the reference software side-by-side. Compare the menu structure, toolbars, icons, panels, and overall layout. Verify whether the placement of key elements matches standard layouts. Review menu labels, tooltips, and buttons to ensure they use medical imaging terms. Adjust window/level settings. Use zoom, pan, and measurement tools.
+
+\item{NFR-LF2\\}\label{NFR-LF2}
+
+Type: Non-Functional, Dynamic, Manual
+
+Initial State: The system under test is installed and accessible on the target device. The monitor brightness is set to a comfortable level to ensure consistency during the test.
+
+Input/Condition: User interaction with the interface for typical workflows.
+
+Output/Result: Color contrast ratio is 4.5:1 or higher for text. Font sizes at least 12-14 points for normal text.
+
+How this test will be performed: Launch the system and ensure the default color schemes and fonts are applied. Perform tasks continuously for 1-2 hours while interacting with different parts of the system interface (e.g., forms, menus). Check for signs of fatigue or frustration (e.g., rubbing eyes, slowing down). Use tools to measure the color contrast ratio.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability and Humanity}
 
-...
+This subsection's tests cover all Usability and Humanity requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying that users can successfully perform key tasks without assistance and that the interface provides adequate help and tool-tips to guide users through the system.
 
+\begin{enumerate}
+
+\item{NFR-UH1\\}\label{NFR-UH1}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: User accounts and access credentials are prepared for all healthcare professionals participating in the test. Any required files or images are pre-loaded and accessible for the tasks.
+
+Input/Condition: Automated script with a list of specified tasks and user accounts.
+
+Output/Result: Percentage of user accounts that successfully completed all tasks without assistance: $\text{Success Rate} = \frac{\text{Number of Successful Participants}}{\text{Total Number of Participants}} \times 100$.
+
+How this test will be performed: The automated script will perform the following tasks with each user account and calculate the success rate: upload a chest X-ray image to the system, view analysis results or processed reports, adjust image settings (e.g., window/level, zoom), and export the analysis or report to a local folder.
+
+\item{NFR-UH2\\}\label{NFR-UH2}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: List of user accounts and access credentials are prepared. Full access to the user interface. Interface elements (buttons, icons, menus) are accessible for interaction.
+
+Input/Condition: Automated script with a list of interactions specified to interact with the tabs and other listed functionalities.
+
+Output/Result: Log whether tool-tips and help content were displayed correctly for each element tested.
+
+How this test will be performed: The test script will detect if the tool-tip appears after a short delay (0.5-1 second) when it hovers over an element. When it clicks on a help icon (e.g., “?” symbol) or help link, the test script checks if the system provides relevant information about that part of the interface. When the test script finishes, it will provide a log including if tool-tips and help content were displayed correctly for each element tested.
+
+\end{enumerate}
+
+\subsubsection{Performance}
+
+This subsection's tests cover all Performance requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by testing the processing time of image analysis, system availability under various conditions, and system performance when handling simultaneous image uploads.
+
+\begin{enumerate}
+
+\item{NFR-PR1\\}\label{NFR-PR1}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: User is logged in. Standard chest X-ray images are available for testing in PNG/JPG format (depending on system requirements).
+
+Input/Condition: Automated test script interacts with the system.
+
+Output/Result: Percentage of the number of the chest X-ray images that are analyzed correctly.
+
+How this test will be performed: The test script will upload a chest X-ray image through the interface. It will monitor the system to ensure it processes and analyzes the image. The moment the results or report are displayed or the system indicates completion, it checks the timing (30 seconds). The process is repeated multiple times (at least 5 trials) to account for variations in processing time.
+
+\item{NFR-PR2\\}\label{NFR-PR2}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: A monitoring system is set up to log availability metrics, such as downtime events, mean time to recovery, and uptime percentage.
+
+Input/Condition: Server outages, network issues, high number of concurrent users.
+
+Output/Result: Uptime percentage; downtime events (log the number, duration, and cause of any disruptions or downtime); mean time to recovery.
+
+How this test will be performed: Two automated scripts will start the monitoring system for a defined period (e.g., 24 hours or 1 week). One will simulate server outages or network issues by disabling a service temporarily and record the downtime, mean time to recovery. The other will use load testing tools (like Apache JMeter or Locust) to simulate a high number of concurrent users during peak hours and monitor response times. The two scripts will combine their results and return the output once they all finish.
+
+\item{NFR-PR3\\}\label{NFR-PR3}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: All dependencies (database, network, storage, and image processing engine) are configured and operational. Monitoring tools are available to track system performance, including CPU and memory usage, image processing times.
+
+Input/Condition: Collections of 20 identical or varied images, multiple user accounts. Baseline for each image processing is 20 seconds.
+
+Output/Result: Processing time (float), system resource utilization (float), images uploading success/fail (boolean).
+
+How this test will be performed: The automated script will simulate different users to upload 20 images simultaneously and start the stopwatch or monitoring tool when the uploads begin. It will keep track of the CPU, memory, and I/O usage during the processing of the 20 images. When image processing is finished, it will calculate and return the average processing time for the 20 images, return CPU usage, memory usage, and check for errors or failures.
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental}
+
+This subsection's tests cover all Operational and Environmental requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying the system's ability to integrate with the hospital's PACS system and its performance under varying network conditions.
+
+\begin{enumerate}
+
+\item{NFR-OE1\\}\label{NFR-OE1}
+
+Type: Non-Functional, Dynamic, Manual
+
+Initial State: The AI system and the PACS are both connected to the same hospital network and the DICOM configuration for both systems is correctly set.
+
+Input/Condition: AI-processed results including annotations or diagnostic report as an image (in DICOM format). Metadata with patient ID (string) and instance number (string).
+
+Output/Result: Boolean indicating whether the PACS successfully stores the AI-processed results with correct format (annotated image or report). The stored result is associated with the correct patient ID and instance number in the PACS.
+
+How this test will be performed: An automated script will process the retrieved chest X-ray image and generate an annotated image or diagnostic report in DICOM format. It will then send the annotated result to the PACS and verify the response from the PACS to ensure that the transfer was successful. Then it will log into the PACS and search for the patient ID to confirm that the stored result is associated with the correct instance number. The automated script can be run multiple times depending on the need.
+
+\item{NFR-OE2\\}\label{NFR-OE2}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: The network is configured normally with minimal latency and no packet loss initially. Necessary patient data and chest X-ray studies are available for retrieval.
+
+Input/Condition: Retrieve and process a chest X-ray image, store the processed result, and send the data to external.
+
+Output/Result: Boolean indicating if latency is within a reasonable time (190ms~220ms), logs include latency and packet loss statistics.
+
+How this test will be performed: The automated script will simulate network latency and packet loss using a network emulation tool. It will then process the retrieved chest X-ray image and generate an annotated image or diagnostic report, meanwhile monitoring the time taken for operations and the number of retries, and checking the system logs for any warnings or errors related to packet loss or latency. It will check if the system raises alerts if packet loss exceeds 1\% or if latency impacts performance significantly and return the results.
+
+\end{enumerate}
+
+\subsubsection{Security and Privacy}
+
+This subsection's tests cover all Security and Privacy requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying that patient data is securely encrypted during storage and transmission, and that user access is properly controlled according to assigned roles.
+
+\begin{enumerate}
+
+\item{NFR-SR1\\}\label{NFR-SR1}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: AES-256 encryption libraries (such as OpenSSL or Cryptography in Python) are configured for the system. Patient data (including DICOM images and reports) is stored on the system or transmitted over the network.
+
+Input/Condition: X-ray image and diagnostic report with patient ID and instance number. Secret key and initialization vector (IV) for AES-256 encryption.
+
+Output/Result: All patient data, including images and reports, is encrypted using AES-256 both during storage and transmission.
+
+How this test will be performed: The automated system will trigger the AI system to retrieve a chest X-ray image and process it. It will check if transmitted data (images and reports) appears as encrypted bytes and no readable patient information or image data should be visible. After processing, the AI system stores the data and the automated script will try to open a stored DICOM image or report directly without using the decryption mechanism, which should appear as unreadable, encrypted content (random bytes). When the AI system decrypts and accesses the stored image or report, the automated script will detect if the decrypted data matches the original data.
+
+\item{NFR-SR2\\}\label{NFR-SR2}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: The AI system has different user accounts with different assigned roles. Each role has specific permissions defined.
+
+Input/Condition: Role 1: Radiologist—can view diagnostic results and patient images. Role 2: Administrator—can manage user accounts and system configurations (user\_radiologist, user\_admin).
+
+Output/Result: Radiologist should be able to view diagnostic reports and images and should not be able to manage user accounts. Administrator should be able to create and manage user accounts and should not have access to patient diagnostic reports.
+
+How this test will be performed: The automated script will log in as either one of the users (user\_radiologist or user\_admin). For example, the automated script logs in as user\_radiologist and views diagnostic reports and downloads patient images, which should be successful. It will then attempt to manage user accounts, which access should be denied. The same process is repeated for user\_admin.
+
+\end{enumerate}
+
+\subsubsection{Maintainability and Support}
+
+This subsection's tests cover all Maintainability and Support requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying that the system's codebase is modular and well-documented, and that automated testing with code coverage is in place to facilitate future maintenance and updates.
+
+\begin{enumerate}
+
+\item{NFR-MS1\\}\label{NFR-MS1}
+
+Type: Non-Functional, Static, Manual
+
+Initial State: The AI system code-base is deployed in a version-controlled environment. Documentation for each module (e.g., README files, API references, inline comments) is available in the repository.
+
+Input/Condition: All modules within the code repository are accessible.
+
+Output/Result: All key functionalities (e.g., data ingestion, inference, reporting) are encapsulated in separate, well-defined modules. Modules can function independently with minimal coupling. Dependencies between modules are well-documented.
+
+How this test will be performed: The test person should clone the repository of this AI system and identify and list all modules, review dependencies to ensure minimal coupling, and make sure each module is self-contained and can be modified without breaking other parts of the system.
+
+\item{NFR-MS2\\}\label{NFR-MS2}
+
+Type: Non-Functional, Dynamic, Automated
+
+Initial State: Code repository contains the entire AI system, automated testing framework (e.g., JUnit, Pytest) is installed and configured in the project. Tests include unit tests, integration tests, system tests, and end-to-end tests. Code coverage tool (e.g., coverage.py, JaCoCo) is integrated.
+
+Input/Condition: Unit tests, integration tests, and end-to-end tests.
+
+Output/Result: Code coverage report.
+
+How this test will be performed: The automated test script will navigate to the project directory and execute the automated test suite using the testing framework (e.g., Pytest or JUnit).
+
+\end{enumerate}
+
+\subsubsection{Cultural}
+
+This subsection's tests cover all Cultural requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by ensuring that the system supports both English and French languages throughout the interface and reports, with no untranslated or misaligned content.
+
+\begin{enumerate}
+
+\item{NFR-CR1\\}\label{NFR-CR1}
+
+Type: Non-Functional, Dynamic, Manual
+
+Initial State: The language options (English and French) are available in the settings menu.
+
+Input/Condition: Switch language between English and French. Generate report in English and French.
+
+Output/Result: No untranslated or misaligned content should appear.
+
+How this test will be performed: The person conducting the test will switch the language from English to French (and vice versa) in the settings menu and inspect menus, buttons/labels, error messages, notifications, and other necessary elements for correctness. The test person will then use the system to generate a diagnostic report in English (and French) for a chest X-ray image. He/She will review the report for medical findings and patient info to verify that both reports contain the same findings but in the correct language. He/She will also trigger an error condition (e.g., entering invalid patient data) to verify that the error message appears in the selected language (English or French).
+
+\end{enumerate}
+
+\subsubsection{Legal}
+
+This subsection's tests cover all Legal requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by verifying that the system's design and development processes comply with relevant regulations and standards such as HIPAA, PIPEDA, and ISO 13485.
+
+\begin{enumerate}
+
+\item{NFR-LR1\\}\label{NFR-LR1}
+
+Type: Non-Functional, Static, Manual
+
+Initial State: HIPAA and PIPEDA documentation are in place, development artifacts and source code are available.
+
+Input/Condition: Development artifacts, system design documentation.
+
+Output/Result: System design aligns with the requirements of HIPAA (US) and PIPEDA (Canada). If not, all software risks are identified, evaluated, and mitigated.
+
+How this test will be performed: Compliance audits will verify the system design and related documentation to see if the AI system meets data protection and regulation requirements.
+
+\item{NFR-LR2\\}\label{NFR-LR2}
+
+Type: Non-Functional, Static, Manual
+
+Initial State: ISO 13485 documentation is in place, development artifacts are available (verification and validation plans, risk analysis reports, requirements, design documents, test plans, etc.).
+
+Input/Condition: Development artifacts, processes (software lifecycle management process, design review process, etc.).
+
+Output/Result: All development processes align with the requirements of ISO 13485 and if not, all software risks are identified, evaluated, and mitigated.
+
+How this test will be performed: The person conducting the test will first review the development artifacts and processes to confirm that development processes follow ISO 13485 guidelines and risk management procedures are aligned with ISO 14971. He/She will verify that requirements documents are available and cover all key system functionalities, and the system shall adhere to the ISO 13485 standard for medical device software development.
+
+\end{enumerate}
+
+\subsubsection{Health and Safety}
+
+This subsection's tests cover all Health and Safety requirements listed in the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+ by ensuring that the AI-generated diagnostic reports are reviewed and confirmed by qualified radiologists before being finalized, and that appropriate disclaimers are displayed to inform users about the AI's role.
+
+\begin{enumerate}
+
+\item{NFR-HS1\\}\label{NFR-HS1}
+
+Type: Non-Functional, Dynamic, Manual
+
+Initial State: User roles are configured within the system, including Radiologist, Clinician, etc.
+
+Input/Condition: AI-generated report, Radiologist user account.
+
+Output/Result: Logs including radiologist’s review action (confirm/reject) with a timestamp.
+
+How this test will be performed: The test person will log in using a Radiologist user account and upload a test chest X-ray image to the AI system. The AI system analyzes the image and generates a report (flagged as preliminary). The test person will then access the preliminary report through the system’s dashboard and confirm/reject the diagnosis. If confirmed, the report should be marked as final and made available to clinicians/patients. If rejected, the system should log the feedback and trigger a re-analysis request.
+
+\item{NFR-HS2\\}\label{NFR-HS2}
+
+Type: Non-Functional, Dynamic, Manual
+
+Initial State: The AI system is deployed and accessible to radiologists, clinicians, and other users.
+
+Input/Condition: Access the AI-generated diagnostic report and view the user interface displaying AI results.
+
+Output/Result: Disclaimer is prominently displayed and easy to read.
+
+How this test will be performed: The test person should generate a diagnostic report using the AI system and open the generated report. He/She should check if the disclaimer is present on the report, either at the top, bottom, or in a prominent section, and the disclaimer text matches the predefined wording. He/She should also access the user interface which displays AI results and select a patient report, checking if the disclaimer is clearly displayed alongside the AI result and cannot be dismissed.
+
+\end{enumerate}
+
+\begin{landscape}
 \subsection{Traceability Between Test Cases and Requirements}
-
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
-
+\label{section:5.3}
+\begin{table}[H]
+  \centering
+  \footnotesize 
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline
+  \textbf{Test ID} & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} \\ \hline
+  test-FR1-1-\ref{test-FR1-1} & $\times$ & & & & & & & & & & & & & \\ \hline
+  test-FR1-2-\ref{test-FR1-2} & $\times$ & & & & & & & & & & & & & \\ \hline
+  test-FR2-1-\ref{test-FR2-1} & & $\times$ & & & & & & & & & & & & \\ \hline
+  test-FR3-1-\ref{test-FR3-1} & & & $\times$ & & & & & & & & & & & \\ \hline
+  test-FR4-1-\ref{test-FR4-1} & & & & $\times$ & & & & & & & & & & \\ \hline
+  test-FR5-1-\ref{test-FR5-1} & & & & & $\times$ & & & & & & & & & \\ \hline
+  test-FR5-2-\ref{test-FR5-2} & & & & & $\times$ & & & & & & & & & \\ \hline
+  test-FR6-1-\ref{test-FR6-1} & & & & & & $\times$ & & & & & & & & \\ \hline
+  test-FR6-2-\ref{test-FR6-2} & & & & & & $\times$ & & & & & & & & \\ \hline
+  test-FR7-1-\ref{test-FR7-1} & & & & & & & $\times$ & & & & & & & \\ \hline
+  test-FR8-1-\ref{test-FR8-1} & & & & & & & & $\times$ & & & & & & \\ \hline
+  test-FR9-1-\ref{test-FR9-1} & & & & & & & & & $\times$ & & & & & \\ \hline
+  test-FR10-1-\ref{test-FR10-1} & & & & & & & & & & $\times$ & & & & \\ \hline
+  test-FR11-1-\ref{test-FR11-1} & & & & & & & & & & & $\times$ & & & \\ \hline
+  test-FR12-1-\ref{test-FR12-1} & & & & & & & & & & & & $\times$ & & \\ \hline
+  test-FR13-1-\ref{test-FR13-1} & & & & & & & & & & & & & $\times$ & \\ \hline
+  test-FR14-1-\ref{test-FR14-1} & & & & & & & & & & & & & & $\times$ \\ \hline
+  test-FR14-2-\ref{test-FR14-2} & & & & & & & & & & & & & & $\times$ \\ \hline
+  \end{tabular}
+  \caption{\textbf{Functional Requirements Traceability}}
+  \end{table}
+  
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{NFR ID}} & \multicolumn{2}{c|}{\textbf{LF}} & \multicolumn{2}{c|}{\textbf{UH}} & \multicolumn{3}{c|}{\textbf{PR}} & \multicolumn{2}{c|}{\textbf{OE}} & \multicolumn{2}{c|}{\textbf{SR}} & \multicolumn{2}{c|}{\textbf{MS}} & \textbf{CR} & \multicolumn{2}{c|}{\textbf{LR}} & \multicolumn{2}{c|}{\textbf{HS}} \\ 
+      \hline
+      & 1 & 2 & 1 & 2 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 1 & 2 & 1 & 2 \\ 
+      \hline
+      LF 1 & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      LF 2 &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      UH 1 &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      UH 2 &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 1 &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 2 &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      PR 3 &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      OE 1 &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      OE 2 &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  \\ 
+      \hline
+      SR 1 &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  \\ 
+      \hline
+      SR 2 &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  \\ 
+      \hline
+      MS1  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  \\ 
+      \hline
+      MS2  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  \\ 
+      \hline
+      CR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  \\ 
+      \hline
+      LR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  \\ 
+      \hline
+      LR 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  \\ 
+      \hline
+      HS 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  \\ 
+      \hline
+      HS 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x \\ 
+      \hline
+    \end{tabular}
+    \caption{\textbf{Nonfunctional Requirements Traceability Matrix}}
+    \label{tab:nf_requirements}
+  \end{table}  
+  \end{landscape}
+  
 \section{Unit Test Description}
-
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
-
+Please note that this section is a placeholder for the unit test description. The unit test modules will be updated as the project progresses and Module Interface Specification (MIS) documents are developed.
 \subsection{Unit Testing Scope}
+The modules which the unit test focuses on will be divided into two categories: \textbf{Front-end} and \textbf{Back-end}.\\\\
+The following modules are considered outside the scope of unit testing:\\\\
+\textbf{Third-Party Modules}: 
+Any third-party libraries or frameworks integrated into the application will not be subjected to unit testing. This includes modules developed by external sources, such as libraries for data visualization or authentication. These modules will be relied upon for their documented functionality, but no direct verification will be performed.
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
 
-\subsection{Tests for Functional Requirements}
+\subsection{Rationale for Ranking}
+The prioritization of modules for testing is based on the following criteria:
+\begin{itemize}
+    \item[-] \textbf{Impact on Core Functionality}: Modules that are integral to the application’s main features will receive higher priority for unit testing.
+    \item[-] \textbf{User Experience}: Features that directly affect user interactions and overall experience will be tested more rigorously.
+    \item[-] \textbf{Risk Assessment}: Modules with higher associated risks, such as security and data handling, will be prioritized to mitigate potential issues.
+\end{itemize}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+\noindent By focusing our testing efforts on high-impact modules, we aim to ensure a robust and reliable application while efficiently utilizing our resources.
 
-\subsubsection{Module 1}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
-
-\subsection{Traceability Between Test Cases and Modules}
-
-\wss{Provide evidence that all of the modules have been considered.}
-				
+\newpage
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
@@ -490,40 +1797,183 @@ How test will be performed:
 
 \section{Appendix}
 
-This is where you can place additional information.
-
 \subsection{Symbolic Parameters}
+\renewcommand{\arraystretch}{1.3}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+\begin{table}[H]
+  \centering
+  \noindent
+  \begin{tabular}{|p{3.5cm}|p{9.5cm}|}
+      \hline
+      \rowcolor{lightgray} \textbf{Parameter} & \textbf{Description} \\
+      \hline
+      Uptime & 99.99\% – Ensures near-continuous availability of the AI system, minimizing downtime for uninterrupted analysis and diagnostics. \\
+      \hline
+      Training Photos & 471.12 GB (zipped) – A substantial dataset of chest X-rays used to train the AI model, contributing to its robustness and accuracy. \\
+      \hline
+      Accuracy Rate & 90\% – The model achieves a high accuracy rate in classifying and diagnosing chest X-rays, balancing precision with speed for practical clinical use. \\
+      \hline
+      Response Time & Less than 1 second per image – The system is optimized to provide immediate feedback on X-ray results, significantly reducing wait times. \\
+      \hline
+      Batch Size & 32 images per batch – Defines the number of images processed together during each training iteration. \\
+      \hline
+      Learning Rate & 0.001 – The step size during gradient descent, impacting model training speed. \\
+      \hline
+      Number of Epochs & 50 – The number of times the model processes the entire training dataset. \\
+      \hline
+      Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
+      \hline
+      Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
+      \hline
+      Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
+      \hline
+      Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
+      \hline
+  \end{tabular}
+  \caption{\textbf{Symbolic Parameters for AI System}}
+\end{table}
 
-\subsection{Usability Survey Questions?}
 
-\wss{This is a section that would be appropriate for some projects.}
+\subsection{Usability Survey Questions}
+
+\begin{enumerate}
+  \item On a scale of 1 to 5, how would you rate your overall experience with the chest X-ray analysis product?
+  \item On a scale of 1 to 5, how would you rate the ease of use and navigation of the interface?
+  \item On a scale of 1 to 5, how satisfied are you with the accuracy of the product's disease detection and report generation?
+  \item How confident are you in the reliability of the predictions provided by the product? (1 = Not confident, 5 = Very confident)
+  \item Are there any specific features you would like added to improve the accuracy or relevance of the analysis?
+  \item What feature of the product do you find most helpful in interpreting the chest X-ray images and understanding the diagnosis?
+  \item Which feature, if any, did you find least helpful or unnecessary for your workflow?
+  \item How likely are you to recommend this product to other healthcare professionals? (1 = Not likely, 5 = Very likely)
+  \item How intuitive do you find the product’s interface for navigating and analyzing X-ray images? (1 = Not intuitive, 5 = Very intuitive)
+  \item On a scale of 1 to 5, how well do the generated reports and predictions align with your expectations and clinical experience?
+  \item Did you encounter any difficulties in completing diagnostic tasks or viewing the analysis results? If yes, please describe.
+  \item On a scale of 1 to 5, how useful do you find the automated report summaries in supporting your decision-making?
+  \item How secure do you feel using this product in terms of patient data privacy? (1 = Not secure, 5 = Very secure)
+  \item Are there any other medical conditions or features you would like the product to detect or analyze in future updates?
+\end{enumerate}
+
 
 \newpage{}
 \section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.
-
-\input{../Reflection.tex}
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item What knowledge and skills will the team collectively need to acquire to
+  \item \textbf{What went well while writing this deliverable?}
+  
+  Writing this deliverable enabled us to delve deeply into the design and verification aspects of our AI-based chest X-ray analysis system.The abundance of ongoing research in the medical imaging domain and machine learning provided us with access to established validation frameworks and testing tools specifically designed for medical imaging applications and AI models. This made it straightforward to develop detailed system tests for both functional and non-functional requirements, ensuring that we thoroughly examined the core functionalities of our system.
+  \item \textbf{What pain points did you experience during this deliverable, and how
+    did you resolve them?}
+    
+  One of the main challenges we encountered was designing comprehensive system tests that effectively validate both the core functionalities and the additional features of our system. Ensuring that each functional requirement was adequately tested required great attention to detail and a thorough understanding of the system's expected behavior. Initially, we found it difficult to formulate test cases for complex features like AI model integration, security protocols, and handling of patient data. To overcome this, we revisited our System Requirements Specification (SRS) to clarify the requirements and ensure a precise alignment between requirements and tests. We also faced difficulties in balancing the scope of our extras, particularly the secondary features, within our project timeline and resource constraints. To resolve these issues, we held team discussions to prioritize features based on their feasibility and impact. We incorporated a traceability matrix to systematically link test cases to requirements, which greatly improved our ability to identify gaps and redundancies. Additionally, seeking feedback from our supervisor, Dr.Moradi, helped us refine our testing strategies and address any overlooked areas. 
+  \item \textbf{What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
-  identify at least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
+  identify at least one item for each team member.}
+
+  \item \textbf{For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice?}
+\end{enumerate}
+The following 2 questions are answered here for each team member:
+
+\begin{enumerate}
+  \item Patrick
+
+  \begin{itemize}
+      \item[-]Responsibility: Implementing and validating PyTorch models, ensuring model robustness and accuracy.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item[-] Advanced proficiency in PyTorch for deep learning model development and testing.
+          \item[-] Dynamic testing techniques for AI models, including unit testing and integration testing.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Online Courses and Tutorials: Enrolling in advanced PyTorch courses (e.g., Coursera, Udemy) focusing on model testing and validation, such as "Deep Learning with PyTorch" or "AI Testing with PyTorch."
+          \item PyTorch Documentation and Community Forums: Studying official documentation and engaging with the PyTorch community to learn best practices in model validation and debugging.
+      \end{enumerate}
+      \item[-] Chosen Approach: Patrick will pursue the Online Courses and Tutorials approach.
+      \item[-] Reason for Choice: Structured courses provide comprehensive coverage of advanced topics and include hands-on projects that reinforce learning. This method allows Patrick to systematically build upon his existing knowledge and directly apply new skills to our project, ensuring the AI model meets the required standards for accuracy and reliability in the V\&V plan.
+  \end{itemize}
+
+  \item Reza
+
+  \begin{itemize}
+      \item[-] Responsibility: Conducting static code analysis and maintaining code quality across the project.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in static code analysis tools (e.g., Pylint for Python, SonarQube).
+          \item Understanding of coding standards and best practices for maintainability and security.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Hands-on Practice with Tools: Installing and experimenting with static analysis tools on sample codebases to gain practical experience.
+          \item Workshops and Webinars: Participating in workshops focused on code quality and static analysis techniques.
+      \end{enumerate}
+      \item[-] Chosen Approach: Reza will pursue the Hands-on Practice with Tools approach.
+      \item[-] Reason for Choice: Practical experience is essential for mastering static analysis tools, and applying them directly to our project's codebase will provide immediate benefits. This approach allows Reza to tailor his learning to the specific tools and languages used in our project, ensuring that code quality and security are upheld in accordance with the V\&V plan.
+  \end{itemize}
+
+  \item Kelly
+
+  \begin{itemize}
+      \item[-] Responsibility: Setting up and managing continuous integration (CI) and automation workflows using GitHub Actions.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in CI/CD pipelines and GitHub Actions.
+          \item Automation of testing procedures and deployment processes.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item GitHub Learning Lab Courses: Completing interactive courses specifically focused on GitHub Actions and CI/CD practices.
+          \item Project-Based Learning: Implementing CI/CD pipelines in a controlled environment or sample projects to gain practical experience.
+      \end{enumerate}
+      \item[-] Chosen Approach: Kelly will combine both approaches but will focus on the GitHub Learning Lab Courses first.
+      \item[-] Reason for Choice: The structured courses provide essential knowledge and best practices, after which she will apply this knowledge through project-based learning to reinforce and expand her skills. This dual approach ensures that our V\&V processes are automated efficiently and effectively.
+  \end{itemize}
+
+  \item \textbf{Ayman}
+
+  \begin{itemize}
+      \item[-] Responsibility: Developing effective data visualization techniques for medical data analysis and assisting in web interface development.
+      \item[-] Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Proficiency in data visualization libraries (e.g., Matplotlib, Seaborn, Plotly).
+          \item Understanding of usability testing methodologies for web applications.
+          \item Frontend development skills (e.g., React, Angular) for web interface testing.
+      \end{itemize}
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item Online Tutorials and Documentation: Learning visualization libraries through official documentation and community tutorials.
+          \item Case Studies and Best Practices: Studying case studies on effective medical data visualization and user interface design.
+      \end{enumerate}
+      \item[-] Chosen Approach: Ayman will pursue the Case Studies and Best Practices approach.
+      \item[-] Reason for Choice: By understanding how visualization is effectively used in existing medical applications, Ayman can apply proven techniques to our project. This approach also aids in designing user-friendly interfaces, crucial for the V\&V plan's usability testing component.
+  \end{itemize}
+
+  \item Nathan 
+
+  \begin{itemize}
+      \item[-] Responsibility: Conducting usability testing to ensure the web application is user-friendly and meets the needs of healthcare professionals.
+      
+      \item[-]Knowledge and Skills Needed:
+      \begin{itemize}
+          \item Understanding of usability testing methodologies and best practices.
+          \item Proficiency in designing and conducting user surveys and interviews.
+          \item Ability to analyze user feedback and identify areas for improvement.
+      \end{itemize}
+      
+      \item[-] Approaches to Acquiring Skills:
+      \begin{enumerate}
+          \item User Research and Surveys: Engaging in user research activities to gather insights into user needs and preferences.
+          \item Usability Testing Workshops: Participating in workshops focused on usability testing techniques and user-centered design principles.
+      \end{enumerate}
+      
+      \item[-] Chosen Approach: Nathan will pursue the Usability Testing Workshops approach.
+      
+      \item[-] Reason for Choice: Attending workshops will provide Nathan with structured training and hands-on experience in usability testing, enabling him to effectively evaluate and enhance the user interface based on real user feedback. This approach ensures that Nathan can apply best practices directly to our V\&V plan, improving the overall user experience for healthcare professionals.
+  \end{itemize}
+
 \end{enumerate}
 
 \end{document}
