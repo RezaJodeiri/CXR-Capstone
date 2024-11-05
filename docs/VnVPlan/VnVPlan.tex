@@ -356,6 +356,55 @@ Understanding user expectations is critical for verifying that the final product
     \item \textbf{Questions for the Supervisor $\&$ TA's:} We will ask key questions that would focus on verifying the scope, clarity, and feasibility of our SRS document. An example, could be asking if the NFRs or non-functional requirements align with the project’s quality objectives.
 \end{itemize}
 
+\subsubsection{SRS Checklist}
+\textbf{1. Completeness}
+\begin{itemize}
+    \item \textbf{Purpose and Scope:} Clearly outlines the project’s goal to predict diseases from X-ray images using AI models. 
+    \item \textbf{Stakeholders:} Identifies and defines relevant stakeholders, including healthcare professionals, patients, and regulatory bodies. 
+    \item \textbf{Functional Requirements:} Describes core functionalities like image processing, disease prediction accuracy, and report generation. 
+    \item \textbf{Non-Functional Requirements:} Covers essential factors such as system performance, data security, and regulatory compliance. 
+\end{itemize}
+\textbf{2. Clarity} 
+\begin{itemize}
+    \item \textbf{Clear Terminology:} Ensures that technical terms (e.g., deep learning, classification, X-ray modalities) are defined and used consistently. 
+    \item \textbf{Glossary Completeness:} Includes all necessary acronyms and terminology relevant to AI, healthcare, and radiology. 
+\end{itemize}
+\textbf{3. Consistency} 
+\begin{itemize}
+    \item \textbf{Consistent Terminology:} Uses standardized language across all documentation to avoid misinterpretation. 
+    \item \textbf{No Conflicting Requirements:} Checks for conflicts, especially between performance and security constraints. 
+\end{itemize}
+\textbf{4. Verifiability} 
+\begin{itemize}
+    \item \textbf{Testable Requirements:} Ensures all functions, such as prediction accuracy and response time, are measurable and testable. 
+    \item \textbf{Acceptance Criteria:} Establishes specific benchmarks for model performance and prediction reliability. 
+\end{itemize}
+\textbf{5. Traceability} 
+\begin{itemize}
+    \item \textbf{Unique Identifiers:} Assigns identifiers to each requirement for tracking through development. 
+    \item \textbf{Source of Requirements:} Links each requirement back to stakeholder needs and healthcare standards. 
+\end{itemize}
+\textbf{6. Feasibility} 
+\begin{itemize}
+    \item \textbf{Technical Feasibility:} Confirms that AI model and image processing techniques are achievable within the project's scope. 
+    \item \textbf{Practical Constraints:} Assesses budget, data availability, and timeline constraints to ensure project viability. 
+\end{itemize}
+
+\textbf{7. Security and Privacy} 
+\begin{itemize}
+    \item \textbf{Data Retention Policy:} Aligns with data privacy laws, focusing on secure handling of patient X-ray images. 
+    \item \textbf{Access Control Requirements:} Specifies requirements for user authentication, ensuring only authorized access to sensitive data. 
+\end{itemize}
+\textbf{8. Modifiability} 
+\begin{itemize}
+    \item \textbf{Organized Structure:} Structures requirements logically to allow future updates and integration of new AI models. 
+    \item \textbf{Avoiding Redundancy:} Ensures there are no duplicate or conflicting requirements to streamline modifications. 
+\end{itemize}
+\textbf{9. Compliance and Ethics} 
+\begin{itemize}
+    \item \textbf{Ethical and Legal Standards:} Addresses compliance with healthcare standards, patient privacy, and ethical AI usage. 
+\end{itemize}
+
 \subsection{Design Verification Plan}
 
 The design verification plan outlines the strategies and procedures that the team will use to verify the correctness and reliability of the design of our X-ray analysis and disease prediction application. This plan will serve as a guideline during the testing phase to ensure that the design meets the intended requirements and can mitigate potential risks identified by the team. The following procedures will be undertaken by the testing team during the verification process:
@@ -1730,21 +1779,6 @@ This is where you can place additional information.
 
 \subsection{Symbolic Parameters}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
-
-\subsection{Usability Survey Questions?}
-
-\wss{This is a section that would be appropriate for some projects.}
-
-\newpage{}
-
-\section{Appendix}
-
-This is where you can place additional information.
-
-\subsection{Symbolic Parameters}
-
 N/A (This information will be consolidated upon the completion of the MIS documents in a later stage.)\\\\
 The specifics regarding symbolic parameters may evolve throughout the development of the project. As the team gains further insights during implementation and testing phases, adjustments to these parameters may be necessary to enhance functionality and performance. Until the implementation plan is fully consolidated, any definitions or adjustments pertaining to symbolic parameters remain provisional. This iterative process allows the team to refine their approach based on real-world data and user feedback, ensuring that the final parameters align with the project's objectives and requirements.
 
@@ -1768,25 +1802,101 @@ The specifics regarding symbolic parameters may evolve throughout the developmen
 \newpage{}
 \section*{Appendix --- Reflection}
 
-\wss{This section is not required for CAS 741}
-
+\wss{This section is not required for CAS 741}\\
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
 
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable? \\\\
+  In our opinion, Part 3 (Planning) went extremely well. This success
+can be attributed to our pre-planning efforts and dividing the tasks
+among team members, which allowed each of us to focus on specific
+sections and streamline the process.
   \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+    did you resolve them? \\\\
+    The most pain points comes from the unclear instructions of the documents templates and requirements. Specifically during Part 5 (Unit Test), where in the rubric it mentions it needs to contain this part. But the instructions given in the docs mentions this needs to wait until the completion of the MIS documents.
+    
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
+  
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
-  identify at least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
-\end{enumerate}
+  identify at least one item for each team member.\\\\
+    To successfully complete the verification and validation of our project, the team collectively needs to acquire the following knowledge and skills:
+    
+    \begin{itemize}
+    \item \textbf{Patrick:} Deepening understanding of \textbf{PyTorch} for model testing and validation processes, particularly in the context of machine learning and deep learning projects.
+    
+    \item \textbf{Reza:} Proficiency in \textbf{static code analysis techniques} to ensure code quality and maintainability, with a focus on tools like Pylint and ESLint.
+    
+    \item \textbf{Kelly:} Comprehensive knowledge of \textbf{GitHub Actions} for continuous integration and deployment, enabling automated testing workflows to streamline our development process.
+    
+    \item \textbf{Ayman:} Expertise in \textbf{data visualization} techniques using libraries such as Matplotlib and Seaborn, to effectively present complex medical data and insights.
+    
+    \item \textbf{Nathan:} Advanced skills in \textbf{backend development and AWS deployment}, focusing on optimizing API interactions and utilizing cloud services for scalable application architecture.
+    \end{itemize}
 
+    \item For each of the knowledge areas and skills identified in the previous
+    question, what are at least two approaches to acquiring the knowledge
+    or mastering the skill? Of the identified approaches, which will each
+    team member pursue, and why did they make this choice?
+
+\begin{itemize}
+  \item \textbf{Patrick} 
+    \begin{itemize}
+      \item \textbf{Responsibility:} Implementing and validating PyTorch models, ensuring model robustness and accuracy.
+      \item \textbf{Chosen Approach:}
+        \begin{enumerate}
+          \item Reviewing PyTorch documentation and completing tutorials focused on testing and validation.
+          \item Organizing workshops for team members to share PyTorch insights, helping align everyone's understanding.
+        \end{enumerate}
+      \item \textbf{Reason for Choice:} Patrick chose this approach to deepen his understanding of PyTorch, building on his existing experience with Python and foundational knowledge in deep learning.
+    \end{itemize}
+  
+  \item \textbf{Reza} 
+    \begin{itemize}
+      \item \textbf{Responsibility:} Conducting static code analysis and maintaining code quality across the project.
+      \item \textbf{Chosen Approach:}
+        \begin{enumerate}
+          \item Practicing static code analysis with Pylint and ESLint to gain hands-on experience.
+          \item Studying diverse static code analysis techniques to deepen understanding and improve the application of best practices.
+        \end{enumerate}
+      \item \textbf{Reason for Choice:} Reza selected this approach due to his structured and meticulous nature, along with his prior experience in code testing, which will enhance his ability to implement effective static analysis techniques.
+
+    \end{itemize}
+  
+  \item \textbf{Kelly} 
+    \begin{itemize}
+      \item \textbf{Responsibility:} Setting up and managing continuous integration and automation workflows using GitHub Actions.
+      \item \textbf{Chosen Approach:}
+        \begin{enumerate}
+          \item Completing GitHub Actions courses on GitHub Learning Lab to gain a foundational understanding.
+          \item Experimenting with small automation projects to apply the learned concepts in a practical setting.
+        \end{enumerate}
+      \item \textbf{Reason for Choice:} Kelly aims to build her confidence in CI/CD automation by starting with structured courses, then apply her learning in real-world scenarios, which will reinforce her knowledge.
+    \end{itemize}
+  
+  \item \textbf{Ayman} 
+    \begin{itemize}
+      \item \textbf{Responsibility:} Developing effective data visualization techniques, particularly for medical data analysis.
+      \item \textbf{Chosen Approach:}
+        \begin{enumerate}
+          \item Studying case studies on medical data visualization to gain insights on best practices.
+          \item Exploring advanced data visualization libraries like Matplotlib and Seaborn for effective presentations.
+        \end{enumerate}
+      \item \textbf{Reason for Choice:} Ayman selected this approach to understand practical examples first, which will provide useful insights into applying visualization techniques specifically relevant to medical data.
+    \end{itemize}
+  
+  \item \textbf{Nathan} 
+    \begin{itemize}
+      \item \textbf{Responsibility:} Managing frontend and backend integration, ensuring alignment with AWS deployment requirements.
+      \item \textbf{Chosen Approach:}
+        \begin{enumerate}
+          \item Taking AWS deployment courses to enhance skills in backend and cloud infrastructure.
+          \item Applying this knowledge to set up a robust, scalable deployment pipeline using AWS services.
+        \end{enumerate}
+      \item \textbf{Reason for Choice:} Nathan chose to deepen his AWS skills with hands-on courses to independently create a scalable deployment pipeline, allowing the team to rely on an efficient cloud infrastructure.
+    \end{itemize}
+\end{itemize}
+\end{enumerate}
 \end{document}
