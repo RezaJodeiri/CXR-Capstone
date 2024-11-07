@@ -3,9 +3,6 @@ services:
     build: ./frontend
     ports:
       - ${FRONTEND_HOST_PORT}:3000
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
       - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
@@ -13,13 +10,14 @@ services:
     depends_on:
       - backend
     image: neuralanalyzer/frontend:latest
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   backend:
     build: ./backend
     ports:
       - ${BACKEND_HOST_PORT}:5000
-    volumes:
-      - ./backend:/app
     environment:
       - FLASK_DEBUG=${FLASK_DEBUG}
       - FRONTEND_URL=${PROTOCOL}://${HOST}:${FRONTEND_HOST_PORT}
@@ -27,3 +25,27 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     command: python app.py
     image: neuralanalyzer/backend:latest
+    depends_on:
+      - neuralanalyzer_model
+      - torchxrayvision_model
+    volumes:
+      - ./backend:/app
+
+
+  neuralanalyzer_model:
+    build: ./ai-services/neuralanalyzer
+    ports:
+      - ${NEURALANALYZER_MODEL_HOST_PORT}:5000
+    command:  python app.py
+    image: neuralanalyzer:latest
+    volumes:
+      - ./ai-services/neuralanalyzer:/app
+
+  torchxrayvision_model:
+    build: ./ai-services/torchxrayvision
+    ports:
+      - ${TORCHXRAYVISION_MODEL_HOST_PORT}:5000
+    command: python app.py
+    image: torchxrayvision:latest
+    volumes:
+      - ./ai-services/torchxrayvision:/app
