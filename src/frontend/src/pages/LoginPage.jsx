@@ -4,6 +4,8 @@ import { PrimaryTextInputWithLabel } from "../components/Inputs";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import { signIn } from "../services/api";
+
 function LoginPage() {
   const navigate = useNavigate();
   const [loginFormValue, setLoginFormValue] = useState({
@@ -44,8 +46,12 @@ function LoginPage() {
 
             <PrimaryButton
               text="Sign In"
-              onClick={() => {
-                // TODO: Login logic here
+              onClick={async () => {
+                const res = await signIn(
+                  loginFormValue.email,
+                  loginFormValue.password
+                );
+                console.log(res);
                 navigate("/dashboard", { replace: true });
               }}
             />

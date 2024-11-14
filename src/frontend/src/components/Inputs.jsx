@@ -1,6 +1,13 @@
-export const PrimaryTextInput = ({ type, placeholder, value, onChange }) => {
+export const PrimaryTextInput = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+  required = true,
+}) => {
   return (
     <input
+      required={required}
       type={type}
       placeholder={placeholder}
       value={value}
