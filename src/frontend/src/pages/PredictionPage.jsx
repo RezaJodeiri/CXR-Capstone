@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
 const allowedFileTypes = ["JPG", "PNG", "GIF"];
+import axios from 'axios';
+
+import { predictImage } from "../services/api";
 
 const mockPrediction = {
   Atelectasis: 0.32797316,
@@ -43,30 +46,32 @@ const getRandomPrediction = () => {
   return prediction;
 };
 
+
 function PredictionPage() {
   const [files, setFiles] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [currentImageName, setCurrentImageName] = useState(null);
 
-  const handleSubmission = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const predictions = {};
-    files.forEach((file) => {
-      const randomPrediction = getRandomPrediction();
-      predictions[file.name] = randomPrediction
-        ? Object.keys(randomPrediction)
-            .map((disease) => {
-              return {
-                disease,
-                percentage: randomPrediction[disease],
-              };
-            })
-            .sort((a, b) => b.percentage - a.percentage)
-        : null;
-    });
-    setPredictions(predictions);
-    setCurrentImageName(files[0].name);
-  };
+
+  // const handleSubmission = async () => {
+  //   await new Promise((resolve) => setTimeout(resolve, 1000));
+  //   const predictions = {};
+  //   files.forEach((file) => {
+  //     const randomPrediction = getRandomPrediction();
+  //     predictions[file.name] = randomPrediction
+  //       ? Object.keys(randomPrediction)
+  //           .map((disease) => {
+  //             return {
+  //               disease,
+  //               percentage: randomPrediction[disease],
+  //             };
+  //           })
+  //           .sort((a, b) => b.percentage - a.percentage)
+  //       : null;
+  //   });
+  //   setPredictions(predictions);
+  //   setCurrentImageName(files[0].name);
+  // };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
