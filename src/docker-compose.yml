@@ -1,18 +1,18 @@
 services:
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - ${FRONTEND_HOST_PORT}:3000
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
-  #     - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
-  #   command: npm start
-  #   depends_on:
-  #     - backend
-  #   image: neuralanalyzer/frontend:latest
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
+  frontend:
+    build: ./frontend
+    ports:
+      - ${FRONTEND_HOST_PORT}:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
+      - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
+    command: npm start
+    depends_on:
+      - backend
+    image: neuralanalyzer/frontend:latest
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   backend:
     build: ./backend
