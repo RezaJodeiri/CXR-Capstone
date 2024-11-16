@@ -10,6 +10,8 @@ import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
 const allowedFileTypes = ["JPG", "PNG", "GIF"];
 
+import { predictImage } from "../services/api";
+
 const mockPrediction = {
   Atelectasis: 0.32797316,
   Consolidation: 0.42933336,
@@ -31,41 +33,35 @@ const mockPrediction = {
   "Enlarged Cardiomediastinum": 0.27218717,
 };
 
-const getRandomPrediction = () => {
-  if (Math.random() < 0.1) {
-    return null;
-  }
-  const prediction = {};
-  Object.keys(mockPrediction).forEach((key) => {
-    prediction[key] = Math.random();
-  });
-
-  return prediction;
-};
-
 function PredictionPage() {
   const [files, setFiles] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [currentImageName, setCurrentImageName] = useState(null);
 
   const handleSubmission = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const predictions = {};
-    files.forEach((file) => {
-      const randomPrediction = getRandomPrediction();
-      predictions[file.name] = randomPrediction
-        ? Object.keys(randomPrediction)
-            .map((disease) => {
-              return {
-                disease,
-                percentage: randomPrediction[disease],
-              };
-            })
-            .sort((a, b) => b.percentage - a.percentage)
-        : null;
+    const promises = files.map((f) => predictImage(f));
+
+    // Simultaneously Predict all images in array
+    const predictionsRes = await Promise.all(promises);
+
+    // Map backend data structure to Front-end data structure
+    const predictionList = files.map((f, index) => {
+      const diseaseWithPercentage = Object.keys(predictionsRes[index])
+        .map((disease) => {
+          return {
+            disease: disease,
+            percentage: predictionsRes[index][disease],
+          };
+        })
+        .sort((a, b) => b.percentage - a.percentage);
+      return { [f.name]: diseaseWithPercentage };
     });
-    setPredictions(predictions);
-    setCurrentImageName(files[0].name);
+
+    const predictionMap = predictionList.reduce((acc, obj) => {
+      return { ...acc, ...obj };
+    }, {});
+
+    setPredictions(predictionMap);
   };
 
   return (
@@ -199,6 +195,7 @@ function PredictionPage() {
                     }
                     key={index}
                     onClick={() => {
+                      console.log(file.name);
                       setCurrentImageName(file.name);
                     }}
                   >
@@ -282,3 +279,35 @@ function PredictionPage() {
 }
 
 export default PredictionPage;
+
+// const handleSubmission = async () => {
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   const predictions = {};
+//   files.forEach((file) => {
+//     const randomPrediction = getRandomPrediction();
+//     predictions[file.name] = randomPrediction
+//       ? Object.keys(randomPrediction)
+//           .map((disease) => {
+//             return {
+//               disease,
+//               percentage: randomPrediction[disease],
+//             };
+//           })
+//           .sort((a, b) => b.percentage - a.percentage)
+//       : null;
+//   });
+//   setPredictions(predictions);
+//   setCurrentImageName(files[0].name);
+// };
+
+// const getRandomPrediction = () => {
+//   if (Math.random() < 0.1) {
+//     return null;
+//   }
+//   const prediction = {};
+//   Object.keys(mockPrediction).forEach((key) => {
+//     prediction[key] = Math.random();
+//   });
+
+//   return prediction;
+// };
