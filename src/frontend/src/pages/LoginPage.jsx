@@ -83,7 +83,7 @@ function LoginPage() {
           </div>
         </div>
         <div className="h-full w-1/2 bg-gradient-to-br from-primary to-[#00B6AD] flex flex-col items-center justify-center gap-4">
-          <h1 className="text-white text-4xl font-medium">Neuralanalyzer.</h1>
+          <h1 className="text-white text-4xl font-medium">Neuralanalyzer</h1>
           <h4 className="text-white">Don't have an account?</h4>
           <Link to="/register">
             <SecondaryButton text="Sign Up" onClick={() => void 0} />
