@@ -5,7 +5,6 @@ import torch
 import torchvision.transforms as transforms
 import torchxrayvision as xrv
 from flask import Blueprint, Flask, jsonify, request
-from flask_cors import CORS
 
 app = Flask(__name__)
 
