@@ -13,9 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      COGNITO_USER_POOL_ID: mock-user-pool-id
+      COGNITO_APP_CLIENT_ID: mock-client-id
+      COGNITO_APP_CLIENT_SECRET: mock-client-secret
+      AWS_REGION: us-east-1
       AWS_ACCESS_KEY_ID: mock-access-key
       AWS_SECRET_ACCESS_KEY: mock-secret-key
-      AWS_REGION: us-east-1
 
     steps:
       - name: Checkout code
