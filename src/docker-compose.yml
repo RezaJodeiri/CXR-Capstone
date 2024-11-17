@@ -46,7 +46,7 @@ services:
 
   torchxrayvision_model:
     build: ./ai-services/torchxrayvision
-    command: python app.py
+    command: python torch_app.py
     image: torchxrayvision:latest
     volumes:
       - ./ai-services/torchxrayvision:/app
