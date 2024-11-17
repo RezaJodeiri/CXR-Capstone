@@ -28,12 +28,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.8"
+          cache: 'pip'
 
-      - name: Cache Python dependencies
+      - name: Cache pip packages
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('src/backend/requirements*.txt') }}
+          path: |
+            ~/.cache/pip
+            ~/.local/lib/python3.8/site-packages
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
