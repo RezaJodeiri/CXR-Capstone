@@ -13,11 +13,19 @@ def client():
 
 
 @pytest.fixture(autouse=True)
-def mock_aws():
-    """Globally mock AWS Cognito-related methods."""
-    with patch("src.backend.runtime.IdentityProvider.sign_in_user") as mock_sign_in, \
-         patch("src.backend.runtime.IdentityProvider.sign_up_user") as mock_sign_up, \
-         patch("src.backend.runtime.IdentityProvider.get_self_user") as mock_get_self_user:
+def mock_config(monkeypatch):
+    """Mock environment variables for AWS configuration."""
+    monkeypatch.setenv("AWS_ACCESS_KEY_ID", "mock-access-key")
+    monkeypatch.setenv("AWS_SECRET_ACCESS_KEY", "mock-secret-key")
+    monkeypatch.setenv("AWS_REGION", "us-east-1")
+
+
+@pytest.fixture(autouse=True)
+def mock_aws_cognito():
+    """Mock AWS Cognito Identity Provider methods."""
+    with patch("src.backend.runtime.data.aws_cognito.CognitoIdentityProvider.sign_in_user") as mock_sign_in, \
+         patch("src.backend.runtime.data.aws_cognito.CognitoIdentityProvider.sign_up_user") as mock_sign_up, \
+         patch("src.backend.runtime.data.aws_cognito.CognitoIdentityProvider.get_self_user") as mock_get_self_user:
         mock_sign_in.return_value = {"user_id": "123", "token": "abc123"}
         mock_sign_up.return_value = {"message": "User created successfully"}
         mock_get_self_user.return_value = {"user_id": "123", "email": "test@test.com"}
@@ -44,7 +52,7 @@ def test_sign_up(client):
 
     response = client.post(
         "/oauth/sign_up",
-        query_string={"email": "test@test.com", "password": "Password123!"},  
+        query_string={"email": "test@test.com", "password": "Password123!"},  # Meets policy
         json=request_body,
     )
 
@@ -59,3 +67,22 @@ def test_get_self_user(client):
 
     assert response.status_code == 200
     assert response.get_json() == {"user_id": "123", "email": "test@test.com"}
+
+
+# Test error handling for /sign_in
+def test_sign_in_error(client):
+    with patch("src.backend.api.oauth.IdentityProvider.sign_in_user", side_effect=Exception("NotAuthorizedException")):
+        response = client.post("/oauth/sign_in", query_string={"email": "wrong@test.com", "password": "wrong_password"})
+
+        assert response.status_code == 401
+        assert response.get_json() == {"error": "NotAuthorizedException"}
+
+
+# Test error handling for /self
+def test_get_self_user_error(client):
+    with patch("src.backend.api.oauth.IdentityProvider.get_self_user", side_effect=Exception("NotAuthorizedException")):
+        headers = {"Authorization": "Bearer invalid_token"}
+        response = client.get("/oauth/self", headers=headers)
+
+        assert response.status_code == 401
+        assert response.get_json() == {"error": "NotAuthorizedException"}
