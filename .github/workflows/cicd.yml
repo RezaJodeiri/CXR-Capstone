@@ -12,6 +12,11 @@ jobs:
   test-and-lint:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_ACCESS_KEY_ID: mock-access-key
+      AWS_SECRET_ACCESS_KEY: mock-secret-key
+      AWS_REGION: us-east-1
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
