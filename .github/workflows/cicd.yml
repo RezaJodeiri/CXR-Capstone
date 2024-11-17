@@ -3,15 +3,104 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - '**'  # Trigger on push to any branch
+      - '**'
   pull_request:
     branches:
-      - '**'  # Trigger on PR to any branch
+      - '**'
+
+env:
+  PYTHON_VERSION: "3.8"
 
 jobs:
-  test-and-lint:
+  setup:
+    name: Setup Environment
     runs-on: ubuntu-latest
+    outputs:
+      cache-key-python: ${{ steps.cache-python.outputs.cache-key }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+        
+      - name: Cache pip packages
+        id: cache-python
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.local/lib/python${{ env.PYTHON_VERSION }}/site-packages
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+        
+      - name: Install Python dependencies
+        if: steps.cache-python.outputs.cache-hit != 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/backend/requirements.txt
+          pip install -r src/backend/requirements-dev.txt
+    
+  lint:
+    name: Lint and Type Check
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Restore Python cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.local/lib/python${{ env.PYTHON_VERSION }}/site-packages
+          key: ${{ needs.setup.outputs.cache-key-python }}
+      
+      - name: Run Flake8
+        run: |
+          flake8 src test --output-file=flake8-report.txt --statistics --exit-zero
+          if grep -q "^E" flake8-report.txt; then
+            echo "Critical flake8 errors found!"
+            exit 1
+          fi
+      
+      - name: Upload Flake8 Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: flake8-report
+          path: flake8-report.txt
+      
+      - name: Run MyPy
+        run: |
+          mypy src test --junit-xml=mypy-report.xml --ignore-missing-imports --warn-error
+          ERROR_COUNT=$(grep -c "error:" mypy-report.xml || true)
+          if [ "$ERROR_COUNT" -gt 0 ]; then
+            echo "Found $ERROR_COUNT critical MyPy errors!"
+            exit 1
+          fi
+      
+      - name: Upload MyPy Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: mypy-report
+          path: mypy-report.xml
 
+  test:
+    name: Run Tests
+    needs: lint
+    runs-on: ubuntu-latest
     env:
       COGNITO_USER_POOL_ID: mock-user-pool-id
       COGNITO_APP_CLIENT_ID: mock-client-id
@@ -19,50 +108,36 @@ jobs:
       AWS_REGION: us-east-1
       AWS_ACCESS_KEY_ID: mock-access-key
       AWS_SECRET_ACCESS_KEY: mock-secret-key
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
-          cache: 'pip'
-
-      - name: Cache pip packages
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Restore Python cache
         uses: actions/cache@v3
         with:
           path: |
             ~/.cache/pip
-            ~/.local/lib/python3.8/site-packages
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
+            ~/.local/lib/python${{ env.PYTHON_VERSION }}/site-packages
+          key: ${{ needs.setup.outputs.cache-key-python }}
+          
+      - name: Run tests with coverage
         run: |
-          python -m pip install --upgrade pip
-          pip install -r src/backend/requirements.txt
-          pip install -r src/backend/requirements-dev.txt
-
-      - name: Run unit tests
-        run: pytest test --cov=src --cov-report=term --cov-report=xml
-
-      - name: Upload coverage to Codecov
+          pytest test \
+            --cov=src \
+            --cov-report=term \
+            --cov-report=xml
+            
+      - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+          files: ./coverage.xml
           flags: unittests
-          name: codecov-umbrella
           fail_ci_if_error: true
-
-      - name: Run Flake8
-        run: flake8 src test
-
-      - name: Run MyPy
-        run: mypy src test
 
   # build-and-push:
   #   needs: test-and-lint
