@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from ..runtime import IdentityProvider
+from runtime import IdentityProvider
 
 oauth_bp = Blueprint("oauth", __name__)
 
