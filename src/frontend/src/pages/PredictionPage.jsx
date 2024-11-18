@@ -10,62 +10,42 @@ import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
 const allowedFileTypes = ["JPG", "PNG", "GIF"];
 
-const mockPrediction = {
-  Atelectasis: 0.32797316,
-  Consolidation: 0.42933336,
-  Infiltration: 0.5316924,
-  Pneumothorax: 0.28849724,
-  Edema: 0.024142697,
-  Emphysema: 0.5011832,
-  Fibrosis: 0.51887786,
-  Effusion: 0.27805611,
-  Pneumonia: 0.18569896,
-  Pleural_Thickening: 0.24489835,
-  Cardiomegaly: 0.3645515,
-  Nodule: 0.68982,
-  Mass: 0.6392845,
-  Hernia: 0.00993878,
-  "Lung Lesion": 0.011150705,
-  Fracture: 0.51916164,
-  "Lung Opacity": 0.59073937,
-  "Enlarged Cardiomediastinum": 0.27218717,
-};
+import { predictImage } from "../services/api";
+import { useAuth } from "../context/Authentication";
 
-const getRandomPrediction = () => {
-  if (Math.random() < 0.1) {
-    return null;
-  }
-  const prediction = {};
-  Object.keys(mockPrediction).forEach((key) => {
-    prediction[key] = Math.random();
-  });
-
-  return prediction;
-};
 
 function PredictionPage() {
+  const { getToken } = useAuth();
   const [files, setFiles] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [currentImageName, setCurrentImageName] = useState(null);
 
   const handleSubmission = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const predictions = {};
-    files.forEach((file) => {
-      const randomPrediction = getRandomPrediction();
-      predictions[file.name] = randomPrediction
-        ? Object.keys(randomPrediction)
-            .map((disease) => {
-              return {
-                disease,
-                percentage: randomPrediction[disease],
-              };
-            })
-            .sort((a, b) => b.percentage - a.percentage)
-        : null;
+    const token = getToken();
+    const promises = files.map((f) => predictImage(f, token));
+
+    // Simultaneously Predict all images in array
+    const predictionsRes = await Promise.all(promises);
+
+    // Map backend data structure to Front-end data structure
+    const predictionList = files.map((f, index) => {
+      const diseaseWithPercentage = Object.keys(predictionsRes[index])
+        .map((disease) => {
+          return {
+            disease: disease,
+            percentage: predictionsRes[index][disease],
+          };
+        })
+        .sort((a, b) => b.percentage - a.percentage);
+      return { [f.name]: diseaseWithPercentage };
     });
-    setPredictions(predictions);
-    setCurrentImageName(files[0].name);
+
+    const predictionMap = predictionList.reduce((acc, obj) => {
+      return { ...acc, ...obj };
+    }, {});
+    
+    if (files.length > 0) setCurrentImageName(files[0].name);
+    setPredictions(predictionMap);
   };
 
   return (
@@ -199,6 +179,7 @@ function PredictionPage() {
                     }
                     key={index}
                     onClick={() => {
+                      console.log(file.name);
                       setCurrentImageName(file.name);
                     }}
                   >
@@ -282,3 +263,35 @@ function PredictionPage() {
 }
 
 export default PredictionPage;
+
+// const handleSubmission = async () => {
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   const predictions = {};
+//   files.forEach((file) => {
+//     const randomPrediction = getRandomPrediction();
+//     predictions[file.name] = randomPrediction
+//       ? Object.keys(randomPrediction)
+//           .map((disease) => {
+//             return {
+//               disease,
+//               percentage: randomPrediction[disease],
+//             };
+//           })
+//           .sort((a, b) => b.percentage - a.percentage)
+//       : null;
+//   });
+//   setPredictions(predictions);
+//   setCurrentImageName(files[0].name);
+// };
+
+// const getRandomPrediction = () => {
+//   if (Math.random() < 0.1) {
+//     return null;
+//   }
+//   const prediction = {};
+//   Object.keys(mockPrediction).forEach((key) => {
+//     prediction[key] = Math.random();
+//   });
+
+//   return prediction;
+// };

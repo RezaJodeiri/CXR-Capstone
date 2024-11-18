@@ -123,3 +123,12 @@ class CognitoIdentityProvider:
                 err.response["Error"]["Message"],
             )
             raise err
+
+    def verify_token(self, token):
+        try:
+            response = self.cognito_idp_client.get_user(
+                AccessToken=token
+            )
+            return True
+        except ClientError:
+            return False

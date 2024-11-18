@@ -8,6 +8,8 @@ import {
   RegisterFlowView3,
 } from "../components/RegisterFlows";
 
+import { useAuth } from "../context/Authentication";
+
 const RegisterFlow = [RegisterFlowView1, RegisterFlowView2, RegisterFlowView3];
 
 function RegisterPage() {
@@ -24,9 +26,36 @@ function RegisterPage() {
     password: "",
     confirmPassword: "",
   });
-  const onSubmit = useCallback(() => {
-    setRegisterSuccess(true);
-  }, []);
+  const { register } = useAuth();
+
+  const onSubmit = useCallback(async () => {
+    try {
+      if (registerFormValue.password !== registerFormValue.confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(registerFormValue.email)) {
+        throw new Error("Invalid email address format");
+      }
+      
+      await register(
+        registerFormValue.email,
+        registerFormValue.password,
+        {
+          first_name: registerFormValue.firstName,
+          last_name: registerFormValue.lastName,
+          occupation: registerFormValue.occupation,
+          organization: registerFormValue.organization,
+          location: registerFormValue.location,
+        }
+      );
+      setRegisterSuccess(true);
+    } catch (error) {
+      console.error("Registration failed:", error);
+      // Add error handling UI here
+    }
+  }, [register, registerFormValue]);
 
   return (
     <div className="w-full h-full flex justify-center items-center">

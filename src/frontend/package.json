@@ -4,12 +4,15 @@
   "private": true,
   "dependencies": {
     "axios": "^1.7.7",
+    "frontend": "file:",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-drag-drop-files": "^2.4.0",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.27.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.4.14",
+    "autoprefixer": "^10.4.20"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -28,10 +31,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "postcss-cli": "^11.0.0",
-    "tailwindcss": "^3.4.14"
   }
 }
