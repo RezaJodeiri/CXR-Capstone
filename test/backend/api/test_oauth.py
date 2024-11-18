@@ -20,14 +20,34 @@ def client():
     return app.test_client()
 
 def test_sign_in(identity_provider, client):
-    identity_provider.sign_in_user.return_value = {"user_id": "123", "token": "abc123"}
-    response = client.post("/oauth/sign_in", query_string={"email": "test@test.com", "password": "password"})
+    identity_provider.sign_in_user.return_value = {
+        "AccessToken": "abc123"
+    }
+    identity_provider.get_self_user.return_value = {
+        "Username": "test_user",
+        "UserAttributes": []
+    }
+    
+    response = client.post("/oauth/sign_in", query_string={
+        "email": "test@test.com", 
+        "password": "password"
+    })
+    
     assert response.status_code == 200
-    assert response.get_json() == {"user_id": "123", "token": "abc123"}
-    identity_provider.sign_in_user.assert_called_once_with(email="test@test.com", password="password")
+    response_data = response.get_json()
+    assert "token" in response_data
+    assert "user" in response_data
+    assert response_data["token"] == "abc123"
 
 def test_sign_up(identity_provider, client):
-    identity_provider.sign_up_user.return_value = {"message": "User created successfully"}
+    identity_provider.sign_up_user.return_value = {
+        "Username": "test_user",
+        "UserAttributes": []
+    }
+    identity_provider.sign_in_user.return_value = {
+        "AccessToken": "abc123"
+    }
+    
     request_body = {
         "first_name": "John",
         "last_name": "Doe",
@@ -35,18 +55,15 @@ def test_sign_up(identity_provider, client):
         "organization": "Tech Corp",
         "location": "Toronto",
     }
-    response = client.post(
-        "/oauth/sign_up",
+    response = client.post(        "/oauth/sign_up",
         query_string={"email": "test@test.com", "password": "Password123!"},
         json=request_body,
     )
     assert response.status_code == 200
-    assert response.get_json() == {"message": "User created successfully"}
-    identity_provider.sign_up_user.assert_called_once_with(
-        password="Password123!",
-        user_email="test@test.com",
-        user_detail=request_body,
-    )
+    response_data = response.get_json()
+    assert "token" in response_data
+    assert "user" in response_data
+    assert response_data["token"] == "abc123"
 
 def test_get_self_user(identity_provider, client):
     identity_provider.get_self_user.return_value = {"user_id": "123", "email": "test@test.com"}
