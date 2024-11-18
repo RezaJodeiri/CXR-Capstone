@@ -4,15 +4,28 @@ import { PrimaryTextInputWithLabel } from "../components/Inputs";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { signIn } from "../services/api";
+import { useAuth } from "../context/Authentication";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loginFormValue, setLoginFormValue] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
+  const [error, setError] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      setError("");
+      await login(loginFormValue.email, loginFormValue.password);
+    } catch (error) {
+      setError(error.message || "Login failed. Please try again.");
+      console.error("Login failed:", error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-[70%] h-[60%] max-w-[1100px] bg-white flex">
@@ -44,16 +57,10 @@ function LoginPage() {
               }
             />
 
+            {error && <div className="text-error text-sm">{error}</div>}
             <PrimaryButton
               text="Sign In"
-              onClick={async () => {
-                const res = await signIn(
-                  loginFormValue.email,
-                  loginFormValue.password
-                );
-                console.log(res);
-                navigate("/dashboard", { replace: true });
-              }}
+              onClick={handleLogin}
             />
             <div className="flex items-center gap-2">
               <input
