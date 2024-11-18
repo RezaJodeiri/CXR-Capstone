@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { signIn, signUp, getSelfUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
-
+import React from "react";
 export const AuthContext = createContext(null);
 
 export const useAuth = () => {

@@ -1,4 +1,5 @@
 import { PrimaryButton } from "./Buttons";
+import React from "react";
 import { PrimaryTextInputWithLabel } from "./Inputs";
 
 export function RegisterFlowView1({
