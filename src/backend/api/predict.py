@@ -5,7 +5,7 @@ from runtime import PredictionService
 predict_bp = Blueprint("predict", __name__)
 
 
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "dcm"}
 
 
 def allowed_file(filename):
@@ -34,7 +34,8 @@ def upload_image():
             jsonify(
                 {
                     "model_id": PredictionService.get_current_model(),
-                    "prediction": res,
+                    "predictions": res.get("predictions", {}),
+                    "metadata": res.get("metadata", None),
                     "filename": filename,
                     "file_size": file_size,
                     "content_type": file.content_type,
