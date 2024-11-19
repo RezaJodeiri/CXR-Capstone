@@ -10,35 +10,52 @@ This project focuses on using PyTorch and deep learning to analyze chest X-rays 
 Below is the structure of the project and an explanation of the key folders and files.
 ```
 CXR-Capstone/
-├── .github/                        # GitHub Actions CI/CD pipeline
-├── docs/                           # Documentation for capstone reports
-├── src/                            # Source folder for all main code
-│   ├── backend/                    # Backend code
-│   │   ├── api/                    # API routes (Flask endpoints)
-│   │   │   └── predict.py          # Endpoint for predicting disease
-│   │   ├── uploads/                # User uploaded images
-│   │   ├── app.py                  # Main Flask app
-│   │   ├── Dockerfile              # Docker container for backend
-│   │   ├── requirements.txt        # Python dependencies
-│   ├── frontend/                   # Frontend code
-│   │   ├── public/                 # Static assets like images, CSS
-│   │   │   └── index.html          # HTML entry point
-│   │   ├── src/                    # React components or JavaScript files
-│   │   │   ├── services/           # Services (API calls to backend)
-│   │   │   │   └── api.js          # API service for communicating with backend
-│   │   │   ├── App.js              # Main React App component
-│   │   │   └── index.js            # Main React entry point
-│   │   ├── static/                 # Static files
-│   │   ├── Dockerfile              # Docker container for frontend
-│   │   └── package.json            # Frontend dependencies
-│   ├── notebooks/                  # Jupyter notebooks for data model training
-│   └── docker-compose.yml          # Docker Compose to orchestrate containers
-├── test/                           # Unit tests
-│   ├── backend/                    # Backend tests
-│   └── frontend/                   # Frontend tests
-├── .gitignore                      # Gitignore for files to exclude from Git
-├── README.md                       # Main project documentation
-├── LICENSE                         # License for the project
+├── src/
+│   ├── backend/
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   ├── oauth.py          # Authentication endpoints
+│   │   │   └── predict.py        # Prediction endpoints
+│   │   ├── runtime/
+│   │   │   ├── __init__.py
+│   │   │   ├── config.py         # Runtime configuration
+│   │   │   ├── logger.py         # Logging configuration
+│   │   │   └── data/
+│   │   │       ├── __init__.py
+│   │   │       ├── aws_cognito.py     # AWS Cognito provider
+│   │   │       └── prediction_services.py  # AI prediction service
+│   │   ├── decorators/
+│   │   │   └── login_required.py  # Authentication decorator
+│   │   ├── app.py               # Main Flask application
+│   │   ├── Dockerfile          # Backend container config
+│   │   ├── requirements.txt    # Production dependencies
+│   │   └── requirements-dev.txt # Development dependencies
+│   └── frontend/
+│       ├── public/
+│       │   └── index.html      # HTML entry point
+│       ├── src/
+│       │   ├── components/
+│       │   │   ├── Buttons.jsx
+│       │   │   ├── Inputs.jsx
+│       │   │   └── ProtectedRoute.jsx
+│       │   ├── context/
+│       │   │   └── Authentication.js
+│       │   ├── pages/
+│       │   │   ├── LoginPage.jsx
+│       │   │   ├── RegisterPage.jsx
+│       │   │   └── PredictionPage.jsx
+│       │   ├── services/
+│       │   │   └── api.js      # API service layer
+│       │   └── App.jsx         # Main React component
+│       ├── .gitignore
+│       └── package.json       # Frontend dependencies
+├── test/
+│   ├── backend/
+│   │   └── api/
+│   │       └── test_oauth.py  # Authentication tests
+│   ├── conftest.py           # Pytest configuration
+│   └── README.md             # Test documentation
+└── README.md                 # Project documentation
 ```
 
 ## Getting Started
