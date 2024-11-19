@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
-const allowedFileTypes = ["JPG", "PNG", "GIF"];
+const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
 import { predictImage } from "../services/api";
 import { useAuth } from "../context/Authentication";
@@ -29,23 +29,59 @@ function PredictionPage() {
 
     // Map backend data structure to Front-end data structure
     const predictionList = files.map((f, index) => {
-      const diseaseWithPercentage = Object.keys(predictionsRes[index])
-        .map((disease) => {
-          return {
-            disease: disease,
-            percentage: predictionsRes[index][disease],
-          };
-        })
-        .sort((a, b) => b.percentage - a.percentage);
-      return { [f.name]: diseaseWithPercentage };
+        const response = predictionsRes[index];
+        const diseaseWithPercentage = Object.keys(response.predictions || {})
+            .map((disease) => {
+                return {
+                    disease: disease,
+                    percentage: response.predictions[disease],
+                };
+            })
+            .sort((a, b) => b.percentage - a.percentage);
+        
+        return { 
+            [f.name]: {
+                predictions: diseaseWithPercentage,
+                metadata: response.metadata || null
+            }
+        };
     });
 
     const predictionMap = predictionList.reduce((acc, obj) => {
-      return { ...acc, ...obj };
+        return { ...acc, ...obj };
     }, {});
     
     if (files.length > 0) setCurrentImageName(files[0].name);
     setPredictions(predictionMap);
+  };
+
+  const renderFilePreview = (file) => {
+    const fileType = file.name.split('.').pop().toLowerCase();
+    
+    if (fileType === 'dcm') {
+      // For DICOM files, show a placeholder image or icon
+      return (
+        <div className="h-full flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <img 
+              src="/dicom-icon.png" 
+              alt="DICOM file" 
+              className="w-16 h-16 mx-auto"
+            />
+            <p className="text-sm text-gray-600 mt-2">DICOM File</p>
+          </div>
+        </div>
+      );
+    }
+    
+    // For regular images, show the image preview
+    return (
+      <img
+        src={URL.createObjectURL(file)}
+        alt={file.name.split(".").pop()}
+        className="h-full object-cover"
+      />
+    );
   };
 
   return (
@@ -128,11 +164,7 @@ function PredictionPage() {
                           >
                             <FaExternalLinkAlt className="text-gray-200" />
                           </div>
-                          <img
-                            src={URL.createObjectURL(file)}
-                            alt={file.name.split(".").pop()}
-                            className="h-full object-cover"
-                          />
+                          {renderFilePreview(file)}
                         </div>
                         <div className="w-full flex justify-center">
                           <div className="max-w-min flex justify-center items-center gap-1 border-[2px] border-gray-600 px-2 rounded-md">
@@ -202,55 +234,75 @@ function PredictionPage() {
           </div>
           <div id="prediction-bars" className="h-full w-[80%]">
             {predictions[currentImageName] ? (
-              <div className="h-[70%] w-full flex flex-col gap-5">
-                <h1 className="text-xl font-bold">Likelihood of Disease</h1>
-                <div className="h-[85%] py-4 w-full flex flex-col bg-[#f2f2f2] flex-wrap items-center gap-4">
-                  {predictions[currentImageName].map((item, index) => {
+              <div className="h-full w-full flex flex-col">
+                <h1 className="text-xl font-bold mb-3">Likelihood of Disease</h1>
+                <div className="h-[50%] py-2 w-full flex flex-col bg-[#f2f2f2] flex-wrap items-center gap-2">
+                  {predictions[currentImageName].predictions.map((item, index) => {
                     let { disease } = item;
                     const percentage = item.percentage * 100;
                     return (
                       <div key={index} className="h-[5%] w-[40%]">
                         <div className="h-full w-full flex items-center gap-2">
-                          <h1
-                            className={
-                              index == 0
-                                ? "text-xs font-bold text-primary"
-                                : "text-xs font-bold text-secondary"
-                            }
-                          >
+                          <h1 className={index == 0 ? "text-xs font-bold text-primary" : "text-xs font-bold text-secondary"}>
                             {`${percentage.toFixed(2)}%`}
                           </h1>
                           <div className="h-1/2 w-1/2 bg-[#D9D9D9] rounded-md">
                             <div
-                              className={
-                                index == 0
-                                  ? "h-full bg-primary rounded-md"
-                                  : "h-full bg-secondary rounded-md"
-                              }
+                              className={index == 0 ? "h-full bg-primary rounded-md" : "h-full bg-secondary rounded-md"}
                               style={{
                                 width: percentage >= 3 ? `${percentage}%` : 0,
                               }}
                             ></div>
                           </div>
                           {index === 0 ? (
-                            <Link
-                              className="text-xs font-bold w-1/4 hover:underline flex"
-                              to={`https://www.google.com/search?q=${disease}`}
-                              target="_blank"
-                            >
+                            <Link className="text-xs font-bold w-1/4 hover:underline flex gap-1 whitespace-nowrap" to={`https://www.google.com/search?q=${disease}`} target="_blank">
                               {disease}
                               <IoInformationCircleSharp />
                             </Link>
                           ) : (
-                            <h1 className="text-xs text-[#393939] w-1/4">
-                              {disease}
-                            </h1>
+                            <h1 className="text-xs text-[#393939] w-1/4 whitespace-nowrap">{disease}</h1>
                           )}
                         </div>
                       </div>
                     );
                   })}
                 </div>
+                
+                {predictions[currentImageName]?.metadata && currentImageName.toLowerCase().endsWith('.dcm') && (
+                  <div className="mt-1 w-full">
+                    <h1 className="text-lg font-bold mb-1">Patient Information</h1>
+                    <div className="bg-[#f2f2f2] p-1 rounded-md w-[80%]">
+                      <table className="min-w-full text-sm">
+                        <tbody className="divide-y divide-gray-200">
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold w-1/4">Patient Name:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_name.replace(/^b'|'$/g, '')}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Patient ID:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_id}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Sex:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_sex}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Study ID:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.study_id}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">View Position:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.view_position}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Acquisition Date:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.acquisition_date}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <h1 className="text-2xl font-bold">No Prediction Available</h1>
