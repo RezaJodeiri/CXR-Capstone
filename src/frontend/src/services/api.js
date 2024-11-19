@@ -78,7 +78,7 @@ export const predictImage = async (file, token) => {
         Authorization: `Bearer ${token}`
       },
     });
-    return response.data.prediction;
+    return response.data;
   } catch (error) {
     console.error("Error uploading file", error);
     throw error;

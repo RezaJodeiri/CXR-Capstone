@@ -1,14 +1,15 @@
 import logging
-
+import io
+import numpy as np
 import skimage
 import torch
 import torchvision.transforms as transforms
 import torchxrayvision as xrv
+import pydicom
 from flask import Blueprint, Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-
 
 predict_bp = Blueprint("predict", __name__)
 
@@ -41,6 +42,45 @@ logger.setLevel(logging.INFO)
 model = xrv.models.DenseNet(weights="densenet121-res224-all")
 model.eval()
 
+def process_dicom(file_content):
+    """Process DICOM file and extract image and metadata"""
+    try:
+        dcm = pydicom.dcmread(io.BytesIO(file_content))
+        
+        def safe_convert(value):
+            """Safely convert DICOM values to JSON serializable format"""
+            if hasattr(value, 'original_string'):
+                return str(value.original_string)
+            if hasattr(value, 'value'):
+                if isinstance(value.value, list):
+                    return [str(x) for x in value.value]
+                return str(value.value)
+            if isinstance(value, pydicom.multival.MultiValue):
+                return [str(x) for x in value]
+            return str(value)
+        
+        # Extract metadata with safe conversion
+        metadata = {
+            "study_id": safe_convert(getattr(dcm, "StudyID", "Unknown")),
+            "patient_id": safe_convert(getattr(dcm, "PatientID", "Unknown")),
+            "patient_name": safe_convert(getattr(dcm, "PatientName", "Unknown")),
+            "patient_sex": safe_convert(getattr(dcm, "PatientSex", "Unknown")),
+            "acquisition_date": safe_convert(getattr(dcm, "AcquisitionDate", "Unknown")),
+            "view_position": safe_convert(getattr(dcm, "ViewPosition", "Unknown")),
+            "patient_orientation": safe_convert(getattr(dcm, "PatientOrientation", "Unknown")),
+        }
+        
+        # Convert DICOM image to array
+        img = dcm.pixel_array.astype(float)
+        
+        # Normalize pixel values
+        if img.max() != 0:
+            img = (img / img.max() * 255.0).astype(np.uint8)
+        
+        return img, metadata, True
+    except Exception as e:
+        logger.error(f"Error processing DICOM: {str(e)}")
+        return None, None, False
 
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
@@ -50,43 +90,50 @@ def predict():
             return jsonify({"error": "No file uploaded"}), 400
 
         file = request.files["file"]
-        img = skimage.io.imread(file)  # Read the image
-        logger.info("Image successfully loaded")
+        file_content = file.read()
+        
+        # Try to process as DICOM first
+        img, metadata, is_dicom = process_dicom(file_content)
+        
+        # If not DICOM, process as regular image
+        if not is_dicom:
+            file.seek(0)
+            img = skimage.io.imread(file)
+            metadata = None
+            logger.info("Processing as regular image")
+        else:
+            logger.info("Processing as DICOM image")
 
-        img = xrv.datasets.normalize(img, 255)  # Normalize image
-        img = (
-            img.mean(2)[None, ...] if img.ndim == 3 else img[None, ...]
-        )  # Convert to grayscale
+        # Common image processing pipeline
+        img = xrv.datasets.normalize(img, 255)
+        img = img.mean(2)[None, ...] if img.ndim == 3 else img[None, ...]
 
-        transform = transforms.Compose(
-            [
-                xrv.datasets.XRayCenterCrop(),
-                xrv.datasets.XRayResizer(224),  # Resize to 224x224
-            ]
-        )
+        transform = transforms.Compose([
+            xrv.datasets.XRayCenterCrop(),
+            xrv.datasets.XRayResizer(224),
+        ])
 
-        img = transform(img)  # Transform the image
-        img = torch.from_numpy(img)  # Convert to a torch tensor
-        outputs = model(img[None, ...])  # Perform prediction using model
+        img = transform(img)
+        img = torch.from_numpy(img)
+        outputs = model(img[None, ...])
 
-        # Create a dictionary of pathologies and their confidence scores
+        # Create prediction results
         prediction_results = dict(zip(model.pathologies, outputs[0].detach().numpy()))
         prediction_results = {
             key: float(value) for key, value in prediction_results.items()
         }
 
-        # The prediction results are provided predictions for all pathologies
-        logger.info(f"Predictions: {prediction_results}")
+        # Prepare response
+        response = {"predictions": prediction_results}
+        if metadata:
+            response["metadata"] = metadata
 
-        return (
-            jsonify(prediction_results),
-            200,
-        )
+        logger.info(f"Predictions complete: {response}")
+        return jsonify(response), 200
 
     except Exception as e:
         logger.error(f"Error during prediction: {str(e)}")
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
-
 
 app.register_blueprint(predict_bp)
 if __name__ == "__main__":
