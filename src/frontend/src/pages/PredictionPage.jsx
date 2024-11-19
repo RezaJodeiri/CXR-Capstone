@@ -59,22 +59,14 @@ function PredictionPage() {
     const fileType = file.name.split('.').pop().toLowerCase();
     
     if (fileType === 'dcm') {
-      // For DICOM files, show a placeholder image or icon
       return (
-        <div className="h-full flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <img 
-              src="/dicom-icon.png" 
-              alt="DICOM file" 
-              className="w-16 h-16 mx-auto"
-            />
-            <p className="text-sm text-gray-600 mt-2">DICOM File</p>
-          </div>
-        </div>
+        <img 
+          src="/sample.jpg" 
+          alt="X-Ray Preview" 
+          className="h-full object-cover"
+        />
       );
     }
-    
-    // For regular images, show the image preview
     return (
       <img
         src={URL.createObjectURL(file)}
@@ -215,11 +207,19 @@ function PredictionPage() {
                       setCurrentImageName(file.name);
                     }}
                   >
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt={file.name.split(".").pop()}
-                      className="object-cover pointer-events-none"
-                    />
+                    {file.name.toLowerCase().endsWith('.dcm') ? (
+                      <img
+                        src="/sample.jpg"
+                        alt="X-Ray Preview"
+                        className="object-cover pointer-events-none"
+                      />
+                    ) : (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name.split(".").pop()}
+                        className="object-cover pointer-events-none"
+                      />
+                    )}
                     <h3
                       className={
                         currentImageName === file.name
