@@ -8,64 +8,72 @@ import { Link } from "react-router-dom";
 
 import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
-const allowedFileTypes = ["JPG", "PNG", "GIF"];
+const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
-const mockPrediction = {
-  Atelectasis: 0.32797316,
-  Consolidation: 0.42933336,
-  Infiltration: 0.5316924,
-  Pneumothorax: 0.28849724,
-  Edema: 0.024142697,
-  Emphysema: 0.5011832,
-  Fibrosis: 0.51887786,
-  Effusion: 0.27805611,
-  Pneumonia: 0.18569896,
-  Pleural_Thickening: 0.24489835,
-  Cardiomegaly: 0.3645515,
-  Nodule: 0.68982,
-  Mass: 0.6392845,
-  Hernia: 0.00993878,
-  "Lung Lesion": 0.011150705,
-  Fracture: 0.51916164,
-  "Lung Opacity": 0.59073937,
-  "Enlarged Cardiomediastinum": 0.27218717,
-};
+import { predictImage } from "../services/api";
+import { useAuth } from "../context/Authentication";
 
-const getRandomPrediction = () => {
-  if (Math.random() < 0.1) {
-    return null;
-  }
-  const prediction = {};
-  Object.keys(mockPrediction).forEach((key) => {
-    prediction[key] = Math.random();
-  });
-
-  return prediction;
-};
 
 function PredictionPage() {
+  const { getToken } = useAuth();
   const [files, setFiles] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [currentImageName, setCurrentImageName] = useState(null);
 
   const handleSubmission = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const predictions = {};
-    files.forEach((file) => {
-      const randomPrediction = getRandomPrediction();
-      predictions[file.name] = randomPrediction
-        ? Object.keys(randomPrediction)
+    const token = getToken();
+    const promises = files.map((f) => predictImage(f, token));
+
+    // Simultaneously Predict all images in array
+    const predictionsRes = await Promise.all(promises);
+
+    // Map backend data structure to Front-end data structure
+    const predictionList = files.map((f, index) => {
+        const response = predictionsRes[index];
+        const diseaseWithPercentage = Object.keys(response.predictions || {})
             .map((disease) => {
-              return {
-                disease,
-                percentage: randomPrediction[disease],
-              };
+                return {
+                    disease: disease,
+                    percentage: response.predictions[disease],
+                };
             })
-            .sort((a, b) => b.percentage - a.percentage)
-        : null;
+            .sort((a, b) => b.percentage - a.percentage);
+        
+        return { 
+            [f.name]: {
+                predictions: diseaseWithPercentage,
+                metadata: response.metadata || null
+            }
+        };
     });
-    setPredictions(predictions);
-    setCurrentImageName(files[0].name);
+
+    const predictionMap = predictionList.reduce((acc, obj) => {
+        return { ...acc, ...obj };
+    }, {});
+    
+    if (files.length > 0) setCurrentImageName(files[0].name);
+    setPredictions(predictionMap);
+  };
+
+  const renderFilePreview = (file) => {
+    const fileType = file.name.split('.').pop().toLowerCase();
+    
+    if (fileType === 'dcm') {
+      return (
+        <img 
+          src="/sample.jpg" 
+          alt="X-Ray Preview" 
+          className="h-full object-cover"
+        />
+      );
+    }
+    return (
+      <img
+        src={URL.createObjectURL(file)}
+        alt={file.name.split(".").pop()}
+        className="h-full object-cover"
+      />
+    );
   };
 
   return (
@@ -148,11 +156,7 @@ function PredictionPage() {
                           >
                             <FaExternalLinkAlt className="text-gray-200" />
                           </div>
-                          <img
-                            src={URL.createObjectURL(file)}
-                            alt={file.name.split(".").pop()}
-                            className="h-full object-cover"
-                          />
+                          {renderFilePreview(file)}
                         </div>
                         <div className="w-full flex justify-center">
                           <div className="max-w-min flex justify-center items-center gap-1 border-[2px] border-gray-600 px-2 rounded-md">
@@ -199,14 +203,23 @@ function PredictionPage() {
                     }
                     key={index}
                     onClick={() => {
+                      console.log(file.name);
                       setCurrentImageName(file.name);
                     }}
                   >
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt={file.name.split(".").pop()}
-                      className="object-cover pointer-events-none"
-                    />
+                    {file.name.toLowerCase().endsWith('.dcm') ? (
+                      <img
+                        src="/sample.jpg"
+                        alt="X-Ray Preview"
+                        className="object-cover pointer-events-none"
+                      />
+                    ) : (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name.split(".").pop()}
+                        className="object-cover pointer-events-none"
+                      />
+                    )}
                     <h3
                       className={
                         currentImageName === file.name
@@ -221,55 +234,75 @@ function PredictionPage() {
           </div>
           <div id="prediction-bars" className="h-full w-[80%]">
             {predictions[currentImageName] ? (
-              <div className="h-[70%] w-full flex flex-col gap-5">
-                <h1 className="text-xl font-bold">Likelihood of Disease</h1>
-                <div className="h-[85%] py-4 w-full flex flex-col bg-[#f2f2f2] flex-wrap items-center gap-4">
-                  {predictions[currentImageName].map((item, index) => {
+              <div className="h-full w-full flex flex-col">
+                <h1 className="text-xl font-bold mb-3">Likelihood of Disease</h1>
+                <div className="h-[50%] py-2 w-full flex flex-col bg-[#f2f2f2] flex-wrap items-center gap-2">
+                  {predictions[currentImageName].predictions.map((item, index) => {
                     let { disease } = item;
                     const percentage = item.percentage * 100;
                     return (
                       <div key={index} className="h-[5%] w-[40%]">
                         <div className="h-full w-full flex items-center gap-2">
-                          <h1
-                            className={
-                              index == 0
-                                ? "text-xs font-bold text-primary"
-                                : "text-xs font-bold text-secondary"
-                            }
-                          >
+                          <h1 className={index == 0 ? "text-xs font-bold text-primary" : "text-xs font-bold text-secondary"}>
                             {`${percentage.toFixed(2)}%`}
                           </h1>
                           <div className="h-1/2 w-1/2 bg-[#D9D9D9] rounded-md">
                             <div
-                              className={
-                                index == 0
-                                  ? "h-full bg-primary rounded-md"
-                                  : "h-full bg-secondary rounded-md"
-                              }
+                              className={index == 0 ? "h-full bg-primary rounded-md" : "h-full bg-secondary rounded-md"}
                               style={{
                                 width: percentage >= 3 ? `${percentage}%` : 0,
                               }}
                             ></div>
                           </div>
                           {index === 0 ? (
-                            <Link
-                              className="text-xs font-bold w-1/4 hover:underline flex"
-                              to={`https://www.google.com/search?q=${disease}`}
-                              target="_blank"
-                            >
+                            <Link className="text-xs font-bold w-1/4 hover:underline flex gap-1 whitespace-nowrap" to={`https://www.google.com/search?q=${disease}`} target="_blank">
                               {disease}
                               <IoInformationCircleSharp />
                             </Link>
                           ) : (
-                            <h1 className="text-xs text-[#393939] w-1/4">
-                              {disease}
-                            </h1>
+                            <h1 className="text-xs text-[#393939] w-1/4 whitespace-nowrap">{disease}</h1>
                           )}
                         </div>
                       </div>
                     );
                   })}
                 </div>
+                
+                {predictions[currentImageName]?.metadata && currentImageName.toLowerCase().endsWith('.dcm') && (
+                  <div className="mt-1 w-full">
+                    <h1 className="text-lg font-bold mb-1">Patient Information</h1>
+                    <div className="bg-[#f2f2f2] p-1 rounded-md w-[80%]">
+                      <table className="min-w-full text-sm">
+                        <tbody className="divide-y divide-gray-200">
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold w-1/4">Patient Name:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_name.replace(/^b'|'$/g, '')}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Patient ID:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_id}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Sex:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.patient_sex}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Study ID:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.study_id}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">View Position:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.view_position}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 px-4 font-semibold">Acquisition Date:</td>
+                            <td className="py-0.5 px-4">{predictions[currentImageName].metadata.acquisition_date}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <h1 className="text-2xl font-bold">No Prediction Available</h1>
@@ -282,3 +315,35 @@ function PredictionPage() {
 }
 
 export default PredictionPage;
+
+// const handleSubmission = async () => {
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   const predictions = {};
+//   files.forEach((file) => {
+//     const randomPrediction = getRandomPrediction();
+//     predictions[file.name] = randomPrediction
+//       ? Object.keys(randomPrediction)
+//           .map((disease) => {
+//             return {
+//               disease,
+//               percentage: randomPrediction[disease],
+//             };
+//           })
+//           .sort((a, b) => b.percentage - a.percentage)
+//       : null;
+//   });
+//   setPredictions(predictions);
+//   setCurrentImageName(files[0].name);
+// };
+
+// const getRandomPrediction = () => {
+//   if (Math.random() < 0.1) {
+//     return null;
+//   }
+//   const prediction = {};
+//   Object.keys(mockPrediction).forEach((key) => {
+//     prediction[key] = Math.random();
+//   });
+
+//   return prediction;
+// };

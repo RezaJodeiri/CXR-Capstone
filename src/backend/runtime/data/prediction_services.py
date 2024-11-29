@@ -32,4 +32,10 @@ class PredictionService:
         files = {"file": image}
         response = requests.post(f"{self.current_model_url}/predict", files=files)
         logger.info(response)
-        return response.json()
+        if response.status_code == 200:
+            data = response.json()
+            # Return the entire response data structure
+            return data
+        else:
+            logger.error(f"Prediction failed with status code {response.status_code}")
+            return None
