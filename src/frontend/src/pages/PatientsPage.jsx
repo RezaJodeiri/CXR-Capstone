@@ -32,6 +32,20 @@ function PatientsPage() {
     },
   ]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalPages = Math.ceil(patients.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPatients = patients.slice(startIndex, endIndex);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
   const statusColors = {
     'Active': 'bg-green-500',
     'Pending': 'bg-blue-500',
@@ -267,7 +281,7 @@ function PatientsPage() {
                     </td>
                   </tr>
                 )}
-                {patients.map((patient) => (
+                {currentPatients.map((patient) => (
                   <tr key={patient.id} className="border-t">
                     <td className="py-4">{patient.patientId}</td>
                     <td className="py-4">
@@ -306,14 +320,36 @@ function PatientsPage() {
 
             <div className="flex justify-between items-center mt-6">
               <div className="flex gap-2">
-                <button className="px-3 py-1 border rounded">Previous</button>
-                <button className="px-3 py-1 border rounded bg-[#3C7187] text-white">1</button>
-                <button className="px-3 py-1 border rounded">2</button>
-                <button className="px-3 py-1 border rounded">3</button>
-                <button className="px-3 py-1 border rounded">Next</button>
+                <button 
+                  className={`px-3 py-1 border rounded ${currentPage === 1 ? 'text-gray-400' : ''}`}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                {[...Array(totalPages)].map((_, index) => (
+                  <button
+                    key={index + 1}
+                    className={`px-3 py-1 border rounded ${
+                      currentPage === index + 1 ? 'bg-[#3C7187] text-white' : ''
+                    }`}
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+                <button 
+                  className={`px-3 py-1 border rounded ${currentPage === totalPages ? 'text-gray-400' : ''}`}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Page 1 of 34</span>
+                <span className="text-sm text-gray-500">
+                  Page {currentPage} of {totalPages}
+                </span>
               </div>
             </div>
           </div>
