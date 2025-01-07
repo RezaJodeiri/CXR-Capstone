@@ -76,12 +76,10 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for the
+\projname application. Complementary documents include the Module Guide.
 
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone.git}.
 
 \section{Notation}
 
@@ -119,6 +117,29 @@ are sequences of characters. Tuples contain a list of values, potentially of
 different types. In addition, \progname \ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
+
+\subsection{Data Types from Libraries}
+
+The following table summarizes the data types provided by external libraries and
+used by \projname.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.2}
+  \noindent
+  \begin{tabular}{l l p{7.5cm}}
+    \toprule
+    \textbf{Data Type}          & \textbf{Notation}           & \textbf{Description}                                                                                                                                                                                                                                            \\
+    \midrule                                                                                                                                                                                    \\
+    DICOM      & DICOM      & A single media track within a media stream.                                                                                                                                                                                                               \\
+    JSON                  & JSON                  & JavaScript Object Notation, it is a text-based open standard data interchange setup and only provides a data encoding specification.                                                                                                                      \\
+    PNG                  & PNG                  & Portable Network Graphics, a raster-graphics file format that supports lossless data compression                                                                                                                      \\
+    JPEG/JPG                & JPEG/JPG                  & Joint Photographic Experts Group, a commonly used method of lossy compression for digital images, particularly for those images produced by digital photography                                                                                                                      \\
+    ASCII                & ASCII                  & American Standard Code for Information Interchange, a character encoding standard used to represent text in computers and electronic devices.                                                                   \\
+    \bottomrule
+  \end{tabular}
+  \caption{Data types from libraries}
+\end{table}
 
 \section{Module Decomposition}
 
