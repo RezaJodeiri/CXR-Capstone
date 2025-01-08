@@ -33,8 +33,9 @@ urlcolor=cyan          % color of external links
 
 \externaldocument{../../SRS/SRS}
 
-\input{../../Comments}
-\input{../../Common}
+\input{../../packages/Comments.tex}
+\input{../../packages/Common.tex}
+\input{../../packages/Reflection.tex}
 
 \begin{document}
 
@@ -156,78 +157,207 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Web Application Server Module} 
 
 \subsection{Module}
-
-\wss{Short name for the module}
-
+Web Application Server   
 \subsection{Uses}
-
-
+M2: HTTP Server Module \\ 
+M5: Doctor Profile View Module \\ 
+M6: Patient List View Module \\ 
+Other view modules (M7-M10) for displaying data.\\ 
 \subsection{Syntax}
-
 \subsubsection{Exported Constants}
 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2.5cm} p{3.5cm} p{3.5cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+handleRequest & HTTP request & HTTP response & InvalidRequestException \\
 \hline
 \end{tabular}
 \end{center}
-
 \subsection{Semantics}
-
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
-
+\begin{itemize}
+  \item \textbf{sessionData}: Stores current session information.
+  \item \textbf{activeUsers}: Keeps track of currently active users.
+\end{itemize}
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
+\begin{itemize}
+  \item \textbf{serverPort}: The port on which the server listens for incoming connections.
+  \item \textbf{hostAddress}: The server's host address.
+\end{itemize}
 \subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
+\begin{itemize}
+  \item Assumes the HTTP Server Module (M2) is properly configured and running.
+  \item Assumes valid HTTP requests are received.
+\end{itemize}
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+handleRequest(request)
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition:  Processes the incoming HTTP request and routes it to the appropriate view module.
+\item output: Returns the HTTP response based on the request.
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
-
 \subsubsection{Local Functions}
-
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\begin{itemize}
+  \item \textbf{parseRequest(request)}: Parses the incoming HTTP request to extract necessary information.
+  \item \textbf{generateResponse(data)}: Constructs an HTTP response based on the processed data.
+  \item \textbf{authenticateUser(credentials)}: Verifies the user's credentials before processing the request.
+\end{itemize}
+\newpage
 
 \newpage
+
+\section{Web Application Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M3: Disease Prediction Server Module
+    \item M4: Disease Progression Tracking Server Module
+    \item M5: Doctor Profile View Module
+    \item M6: Patient List View Module
+    \item Other view modules (M7-M10) for displaying data.
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{requestQueue}: Holds incoming HTTP requests until they are processed.
+    \item \textbf{responseQueue}: Holds outgoing HTTP responses that need to be sent back to clients.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{startServer} & None & None & \texttt{ServerStartException} \\
+    \texttt{stopServer} & None & None & \texttt{ServerStopException} \\
+    \texttt{processRequest} & \texttt{HTTP request} & \texttt{HTTP response} & \texttt{InvalidRequestException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{SERVER\_PORT}: 8080
+    \item \textbf{MAX\_CONNECTIONS}: 100
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{serverPort}: The port on which the server listens for incoming HTTP connections.
+    \item \textbf{maxConnections}: Maximum number of simultaneous connections the server can handle.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the Web Application Server Module (M1) is properly configured and running.
+    \item Assumes incoming HTTP requests are formatted correctly.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{startServer()}
+\begin{itemize}
+    \item \textbf{Transition}: Starts the HTTP server, initializes necessary resources, and begins listening for incoming requests.
+    \item \textbf{Output}: No output, but may throw a \texttt{ServerStartException} if the server cannot be started.
+\end{itemize}
+
+\subsubsection{stopServer()}
+\begin{itemize}
+    \item \textbf{Transition}: Stops the HTTP server, gracefully shuts down connections.
+    \item \textbf{Output}: No output, but may throw a \texttt{ServerStopException} if the server cannot be stopped.
+\end{itemize}
+
+\subsubsection{processRequest(request)}
+\begin{itemize}
+    \item \textbf{Transition}: Takes an incoming HTTP request and processes it, routing it to the appropriate server module or view module.
+    \item \textbf{Output}: Returns an HTTP response based on the processed request.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{parseRequest()}: Parses the incoming HTTP request to extract necessary information such as headers and parameters.
+    \item \textbf{generateResponse()}: Constructs an HTTP response based on the processed data from the request.
+    \item \textbf{handleError()}: Handles errors that arise during request processing and generates appropriate error responses.
+\end{itemize}
+
+
+\section{Disease Prediction Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M4: Disease Progression Tracking Server Module
+    \item M5: Doctor Profile View Module
+    \item M6: Patient List View Module
+    \item M7: Patient Diseases Progression View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{model}: The pre-trained model from \texttt{torchxrayvision} used for predicting lung diseases from X-ray images.
+    \item \textbf{modelAccuracy}: Tracks the accuracy of the current model after training and validation.
+    \item \textbf{predictionThreshold}: A constant threshold to determine the classification outcome (e.g., disease presence).
+    \item \textbf{patientImageData}: Holds the chest X-ray image data used for prediction.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{loadModel} & None & Loaded model & \texttt{ModelLoadException} \\
+    \texttt{predictDisease} & X-ray image data & Disease prediction & \texttt{InvalidImageException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{PREDICTION\_THRESHOLD}: 0.75 (threshold for classification of disease presence)
+    \item \textbf{MODEL\_PATH}: Path to the pre-trained model (e.g., \texttt{./models/chest\_xray\_model.pth})
+    \item \textbf{MAX\_PREDICTIONS}: 1000 (maximum number of predictions to handle concurrently)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{modelPath}: The path where the \texttt{torchxrayvision} pre-trained model is saved or loaded from.
+    \item \textbf{predictionEndpoint}: The endpoint for making predictions using chest X-ray images.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the pre-trained \texttt{torchxrayvision} model is available and compatible with the data provided.
+    \item Assumes valid X-ray image data is available for predictions.
+    \item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{loadModel()}
+\begin{itemize}
+    \item \textbf{Transition}: Loads the pre-trained disease prediction model from the specified path after image is uploaded using \texttt{torchxrayvision}.
+\end{itemize}
+
+\subsubsection{predictDisease(patientImageData)}
+\begin{itemize}
+    \item \textbf{Transition}: Uses the loaded model to make predictions based on the provided X-ray image data.
+    \item \textbf{Output}: Returns the disease prediction (e.g., probability of a disease being present) or throws an \texttt{InvalidImageException} if the image is invalid.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{loadModel()}: Loads the pre-trained model from disk or cloud storage using \texttt{torchxrayvision}'s functionality.
+    \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
+    \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
+    \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a human-readable format (e.g., disease labels).
+\end{itemize}
 
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
@@ -247,7 +377,7 @@ The following table is taken directly from the Module Guide document for this pr
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.tex}
+
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
