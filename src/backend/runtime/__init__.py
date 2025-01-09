@@ -15,7 +15,7 @@ IdentityProvider = CognitoIdentityProvider(
 )
 
 PredictionService = PS()
-MedicalRecordService = MRS()
-MedicalPrescriptionService = MPS()
+MedicalRecordService = MRS("capstone_medical_record", "us-west-2")
+MedicalPrescriptionService = MPS("capstone_medical_prescription", "us-west-2")
 
 RuntimeLogger = Logger().getLogger()

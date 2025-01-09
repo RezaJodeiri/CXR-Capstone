@@ -21,7 +21,7 @@ class BaseDynamoService:
             )
             if response.get("Items"):
                 return response["Items"][0]  # Return the first item
-            print(f"No items found with {"id"}={uuid}")
+            print(f"No items found with id={uuid}")
             return None
         except ClientError as e:
             print(f"Unable to get item: {e.response['Error']['Message']}")
@@ -34,9 +34,9 @@ class BaseDynamoService:
         :return: The inserted item or False on failure.
         """
         try:
+            item["id"] = str(uuid.uuid4())
             self.table.put_item(Item=item)
-            partition_key_value = str(uuid.uuid4())
-            return self.get_item_by_id("id", partition_key_value)
+            return self.get_item_by_id(item["id"])
         except ClientError as e:
             print(f"Unable to put item: {e.response['Error']['Message']}")
             return False
