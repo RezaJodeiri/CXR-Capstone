@@ -1,19 +1,19 @@
 services:
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - ${FRONTEND_HOST_PORT}:3000
-  #   environment:
-  #     - WATCHPACK_POLLING=${WATCHPACK_POLLING}
-  #     - WATCHPACK_POLLING_INTERVAL=2000
-  #     - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
-  #   command: npm start
-  #   depends_on:
-  #     - backend
-  #   image: neuralanalyzer/frontend:latest
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
+  frontend:
+    build: ./frontend
+    ports:
+      - ${FRONTEND_HOST_PORT}:3000
+    environment:
+      - WATCHPACK_POLLING=${WATCHPACK_POLLING}
+      - WATCHPACK_POLLING_INTERVAL=2000
+      - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
+    command: npm start
+    depends_on:
+      - backend
+    image: neuralanalyzer/frontend:latest
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   backend:
     build: ./backend
@@ -22,12 +22,12 @@ services:
     environment:
       - FRONTEND_URL=${PROTOCOL}://${HOST}:${FRONTEND_HOST_PORT}
       - TORCHXRAYVISION_MODEL_URL=${PROTOCOL}://torchxrayvision_model
-      # - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model
+      - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model
     command: python app.py
     image: neuralanalyzer/backend:latest
-    # depends_on:
-      # - neuralanalyzer_model
-      # - torchxrayvision_model
+    depends_on:
+      - neuralanalyzer_model
+      - torchxrayvision_model
     volumes:
       - ./backend:/app
     env_file:
@@ -35,23 +35,23 @@ services:
     networks:
       - backend_private_network
 
-  # neuralanalyzer_model:
-  #   build: ./ai-services/neuralanalyzer
-  #   command: python app.py
-  #   image: neuralanalyzer:latest
-  #   volumes:
-  #     - ./ai-services/neuralanalyzer:/app
-  #   networks:
-  #     - backend_private_network
+  neuralanalyzer_model:
+    build: ./ai-services/neuralanalyzer
+    command: python app.py
+    image: neuralanalyzer:latest
+    volumes:
+      - ./ai-services/neuralanalyzer:/app
+    networks:
+      - backend_private_network
 
-  # torchxrayvision_model:
-  #   build: ./ai-services/torchxrayvision
-  #   command: python torch_app.py
-  #   image: torchxrayvision:latest
-  #   volumes:
-  #     - ./ai-services/torchxrayvision:/app
-  #   networks:
-  #     - backend_private_network
+  torchxrayvision_model:
+    build: ./ai-services/torchxrayvision
+    command: python torch_app.py
+    image: torchxrayvision:latest
+    volumes:
+      - ./ai-services/torchxrayvision:/app
+    networks:
+      - backend_private_network
 
 networks:
   backend_private_network:
