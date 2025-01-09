@@ -22,11 +22,11 @@ services:
     environment:
       - FRONTEND_URL=${PROTOCOL}://${HOST}:${FRONTEND_HOST_PORT}
       - TORCHXRAYVISION_MODEL_URL=${PROTOCOL}://torchxrayvision_model
-      - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model
+      # - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model
     command: python app.py
     image: neuralanalyzer/backend:latest
     depends_on:
-      - neuralanalyzer_model
+      # - neuralanalyzer_model
       - torchxrayvision_model
     volumes:
       - ./backend:/app
@@ -35,14 +35,14 @@ services:
     networks:
       - backend_private_network
 
-  neuralanalyzer_model:
-    build: ./ai-services/neuralanalyzer
-    command: python app.py
-    image: neuralanalyzer:latest
-    volumes:
-      - ./ai-services/neuralanalyzer:/app
-    networks:
-      - backend_private_network
+  # neuralanalyzer_model:
+  #   build: ./ai-services/neuralanalyzer
+  #   command: python app.py
+  #   image: neuralanalyzer:latest
+  #   volumes:
+  #     - ./ai-services/neuralanalyzer:/app
+  #   networks:
+  #     - backend_private_network
 
   torchxrayvision_model:
     build: ./ai-services/torchxrayvision
