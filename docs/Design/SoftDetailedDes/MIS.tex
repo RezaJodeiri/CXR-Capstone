@@ -435,7 +435,7 @@ handleRequest(request)
 \item \textbf{archiveOldData()}: Moves data older than the retention period to an archive for long-term storage.
 \end{itemize}
 % /********************* M5 *********************/
-\section{Module NAME HERE!!!}
+\section{Doctor Profile View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
@@ -493,16 +493,20 @@ handleRequest(request)
     \item fill this
 \end{itemize}
 % /********************* M6 *********************/
-\section{Module NAME HERE!!!}
+\section{Patient List View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: Patient Medical Record View Module
+    \item M15: Patient Medical Record Update Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+\item \textbf{patientList}: Stores a list of patients assigned to a doctor, including their basic information such as name, age, and medical condition.
+\item \textbf{searchFilters}: Stores the current filters applied to the patient list for sorting and searching purposes.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -511,15 +515,17 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{viewPatientList} & Doctor ID, filters & List of patient details & \texttt{PatientListNotFoundException} \\
     \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{applyFilter} & Filter parameters & Filtered patient list & \texttt{InvalidFilterException} \\
+    \hline
+    \texttt{sortList} & Sorting criteria & Sorted patient list & None \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{DEFAULT\_SORT\_ORDER}: "alphabetical" (default order in which patients are listed)
 \end{itemize}
 
 \subsection{Environment Variables}
@@ -725,7 +731,7 @@ handleRequest(request)
     \item fill this
 \end{itemize}
 % /********************* M10 *********************/
-\section{Module NAME HERE!!!}
+\section{Patient Medical Record View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
