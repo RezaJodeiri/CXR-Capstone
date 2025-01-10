@@ -92,54 +92,30 @@ This section records information for easy reference.
 
 \section{Introduction}
 
-Decomposing a system into modules is a commonly accepted approach to developing
-software.  A module is a work assignment for a programmer or programming
-team~\citep{ParnasEtAl1984}.  We advocate a decomposition
-based on the principle of information hiding~\citep{Parnas1972a}.  This
-principle supports design for change, because the ``secrets'' that each module
-hides represent likely future changes.  Design for change is valuable in SC,
-where modifications are frequent, especially during initial development as the
-solution space is explored.  
+This Module Guide Document serves as a design blueprint for CXR - a web-based chest X-ray analysis application developed to support healthcare professionals in diagnosing and monitoring respiratory and cardiac conditions. It provides a modular overview of the project, enabling the development team to build a platform that prioritizes accurate diagnostics, efficient performance, and seamless integration into existing medical workflows.
 
-Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
-\begin{itemize}
-\item System details that are likely to change independently should be the
-  secrets of separate modules.
-\item Each data structure is implemented in only one module.
-\item Any other program that requires information stored in a module's data
-  structures must obtain it by calling access programs belonging to that module.
-\end{itemize}
+\subsection{Overview}
+This Module Guide Document serves as a design blueprint for CXR - a web-based chest X-ray analysis application developed to support healthcare professionals in diagnosing and monitoring respiratory and cardiac conditions. It provides a modular overview of the project, enabling the development team to build a platform that prioritizes accurate diagnostics, efficient performance, and seamless integration into existing medical workflows.
 
-After completing the first stage of the design, the Software Requirements
-Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
-specifies the modular structure of the system and is intended to allow both
-designers and maintainers to easily identify the parts of the software.  The
-potential readers of this document are as follows:
+\rt{Relevant documentation include:}
+\begin{description}
+\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{\rt{SRS}}]
+ \rt{The SRS document is a related document as most of the requirements specified
+  in this document come from the SRS document.}
+\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{\rt{Hazard Analysis}}]
+  \rt{The Hazard Analysis document is a related document as some of the requirements
+  come from the Hazard Analysis document.}
+\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{\rt{VnVPlan}}]
+  \rt{The VnVPlan is essential as it outlines the approach for ensuring that the modules meet their specified requirements and work as intended.}
+\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{\rt{Module Interface Specification}}]
+  \rt{The Module Interface Specification is pivotal for detailing the interactions between various system components, ensuring compatibility and defining the communication protocols necessary for module integration.}
+\end{description}
 
-\begin{itemize}
-\item New project members: This document can be a guide for a new project member
-  to easily understand the overall structure and quickly find the
-  relevant modules they are searching for.
-\item Maintainers: The hierarchical structure of the module guide improves the
-  maintainers' understanding when they need to make changes to the system. It is
-  important for a maintainer to update the relevant sections of the document
-  after changes have been made.
-\item Designers: Once the module guide has been written, it can be used to
-  check for consistency, feasibility, and flexibility. Designers can verify the
-  system in various ways, such as consistency among modules, feasibility of the
-  decomposition, and flexibility of the design.
-\end{itemize}
+\subsection{Purpose}
+The aim of this Module Guide Document is to detail the architecture of modules, based on selected design principles and patterns, to clarify the project’s functionalities and the specific roles of each module.
 
-The rest of the document is organized as follows. Section
-\ref{SecChange} lists the anticipated and unlikely changes of the software
-requirements. Section \ref{SecMH} summarizes the module decomposition that
-was constructed according to the likely changes. Section \ref{SecConnection}
-specifies the connections between the software requirements and the
-modules. Section \ref{SecMD} gives a detailed description of the
-modules. Section \ref{SecTM} includes two traceability matrices. One checks
-the completeness of the design against the requirements provided in the SRS. The
-other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+\subsection{Design Principles}
+The Module Guide will emphasize modularity, scalability, and separation of concerns for efficient, maintainable design. It promotes reusability, interoperability, and security while ensuring simplicity, robustness, and testability. Consistent standards and traceability will streamline development and maintenance.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
