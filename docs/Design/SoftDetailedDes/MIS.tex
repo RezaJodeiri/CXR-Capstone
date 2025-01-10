@@ -439,12 +439,15 @@ handleRequest(request)
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+    \item \textbf{doctorProfile}: Stores the profile information of the currently logged-in doctor, including name, specialty, contact details, and credentials.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -453,44 +456,41 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
-    \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{viewDoctorProfile} & Doctor ID & Doctor profile details & \texttt{ProfileNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{PROFILE\_UPDATE\_INTERVAL}: 24 hours (time interval for automatic profile updates)
+\item \textbf{DEFAULT\_PROFILE\_PICTURE}: "default\_doctor.png" (default profile picture for doctors without a custom one)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{profileDataPath}: Path to the data source containing doctor profile information.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+\item Assumes that the User Authentication Module (M11) ensures only authorized doctors can view their profiles.
+\item Assumes the profile data is accurately stored and updated in the Data Persistence Module (M15).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{viewDoctorProfile(doctorID)}
 \begin{itemize}
-    \item fill this
-\end{itemize}
-
-\subsubsection{}
-
-\begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves the profile information of the specified doctor.
+    \item \textbf{Output}: Returns the doctor profile details or throws a \texttt{ProfileNotFoundException} if the profile cannot be found.
 \end{itemize}
 
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{fetchProfileData(doctorID)}: Retrieves profile data from the data source.
+\item \textbf{updateProfilePicture(doctorID, picturePath)}: Updates the profile picture of the doctor.
+\item \textbf{logProfileAccess(doctorID)}: Logs each time a doctor accesses their profile for auditing purposes.
 \end{itemize}
 % /********************* M6 *********************/
 \section{Patient List View Module}
@@ -525,36 +525,49 @@ handleRequest(request)
 
 \subsubsection{Exported Constants}
 \begin{itemize}
+\item \textbf{MAX\_PATIENTS\_PER\_PAGE}: 20 (maximum number of patients displayed per page in the list)
 \item \textbf{DEFAULT\_SORT\_ORDER}: "alphabetical" (default order in which patients are listed)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{patientDataPath}: Path to the data source containing patient records.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+\item Assumes that the User Authentication Module (M11) is responsible for verifying that the user is a doctor with access to the list.
+\item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M15).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
+\subsubsection{viewPatientList(doctorID, filters)}
 
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves a list of patients associated with the given doctor, applying the specified filters.
+    \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
 \end{itemize}
 
-\subsubsection{}
+\subsubsection{applyFilter(filters)}
 
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Applies the given filters to the current patient list.
+    \item \textbf{Output}: Returns the filtered patient list or throws an \texttt{InvalidFilterException} if the filters are invalid.
 \end{itemize}
 
+\subsubsection{sortList(criteria)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Sorts the current patient list based on the provided criteria.
+    \item \textbf{Output}: Returns the sorted patient list.
+\end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{filterPatients(filters)}: Filters the patient list according to the specified parameters.
+\item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
+\item \textbf{logListAccess(doctorID)}: Logs each time a doctor accesses the patient list for auditing purposes.
 \end{itemize}
 % /********************* M7 *********************/
 \section{Module NAME HERE!!!}
