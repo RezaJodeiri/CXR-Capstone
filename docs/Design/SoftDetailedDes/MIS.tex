@@ -165,10 +165,9 @@ Web Application Server
 M2: HTTP Server Module \\ 
 M5: Doctor Profile View Module \\ 
 M6: Patient List View Module \\ 
-Other view modules (M7-M10) for displaying data.\\ 
 \subsection{Syntax}
 \subsubsection{Exported Constants}
-
+NA
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -180,6 +179,7 @@ handleRequest & HTTP request & HTTP response & InvalidRequestException \\
 \hline
 \end{tabular}
 \end{center}
+% /********************* M1 *********************/
 \subsection{Semantics}
 \subsubsection{State Variables}
 \begin{itemize}
@@ -212,8 +212,8 @@ handleRequest(request)
 \newpage
 
 \newpage
-
-\section{Web Application Server Module}
+% /********************* M2 *********************/
+\section{HTTP Server Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
@@ -287,7 +287,7 @@ handleRequest(request)
     \item \textbf{handleError()}: Handles errors that arise during request processing and generates appropriate error responses.
 \end{itemize}
 
-
+% /********************* M3 *********************/
 \section{Disease Prediction Server Module}
 
 \subsection{Other Modules the Current Module Uses}
@@ -357,6 +357,719 @@ handleRequest(request)
     \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
     \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
     \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a human-readable format (e.g., disease labels).
+\end{itemize}
+
+% /********************* M4 *********************/
+\section{Disease Progression Tracking Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M3: Disease Prediction Server Module
+\item M5: Doctor Profile View Module
+\item M6: Patient List View Module
+\item M7: Patient Overview Module
+\item M8: Patient Diseases Progression View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{progressionData}: Stores historical data of disease progression for each patient.
+    \item \textbf{timeStamps}: Records the dates and times when progression data is captured.
+    \item \textbf{patientHistory}: Maintains a detailed history of each patient's disease states over time.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{trackProgression} & Patient ID, data & Confirmation of tracking & \texttt{DataNotFoundException} \\
+    \hline
+    \texttt{getProgressionHistory} & Patient ID & Progression history & \texttt{DataNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{DATA\_RETENTION\_PERIOD}: 5 years (duration for storing disease progression data)
+\item \textbf{TRACKING\_INTERVAL}: 30 days (standard interval for recording progression data)
+\item \textbf{MAX\_HISTORY\_ENTRIES}: 10000 (maximum number of progression entries per patient)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{dataStoragePath}: The path where progression tracking data is stored.
+\item \textbf{updateInterval}: The time interval for automatically updating progression data.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes valid and accurate disease prediction data is available from M3.
+\item Assumes patients' data is regularly updated.
+\item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Stores new disease progression data for the given patient.
+    \item \textbf{Output}: Returns confirmation of data storage or throws a \texttt{DataNotFoundException} if the patient data is not found.
+\end{itemize}
+
+\subsubsection{getProgressionHistory(patientID)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves historical progression data for the specified patient.
+    \item \textbf{Output}: Returns the progression history or throws a \texttt{DataNotFoundException} if no history is found.
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{updateProgressionData()}: Updates the disease progression data at regular intervals based on new predictions or patient information.
+\item \textbf{analyzeProgressionTrends()}: Analyzes progression data to identify trends or anomalies in disease progression.
+\item \textbf{archiveOldData()}: Moves data older than the retention period to an archive for long-term storage.
+\end{itemize}
+% /********************* M5 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M6 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M7 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M8 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M9 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M10 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M11 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M12 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M13 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M14 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+% /********************* M15 *********************/
+\section{Module NAME HERE!!!}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item fill this 
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{Title}: file this 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item fill this
 \end{itemize}
 
 \bibliographystyle {plainnat}
