@@ -126,37 +126,40 @@ unlikely changes are listed in Section \ref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
 
-Anticipated changes are the source of the information that is to be hidden
-inside the modules. Ideally, changing one of the anticipated changes will only
-require changing the one module that hides the associated decision. The approach
-adapted here is called design for
-change.
+Anticipated changes are adjustments expected during the project lifecycle and are designed to minimize the impact on the overall system. These changes are encapsulated within specific modules to ensure that the modifications affect only the corresponding module. This strategy is referred to as "design for change."
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
-\end{description}
+\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware configurations on which the AI model runs may evolve as technology advances, including GPU updates for faster computations or better memory handling.
 
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format or structure of input chest X-rays might vary, such as accommodating different resolutions or adding metadata for enhanced analysis.
+
+\item[\refstepcounter{acnum} \actheacnum \label{acCompliance}:] Changes in healthcare regulations could require modifications to the model’s outputs or data handling to ensure compliance with privacy and security standards.
+
+\item[\refstepcounter{acnum} \actheacnum \label{acDisease}:] Expanding or refining the list of detectable diseases as new medical research or datasets become available.
+
+\item[\refstepcounter{acnum} \actheacnum \label{acUI}:] Adjustments to the front-end interface to make it more user-friendly for medical professionals, incorporating feedback from usability studies.
+
+\item[\refstepcounter{acnum} \actheacnum \label{acErrorHandling}:] Introducing or refining mechanisms to manage edge cases, such as incomplete or corrupted input data.
+
+\item[\refstepcounter{acnum} \actheacnum \label{acPreprocessing}:] Enhancements to image preprocessing, such as noise reduction, normalization, or resizing techniques, to improve the quality of input data.
+
+\end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
-decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
-will potentially need to be modified. Hence, it is not intended that these
-decisions will be changed.
+Unlikely changes are those that are not expected to occur during the project lifecycle. These changes typically involve fundamental shifts in the system's scope, technology, or purpose and would require significant effort to implement.
+
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucFrameworkMigration}:] Switching from PyTorch to an entirely different deep learning framework, such as TensorFlow or JAX, is unlikely due to the associated complexity and cost.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPurpose}:] A change in the primary use case, such as shifting from diagnostic support to research-oriented predictions, is considered unlikely.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucObjective}:] Shifting the AI model's purpose from disease prediction to a completely different application, such as general image classification.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucNonAI}:] Eliminating the AI model and replacing it with traditional statistical methods or rule-based systems.
+
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucScopeExpansion}:] Expanding the system to predict non-chest-related diseases or conditions beyond its initial design focus or the project's current scope.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
