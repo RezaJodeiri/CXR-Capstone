@@ -447,7 +447,7 @@ handleRequest(request)
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{doctorProfile}: Stores the profile information of the currently logged-in doctor, including name, specialty, contact details, and credentials.
+    \item \textbf{doctorProfile}: Stores the user information of the currently logged-in doctor, including name, specialty, contact details, and credentials.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -456,7 +456,9 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewDoctorProfile} & Doctor ID & Doctor profile details & \texttt{ProfileNotFoundException} \\
+    \texttt{getDoctorProfile} & userID & user Profile & \texttt{ProfileNotFoundException} \\
+    \hline
+    \texttt{getDoctorProfile} & userID & user Profile & \texttt{NotDoctorException } \\
     \hline
 \end{tabular}
 
@@ -464,6 +466,7 @@ handleRequest(request)
 \begin{itemize}
 \item \textbf{PROFILE\_UPDATE\_INTERVAL}: 24 hours (time interval for automatic profile updates)
 \item \textbf{DEFAULT\_PROFILE\_PICTURE}: "default\_doctor.png" (default profile picture for doctors without a custom one)
+\item \textbf{DEFAULT\_SPECIALTY}: "Radiologist" (default specialty for doctors without a specified specialty)
 \end{itemize}
 
 \subsection{Environment Variables}
