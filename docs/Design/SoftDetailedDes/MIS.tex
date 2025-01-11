@@ -156,18 +156,16 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 ~\newpage
-
+% /********************* M1 *********************/
 \section{MIS of Web Application Server Module} 
 
 \subsection{Module}
 Web Application Server   
 \subsection{Uses}
-M2: HTTP Server Module \\ 
-M5: Doctor Profile View Module \\ 
-M6: Patient List View Module \\ 
+N/A
 \subsection{Syntax}
 \subsubsection{Exported Constants}
-NA
+N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -179,7 +177,6 @@ handleRequest & HTTP request & HTTP response & InvalidRequestException \\
 \hline
 \end{tabular}
 \end{center}
-% /********************* M1 *********************/
 \subsection{Semantics}
 \subsubsection{State Variables}
 \begin{itemize}
@@ -217,12 +214,7 @@ handleRequest(request)
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item M1: Web Application Server Module
-    \item M3: Disease Prediction Server Module
-    \item M4: Disease Progression Tracking Server Module
-    \item M5: Doctor Profile View Module
-    \item M6: Patient List View Module
-    \item Other view modules (M7-M10) for displaying data.
+\item N/A
 \end{itemize}
 
 \subsection{State Variables}
@@ -573,16 +565,19 @@ handleRequest(request)
 \item \textbf{logListAccess(doctorID)}: Logs each time a doctor accesses the patient list for auditing purposes.
 \end{itemize}
 % /********************* M7 *********************/
-\section{Module NAME HERE!!!}
+\section{Patient Overview Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+\item \textbf{patientOverview}: Stores the summary information of a selected patient, including personal details, recent medical history, and current treatment plans.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -591,51 +586,50 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
-    \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{getPatient} & Patient ID & Patient overview details & \texttt{OverviewNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{OVERVIEW\_REFRESH\_INTERVAL}: 15 minutes (interval for refreshing the patient overview data)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{overviewDataPath}: Path to the data source containing patient overview information.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the patient overview.
+\item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M15).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{viewPatientOverview(patientID)}
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves the overview information of the specified patient.
+    \item \textbf{Output}: Returns the patient overview details or throws an \texttt{OverviewNotFoundException} if the overview cannot be found.
 \end{itemize}
-
-\subsubsection{}
-
-\begin{itemize}
-    \item fill this
-\end{itemize}
-
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{fetchOverviewData(patientID)}: Retrieves overview data from the data source.
+\item \textbf{generateOverviewSummary(patientID)}: Creates a summary of the patient's current status.
+\item \textbf{logOverviewAccess(patientID)}: Logs each time a patient overview is accessed for auditing purposes.
 \end{itemize}
 % /********************* M8 *********************/
-\section{Module NAME HERE!!!}
+\section{Patient Diseases Progression View}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M12: Disease Progression Tracking Module
+\item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
@@ -649,56 +643,55 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
-    \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{viewProgression} & Patient ID & Progression data & \texttt{ProgressionNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{PROGRESSION\_UPDATE\_INTERVAL}: 12 hours (time interval for updating disease progression data)
+\item \textbf{DEFAULT\_CHART\_TEMPLATE}: "default\_progression\_chart.html" (default template for displaying disease progression charts)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{progressionDataPath}: Path to the data source containing disease progression information.
+\item \textbf{chartRenderingService}: URL or endpoint of the service used for rendering progression charts.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the disease progression.
+    \item Assumes the data is regularly updated and maintained in the Data Persistence Module (M15).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{viewDiseaseProgression(patientID)}
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves the disease progression details for the specified patient.
+    \item \textbf{Output}: Returns the progression details or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
 \end{itemize}
-
-\subsubsection{}
-
-\begin{itemize}
-    \item fill this
-\end{itemize}
-
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{fetchProgressionData(patientID)}: Retrieves disease progression data from the data source.
+\item \textbf{generateProgressionChart(patientID)}: Generates a visual chart of the disease progression.
+\item \textbf{logProgressionAccess(patientID)}: Logs access to a patient's disease progression data for auditing purposes.
 \end{itemize}
 % /********************* M9 *********************/
-\section{Module NAME HERE!!!}
+\section{Patient Medical Records List View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+\item \textbf{medicalRecordsList}: Contains a list of all medical records associated with a specific patient, including dates, record types, and summaries.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -707,56 +700,56 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
-    \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{viewMedicalRecordsList} & Patient ID & List of medical records & \texttt{RecordsNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{RECORDS\_REFRESH\_INTERVAL}: 10 minutes (interval for refreshing the list of medical records)
+\item \textbf{DEFAULT\_LIST\_TEMPLATE}: "default\_records\_list\_template.html" (default template for displaying the list of medical records)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{recordsDataPath}: Path to the data source containing the patient's medical records.
+\item \textbf{recordSummaryService}: URL or endpoint of the service used for summarizing medical records.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the medical records.
+\item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M15).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{viewMedicalRecordsList(patientID)}
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves the list of medical records for the specified patient.
+    \item \textbf{Output}: Returns the list of medical records or throws a \texttt{RecordsNotFoundException} if no records are found.
 \end{itemize}
-
-\subsubsection{}
-
-\begin{itemize}
-    \item fill this
-\end{itemize}
-
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{fetchMedicalRecords(patientID)}: Retrieves the list of medical records from the data source.
+\item \textbf{generateRecordsSummary(patientID)}: Creates summaries for each record in the list.
+\item \textbf{logRecordsAccess(patientID)}: Logs access to a patient's medical records list for auditing purposes.
 \end{itemize}
 % /********************* M10 *********************/
 \section{Patient Medical Record View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item fill this 
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M13: Disease Prediction Module 
+\item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+\item \textbf{medicalRecordDetails}: Stores detailed information about a specific medical record, including the date, diagnosis, treatment, and doctor notes.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -765,44 +758,41 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
-    \hline
-    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \texttt{viewMedicalRecord} & Record ID & Medical record details & \texttt{RecordNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{Title}: file this 
+\item \textbf{DEFAULT\_RECORD\_TEMPLATE}: "default\_record\_template.html" (default template for displaying a medical record)
+\item \textbf{MAX\_RECORD\_DISPLAY\_LENGTH}: 5000 characters (maximum length for displaying record content)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item fill this
+\item \textbf{recordDataPath}: Path to the data source containing the specific medical record.
+\item \textbf{recordDetailService}: URL or endpoint of the service used for fetching detailed medical record data.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item fill this
+    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the detailed medical record.
+    \item Assumes the data for medical records is accurately maintained and readily accessible through the Data Persistence Module (M15).
 \end{itemize}
+
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{viewMedicalRecord(recordID)}
 \begin{itemize}
-    \item fill this
+    \item \textbf{Transition}: Retrieves the details of the specific medical record identified by \texttt{recordID}.
+    \item \textbf{Output}: Returns the medical record details or throws a \texttt{RecordNotFoundException} if the record cannot be found.
 \end{itemize}
-
-\subsubsection{}
-
-\begin{itemize}
-    \item fill this
-\end{itemize}
-
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item fill this
+\item \textbf{fetchMedicalRecord(recordID)}: Retrieves the details of the specified medical record from the data source.
+\item \textbf{formatRecordDetails(recordID)}: Formats the medical record details for display.
+\item \textbf{logRecordAccess(recordID)}: Logs access to the specific medical record for auditing purposes.
 \end{itemize}
 % /********************* M11 *********************/
 \section{Module NAME HERE!!!}
