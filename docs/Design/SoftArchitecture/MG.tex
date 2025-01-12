@@ -30,6 +30,7 @@
 \newcounter{mnum}
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
+\newcommand{\rt}[1]{\textbf{#1}}
 
 \begin{document}
 
@@ -92,30 +93,63 @@ This section records information for easy reference.
 
 \section{Introduction}
 
-This Module Guide Document serves as a design blueprint for CXR - a web-based chest X-ray analysis application developed to support healthcare professionals in diagnosing and monitoring respiratory and cardiac conditions. It provides a modular overview of the project, enabling the development team to build a platform that prioritizes accurate diagnostics, efficient performance, and seamless integration into existing medical workflows.
+Decomposing a system into modules is a commonly accepted approachh to developing
+software.  A module is a work assignment for a programmer or programming
+team~\citep{ParnasEtAl1984}.  We advocate a decomposition
+based on the principle of information hiding~\citep{Parnas1972a}.  This
+principle supports design for change, because the ``secrets'' that each module
+hides represent likely future changes.  Design for change is valuable in SC,
+where modifications are frequent, especially during initial development as the
+solution space is explored.  
 
-\subsection{Overview}
-This Module Guide Document serves as a design blueprint for CXR - a web-based chest X-ray analysis application developed to support healthcare professionals in diagnosing and monitoring respiratory and cardiac conditions. It provides a modular overview of the project, enabling the development team to build a platform that prioritizes accurate diagnostics, efficient performance, and seamless integration into existing medical workflows.
+Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
+\begin{itemize}
+\item System details that are likely to change independently should be the
+  secrets of separate modules.
+\item Each data structure is implemented in only one module.
+\item Any other program that requires information stored in a module's data
+  structures must obtain it by calling access programs belonging to that module.
+\end{itemize}
 
-\rt{Relevant documentation include:}
-\begin{description}
-\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{\rt{SRS}}]
- \rt{The SRS document is a related document as most of the requirements specified
-  in this document come from the SRS document.}
-\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{\rt{Hazard Analysis}}]
-  \rt{The Hazard Analysis document is a related document as some of the requirements
-  come from the Hazard Analysis document.}
-\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{\rt{VnVPlan}}]
-  \rt{The VnVPlan is essential as it outlines the approach for ensuring that the modules meet their specified requirements and work as intended.}
-\item[\href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{\rt{Module Interface Specification}}]
-  \rt{The Module Interface Specification is pivotal for detailing the interactions between various system components, ensuring compatibility and defining the communication protocols necessary for module integration.}
-\end{description}
+After completing the first stage of the design, the Software Requirements
+Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
+specifies the modular structure of the system and is intended to allow both
+designers and maintainers to easily identify the parts of the software.
+potential readers of this document are as follows:
 
-\subsection{Purpose}
-The aim of this Module Guide Document is to detail the architecture of modules, based on selected design principles and patterns, to clarify the project’s functionalities and the specific roles of each module.
+\begin{itemize}
+\item New project members: This document can be a guide for a new project member
+  to easily understand the overall structure and quickly find the
+  relevant modules they are searching for.
+\item Maintainers: The hierarchical structure of the module guide improves the
+  maintainers' understanding when they need to make changes to the system. It is
+  important for a maintainer to update the relevant sections of the document
+  after changes have been made.
+\item Designers: Once the module guide has been written, it can be used to
+  check for consistency, feasibility, and flexibility. Designers can verify the
+  system in various ways, such as consistency among modules, feasibility of the
+  decomposition, and flexibility of the design.
+\end{itemize}
 
-\subsection{Design Principles}
-The Module Guide will emphasize modularity, scalability, and separation of concerns for efficient, maintainable design. It promotes reusability, interoperability, and security while ensuring simplicity, robustness, and testability. Consistent standards and traceability will streamline development and maintenance.
+\noindent The rest of the document is organized as follows. Section
+\ref{SecChange} lists the anticipated and unlikely changes of the software
+requirements. Section \ref{SecMH} summarizes the module decomposition that
+was constructed according to the likely changes. Section \ref{SecConnection}
+specifies the connections between the software requirements and the
+modules. Section \ref{SecMD} gives a detailed description of the
+modules. Section \ref{SecTM} includes two traceability matrices. One checks
+the completeness of the design against the requirements provided in the SRS. The
+other shows the relation between anticipated changes and the modules. Section
+\ref{SecUse} describes the use relation between modules.
+
+% \subsection{Overview}
+% This Module Guide Document serves as a design blueprint for CXR - a web-based chest X-ray analysis application developed to support healthcare professionals in diagnosing and monitoring respiratory and cardiac conditions. It provides a modular overview of the project, enabling the development team to build a platform that prioritizes accurate diagnostics, efficient performance, and seamless integration into existing medical workflows.
+
+% \subsection{Purpose}
+% The aim of this Module Guide Document is to detail the architecture of modules, based on selected design principles and patterns, to clarify the project’s functionalities and the specific roles of each module.
+
+% \subsection{Design Principles}
+% The Module Guide will emphasize modularity, scalability, and separation of concerns for efficient, maintainable design. It promotes reusability, interoperability, and security while ensuring simplicity, robustness, and testability. Consistent standards and traceability will streamline development and maintenance.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -170,21 +204,19 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Web Application Server Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] HTTP Server Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Disease Prediction Server Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Disease Progression Tracking Server Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Doctor Profile View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Patients List View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Patient Overview View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Patient Disease Progression View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Patient Medical Records List View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Patient Medical Record View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] User Authentication Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Disease Progression Tracking Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Disease Prediction Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Report Generation Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Data Persistent Module
+\item [\refstepcounter{mnum} \mthemnum \label{mWebApp}:] Web Application Server 
+\item [\refstepcounter{mnum} \mthemnum \label{mHTTP}:] HTTP Server 
+\item [\refstepcounter{mnum} \mthemnum \label{mDiseasePredict}:] Disease Prediction Server 
+\item [\refstepcounter{mnum} \mthemnum \label{mDiseaseProgress}:] Disease Progression Server
+\item [\refstepcounter{mnum} \mthemnum \label{mAuth}:] User Authentication 
+\item [\refstepcounter{mnum} \mthemnum \label{mPatientList}:] Patients List View 
+\item [\refstepcounter{mnum} \mthemnum \label{mPatientOverview}:] Patient Overview View 
+\item [\refstepcounter{mnum} \mthemnum \label{mProgressView}:] Disease Progression View 
+\item [\refstepcounter{mnum} \mthemnum \label{mRecordsList}:] Medical Records List View
+\item [\refstepcounter{mnum} \mthemnum \label{mReportView}:] X-Ray Report View
+\item [\refstepcounter{mnum} \mthemnum \label{mProgressModel}:] Disease Progression Model 
+\item [\refstepcounter{mnum} \mthemnum \label{mPredictModel}:] Disease Prediction Model
+\item [\refstepcounter{mnum} \mthemnum \label{mDataStore}:] Data Persistent 
 \end{description}
 
 
@@ -212,8 +244,6 @@ actually be implemented.
 \multirow{3}{0.3\textwidth}{Software Decision Module} & M11\\
 & M12\\
 & M13\\
-& M14\\
-& M15\\
 \bottomrule
 
 \end{tabular}
@@ -250,7 +280,7 @@ Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
 
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual
@@ -259,6 +289,30 @@ to be implemented.
   system. This module provides the interface between the hardware and the
   software. So, the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
+\end{description}
+\subsubsection{Web Application Server Module (\mref{mWebApp})}
+\begin{description}
+\item[Secrets:] Infrastructure configuration, load balancing strategies, and server deployment patterns for handling concurrent medical requests.
+\item[Services:] Manages web application hosting, handles HTTP requests routing, provides scalable infrastructure for serving the X-Ray Analysis interface, and ensures high availability.
+\item[Implemented By:] Flask
+\end{description}
+\subsubsection{HTTP Server Module (\mref{mHTTP})}
+\begin{description}
+\item[Secrets:] Protocol implementation details, request/response handling mechanisms, and network-level security configurations.
+\item[Services:] Handles HTTP/HTTPS protocol implementation, manages network connections, processes incoming requests, and implements security measures for medical data transmission.
+\item[Implemented By:] Flask
+\end{description}
+\subsubsection{Disease Prediction Server Module (\mref{mDiseasePredict})}
+\begin{description}
+\item[Secrets:] GPU memory allocation strategies, CUDA resource management patterns, and hardware-level optimizations for ML model inference.
+\item[Services:] Manages GPU resources for disease prediction models, handles batch processing of X-ray images, coordinates model inference requests, and optimizes hardware utilization while acting as a controller for prediction workflows.
+\item[Implemented By:] Python and CUDA
+\end{description}
+\subsubsection{Disease Progression Server Module (\mref{mDiseaseProgress})}
+\begin{description}
+\item[Secrets:] Multi-GPU resource allocation, parallel processing patterns, and memory management strategies for comparing temporal X-ray data.
+\item[Services:] Coordinates progression analysis workflows, manages GPU resources for temporal analysis, handles parallel processing of multiple X-rays, and serves as a controller for progression detection pipelines.
+\item[Implemented By:] Python and CUDA
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
@@ -273,58 +327,52 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Doctor Profile View Module (\mref{mInput})}
+\subsubsection{User Authentication Module (\mref{mAuth})}
 \begin{description}
-\item[Secrets:] Visualization of Doctor Profile View. 
-\item[Services:] Shows doctor information like name, experience level, areas of expertise etc.
-\item[Implemented By:] React & JavaScript
+\item[Secrets:] AWS Cognito integration patterns and frontend authentication workflows that handle secure medical staff access.
+\item[Services:] Provides a secure gateway for medical personnel to access the system through login forms, handles session persistence, and manages role-based access control.
+\item[Implemented By:] React, JavaScript, and AWS Cognito
 \item[Type of Module:] Abstract Object
-  [Information to include for leaf modules in the decomposition by secrets tree.]
 \end{description}
 
-\subsubsection{Patient List View Module (\mref{mInput})}
+\subsubsection{Patient List View Module (\mref{mPatientList})}
 \begin{description}
-  \item[Secrets:] Visualization of Patient List View. 
-  \item[Services:] Shows patient information like date of admission, assigned room, area of concern and who is in charge of them etc. 
-  \item[Implemented By:] React & JavaScript
-  \item[Type of Module:] Abstract Object
-    [Information to include for leaf modules in the decomposition by secrets tree.]
-  \end{description}
-
-\subsubsection{Patient Overview View Module (\mref{mInput})}
-\begin{description}
-  \item[Secrets:] Visualization of Patient Overview. 
-  \item[Services:] Shows patient information like clinical history, treatment plan, and test result as well as personal informaiton etc. 
-  \item[Implemented By:] React & JavaScript
-  \item[Type of Module:] Abstract Object
-    [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] Component architecture for displaying and managing tabular patient data with sorting and filtering capabilities.
+\item[Services:] Renders an interactive table interface displaying patient records with customizable columns. Enables medical staff to quickly sort, filter, and search through patient lists while maintaining responsive performance.
+\item[Implemented By:] React and JavaScript
+\item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Patient Disease Progression View Module (\mref{mInput})}
+\subsubsection{Patient Overview View Module (\mref{mPatientOverview})}
 \begin{description}
-  \item[Secrets:] Visualization of Patient List View. 
-  \item[Services:] Shows patient disease condition change over pertain period, and how the statistics changed over time. 
-  \item[Implemented By:] React & JavaScript
-  \item[Type of Module:] Abstract Object
-    [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] Layout management and component composition strategies for organizing complex patient information.
+\item[Services:] Presents a dashboard-style interface that organizes patient vitals, demographics, and current status in distinct sections. Implements responsive design to maintain usability across different screen sizes.
+\item[Implemented By:] React and JavaScript
+\item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Patient Medical Records List View Module (\mref{mInput})}
+\subsubsection{Patient Disease Progression View Module (\mref{mProgressView})}
 \begin{description}
-  \item[Secrets:] Visualization of Patient Medical Record List View. 
-  \item[Services:] Shows patient medical record information like record id, X-ray attachment, side notes etc. 
-  \item[Implemented By:] React & JavaScript
-  \item[Type of Module:] Abstract Object
-    [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] Side by side comparison of 2 X-Ray records.
+\item[Services:] Displays the disease progression of the patient over 2 selected X-Ray records.
+\item[Implemented By:] React and JavaScript
+\item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Patient Medical Report View Module (\mref{mInput})}
+\subsubsection{Patient Medical Records List View Module (\mref{mRecordsList})}
 \begin{description}
-  \item[Secrets:] Visualization of Patient Medical Report View. 
-  \item[Services:] Shows patient medical report including information like likelihood of diseases, symptoms, findings, impression etc. 
-  \item[Implemented By:] React & JavaScript
-  \item[Type of Module:] Abstract Object
-    [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] Virtual scrolling implementation and lazy loading patterns for efficient record display.
+\item[Services:] Manages the presentation of paginated medical records detailing the patient's medical history.
+\item[Implemented By:] React and JavaScript
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{X-Ray Report View Module (\mref{mReportView})}
+\begin{description}
+\item[Secrets:] Form layout and validation logic for structured medical report display.
+\item[Services:] Presents AI generated reports in a structured format with detailing the findings of the X-Ray.
+\item[Implemented By:] React and JavaScript
+\item[Type of Module:] Abstract Object
 \end{description}
 
 
@@ -336,9 +384,32 @@ to be implemented.
   \emph{not} described in the SRS.
 \item[Services:] Includes data structure and algorithms used in the system that
   do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
 \item[Implemented By:] --
+\end{description}
+
+\subsubsection{Disease Progression Model Module (\mref{mProgressModel})}
+\begin{description}
+\item[Secrets:] The criteria and methods for detecting and quantifying changes in disease manifestation between X-ray images over time.
+\item[Services:] Analyzes temporal changes in specific lung regions using DETR(Detection Transformer) for precise disease progression monitoring.
+\item[Implemented By:] PyTorch
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Disease Prediction Model Module (\mref{mPredictModel})}
+\begin{description}
+\item[Secrets:] The algorithm used to identify diseases and their severity from X-ray image features.
+\item[Services:] Processes chest X-ray images to provide disease classification and severity scores using a fine-tuned ResNet model.
+\item[Implemented By:] PyTorch
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Data Persistence Module (\mref{mDataStore})}
+\begin{description}
+\item[Secrets:] The organization and relationships between different types of patient data, and the rules for maintaining data consistency and accessibility.
+\item[Services:] Manages data storage and retrieval using AWS S3 for Patient Data including X-Ray Images, prescriptions, clinical notes, and DynamoDB for structured data.
+\item[Implemented By:] AWS S3 and DynamoDB
+\item[Type of Module:] Abstract Object
+\end{description}
 
 
 \section{Traceability Matrix} \label{SecTM}
@@ -397,25 +468,17 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
-In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
-correct execution of B may be necessary for A to complete the task described in
-its specification. That is, A {\em uses} B if there exist situations in which
-the correct functioning of A depends upon the availability of a correct
-implementation of B.  Figure \ref{FigUH} illustrates the use relation between
-the modules. It can be seen that the graph is a directed acyclic graph
-(DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+In this section, the uses hierarchy between modules is provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if correct execution of B may be necessary for A to complete the task described in its specification. That is, A {\em uses} B if there exist situations in which the correct functioning of A depends upon the availability of a correct implementation of B. Figure \ref{FigUH} illustrates the use relation between the modules.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.1\textwidth]{../../assets/ContextDesignFlow.png}
+\caption{Use Hierarchy Diagram showing module interactions}
+\label{FigUH}
+\end{figure}
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
+\noindent The architecture follows a hybrid design pattern combining Model-View-Controller (MVC) for the machine learning components and client-server architecture for the view modules. The machine learning modules are structured with clear separation between the model logic, view presentation, and control flow. The view modules interact with patient data through requests to the web server module, which in turn communicates with the data persistence module. For simplicity, the diagram omits the request arrows between views and the web server module, as well as between modules and the data persistence layer. This modular design enables independent testing and development of components while maintaining clear interfaces between layers.
+
 
 \begin{figure}[H]
 \centering
@@ -427,19 +490,50 @@ arrows in the diagram typically correspond to the presence of import statement.}
 %\section*{References}
 
 \section{User Interfaces}
+The user interface design consists of several key pages that have been prototyped in Figma:
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
+\begin{itemize}
+\item A login page for secure user authentication
+\item A dashboard showing critical patient statistics and recent X-rays
+\item A patient records page displaying medical history and X-ray images
+\item A detailed X-ray analysis page with disease detection results
+\item A report generation page for doctors to document findings and prescriptions
+\item A disease progression tracking interface to monitor changes over time
+\end{itemize}
 
-\section{Design of Communication Protocols}
-
-\wss{If appropriate}
+The complete interactive mockups can be viewed at \href{https://www.figma.com/design/HAjX8dhwPjPSzX2Wz06YQ2/Capstone-App?node-id=134-122&t=8ET1qlba7wlarEvq-0}{our Figma design}.
 
 \section{Timeline}
+\begin{itemize} \item \textbf{Week 1 - 2:} \rt{Jan 15 - Jan 28, 2025} \begin{itemize} \item \textbf{M1: Backend Integration Module} \begin{itemize} \item Setup initial backend services for user data, medical records, and X-ray storage (\textit{Nathan}) \item Integrate existing frontend structure with backend endpoints (ensure authentication, data fetching) (\textit{Nathan}) \item Basic testing to confirm data flow and API correctness (\textit{Nathan, Ayman}) \end{itemize} \item \textbf{M2: Report Page Module} \begin{itemize} \item Design the UI/UX for the doctor’s report page (wireframes, user flow) (\textit{Ayman}) \item Implement editable fields (findings, prescriptions, clinical notes) and “Generate Report” functionality (\textit{Ayman}) \item Basic integration tests to ensure the generated report is saved/retrieved properly from backend (\textit{Ayman}) \end{itemize} \end{itemize}
 
-\wss{Schedule of tasks and who is responsible}
+\item \textbf{Week 3 - 4:} \rt{Jan 29 - Feb 11, 2025} \begin{itemize} \item \textbf{M3: Disease Model Implementation Module} \begin{itemize} \item Fine-tune a baseline ML model (e.g., EfficientNet or similar) for disease detection (\textit{Patrick}) \item Incorporate clinical notes or prescription data as additional input (if feasible) (\textit{Patrick}) \item Initial inference endpoint set up in the backend (possibly behind an API route) (\textit{Nathan}) \item Minimal validation tests: confirm the model loads, infers, and returns results (\textit{All as needed}) \end{itemize} \item \textbf{M4: Disease Progression Feature Module} \begin{itemize} \item Research and define approach for tracking disease progression over time (\textit{Reza}) \item Implement backend logic to compare multiple patient X-rays or relevant data points (\textit{Reza}) \item Update UI to support selecting multiple images or timepoints (\textit{Reza}) \item Basic tests for progression calculations (mock data sets, verifying progression output) (\textit{Reza, Nathan}) \end{itemize} \end{itemize}
 
-\wss{You can point to GitHub if this information is included there}
+\item \textbf{Week 5 - 6:} \rt{Feb 12 - Feb 25, 2025} \begin{itemize} \item \textbf{M5: ML Metrics and ROC/AUC Module} \begin{itemize} \item Collaborate with \textit{Patrick} to gather model outputs for test sets (\textit{Kelly}) \item Develop scripts or a mini-dashboard to compute ROC/AUC, precision/recall, etc. (\textit{Kelly, Patrick}) \item Display these metrics in a UI page or console logs for internal evaluation (\textit{Kelly, Ayman}) \item Run spot checks on real or synthetic data to validate model performance (\textit{Kelly, Patrick}) \end{itemize} \item \textbf{M6: Dashboard Page Module} \begin{itemize} \item Design a dashboard that displays quick stats: critical cases, aggregated disease predictions, etc. (\textit{Kelly, Ayman}) \item Implement data retrieval from backend to highlight urgent patient statuses (\textit{Kelly, Nathan}) \item Optional advanced features (if time allows): interactive charts, patient filtering (\textit{Kelly, Ayman}) \end{itemize} \end{itemize}
+
+\item \textbf{Week 7 - 8:} \rt{Feb 26 - Mar 10, 2025} \begin{itemize} \item \textbf{M7: CI/CD Pipeline and Testing Module} \begin{itemize} \item Set up automated build and deployment scripts (GitHub Actions, Jenkins, or similar) (\textit{Ayman}) \item Establish unit and integration test frameworks in both frontend and backend (\textit{Ayman, All team members}) \item Generate code coverage reports and ensure critical paths are tested (\textit{Ayman}) \item Basic load or stress tests on the main endpoints to ensure reliability (\textit{All team members as needed}) \end{itemize} \item \textbf{M8: Finishing Incomplete UI Pages} \begin{itemize} \item Complete Settings/Help page: user preferences, contact info, help content (\textit{Ayman, All team members}) \item Finalize Profile pages: doctor or patient profile editing, access controls (\textit{Ayman, All team members}) \item Ensure consistent styling/theme across all UI pages (\textit{All team members}) \end{itemize} \end{itemize}
+
+\item \textbf{Week 9 - 10:} \rt{Mar 11 - Mar 24, 2025} \begin{itemize} \item \textbf{M9: Additional Sidebar Features} \begin{itemize} \item Add quick links (e.g., “New Report,” “View Dashboard,” “Disease Progression”) strictly relevant to the X-ray project (\textit{Ayman, All team members}) \item Remove or hide unrelated placeholders (appointments, scheduling) to keep UI focused (\textit{Ayman}) \item Small UX improvements (icon updates, rearranging submenus, etc.) (\textit{Ayman}) \end{itemize} \item \textbf{M10: Consolidation and Light Testing} \begin{itemize} \item Review each module’s functionality to ensure “Rev 0” completeness (\textit{All team members}) \item Perform partial integration testing across backend-frontend flows (uploading X-rays, generating reports, disease progression) (\textit{All team members}) \item Document known issues and quick fixes for final refinements (\textit{All team members}) \end{itemize} \end{itemize}
+
+\item \textbf{Week 11 - 12:} \rt{Mar 25 - Apr 7, 2025} \begin{itemize} \item \textbf{M11: Final Checks and Rev 0 Confidence} \begin{itemize} \item Compile partial test results to ensure stable performance (\textit{Ayman, All team members}) \item Confirm ML model accuracy is acceptable; refine or retrain if major gaps found (\textit{ Kelly}) \item Ensure final UI/UX for the doctor’s workflow is coherent (report generation, patient overview, dashboard) (\textit{Ayman}) \item If time allows, address any low-priority enhancements or bugs (\textit{All team members}) \end{itemize} \end{itemize} \end{itemize}
+
+\noindent \textbf{Notes and Assignments Summary:} \begin{itemize} \item \textit{Nathan (Backend Integration)}: AWS S3 setup, database connections, API routes, ensuring the frontend can properly fetch and save data.
+\item \textit{Ayman (Frontend UI/UX)}: Report page design/coding, dashboard, overall UI refinement.
+\item \textit{Patrick (Disease Model)}: ML model development, fine-tuning, integration into backend inference endpoints.
+\item \textit{Reza (Disease Progression)}: Algorithm/design for progression logic, backend integration.
+\item \textit{Kelly (ML Metrics, Dashboard Features)}: ROC/AUC, precision/recall metrics, supporting the model team, building quick metrics display.
+\item \textit{Ayman (CI/CD, Testing)}: Automate builds, set up test frameworks, code coverage, minimal performance checks.
+\item \textit{All Team Members}: Contribute to tests for each feature, help refine UI and fix bugs as needed. \end{itemize}
+
+\noindent By the end of \textbf{Week 12}, we aim for a functional “Rev 0” where doctors can: \begin{itemize} \item Log in to the system
+\item Upload or view X-ray images
+\item Receive disease predictions and progression analysis
+\item Generate and edit a final report (with prescriptions/notes), automatically linked in the patient’s record
+\item See basic metrics (ROC/AUC) for the ML model’s performance
+\item Use a partially tested, but stable, CI/CD pipeline that automates builds/deployments
+\end{itemize}
+
+\noindent Additional refinement or advanced features can be scheduled for post-Rev-0 milestones if time permits.
+formation is included there
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
