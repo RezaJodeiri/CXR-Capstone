@@ -19,6 +19,39 @@ class CognitoIdentityProvider:
         self.client_id = client_id
         self.client_secret = client_secret
 
+    def _parse_user_json_from_cognito_user(self, cognito_user):
+        if not cognito_user:
+            return None
+        user_attributes = cognito_user["Attributes"]
+        user_json = {
+            attr["Name"].replace("custom:", ""): attr["Value"]
+            for attr in user_attributes
+        }
+        user_json["id"] = user_json["sub"]
+        user_json["enabled"] = cognito_user["Enabled"]
+        user_json["user_create_date"] = cognito_user["UserCreateDate"]
+        user_json["user_last_modified_date"] = cognito_user["UserLastModifiedDate"]
+        user_json["user_status"] = cognito_user["UserStatus"]
+        user_json["username"] = cognito_user["Username"]
+        return user_json
+
+    def _parse_cognito_attr_user_from_user_json(self, user_json):
+        if not user_json:
+            return None
+
+        UserAttributes = [
+            {"Name": "custom:first_name", "Value": user_json["first_name"]},
+            {"Name": "custom:last_name", "Value": user_json["last_name"]},
+            {"Name": "custom:occupation", "Value": user_json["occupation"]},
+            {
+                "Name": "custom:organization",
+                "Value": user_json["organization"],
+            },
+            {"Name": "custom:location", "Value": user_json["location"]},
+        ]
+
+        return UserAttributes
+
     def _get_secret_hash(self, username):
         message = username + self.client_id
         dig = hmac.new(
@@ -126,9 +159,51 @@ class CognitoIdentityProvider:
 
     def verify_token(self, token):
         try:
-            response = self.cognito_idp_client.get_user(
-                AccessToken=token
-            )
+            self.cognito_idp_client.get_user(AccessToken=token)
             return True
         except ClientError:
             return False
+
+    def get_user_by_id(self, uuid):
+        try:
+            response = self.cognito_idp_client.list_users(
+                UserPoolId=self.user_pool_id, Filter=f'sub = "{uuid}"'
+            )
+            if response["Users"]:
+                return self._parse_user_json_from_cognito_user(response["Users"][0])
+            return None
+        except ClientError as err:
+            logger.error(
+                "Couldn't get user by id %s. Here's why: %s: %s",
+                uuid,
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise err
+
+    def update_user_by_id(self, uuid, updated_user_json):
+        try:
+            current_user = self.get_user_by_id(uuid)
+            if not current_user:
+                raise Exception("UserNotFoundException")
+            updated_user_attr = self._parse_cognito_attr_user_from_user_json(
+                updated_user_json
+            )
+            self.cognito_idp_client.admin_update_user_attributes(
+                UserPoolId=self.user_pool_id,
+                Username=current_user["username"],
+                UserAttributes=updated_user_attr,
+            )
+            return {
+                "updated": "success",
+                "userId": current_user["sub"],
+                "username": current_user["username"],
+            }
+        except ClientError as err:
+            logger.error(
+                "Couldn't edit user %s. Here's why: %s: %s",
+                uuid,
+                err.response["Error"]["Code"],
+                err.response["Error"]["Message"],
+            )
+            raise Exception(err.response["Error"]["Code"])
