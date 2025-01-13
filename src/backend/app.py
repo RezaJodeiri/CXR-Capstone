@@ -1,11 +1,16 @@
-from api.oauth import oauth_bp
-from api.predict import predict_bp
-from flask import Flask
+from flask import Flask, json
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
+
 from runtime import RuntimeConfig
 
-app = Flask(__name__)
+from api.oauth import oauth_bp
+from api.predict import predict_bp
+from api.user import user_blueprint
+from api.record import record_blueprint
+from api.prescription import prescription_blueprint
 
+app = Flask(__name__)
 CORS(
     app,
     resources={
@@ -15,6 +20,29 @@ CORS(
 
 app.register_blueprint(predict_bp)
 app.register_blueprint(oauth_bp, url_prefix="/oauth")
+app.register_blueprint(user_blueprint, url_prefix="/users")
+app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
+app.register_blueprint(
+    prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
+)
+
+
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    # start with the correct headers and status code from the error
+    response = e.get_response()
+    # replace the body with JSON
+    response.data = json.dumps(
+        {
+            "code": e.code,
+            "name": e.name,
+            "description": e.description,
+        }
+    )
+    response.content_type = "application/json"
+    return response
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
