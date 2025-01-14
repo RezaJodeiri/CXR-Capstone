@@ -78,69 +78,52 @@ See SRS Documentation at \wss{give url}
 \section{Introduction}
 
 The following document details the Module Interface Specifications for the
-\projname application. Complementary documents include the Module Guide.
+ application. Complementary documents include the Module Guide.
 
-The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone.git}.
+The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
-with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
-multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
-
-The following table summarizes the primitive data types used by \progname. 
-
+The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. The mathematical notation follows standard conventions for sets, sequences, and functions. The notation includes symbols for ML model operations and medical data processing.
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
-\midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-\bottomrule
-\end{tabular} 
-\end{center}
-
-\noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
-are defined by the data types of their inputs and outputs. Local functions are
-described by giving their type signature followed by their specification.
-
-\subsection{Data Types from Libraries}
-
-The following table summarizes the data types provided by external libraries and
-used by \projname.
-
-\begin{table}[H]
-  \centering
-  \renewcommand{\arraystretch}{1.2}
-  \noindent
-  \begin{tabular}{l l p{7.5cm}}
-    \toprule
-    \textbf{Data Type}          & \textbf{Notation}           & \textbf{Description}                                                                                                                                                                                                                                            \\
-    \midrule                                                                                                                                                                                    \\
-    DICOM      & DICOM      & A single media track within a media stream.                                                                                                                                                                                                               \\
-    JSON                  & JSON                  & JavaScript Object Notation, it is a text-based open standard data interchange setup and only provides a data encoding specification.                                                                                                                      \\
-    PNG                  & PNG                  & Portable Network Graphics, a raster-graphics file format that supports lossless data compression                                                                                                                      \\
-    JPEG/JPG                & JPEG/JPG                  & Joint Photographic Experts Group, a commonly used method of lossy compression for digital images, particularly for those images produced by digital photography                                                                                                                      \\
-    ASCII                & ASCII                  & American Standard Code for Information Interchange, a character encoding standard used to represent text in computers and electronic devices.                                                                   \\
+    \renewcommand{\arraystretch}{1.2}
+    \noindent 
+    \begin{tabular}{l l p{7.5cm}} 
+    \toprule 
+    \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+    \midrule
+    character & char & a single symbol or digit\\
+    integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$)\\
+    natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$)\\
+    real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+    tensor & $\mathbb{T}^{n}$ & an n-dimensional array of numerical values used for ML computations\\
+    probability & $\mathbb{P}$ & a real number in [0, 1] representing likelihood\\
+    matrix & $\mathbb{M}_{m,n}$ & a 2D array of size m×n containing numerical values\\
+    binary & $\mathbb{B}$ & boolean values {true, false}\\
     \bottomrule
-  \end{tabular}
-  \caption{Data types from libraries}
-\end{table}
+    \end{tabular} 
+    \end{center}
+\subsection{Data Types from Libraries}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \noindent
+    \begin{tabular}{l l p{7.5cm}}
+    \toprule
+    \textbf{Data Type} & \textbf{Notation} & \textbf{Description} \\
+    \midrule
+    DICOM & DICOM & Digital Imaging and Communications in Medicine format, standard for medical imaging storage and transmission \\
+    PyTorch Tensor & torch.Tensor & Multi-dimensional matrix containing elements of a single data type, optimized for GPU operations \\
+    NumPy Array & np.ndarray & Multi-dimensional array for scientific computing and image processing \\
+    JWT & JWT & JSON Web Token for secure authentication and information transmission \\
+    HTTP Request & HTTPRequest & Object containing HTTP request information including headers, body, and method \\
+    HTTP Response & HTTPResponse & Object containing HTTP response information including status code, headers, and body \\
+    DataFrame & pd.DataFrame & 2-dimensional labeled data structure for patient and medical records \\
+    Base64 & Base64 & Binary-to-text encoding scheme for transmitting binary image data \\
+    YAML & YAML & Human-readable data serialization format for configuration files \\
+    \bottomrule
+    \end{tabular}
+    \caption{Data types from libraries}
+    \end{table}
 
 \section{Module Decomposition}
 
@@ -177,19 +160,16 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 ~\newpage
-
+% /********************* M1 *********************/
 \section{MIS of Web Application Server Module} 
 
 \subsection{Module}
 Web Application Server   
 \subsection{Uses}
-M2: HTTP Server Module \\ 
-M5: Doctor Profile View Module \\ 
-M6: Patient List View Module \\ 
-Other view modules (M7-M10) for displaying data.\\ 
+N/A
 \subsection{Syntax}
 \subsubsection{Exported Constants}
-
+N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -233,17 +213,12 @@ handleRequest(request)
 \newpage
 
 \newpage
-
-\section{Web Application Server Module}
+% /********************* M2 *********************/
+\section{HTTP Server Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item M1: Web Application Server Module
-    \item M3: Disease Prediction Server Module
-    \item M4: Disease Progression Tracking Server Module
-    \item M5: Doctor Profile View Module
-    \item M6: Patient List View Module
-    \item Other view modules (M7-M10) for displaying data.
+\item N/A
 \end{itemize}
 
 \subsection{State Variables}
@@ -308,7 +283,7 @@ handleRequest(request)
     \item \textbf{handleError()}: Handles errors that arise during request processing and generates appropriate error responses.
 \end{itemize}
 
-
+% /********************* M3 *********************/
 \section{Disease Prediction Server Module}
 
 \subsection{Other Modules the Current Module Uses}
@@ -380,6 +355,771 @@ handleRequest(request)
     \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a human-readable format (e.g., disease labels).
 \end{itemize}
 
+% /********************* M4 *********************/
+\section{Disease Progression Tracking Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M3: Disease Prediction Server Module
+\item M5: Doctor Profile View Module
+\item M6: Patient List View Module
+\item M7: Patient Overview Module
+\item M8: Patient Diseases Progression View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{progressionData}: Stores historical data of disease progression for each patient.
+    \item \textbf{timeStamps}: Records the dates and times when progression data is captured.
+    \item \textbf{patientHistory}: Maintains a detailed history of each patient's disease states over time.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{trackProgression} & Patient ID, data & Confirmation of tracking & \texttt{DataNotFoundException} \\
+    \hline
+    \texttt{getProgressionHistory} & Patient ID & Progression history & \texttt{DataNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{DATA\_RETENTION\_PERIOD}: 5 years (duration for storing disease progression data)
+\item \textbf{TRACKING\_INTERVAL}: 30 days (standard interval for recording progression data)
+\item \textbf{MAX\_HISTORY\_ENTRIES}: 10000 (maximum number of progression entries per patient)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{dataStoragePath}: The path where progression tracking data is stored.
+\item \textbf{updateInterval}: The time interval for automatically updating progression data.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes valid and accurate disease prediction data is available from M3.
+\item Assumes patients' data is regularly updated.
+\item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(patientID, data)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Stores new disease progression data for the given patient.
+    \item \textbf{Output}: Returns confirmation of data storage or throws a \texttt{DataNotFoundException} if the patient data is not found.
+\end{itemize}
+
+\subsubsection{getProgressionHistory(patientID)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves historical progression data for the specified patient.
+    \item \textbf{Output}: Returns the progression history or throws a \texttt{DataNotFoundException} if no history is found.
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{updateProgressionData()}: Updates the disease progression data at regular intervals based on new predictions or patient information.
+\item \textbf{analyzeProgressionTrends()}: Analyzes progression data to identify trends or anomalies in disease progression.
+\item \textbf{archiveOldData()}: Moves data older than the retention period to an archive for long-term storage.
+\end{itemize}
+% /********************* M5 *********************/
+\section{Doctor Profile View Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{doctorProfile}: Stores the user information of the currently logged-in doctor, including name, specialty, contact details, and credentials.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{getDoctorProfile} & userID & user Profile & \texttt{ProfileNotFoundException} \\
+    \hline
+    \texttt{getDoctorProfile} & userID & user Profile & \texttt{NotDoctorException } \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{PROFILE\_UPDATE\_INTERVAL}: 24 hours (time interval for automatic profile updates)
+\item \textbf{DEFAULT\_PROFILE\_PICTURE}: "default\_doctor.png" (default profile picture for doctors without a custom one)
+\item \textbf{DEFAULT\_SPECIALTY}: "Radiologist" (default specialty for doctors without a specified specialty)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{profileDataPath}: Path to the data source containing doctor profile information.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes that the User Authentication Module (M11) ensures only authorized doctors can view their profiles.
+\item Assumes the profile data is accurately stored and updated in the Data Persistence Module (M15).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewDoctorProfile(doctorID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the profile information of the specified doctor.
+    \item \textbf{Output}: Returns the doctor profile details or throws a \texttt{ProfileNotFoundException} if the profile cannot be found.
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{fetchProfileData(doctorID)}: Retrieves profile data from the data source.
+\item \textbf{updateProfilePicture(doctorID, picturePath)}: Updates the profile picture of the doctor.
+\item \textbf{logProfileAccess(doctorID)}: Logs each time a doctor accesses their profile for auditing purposes.
+\end{itemize}
+% /********************* M6 *********************/
+\section{Patient List View Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: Patient Medical Record View Module
+    \item M15: Patient Medical Record Update Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{patientList}: Stores a list of patients assigned to a doctor, including their basic information such as name, age, and medical condition.
+\item \textbf{searchFilters}: Stores the current filters applied to the patient list for sorting and searching purposes.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewPatientList} & Doctor ID, filters & List of patient details & \texttt{PatientListNotFoundException} \\
+    \hline
+    \texttt{applyFilter} & Filter parameters & Filtered patient list & \texttt{InvalidFilterException} \\
+    \hline
+    \texttt{sortList} & Sorting criteria & Sorted patient list & None \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{MAX\_PATIENTS\_PER\_PAGE}: 20 (maximum number of patients displayed per page in the list)
+\item \textbf{DEFAULT\_SORT\_ORDER}: "alphabetical" (default order in which patients are listed)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{patientDataPath}: Path to the data source containing patient records.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes that the User Authentication Module (M11) is responsible for verifying that the user is a doctor with access to the list.
+\item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M15).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewPatientList(doctorID, filters)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves a list of patients associated with the given doctor, applying the specified filters.
+    \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
+\end{itemize}
+
+\subsubsection{applyFilter(filters)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Applies the given filters to the current patient list.
+    \item \textbf{Output}: Returns the filtered patient list or throws an \texttt{InvalidFilterException} if the filters are invalid.
+\end{itemize}
+
+\subsubsection{sortList(criteria)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Sorts the current patient list based on the provided criteria.
+    \item \textbf{Output}: Returns the sorted patient list.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{filterPatients(filters)}: Filters the patient list according to the specified parameters.
+\item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
+\item \textbf{logListAccess(doctorID)}: Logs each time a doctor accesses the patient list for auditing purposes.
+\end{itemize}
+% /********************* M7 *********************/
+\section{Patient Overview Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{patientOverview}: Stores the summary information of a selected patient, including personal details, recent medical history, and current treatment plans.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{getPatient} & Patient ID & Patient overview details & \texttt{OverviewNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{OVERVIEW\_REFRESH\_INTERVAL}: 15 minutes (interval for refreshing the patient overview data)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{overviewDataPath}: Path to the data source containing patient overview information.
+\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the patient overview.
+\item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M15).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewPatientOverview(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the overview information of the specified patient.
+    \item \textbf{Output}: Returns the patient overview details or throws an \texttt{OverviewNotFoundException} if the overview cannot be found.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{fetchOverviewData(patientID)}: Retrieves overview data from the data source.
+\item \textbf{generateOverviewSummary(patientID)}: Creates a summary of the patient's current status.
+\item \textbf{logOverviewAccess(patientID)}: Logs each time a patient overview is accessed for auditing purposes.
+\end{itemize}
+% /********************* M8 *********************/
+\section{Patient Diseases Progression View}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M12: Disease Progression Tracking Module
+\item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{Title}: fill this 
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewProgression} & Patient ID & Progression data & \texttt{ProgressionNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{PROGRESSION\_UPDATE\_INTERVAL}: 12 hours (time interval for updating disease progression data)
+\item \textbf{DEFAULT\_CHART\_TEMPLATE}: "default\_progression\_chart.html" (default template for displaying disease progression charts)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{progressionDataPath}: Path to the data source containing disease progression information.
+\item \textbf{chartRenderingService}: URL or endpoint of the service used for rendering progression charts.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the disease progression.
+    \item Assumes the data is regularly updated and maintained in the Data Persistence Module (M15).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewDiseaseProgression(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the disease progression details for the specified patient.
+    \item \textbf{Output}: Returns the progression details or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{fetchProgressionData(patientID)}: Retrieves disease progression data from the data source.
+\item \textbf{generateProgressionChart(patientID)}: Generates a visual chart of the disease progression.
+\item \textbf{logProgressionAccess(patientID)}: Logs access to a patient's disease progression data for auditing purposes.
+\end{itemize}
+% /********************* M9 *********************/
+\section{Patient Medical Records List View Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{medicalRecordsList}: Contains a list of all medical records associated with a specific patient, including dates, record types, and summaries.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewMedicalRecordsList} & Patient ID & List of medical records & \texttt{RecordsNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{RECORDS\_REFRESH\_INTERVAL}: 10 minutes (interval for refreshing the list of medical records)
+\item \textbf{DEFAULT\_LIST\_TEMPLATE}: "default\_records\_list\_template.html" (default template for displaying the list of medical records)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{recordsDataPath}: Path to the data source containing the patient's medical records.
+\item \textbf{recordSummaryService}: URL or endpoint of the service used for summarizing medical records.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the medical records.
+\item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M15).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewMedicalRecordsList(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the list of medical records for the specified patient.
+    \item \textbf{Output}: Returns the list of medical records or throws a \texttt{RecordsNotFoundException} if no records are found.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{fetchMedicalRecords(patientID)}: Retrieves the list of medical records from the data source.
+\item \textbf{generateRecordsSummary(patientID)}: Creates summaries for each record in the list.
+\item \textbf{logRecordsAccess(patientID)}: Logs access to a patient's medical records list for auditing purposes.
+\end{itemize}
+% /********************* M10 *********************/
+\section{Patient Medical Record View Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M11: User Authentication Module
+\item M13: Disease Prediction Module 
+\item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{medicalRecordDetails}: Stores detailed information about a specific medical record, including the date, diagnosis, treatment, and doctor notes.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewMedicalRecord} & Record ID & Medical record details & \texttt{RecordNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{DEFAULT\_RECORD\_TEMPLATE}: "default\_record\_template.html" (default template for displaying a medical record)
+\item \textbf{MAX\_RECORD\_DISPLAY\_LENGTH}: 5000 characters (maximum length for displaying record content)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{recordDataPath}: Path to the data source containing the specific medical record.
+\item \textbf{recordDetailService}: URL or endpoint of the service used for fetching detailed medical record data.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the detailed medical record.
+    \item Assumes the data for medical records is accurately maintained and readily accessible through the Data Persistence Module (M15).
+\end{itemize}
+
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewMedicalRecord(recordID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the details of the specific medical record identified by \texttt{recordID}.
+    \item \textbf{Output}: Returns the medical record details or throws a \texttt{RecordNotFoundException} if the record cannot be found.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{fetchMedicalRecord(recordID)}: Retrieves the details of the specified medical record from the data source.
+\item \textbf{formatRecordDetails(recordID)}: Formats the medical record details for display.
+\item \textbf{logRecordAccess(recordID)}: Logs access to the specific medical record for auditing purposes.
+\end{itemize}
+% /********************* M11 *********************/
+\section{Disease Prediction Module}
+\label{Disease Prediction Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{currentModel}: Model and The currently loaded disease prediction model.
+    \item \textbf{modelStatus}: ModelStatus and Status of the prediction model (e.g., loaded, unloaded, error).
+    \item \textbf{predictionCache}: Cache and Caches recent prediction results for quick access.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{loadModel} & modelPath : String & - & \texttt{ModelLoadException} \\
+    \hline
+    \texttt{predictDisease} & patientData : PatientData & PredictionResult & \texttt{InvalidInputException} \\
+    \hline
+    \texttt{updateModel} & newModel : Model & - & \texttt{ModelUpdateException} \\
+    \hline
+    \texttt{getModelStatus} & - & ModelStatus & - \\
+    \hline
+    \texttt{resetModel} & - & - & - \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{DEFAULT\_PREDICTION\_MODEL}: "default\_model.pkl" (path to the default prediction model)
+    \item \textbf{MAX\_INPUT\_SIZE}: 1024 (maximum size for input data)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{MODEL\_PATH}: Path to the directory containing prediction models.
+    \item \textbf{CACHE\_SIZE}: Maximum number of predictions to cache.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes that the Data Persistence Module (M15) provides reliable access to patient data.
+    \item Assumes that the User Authentication Module (M11) ensures that only authorized users can perform predictions.
+    \item Assumes that prediction models are compatible with the system's architecture and dependencies.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{loadModel(modelPath)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Loads the disease prediction model from the specified \texttt{modelPath}.
+    \item \textbf{Exception}: Throws \texttt{ModelLoadException} if the model cannot be loaded.
+\end{itemize}
+
+\subsubsection{predictDisease(patientData)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Processes \texttt{patientData} using the current prediction model to generate a prediction.
+    \item \textbf{Output}: Returns a \texttt{PredictionResult} containing the predicted disease information.
+    \item \textbf{Exception}: Throws \texttt{InvalidInputException} if \texttt{patientData} is malformed or incomplete.
+\end{itemize}
+
+\subsubsection{updateModel(newModel)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Updates the current prediction model with \texttt{newModel}.
+    \item \textbf{Exception}: Throws \texttt{ModelUpdateException} if the update fails.
+\end{itemize}
+
+\subsubsection{getModelStatus()}
+
+\begin{itemize}
+    \item \textbf{Output}: Returns the current status of the prediction model (\texttt{ModelStatus}).
+    \item \textbf{Exception}: None.
+\end{itemize}
+
+\subsubsection{resetModel()}
+
+\begin{itemize}
+    \item \textbf{Transition}: Resets the prediction model to the default state.
+    \item \textbf{Exception}: None.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{validatePatientData(patientData)}: Validates the structure and completeness of \texttt{patientData}.
+    \item \textbf{loadDefaultModel()} : Loads the default prediction model.
+    \item \textbf{cachePrediction(result)}: Stores the \texttt{PredictionResult} in the \texttt{predictionCache}.
+    \item \textbf{clearCache()} : Clears all entries from the \texttt{predictionCache}.
+\end{itemize}
+
+% /********************* M12 *********************/
+\section{Disease Progression Module}
+\label{Disease Progression Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M13: Disease Prediction Module 
+    \item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{description}
+    \item[\textbf{currentProgressionModel}:] Model -- The currently loaded disease progression model.
+    \item[\textbf{progressionStatus}:] ProgressionStatus -- Status of the progression model (e.g., loaded, unloaded, error).
+    \item[\textbf{progressionCache}:] Cache -- Caches recent progression results for quick access.
+\end{description}
+
+\subsection{Exported Constants and Access Programs}
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{loadProgressionModel} & modelPath : String & - & \texttt{ModelLoadException} \\
+    \hline
+    \texttt{updateProgressionStage} & patientID : String, stageData : StageData & - & \texttt{InvalidStageException} \\
+    \hline
+    \texttt{getProgressionStatus} & patientID : String & ProgressionStatus & \texttt{PatientNotFoundException} \\
+    \hline
+    \texttt{resetProgressionModel} & - & - & - \\
+    \hline
+    \texttt{forecastProgression} & patientID : String & ForecastResult & \texttt{ForecastException} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{DEFAULT\_PROGRESSION\_MODEL}: \texttt{"progression\_model.pkl"} -- Path to the default progression model.
+    \item \textbf{MAX\_STAGES}: 10 -- Maximum number of disease progression stages.
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{PROGRESSION\_MODEL\_PATH}: Path to the directory containing progression models.
+    \item \textbf{CACHE\_SIZE}: Maximum number of progression forecasts to cache.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes that the Data Persistence Module (M15) provides reliable access to patient data.
+    \item Assumes that the User Authentication Module (M11) ensures that only authorized users can update and view disease progression.
+    \item Assumes that progression models are regularly updated and maintained for accuracy.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{loadProgressionModel(modelPath)}
+\begin{itemize}
+    \item \textbf{Transition}: Loads the disease progression model from the specified \texttt{modelPath}.
+    \item \textbf{Exception}: Throws \texttt{ModelLoadException} if the model cannot be loaded.
+\end{itemize}
+
+\subsubsection{updateProgressionStage(patientID, stageData)}
+\begin{itemize}
+    \item \textbf{Transition}: Updates the disease progression stage for the patient identified by \texttt{patientID} with the provided \texttt{stageData}.
+    \item \textbf{Exception}: Throws \texttt{InvalidStageException} if \texttt{stageData} is invalid.
+\end{itemize}
+
+\subsubsection{getProgressionStatus(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the current disease progression status for the patient identified by \texttt{patientID}.
+    \item \textbf{Output}: Returns a \texttt{ProgressionStatus} object.
+    \item \textbf{Exception}: Throws \texttt{PatientNotFoundException} if the patient does not exist.
+\end{itemize}
+
+\subsubsection{resetProgressionModel()}
+\begin{itemize}
+    \item \textbf{Transition}: Resets the disease progression model to the default state.
+    \item \textbf{Exception}: None.
+\end{itemize}
+
+\subsubsection{forecastProgression(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Generates a forecast of the disease progression for the patient identified by \texttt{patientID}.
+    \item \textbf{Output}: Returns a \texttt{ForecastResult} containing predicted progression data.
+    \item \textbf{Exception}: Throws \texttt{ForecastException} if the forecast cannot be generated.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{validateStageData(stageData)}: Validates the structure and completeness of \texttt{stageData}.
+    \item \textbf{loadDefaultProgressionModel()}: Loads the default progression model.
+    \item \textbf{cacheProgressionResult(result)}: Stores the \texttt{ForecastResult} in the \texttt{progressionCache}.
+    \item \textbf{clearProgressionCache()}: Clears all entries from the \texttt{progressionCache}.
+\end{itemize}
+
+% /********************* M13 *********************/
+\section{Data Persistence Module}
+\label{Data Persistence Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M11: User Authentication Module
+    \item M13: Disease Prediction Module 
+    \item M14: Disease Progression Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{description}
+    \item[\textbf{dbConnection}:] DBConnection -- Represents the active connection to the database.
+    \item[\textbf{connectionStatus}:] ConnectionStatus -- Indicates the status of the database connection.
+    \item[\textbf{retryCount}:] int -- Tracks the number of retry attempts for failed operations.
+\end{description}
+
+\subsection{Exported Constants and Access Programs}
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{connectDB} & dbPath : String & ConnectionStatus & \texttt{ConnectionException} \\
+    \hline
+    \texttt{saveData} & data : DataObject & - & \texttt{SaveException} \\
+    \hline
+    \texttt{loadData} & query : Query & DataObject & \texttt{LoadException} \\
+    \hline
+    \texttt{updateData} & dataID : String, newData : DataObject & - & \texttt{UpdateException} \\
+    \hline
+    \texttt{deleteData} & dataID : String & - & \texttt{DeleteException} \\
+    \hline
+    \texttt{backupDatabase} & backupPath : String & - & \texttt{BackupException} \\
+    \hline
+    \texttt{restoreDatabase} & backupPath : String & - & \texttt{RestoreException} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{DEFAULT\_DB\_PATH}: \texttt{"/var/data/persistence.db"} -- Default database file path.
+    \item \textbf{MAX\_RETRIES}: 5 -- Maximum number of retry attempts for database operations.
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{DB\_PATH}: Path to the primary database file.
+    \item \textbf{BACKUP\_PATH}: Path to store database backups.
+    \item \textbf{RETRY\_LIMIT}: Maximum number of retry attempts for database operations.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes that the database server is accessible and properly configured.
+    \item Assumes that sufficient storage is available for data persistence and backups.
+    \item Assumes that the User Authentication Module (M11) handles access control for database operations.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{connectDB(dbPath)}
+\begin{itemize}
+    \item \textbf{Transition}: Establishes a connection to the database located at \texttt{dbPath}.
+    \item \textbf{Output}: Returns the current \texttt{ConnectionStatus}.
+    \item \textbf{Exception}: Throws \texttt{ConnectionException} if the connection fails.
+\end{itemize}
+
+\subsubsection{saveData(data)}
+\begin{itemize}
+    \item \textbf{Transition}: Saves the provided \texttt{data} object to the database.
+    \item \textbf{Exception}: Throws \texttt{SaveException} if the data cannot be saved.
+\end{itemize}
+
+\subsubsection{loadData(query)}
+\begin{itemize}
+    \item \textbf{Transition}: Executes the \texttt{query} to retrieve data from the database.
+    \item \textbf{Output}: Returns the resulting \texttt{DataObject}.
+    \item \textbf{Exception}: Throws \texttt{LoadException} if the data cannot be retrieved.
+\end{itemize}
+
+\subsubsection{updateData(dataID, newData)}
+\begin{itemize}
+    \item \textbf{Transition}: Updates the data entry identified by \texttt{dataID} with \texttt{newData}.
+    \item \textbf{Exception}: Throws \texttt{UpdateException} if the update fails.
+\end{itemize}
+
+\subsubsection{deleteData(dataID)}
+\begin{itemize}
+    \item \textbf{Transition}: Deletes the data entry identified by \texttt{dataID} from the database.
+    \item \textbf{Exception}: Throws \texttt{DeleteException} if the deletion fails.
+\end{itemize}
+
+\subsubsection{backupDatabase(backupPath)}
+\begin{itemize}
+    \item \textbf{Transition}: Creates a backup of the database at the specified \texttt{backupPath}.
+    \item \textbf{Exception}: Throws \texttt{BackupException} if the backup process fails.
+\end{itemize}
+
+\subsubsection{restoreDatabase(backupPath)}
+\begin{itemize}
+    \item \textbf{Transition}: Restores the database from the backup located at \texttt{backupPath}.
+    \item \textbf{Exception}: Throws \texttt{RestoreException} if the restoration process fails.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{validateData(data)}: Validates the structure and integrity of \texttt{data}.
+    \item \textbf{retryOperation(operation)}: Attempts to retry a failed \texttt{operation} up to \texttt{MAX\_RETRIES}.
+    \item \textbf{logDatabaseActivity(activity)}: Logs database operations for auditing and debugging purposes.
+    \item \textbf{initializeConnection()}: Initializes the database connection using environment variables.
+\end{itemize}
+
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
@@ -392,8 +1132,6 @@ handleRequest(request)
 \newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741 projects}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
@@ -415,6 +1153,11 @@ graduate attribute of Problem Analysis and Design.
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+\end{enumerate}
+
+\newpage
+\begin{enumerate}
+    \item When writing this deliverable, several things went really well that made the whole process smoother and more organized. Our existing documentation, like the detailed list of functional and non-functional requirements and the Module Interface Specification (MIS) we created, provided a solid roadmap for how the system should behave. This clarity made it easier to develop the design blueprint and the specifications for each module because we already knew what each part needed to do and how they should interact. Another big plus was the team’s early focus on a modular architecture, such as separating the machine learning (ML) services from the core backend. This approach kept our design documents organized and manageable, allowing us to develop, test, and maintain each module independently without getting overwhelmed. Additionally, having the core implementation set up during the Proof of Concept (POC) phase gave us a great direction for developing the specifications for our modules. It provided a tested foundation to build on, reducing uncertainties and making our specification development more precise and targeted.
 \end{enumerate}
 
 \subsection{Kelly Deng}
