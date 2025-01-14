@@ -220,6 +220,8 @@ actually be implemented.
 \end{description}
 
 
+
+
 \begin{table}[h!]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
@@ -252,17 +254,107 @@ actually be implemented.
 \end{table}
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
-
-The design of the system is intended to satisfy the requirements developed in
-the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table~\ref{TblRT}.
-
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+\subsection{Functional Requirements (FR)}\\
+\textbf{FR1: Accept chest X-ray images as input} \\
+Modules: mDiseasePredict, mDiseaseProgress, mProgressModel, mPredictModel \\
+Rationale: These modules are responsible for processing X-ray images for disease prediction and tracking progression. They handle the image input and its integration into the disease detection pipeline. \\
+\textbf{FR2: Input additional patient symptoms} \\
+Modules: mDiseasePredict, mReportView, mPredictModel \\
+Rationale: The system requires patient symptoms for disease prediction. mDiseasePredict and mPredictModel handle the input, while mReportView is responsible for displaying the results, including the additional symptoms. \\
+\textbf{FR3: Analyze chest X-rays for disease detection} \\
+Modules: mDiseasePredict, mPredictModel \\
+Rationale: These modules perform the core task of analyzing X-rays and predicting disease based on the image content. \\
+\textbf{FR4: Monitor patient condition changes} \\
+Modules: mDiseaseProgress, mProgressModel \\
+Rationale: These modules track the progression of a disease over time and analyze changes in the patient’s condition, ensuring that the system provides up-to-date insights into the patient's health. \\
+\textbf{FR5: Highlight affected areas on X-rays} \\
+Modules: mDiseasePredict, mReportView, mPredictModel \\
+Rationale: mDiseasePredict analyzes the X-rays and identifies affected areas, while mReportView visualizes those areas for the user. mPredictModel assists with disease prediction and highlighting. \\
+\textbf{FR6: Generate a structured report} \\
+Modules: mReportView \\
+Rationale: This module is responsible for generating and displaying structured reports based on the analyzed X-rays and predicted diagnoses. \\
+\textbf{FR7: Store patient data securely} \\
+Modules: mDataStore \\
+Rationale: mDataStore is specifically designed to store and manage patient data securely, ensuring compliance with data protection regulations. \\
+\textbf{FR8: Provide alerts for significant condition changes} \\
+Modules: mDiseaseProgress, mPatientList, mPatientOverview, mProgressView \\
+Rationale: These modules monitor changes in a patient's condition and provide notifications when significant changes are detected. They also handle displaying the alerts to users. \\
+\textbf{FR9: Allow treatment plan adjustments} \\
+Modules: mRecordsList \\
+Rationale: mRecordsList stores medical records, which includes treatment plans. This module enables viewing and adjusting the plans as necessary. \\
+\textbf{FR10: Integrate with EHR systems} \\
+Modules: mDataStore \\
+Rationale: Integration with EHR (Electronic Health Records) systems requires a secure and reliable data storage mechanism, handled by the mDataStore module. \\
+\textbf{FR11: Display confidence levels in UI} \\
+Modules: mReportView \\
+Rationale: The confidence levels of AI predictions are displayed through the mReportView to inform users about the accuracy of diagnoses. \\
+\textbf{FR12: Patient uploads for self-diagnosis (Canceled)} \\
+Rationale: This feature was canceled, so no module is connected to it. \\
+\textbf{FR13: Support user roles and access levels (Canceled)} \\
+Rationale: This feature was also canceled, so no module is connected to it. \\
+\textbf{FR14: Create a new copy of X-rays for analysis} \\
+Modules: mRecordsList \\
+Rationale: The mRecordsList module manages and stores medical records, including X-ray images, and enables creating new copies for further analysis. \\
+\textbf{FR15: Support additional imaging modalities} \\
+Modules: mProgressView, mRecordsList, mReportView \\
+Rationale: These modules are adaptable to support various imaging modalities. They provide the necessary frameworks to visualize and store different types of images, such as X-rays or MRIs. \\
+\textbf{FR16: Support AI model updates} \\
+Modules: mDiseasePredict, mDiseaseProgress, mProgressModel, mPredictModel \\
+Rationale: These modules rely on AI models for disease prediction and progression analysis. The system needs to support updates to these models as new data or improvements emerge. \\
+\subsection{Non-Functional Requirements (NFR)}
+\textbf{LF1: Consistent user interface} \\
+Modules: mPatientList, mPatientOverview, mProgressView, mRecordsList \\
+Rationale: These modules are essential for maintaining a consistent UI across the system, ensuring a seamless user experience for viewing patient details and progress. \\
+\textbf{LF2: Ergonomic color schemes and fonts} \\
+Modules: mPatientList, mPatientOverview, mProgressView, mRecordsList \\
+Rationale: These modules focus on presenting patient data and disease progression in an easy-to-read, ergonomic manner. Consistent color schemes and font choices are critical for a good user experience. \\
+\textbf{UH1: Usability for common tasks} \\
+Modules: mPatientList, mPatientOverview, mProgressView, mRecordsList \\
+Rationale: These modules are designed with usability in mind to allow healthcare professionals to perform tasks such as searching for patients, viewing records, and analyzing disease progression efficiently. \\
+\textbf{UH2: Context-sensitive help} \\
+Modules: mAuth, mDataStore \\
+Rationale: The mAuth module ensures that users can access the system securely, while mDataStore can provide relevant help regarding data management and privacy settings. \\
+\textbf{PR1: Process images within 30 seconds} \\
+Modules: mDiseasePredict, mPredictModel, mDiseaseProgress, mProgressModel \\
+Rationale: These modules must process images quickly to meet the 30-second time constraint for efficient diagnosis and progression tracking. \\
+\textbf{PR2: Maintain consistent availability} \\
+Modules: mWebApp, mHTTP \\
+Rationale: These modules ensure that the application is available and responsive at all times, minimizing downtime for users who rely on the system. \\
+\textbf{PR3: Concurrent processing of 20 images} \\
+Modules: mDiseasePredict, mPredictModel, mDiseaseProgress, mProgressModel \\
+Rationale: The system is designed to handle the simultaneous processing of multiple images, enabling efficient analysis of large batches of X-rays or other diagnostic images. \\
+\textbf{OE1: Integration with PACS systems} \\
+Modules: mDataStore \\
+Rationale: PACS (Picture Archiving and Communication System) integration allows the system to interact with medical imaging databases, which is managed by mDataStore. \\
+\textbf{OE2: Operate in variable network conditions} \\
+Modules: mWebApp, mHTTP \\
+Rationale: These modules are built to handle different network conditions, ensuring that the web application can function reliably even with fluctuating internet speeds. \\
+\textbf{SR1: Encrypt patient data} \\
+Modules: mDataStore \\
+Rationale: mDataStore ensures that patient data is encrypted both in transit and at rest, satisfying security and privacy regulations. \\
+\textbf{SR2: Role-based access control (Canceled)} \\
+Rationale: This feature was canceled, so no module is connected to it. \\
+\textbf{MS1: Modular architecture} \\
+Modules: mReportView, mPredictModel, mProgressModel \\
+Rationale: The modular architecture allows each module to be updated or replaced independently, facilitating maintenance and scalability. \\
+\textbf{MS2: Automated testing suites} \\
+Modules: mDiseasePredict, mPredictModel, mDiseaseProgress, mProgressModel, mDataStore \\
+Rationale: These modules require robust automated testing to ensure their functionality and accuracy in disease prediction, progression tracking, and data management. \\
+\textbf{CR1: Support English and French languages} \\
+Modules: mPatientList, mPatientOverview, mProgressView, mRecordsList, mReportView \\
+Rationale: These modules display patient information and reports, which must support multiple languages for broader user accessibility. \\
+\textbf{LR1: Compliance with healthcare data protection laws} \\
+Modules: mDataStore \\
+Rationale: mDataStore ensures compliance with healthcare regulations by securely handling patient data in accordance with legal requirements. \\
+\textbf{LR2: Adherence to ISO 13485} \\
+Modules: mDataStore \\
+Rationale: mDataStore ensures that all data handling and storage comply with ISO 13485 standards for medical devices. \\
+\textbf{HS1: Radiologist validation of AI-generated diagnoses} \\
+Modules: mReportView \\
+Rationale: The mReportView module provides a platform for radiologists to review AI-generated diagnoses and confirm their accuracy before taking action. \\
+\textbf{HS2: Clear disclaimers about AI limitations} \\
+Modules: mReportView \\
+Rationale: mReportView includes disclaimers in the generated reports to inform users about the limitations of AI-based predictions. \\
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -421,26 +513,64 @@ requirements and between the modules and the anticipated changes.
 % like fref
 \begin{table}[H]
 \centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\begin{tabular}{p{0.6\textwidth} p{0.3\textwidth}}
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR1: Accept chest X-ray images as input & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel}\\
+FR2: Input additional patient symptoms & \mref{mDiseasePredict}, \mref{mReportView}, \mref{mPredictModel}\\
+FR3: Analyze chest X-rays for disease detection & \mref{mDiseasePredict}, \mref{mPredictModel}\\
+FR4: Monitor patient condition changes & \mref{mDiseaseProgress}, \mref{mProgressModel}\\
+FR5: Highlight affected areas on X-rays & \mref{mDiseasePredict}, \mref{mReportView}, \mref{mPredictModel}\\
+FR6: Generate a structured report & \mref{mReportView}\\
+FR7: Store patient data securely & \mref{mDataStore}\\
+FR8: Provide alerts for significant condition changes & \mref{mDiseaseProgress}, \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView}\\
+FR9: Allow treatment plan adjustments & \mref{mRecordsList}\\
+FR10: Integrate with EHR systems & \mref{mDataStore}\\
+FR11: Display confidence levels in UI & \mref{mReportView}\\
+FR12: Patient uploads for self-diagnosis (Canceled) & \\
+FR13: Support user roles and access levels (Canceled) & \\
+FR14: Create a new copy of X-rays for analysis & \mref{mRecordsList}\\
+FR15: Support additional imaging modalities & \mref{mProgressView}, \mref{mRecordsList}, \mref{mReportView}\\
+FR16: Support AI model updates & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel}\\
 \bottomrule
 \end{tabular}
-\caption{Trace Between Requirements and Modules}
+\caption{Trace Between Functional Requirements and Modules}
 \label{TblRT}
 \end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.6\textwidth} p{0.3\textwidth}}
+\toprule
+\textbf{Requirement} & \textbf{Modules} \\
+\midrule
+LF1: Consistent user interface & \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList} \\
+LF2: Ergonomic color schemes and fonts & \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList} \\
+UH1: Usability for common tasks & \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList} \\
+UH2: Context-sensitive help & \mref{mAuth}, \mref{mDataStore} \\
+PR1: Process images within 30 seconds & \mref{mDiseasePredict}, \mref{mPredictModel}, \mref{mDiseaseProgress}, \mref{mProgressModel} \\
+PR2: Maintain consistent availability & \mref{mWebApp}, \mref{mHTTP} \\
+PR3: Concurrent processing of 20 images & \mref{mDiseasePredict}, \mref{mPredictModel}, \mref{mDiseaseProgress}, \mref{mProgressModel} \\
+OE1: Integration with PACS systems & \mref{mDataStore} \\
+OE2: Operate in variable network conditions & \mref{mWebApp}, \mref{mHTTP} \\
+SR1: Encrypt patient data & \mref{mDataStore} \\
+SR2: Role-based access control (Canceled) & \\
+MS1: Modular architecture & \mref{mReportView}, \mref{mPredictModel}, \mref{mProgressModel} \\
+MS2: Automated testing suites & \mref{mDiseasePredict}, \mref{mPredictModel}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mDataStore} \\
+CR1: Support English and French languages & \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView},\mref{mRecordsList}, \mref{mReportView} \\
+LR1: Compliance with healthcare data protection laws & \mref{mDataStore} \\
+LR2: Adherence to ISO 13485 & \mref{mDataStore} \\
+HS1: Radiologist validation of AI-generated diagnoses & \mref{mReportView} \\
+HS2: Clear disclaimers about AI limitations & \mref{mReportView} \\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Non-Functional Requirements and Modules}
+\label{TblNFRModules}
+\end{table}
+
+
 
 \begin{table}[H]
 \centering
@@ -448,18 +578,13 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acHardware} & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel}, \mref{mDataStore}\\
+\acref{acInput} & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList}, \mref{mDataStore}, \mref{mPredictModel}, \mref{mProgressModel}\\
+\acref{acCompliance} & \mref{mDataStore}\\
+\acref{acDisease} & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mPredictModel}, \mref{mProgressModel}\\
+\acref{acUI} & \mref{mProgressView}, \mref{mReportView}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList}\\
+\acref{acErrorHandling} & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mPredictModel}, \mref{mProgressModel}\\
+\acref{acPreprocessing} & \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
