@@ -73,9 +73,8 @@ This section records information for easy reference.
   R & Requirement\\
   SC & Scientific Computing \\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  \progname & Chest X-Ray scan Analysis\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
   \bottomrule
 \end{tabular}\\
 
@@ -227,23 +226,23 @@ actually be implemented.
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & M1 \\
-& M2\\
-& M3\\
-& M4\\
+{Hardware-Hiding Module} &  Web Application Server\\
+& HTTP Server \\
+& Disease Prediction Server\\
+& Disease Progression Server\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & M5\\
-& M6\\
-& M7\\
-& M8\\
-& M9\\
-& M10\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & User Authentication \\
+& Patients List View\\
+& Patient Overview View \\
+& Disease Progression View \\
+& Medical Records List View\\
+& X-Ray Report View\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & M11\\
-& M12\\
-& M13\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
+& Disease Prediction Model\\
+& Data Persistent \\
 \bottomrule
 
 \end{tabular}
@@ -257,12 +256,6 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
