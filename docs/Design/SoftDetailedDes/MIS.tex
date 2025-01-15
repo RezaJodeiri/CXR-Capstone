@@ -1174,4 +1174,12 @@ graduate attribute of Problem Analysis and Design.
   \item While creating this design doc, as we investigated the functionality and operational flow of the system, we recognized gaps in our initial architecture that required additional components to ensure a logical and coherent flow. We found out that the Software Requirements Specification and hazard analysis were incomplete and needed to be revisited to accommodate these changes. For SRS we might need to adjust the specification for inputs taken into the system or incorporating an image preprocessing pipeline to standardize DICOM inputs and ensure compatibility images taken from different X-ray machines. Development Plan should include risks related to false negatives (missed abnormalities) and false positives (unnecessary follow-ups). It should also include mitigation strategies such as implementing secondary review workflows. 
 \end{enumerate}
 
-\end{document}
+\begin{enumerate}
+  Limitations of our solution includes that the AI model was trained on a specific dataset that may lack diversity in terms of patient demographics (age, gender, ethnicity) and may not perform equally well on images from underrepresented populations or different imaging machines (different brands, resolutions, or configurations). This might cause inaccuracies in model's predictions for underrepresented populations or when analyzing images from unfamiliar imaging devices. Another limitation is Module communication lacks robust retry mechanisms in case of network or hardware failures. This might cause failures in communication between system modules could result in data loss or delayed analyses. If we were given unlimited resources or had more time, we can expand the training dataset to include more diverse populations and images taken from different imaging equipments. We can also add advanced logging, monitoring, and error-recovery mechanisms to enhance fault tolerance. 
+\end{enumerate}
+
+\begin{enumerate}
+  Our chosen design pattern is layered architecture because it is highly scalable and maintainable and easy to replace or upgrade individual layers. It is also ideal for larger systems with complex workflows since it has clear separation between system layers. For our case, our backend services has multiple AI integrations which increases complexity. Layers are interacted sequentially from top to bottom which follows the logic flow of our project. We also considered MVC as our design solution but we realized that it can lead to tight coupling between controller and view, and our project might not fit into the triangular flow of MVC.
+\end{enumerate}
+
+  \end{document}
