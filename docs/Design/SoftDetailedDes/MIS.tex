@@ -32,7 +32,6 @@ urlcolor=cyan          % color of external links
 \usepackage{array}
 
 \externaldocument{../../SRS/SRS}
-
 \input{../../packages/Comments.tex}
 \input{../../packages/Common.tex}
 \input{../../packages/Reflection.tex}
@@ -184,7 +183,7 @@ The following table is taken directly from the Module Guide document for this pr
     \end{table}
 ~\newpage
 % /********************* M1 *********************/
-\section{MIS of Web Application Server Module} 
+\section{Web Application Server Module} 
 
 \subsection{Module}
 Web Application Server   
@@ -313,10 +312,7 @@ handleRequest(request)
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M4: Disease Progression Tracking Server Module
-    \item M5: Doctor Profile View Module
-    \item M6: Patient List View Module
-    \item M7: Patient Diseases Progression View Module
+    \item M14: Disease Prediction Model
 \end{itemize}
 
 \subsection{State Variables}
@@ -385,11 +381,7 @@ handleRequest(request)
 \begin{itemize}
 \item M1: Web Application Server Module
 \item M2: HTTP Server Module
-\item M3: Disease Prediction Server Module
-\item M5: Doctor Profile View Module
-\item M6: Patient List View Module
-\item M7: Patient Overview Module
-\item M8: Patient Diseases Progression View Module
+\item M13: Disease Progression Model
 \end{itemize}
 
 \subsection{State Variables}
@@ -453,14 +445,69 @@ handleRequest(request)
 \item \textbf{analyzeProgressionTrends()}: Analyzes progression data to identify trends or anomalies in disease progression.
 \item \textbf{archiveOldData()}: Moves data older than the retention period to an archive for long-term storage.
 \end{itemize}
+
 % /********************* M5 *********************/
+\section{User Authentication Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M15: Data Persistent
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{place holder} & place holder & place holder & \texttt{place holder}
+    \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{place holder}:
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item place holder
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{place holder}
+\begin{itemize}
+    \item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{place holder(place holder)}: place holder.
+\end{itemize}
+
+% /********************* M6 *********************/
 \section{Doctor Profile View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M11: User Authentication Module
+    \item M5: User Authentication Module
+    \item M7: Patients Overview View
+    \item M10: Medical Records List View
     \item M15: Data Persistence Module
 \end{itemize}
 
@@ -496,7 +543,7 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-\item Assumes that the User Authentication Module (M11) ensures only authorized doctors can view their profiles.
+\item Assumes that the User Authentication Module (M5) ensures only authorized doctors can view their profiles.
 \item Assumes the profile data is accurately stored and updated in the Data Persistence Module (M15).
 \end{itemize}
 
@@ -514,15 +561,17 @@ handleRequest(request)
 \item \textbf{updateProfilePicture(doctorID, picturePath)}: Updates the profile picture of the doctor.
 \item \textbf{logProfileAccess(doctorID)}: Logs each time a doctor accesses their profile for auditing purposes.
 \end{itemize}
-% /********************* M6 *********************/
+
+% /********************* M7 *********************/
 \section{Patient List View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M11: Patient Medical Record View Module
-    \item M15: Patient Medical Record Update Module
+    \item M5: User Authentication
+    \item M7: Patient Overview View
+    \item M15: Data Persistent
 \end{itemize}
 
 \subsection{State Variables}
@@ -559,7 +608,7 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-\item Assumes that the User Authentication Module (M11) is responsible for verifying that the user is a doctor with access to the list.
+\item Assumes that the User Authentication Module (M5) is responsible for verifying that the user is a doctor with access to the list.
 \item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M15).
 \end{itemize}
 
@@ -591,7 +640,7 @@ handleRequest(request)
 \item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
 \item \textbf{logListAccess(doctorID)}: Logs each time a doctor accesses the patient list for auditing purposes.
 \end{itemize}
-% /********************* M7 *********************/
+% /********************* M8 *********************/
 \section{Patient Overview Module}
 
 \subsection{Other Modules the Current Module Uses}
@@ -630,7 +679,7 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the patient overview.
+\item Assumes the User Authentication Module (M5) ensures that only authorized users can view the patient overview.
 \item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M15).
 \end{itemize}
 
@@ -647,15 +696,15 @@ handleRequest(request)
 \item \textbf{generateOverviewSummary(patientID)}: Creates a summary of the patient's current status.
 \item \textbf{logOverviewAccess(patientID)}: Logs each time a patient overview is accessed for auditing purposes.
 \end{itemize}
-% /********************* M8 *********************/
-\section{Patient Diseases Progression View}
+% /********************* M9 *********************/
+\section{Diseases Progression View}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
 \item M1: Web Application Server Module
 \item M2: HTTP Server Module
 \item M11: User Authentication Module
-\item M12: Disease Progression Tracking Module
+\item M12: X-Ray Report View
 \item M15: Data Persistence Module
 \end{itemize}
 
@@ -705,14 +754,15 @@ handleRequest(request)
 \item \textbf{generateProgressionChart(patientID)}: Generates a visual chart of the disease progression.
 \item \textbf{logProgressionAccess(patientID)}: Logs access to a patient's disease progression data for auditing purposes.
 \end{itemize}
-% /********************* M9 *********************/
-\section{Patient Medical Records List View Module}
+% /********************* M10 *********************/
+\section{Medical Records List View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M11: User Authentication Module
+    \item M5: User Authentication Module
+    \item M11: Medical Record View Module
     \item M15: Data Persistence Module
 \end{itemize}
 
@@ -745,7 +795,7 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-\item Assumes the User Authentication Module (M11) ensures that only authorized users can view the medical records.
+\item Assumes the User Authentication Module (M5) ensures that only authorized users can view the medical records.
 \item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M15).
 \end{itemize}
 
@@ -762,15 +812,15 @@ handleRequest(request)
 \item \textbf{generateRecordsSummary(patientID)}: Creates summaries for each record in the list.
 \item \textbf{logRecordsAccess(patientID)}: Logs access to a patient's medical records list for auditing purposes.
 \end{itemize}
-% /********************* M10 *********************/
-\section{Patient Medical Record View Module}
+% /********************* M11 *********************/
+\section{Medical Record View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
 \item M1: Web Application Server Module
 \item M2: HTTP Server Module
 \item M11: User Authentication Module
-\item M13: Disease Prediction Module 
+\item M12: X-Ray Report View
 \item M15: Data Persistence Module
 \end{itemize}
 
@@ -803,7 +853,7 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the detailed medical record.
+    \item Assumes the User Authentication Module (M5) ensures that only authorized users can view the detailed medical record.
     \item Assumes the data for medical records is accurately maintained and readily accessible through the Data Persistence Module (M15).
 \end{itemize}
 
@@ -821,7 +871,164 @@ handleRequest(request)
 \item \textbf{formatRecordDetails(recordID)}: Formats the medical record details for display.
 \item \textbf{logRecordAccess(recordID)}: Logs access to the specific medical record for auditing purposes.
 \end{itemize}
-% /********************* M11 *********************/
+
+% /********************* M12 *********************/
+\section{X-Ray Report View}
+
+\subsection{place holder}
+\begin{itemize}
+\item M1: Web Application Server Module
+\item M2: HTTP Server Module
+\item M15: User Authentication Module
+\item M13: Disease Prediction Server Module 
+\item M15: Data Persistence Server Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{place holder} & place holder & place holder & \texttt{place holder} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{place holder}: "place holder" 
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item place holder
+    \item place holder
+\end{itemize}
+
+
+\subsection{Access Routine Semantics}
+\subsubsection{place holder(place holder)}
+\begin{itemize}
+    \item \textbf{place holder}: place holder
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{place holder(place holder)}: place holder
+\end{itemize}
+
+% /********************* M13 *********************/
+\section{Disease Progression Module}
+\label{Disease Progression Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+    \item M2: HTTP Server Module
+    \item M5: User Authentication Module
+    \item M15: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{description}
+    \item[\textbf{currentProgressionModel}:] Model -- The currently loaded disease progression model.
+    \item[\textbf{progressionStatus}:] ProgressionStatus -- Status of the progression model (e.g., loaded, unloaded, error).
+    \item[\textbf{progressionCache}:] Cache -- Caches recent progression results for quick access.
+\end{description}
+
+\subsection{Exported Constants and Access Programs}
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{loadProgressionModel} & modelPath : String & - & \texttt{ModelLoadException} \\
+    \hline
+    \texttt{updateProgressionStage} & patientID : String, stageData : StageData & - & \texttt{InvalidStageException} \\
+    \hline
+    \texttt{getProgressionStatus} & patientID : String & ProgressionStatus & \texttt{PatientNotFoundException} \\
+    \hline
+    \texttt{resetProgressionModel} & - & - & - \\
+    \hline
+    \texttt{forecastProgression} & patientID : String & ForecastResult & \texttt{ForecastException} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{DEFAULT\_PROGRESSION\_MODEL}: \texttt{"progression\_model.pkl"} -- Path to the default progression model.
+    \item \textbf{MAX\_STAGES}: 10 -- Maximum number of disease progression stages.
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{PROGRESSION\_MODEL\_PATH}: Path to the directory containing progression models.
+    \item \textbf{CACHE\_SIZE}: Maximum number of progression forecasts to cache.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes that the Data Persistence Module (M15) provides reliable access to patient data.
+    \item Assumes that the User Authentication Module (M5) ensures that only authorized users can update and view disease progression.
+    \item Assumes that progression models are regularly updated and maintained for accuracy.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{loadProgressionModel(modelPath)}
+\begin{itemize}
+    \item \textbf{Transition}: Loads the disease progression model from the specified \texttt{modelPath}.
+    \item \textbf{Exception}: Throws \texttt{ModelLoadException} if the model cannot be loaded.
+\end{itemize}
+
+\subsubsection{updateProgressionStage(patientID, stageData)}
+\begin{itemize}
+    \item \textbf{Transition}: Updates the disease progression stage for the patient identified by \texttt{patientID} with the provided \texttt{stageData}.
+    \item \textbf{Exception}: Throws \texttt{InvalidStageException} if \texttt{stageData} is invalid.
+\end{itemize}
+
+\subsubsection{getProgressionStatus(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the current disease progression status for the patient identified by \texttt{patientID}.
+    \item \textbf{Output}: Returns a \texttt{ProgressionStatus} object.
+    \item \textbf{Exception}: Throws \texttt{PatientNotFoundException} if the patient does not exist.
+\end{itemize}
+
+\subsubsection{resetProgressionModel()}
+\begin{itemize}
+    \item \textbf{Transition}: Resets the disease progression model to the default state.
+    \item \textbf{Exception}: None.
+\end{itemize}
+
+\subsubsection{forecastProgression(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Generates a forecast of the disease progression for the patient identified by \texttt{patientID}.
+    \item \textbf{Output}: Returns a \texttt{ForecastResult} containing predicted progression data.
+    \item \textbf{Exception}: Throws \texttt{ForecastException} if the forecast cannot be generated.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{validateStageData(stageData)}: Validates the structure and completeness of \texttt{stageData}.
+    \item \textbf{loadDefaultProgressionModel()}: Loads the default progression model.
+    \item \textbf{cacheProgressionResult(result)}: Stores the \texttt{ForecastResult} in the \texttt{progressionCache}.
+    \item \textbf{clearProgressionCache()}: Clears all entries from the \texttt{progressionCache}.
+\end{itemize}
+
+% /********************* M14 *********************/
 \section{Disease Prediction Module}
 \label{Disease Prediction Module}
 
@@ -829,7 +1036,7 @@ handleRequest(request)
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M11: User Authentication Module
+    \item M5: User Authentication Module
     \item M15: Data Persistence Module
 \end{itemize}
 
@@ -922,108 +1129,6 @@ handleRequest(request)
     \item \textbf{clearCache()} : Clears all entries from the \texttt{predictionCache}.
 \end{itemize}
 
-% /********************* M12 *********************/
-\section{Disease Progression Module}
-\label{Disease Progression Module}
-
-\subsection{Other Modules the Current Module Uses}
-\begin{itemize}
-    \item M1: Web Application Server Module
-    \item M2: HTTP Server Module
-    \item M11: User Authentication Module
-    \item M13: Disease Prediction Module 
-    \item M15: Data Persistence Module
-\end{itemize}
-
-\subsection{State Variables}
-\begin{description}
-    \item[\textbf{currentProgressionModel}:] Model -- The currently loaded disease progression model.
-    \item[\textbf{progressionStatus}:] ProgressionStatus -- Status of the progression model (e.g., loaded, unloaded, error).
-    \item[\textbf{progressionCache}:] Cache -- Caches recent progression results for quick access.
-\end{description}
-
-\subsection{Exported Constants and Access Programs}
-
-\subsubsection{Exported Access Programs}
-\begin{center}
-  \begin{tabular}{|l|l|l|l|}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline 
-    \texttt{loadProgressionModel} & modelPath : String & - & \texttt{ModelLoadException} \\
-    \hline
-    \texttt{updateProgressionStage} & patientID : String, stageData : StageData & - & \texttt{InvalidStageException} \\
-    \hline
-    \texttt{getProgressionStatus} & patientID : String & ProgressionStatus & \texttt{PatientNotFoundException} \\
-    \hline
-    \texttt{resetProgressionModel} & - & - & - \\
-    \hline
-    \texttt{forecastProgression} & patientID : String & ForecastResult & \texttt{ForecastException} \\
-    \hline
-  \end{tabular}
-\end{center}
-
-\subsubsection{Exported Constants}
-\begin{itemize}
-    \item \textbf{DEFAULT\_PROGRESSION\_MODEL}: \texttt{"progression\_model.pkl"} -- Path to the default progression model.
-    \item \textbf{MAX\_STAGES}: 10 -- Maximum number of disease progression stages.
-\end{itemize}
-
-\subsection{Environment Variables}
-\begin{itemize}
-    \item \textbf{PROGRESSION\_MODEL\_PATH}: Path to the directory containing progression models.
-    \item \textbf{CACHE\_SIZE}: Maximum number of progression forecasts to cache.
-\end{itemize}
-
-\subsection{Assumptions}
-\begin{itemize}
-    \item Assumes that the Data Persistence Module (M15) provides reliable access to patient data.
-    \item Assumes that the User Authentication Module (M11) ensures that only authorized users can update and view disease progression.
-    \item Assumes that progression models are regularly updated and maintained for accuracy.
-\end{itemize}
-
-\subsection{Access Routine Semantics}
-
-\subsubsection{loadProgressionModel(modelPath)}
-\begin{itemize}
-    \item \textbf{Transition}: Loads the disease progression model from the specified \texttt{modelPath}.
-    \item \textbf{Exception}: Throws \texttt{ModelLoadException} if the model cannot be loaded.
-\end{itemize}
-
-\subsubsection{updateProgressionStage(patientID, stageData)}
-\begin{itemize}
-    \item \textbf{Transition}: Updates the disease progression stage for the patient identified by \texttt{patientID} with the provided \texttt{stageData}.
-    \item \textbf{Exception}: Throws \texttt{InvalidStageException} if \texttt{stageData} is invalid.
-\end{itemize}
-
-\subsubsection{getProgressionStatus(patientID)}
-\begin{itemize}
-    \item \textbf{Transition}: Retrieves the current disease progression status for the patient identified by \texttt{patientID}.
-    \item \textbf{Output}: Returns a \texttt{ProgressionStatus} object.
-    \item \textbf{Exception}: Throws \texttt{PatientNotFoundException} if the patient does not exist.
-\end{itemize}
-
-\subsubsection{resetProgressionModel()}
-\begin{itemize}
-    \item \textbf{Transition}: Resets the disease progression model to the default state.
-    \item \textbf{Exception}: None.
-\end{itemize}
-
-\subsubsection{forecastProgression(patientID)}
-\begin{itemize}
-    \item \textbf{Transition}: Generates a forecast of the disease progression for the patient identified by \texttt{patientID}.
-    \item \textbf{Output}: Returns a \texttt{ForecastResult} containing predicted progression data.
-    \item \textbf{Exception}: Throws \texttt{ForecastException} if the forecast cannot be generated.
-\end{itemize}
-
-\subsection{Local Functions}
-\begin{itemize}
-    \item \textbf{validateStageData(stageData)}: Validates the structure and completeness of \texttt{stageData}.
-    \item \textbf{loadDefaultProgressionModel()}: Loads the default progression model.
-    \item \textbf{cacheProgressionResult(result)}: Stores the \texttt{ForecastResult} in the \texttt{progressionCache}.
-    \item \textbf{clearProgressionCache()}: Clears all entries from the \texttt{progressionCache}.
-\end{itemize}
-
 % /********************* M13 *********************/
 \section{Data Persistence Module}
 \label{Data Persistence Module}
@@ -1032,9 +1137,6 @@ handleRequest(request)
 \begin{itemize}
     \item M1: Web Application Server Module
     \item M2: HTTP Server Module
-    \item M11: User Authentication Module
-    \item M13: Disease Prediction Module 
-    \item M14: Disease Progression Module
 \end{itemize}
 
 \subsection{State Variables}
