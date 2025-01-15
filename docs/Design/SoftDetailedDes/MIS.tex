@@ -63,9 +63,32 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{l l} 
+  \toprule		
+  \textbf{Symbol} & \textbf{Description}\\
+  \midrule 
+  SRS & Software Requirements Specification\\
+  AI & Artificial Intelligence\\
+  CNN & Convolutional Neural Network\\
+  DICOM & Digital Imaging and Communications in Medicine\\
+  IVDDs & In Vitro Diagnostic Devices\\
+  ML & Machine Learning\\
+  PACS & Picture Archiving and Communication System\\
+  SaMD & Software as a Medical Device\\
+  ROC & Receiver Operating Characteristic Curve\\
+  SLA & Service-Level Agreement\\
+  FR & Functional Requirement\\
+  NFR & Non-Functional Requirement\\
+  FSM & Finite State Machine\\
+  CXR & Chest X-Ray Project\\
+  POC & Proof of Concept\\
+  TM & Theoretical Model\\
+  AWS & Amazon Web Services\\
+  ECS & Elastic Container Service\\
+  ECR & Elastic Container Registry\\
+  \bottomrule
+\end{tabular}
 
 \newpage
 
@@ -80,7 +103,7 @@ See SRS Documentation at \wss{give url}
 The following document details the Module Interface Specifications for the
  application. Complementary documents include the Module Guide.
 
-The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
+\noindent The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
 
 \section{Notation}
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. The mathematical notation follows standard conventions for sets, sequences, and functions. The notation includes symbols for ML model operations and medical data processing.
@@ -125,40 +148,40 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     \caption{Data types from libraries}
     \end{table}
 
+\newpage
 \section{Module Decomposition}
 
 The following table is taken directly from the Module Guide document for this project.
-
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
-\end{table}
-
-\newpage
+    \centering
+    \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1} & \textbf{Level 2}\\
+    \midrule
+    
+    {Hardware-Hiding Module} &  Web Application Server\\
+    & HTTP Server \\
+    & Disease Prediction Server\\
+    & Disease Progression Server\\
+    \midrule
+    
+    \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & User Authentication \\
+    & Patients List View\\
+    & Patient Overview View \\
+    & Disease Progression View \\
+    & Medical Records List View\\
+    & X-Ray Report View\\
+    \midrule
+    
+    \multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
+    & Disease Prediction Model\\
+    & Data Persistent \\
+    \bottomrule
+    
+    \end{tabular}
+    \caption{Module Hierarchy}
+    \label{TblMH}
+    \end{table}
 ~\newpage
 % /********************* M1 *********************/
 \section{MIS of Web Application Server Module} 
@@ -1125,11 +1148,6 @@ handleRequest(request)
 
 \newpage
 
-\section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
-
-\newpage{}
 
 \section*{Appendix --- Reflection}
 
