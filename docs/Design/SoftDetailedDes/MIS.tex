@@ -375,90 +375,169 @@ handleRequest(request)
 \end{itemize}
 
 % /********************* M4 *********************/
-\section{Disease Progression Tracking Server Module}
+\section{User Authentication Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-\item M1: Web Application Server Module
-\item M2: HTTP Server Module
-\item M13: Disease Progression Model
+    \item M15: Data Persistence Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{progressionData}: Stores historical data of disease progression for each patient.
-    \item \textbf{timeStamps}: Records the dates and times when progression data is captured.
-    \item \textbf{patientHistory}: Maintains a detailed history of each patient's disease states over time.
+    \item \textbf{cognito\_idp\_client}: AWS Cognito client, initialized via the AWS boto3 library.
+    \item \textbf{user\_pool\_id}: Identifier of the database at which AWS Cognito stores user's information such as username, password, first name, etc.
+    \item \textbf{client\_id}: Identifier of the User Authentication Module to authenticate with AWS Cognito (via OAUTH's client credential grant).
+    \item \textbf{client\_secret}: Password of the User Authentication Module, used in conjunction with client\_id to authenticate with AWS Cognito.
 \end{itemize}
+
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
 \begin{tabular}{|l|l|l|l|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{sign\_up\_user} & user\_email, password, user\_detail & user & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
     \hline
-    \texttt{trackProgression} & Patient ID, data & Confirmation of tracking & \texttt{DataNotFoundException} \\
+    \texttt{sign\_in\_user} & user\_email, password & bearer\_token & \texttt{Unauthorized, IncorrectCredentials, InternalServerError} \\
     \hline
-    \texttt{getProgressionHistory} & Patient ID & Progression history & \texttt{DataNotFoundException} \\
+    \texttt{get\_self\_user} & bearer\_token & user & \texttt{Unauthorized, InternalServerError} \\
+    \hline
+    \texttt{get\_user\_by\_id} & uuid & user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \hline
+    \texttt{update\_user\_by\_id} & uuid, updated\_user\_json & user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
     \hline
 \end{tabular}
 
+
 \subsubsection{Exported Constants}
-\begin{itemize}
-\item \textbf{DATA\_RETENTION\_PERIOD}: 5 years (duration for storing disease progression data)
-\item \textbf{TRACKING\_INTERVAL}: 30 days (standard interval for recording progression data)
-\item \textbf{MAX\_HISTORY\_ENTRIES}: 10000 (maximum number of progression entries per patient)
-\end{itemize}
+This module does not export any constants
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{dataStoragePath}: The path where progression tracking data is stored.
-\item \textbf{updateInterval}: The time interval for automatically updating progression data.
+    \item \textbf{AWS\_ACCESS\_KEY\_ID}: Access key to authenticate backend with AWS
+    \item \textbf{AWS\_SECRET\_ACCESS\_KEY}: Secret key to authenticate backend with AWS
+    \item \textbf{AWS\_REGION}: AWS Region of the backend infrastructure
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-\item Assumes valid and accurate disease prediction data is available from M3.
-\item Assumes patients' data is regularly updated.
-\item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+    \item AWS Cognito returns consistent json results with user fields, since neuralanalyzer backend expect certain fields from user object (custom:firstName, custom:organization, etc.)
+    \item AWS Cognito always stays online, since without this service, users wont be able to login into the application.
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(patientID, data)}
-
+\subsubsection{sign\_up\_user(user\_email, password, user\_detail)}
 \begin{itemize}
-    \item \textbf{Transition}: Stores new disease progression data for the given patient.
-    \item \textbf{Output}: Returns confirmation of data storage or throws a \texttt{DataNotFoundException} if the patient data is not found.
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{user\_email}: Email address of the user.
+            \item \textbf{password}: Password for the user's account.
+            \item \textbf{user\_detail}: Additional user details, such as first name and organization, formatted as Python Dictionary.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the created user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The provided email is valid and not already registered.
+            \item Password meets AWS Cognito's security requirements.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully created and stored in the Cognito user pool.
+        \end{itemize}
 \end{itemize}
 
-\subsubsection{getProgressionHistory(patientID)}
-
+\subsubsection{sign\_in\_user(user\_email, password)}
 \begin{itemize}
-    \item \textbf{Transition}: Retrieves historical progression data for the specified patient.
-    \item \textbf{Output}: Returns the progression history or throws a \texttt{DataNotFoundException} if no history is found.
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{user\_email}: Email address of the user.
+            \item \textbf{password}: Password for the user's account.
+        \end{itemize}
+    \item \textbf{Outputs}: A bearer token for authenticated access to other services.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The user is registered in the Cognito user pool.
+            \item The provided credentials are correct.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully authenticated.
+            \item A bearer token is generated and returned for future authenticated requests.
+        \end{itemize}
 \end{itemize}
 
+\subsubsection{get\_self\_user(bearer\_token)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{bearer\_token}: User's Bearer token.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the created user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The bearer\_token must be valid and not expired.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully retrieved from AWS Cognito.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{get\_user\_by\_id(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the user (string)
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item User's UUID must be valid, and attached to a registered user.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully retrieved from AWS Cognito.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{update\_user\_by\_id(uuid, updated\_user\_json)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the user (string)
+            \item \textbf{updated\_user\_json}: Python Dictionary object that contains the field which the caller wants to update the user with.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the updated user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item User's UUID must be valid, and attached to a registered user.
+            \item User's updated fields must belong to list of fields users are allowed to edit (ie: first and last name, role, organization, etc.)
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item User with UUID must have the fields in updated\_user\_json updated on AWS Cognito.
+        \end{itemize}
+\end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{updateProgressionData()}: Updates the disease progression data at regular intervals based on new predictions or patient information.
-\item \textbf{analyzeProgressionTrends()}: Analyzes progression data to identify trends or anomalies in disease progression.
-\item \textbf{archiveOldData()}: Moves data older than the retention period to an archive for long-term storage.
+    \item \textbf{\_parse\_user\_json\_from\_cognito\_user}: Convert user object returned from AWS Cognito, to a more application-friendly internal user object.
+    \item \textbf{\_parse\_cognito\_attr\_user\_from\_user\_json}: Convert the internal user object to the user data format that AWS Cognito requires.
+    \item \textbf{\_get\_username\_from\_email}: Converting user's email into their username. (ie: nathan@gmail.com will be converted to nathan\_gmail)
+    \item \textbf{\_get\_user\_by\_email}: Fetching user from AWS Cognito via their email. 
 \end{itemize}
-
-% /********************* M5 *********************/
-\section{User Authentication Module}
+% /********************* M12 *********************/
+\section{Module NAME HERE!!!}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item M1: Web Application Server Module
-    \item M2: HTTP Server Module
-    \item M15: Data Persistent
+    \item fill this 
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{place holder}: place holder
+    \item \textbf{Title}: fill this 
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -467,36 +546,46 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{place holder} & place holder & place holder & \texttt{place holder}
-    \\
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
+    \hline
+    \texttt{fill 1} & fill 2 & fill 3 & \texttt{fill 4} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{place holder}:
+\item \textbf{Title}: file this 
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{place holder}: place holder
+    \item fill this
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-\item place holder
+    \item fill this
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{place holder}
+\subsubsection{trackProgression(patientID, data)}
+
 \begin{itemize}
-    \item \textbf{place holder}: place holder
+    \item fill this
 \end{itemize}
+
+\subsubsection{}
+
+\begin{itemize}
+    \item fill this
+\end{itemize}
+
 
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{place holder(place holder)}: place holder.
+    \item fill this
 \end{itemize}
+
 
 % /********************* M6 *********************/
 \section{Doctor Profile View Module}
@@ -1130,7 +1219,144 @@ handleRequest(request)
 \end{itemize}
 
 % /********************* M13 *********************/
-\section{Data Persistence Module}
+\section{Data Persistent Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item None
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{dynamodb}: AWS DynamoDB client (managed NoSQL service), initialized via aws boto3 library.
+    \item \textbf{table}: Name of the DynamoDB table.
+    \item \textbf{s3\_client}: AWS S3 client (managed blob storage service), initialized via aws boto3 library.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{get\_item\_by\_id} & uuid & item & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{create\_new\_item} & item & uuid, item & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{update\_item\_by\_id} & uuid, item & item & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{get\_s3\_upload\_presigned\_url} & file\_name & presigned\_url & \texttt{InternalServerError, ClientError} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+This module does not export any constants
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{AWS\_ACCESS\_KEY\_ID}: Access key to authenticate backend with AWS
+    \item \textbf{AWS\_SECRET\_ACCESS\_KEY}: Secret key to authenticate backend with AWS
+    \item \textbf{AWS\_REGION}: AWS Region of the backend infrastructure
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item AWS DynamoDB and AWS S3 returns consistent json results and error codes.
+    \item AWS DynamoDB and AWS S3 always stays online, without these services, users wont be able to create, view, update prescriptions and records.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{get\_item\_by\_id(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: Unique identifier of the item to retrieve.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item The item object corresponding to the given `uuid`.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `uuid` exists in the DynamoDB table.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The item object is successfully retrieved from the database.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{create\_new\_item(item)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{item}: A Python Dictionary object containing the details of the item to be created.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the created item.
+            \item \textbf{item}: The created item object.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `item` dictionary is well-formed.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The new item is successfully added to the DynamoDB table.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{update\_item\_by\_id(uuid, item)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the item to be updated.
+            \item \textbf{item}: A Python Dictionary containing the updated fields for the item.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item The updated item object.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `uuid` corresponds to an existing item in the DynamoDB table.
+            \item The `item` Dictionary contains valid fields for the update.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The item is successfully updated in the database, and returned to user.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{get\_s3\_upload\_presigned\_url(file\_name)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{file\_name}:The name of the file to be uploaded to S3 (string).
+        \end{itemize}
+        \item \textbf{Outputs}:
+        \begin{itemize}
+            \item \textbf{presigned\_url}: A pre-signed URL allowing authorized upload of the specified file to AWS S3.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `file\_name' is a valid, non-empty string
+            \item The S3 bucket configured in the s3\_client is accessible and writable by the authenticated user.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item A valid pre-signed URL for uploading the specified file is generated and returned.
+            \item The generated pre-signed URL is only valid for 1 minute.
+        \end{itemize}
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item None
+\end{itemize}
 \label{Data Persistence Module}
 
 \subsection{Other Modules the Current Module Uses}
@@ -1280,25 +1506,10 @@ graduate attribute of Problem Analysis and Design.
 
 \begin{enumerate}
     \item When writing this deliverable, several things went really well that made the whole process smoother and more organized. Our existing documentation, like the detailed list of functional and non-functional requirements and the Module Interface Specification (MIS) we created, provided a solid roadmap for how the system should behave. This clarity made it easier to develop the design blueprint and the specifications for each module because we already knew what each part needed to do and how they should interact. Another big plus was the team’s early focus on a modular architecture, such as separating the machine learning (ML) services from the core backend. This approach kept our design documents organized and manageable, allowing us to develop, test, and maintain each module independently without getting overwhelmed. Additionally, having the core implementation set up during the Proof of Concept (POC) phase gave us a great direction for developing the specifications for our modules. It provided a tested foundation to build on, reducing uncertainties and making our specification development more precise and targeted.
-\end{enumerate}
-
-\begin{enumerate}
-  \item One of the pain points when writing this document is the ambiguities in some of our existing documents which made it challenging for us to finalize module boundaries. To resolve this, we had couple discussions as a team to refine unclear requirements and ensure alignment. We also experienced a hard time determining the design architecture of our project between MVC and layered architecture. MVC is primarily used for organizing applications with user interfaces, especially in web and desktop applications, whereas layered architecture is highly scalable and maintainable and is easy to replace or upgrade individual layers. At the end we decided to go with layered architecture since when building larger-scale, complex systems that need clear abstractions and the system will integrate with multiple services or technologies. When multiple team members were contributing to the same document, we had a hard time managing version control. To resolve this, we implemented a review-and-approval workflow, which each commit needs at least one another team member’s approval before merging in.
-\end{enumerate}
-
-\begin{enumerate}
-  \item After speaking with our client, we decided to prioritize user-friendly interface which was based on client (professor) feedback as it needs to be intuitive and easy to navigate, which also emphasizes maintainability of the project. We decided to prioritize interpretability and transparency of AI-generated report (explainable AI) which comes from the discussions with stakeholder emphasizing trust in AI results. This would help doctors/radiologists to better understand the prediction results. As for non-client-informed decisions, we decided to implement a disease progression feature that is separated from the prediction model. It traces the patient disease progression over a certain period, allowing comparing different X-rays and reports to give a more straightforward understanding of patient condition overtime. By separating two models, they work independently and will still function if the other one goes down, allowing higher fault tolerance.
-\end{enumerate}
-
-\begin{enumerate}
-  \item While creating this design doc, as we investigated the functionality and operational flow of the system, we recognized gaps in our initial architecture that required additional components to ensure a logical and coherent flow. We found out that the Software Requirements Specification and hazard analysis were incomplete and needed to be revisited to accommodate these changes. For SRS we might need to adjust the specification for inputs taken into the system or incorporating an image preprocessing pipeline to standardize DICOM inputs and ensure compatibility images taken from different X-ray machines. Development Plan should include risks related to false negatives (missed abnormalities) and false positives (unnecessary follow-ups). It should also include mitigation strategies such as implementing secondary review workflows. 
-\end{enumerate}
-
-\begin{enumerate}
-  Limitations of our solution includes that the AI model was trained on a specific dataset that may lack diversity in terms of patient demographics (age, gender, ethnicity) and may not perform equally well on images from underrepresented populations or different imaging machines (different brands, resolutions, or configurations). This might cause inaccuracies in model's predictions for underrepresented populations or when analyzing images from unfamiliar imaging devices. Another limitation is Module communication lacks robust retry mechanisms in case of network or hardware failures. This might cause failures in communication between system modules could result in data loss or delayed analyses. If we were given unlimited resources or had more time, we can expand the training dataset to include more diverse populations and images taken from different imaging equipments. We can also add advanced logging, monitoring, and error-recovery mechanisms to enhance fault tolerance. 
-\end{enumerate}
-
-\begin{enumerate}
+    \item One of the pain points when writing this document is the ambiguities in some of our existing documents which made it challenging for us to finalize module boundaries. To resolve this, we had couple discussions as a team to refine unclear requirements and ensure alignment. We also experienced a hard time determining the design architecture of our project between MVC and layered architecture. MVC is primarily used for organizing applications with user interfaces, especially in web and desktop applications, whereas layered architecture is highly scalable and maintainable and is easy to replace or upgrade individual layers. At the end we decided to go with layered architecture since when building larger-scale, complex systems that need clear abstractions and the system will integrate with multiple services or technologies. When multiple team members were contributing to the same document, we had a hard time managing version control. To resolve this, we implemented a review-and-approval workflow, which each commit needs at least one another team member’s approval before merging in.
+    \item After speaking with our client, we decided to prioritize user-friendly interface which was based on client (professor) feedback as it needs to be intuitive and easy to navigate, which also emphasizes maintainability of the project. We decided to prioritize interpretability and transparency of AI-generated report (explainable AI) which comes from the discussions with stakeholder emphasizing trust in AI results. This would help doctors/radiologists to better understand the prediction results. As for non-client-informed decisions, we decided to implement a disease progression feature that is separated from the prediction model. It traces the patient disease progression over a certain period, allowing comparing different X-rays and reports to give a more straightforward understanding of patient condition overtime. By separating two models, they work independently and will still function if the other one goes down, allowing higher fault tolerance.
+    \item While creating this design doc, as we investigated the functionality and operational flow of the system, we recognized gaps in our initial architecture that required additional components to ensure a logical and coherent flow. We found out that the Software Requirements Specification and hazard analysis were incomplete and needed to be revisited to accommodate these changes. For SRS we might need to adjust the specification for inputs taken into the system or incorporating an image preprocessing pipeline to standardize DICOM inputs and ensure compatibility images taken from different X-ray machines. Development Plan should include risks related to false negatives (missed abnormalities) and false positives (unnecessary follow-ups). It should also include mitigation strategies such as implementing secondary review workflows. 
+    \item Limitations of our solution includes that the AI model was trained on a specific dataset that may lack diversity in terms of patient demographics (age, gender, ethnicity) and may not perform equally well on images from underrepresented populations or different imaging machines (different brands, resolutions, or configurations). This might cause inaccuracies in model's predictions for underrepresented populations or when analyzing images from unfamiliar imaging devices. Another limitation is Module communication lacks robust retry mechanisms in case of network or hardware failures. This might cause failures in communication between system modules could result in data loss or delayed analyses. If we were given unlimited resources or had more time, we can expand the training dataset to include more diverse populations and images taken from different imaging equipments. We can also add advanced logging, monitoring, and error-recovery mechanisms to enhance fault tolerance. 
   Our chosen design pattern is layered architecture because it is highly scalable and maintainable and easy to replace or upgrade individual layers. It is also ideal for larger systems with complex workflows since it has clear separation between system layers. For our case, our backend services has multiple AI integrations which increases complexity. Layers are interacted sequentially from top to bottom which follows the logic flow of our project. We also considered MVC as our design solution but we realized that it can lead to tight coupling between controller and view, and our project might not fit into the triangular flow of MVC.
 \end{enumerate}
 
