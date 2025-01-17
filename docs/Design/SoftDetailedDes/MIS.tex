@@ -498,70 +498,6 @@ handleRequest(request)
 \item \textbf{place holder(place holder)}: place holder.
 \end{itemize}
 
-% /********************* M6 *********************/
-\section{Doctor Profile View Module}
-
-\subsection{Other Modules the Current Module Uses}
-\begin{itemize}
-    \item M1: Web Application Server Module
-    \item M2: HTTP Server Module
-    \item M5: User Authentication Module
-    \item M7: Patients Overview View
-    \item M10: Medical Records List View
-    \item M15: Data Persistence Module
-\end{itemize}
-
-\subsection{State Variables}
-\begin{itemize}
-    \item \textbf{doctorProfile}: Stores the user information of the currently logged-in doctor, including name, specialty, contact details, and credentials.
-\end{itemize}
-
-\subsection{Exported Constants and Access Programs}
-\subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline 
-    \texttt{getDoctorProfile} & userID & user Profile & \texttt{ProfileNotFoundException} \\
-    \hline
-    \texttt{getDoctorProfile} & userID & user Profile & \texttt{NotDoctorException } \\
-    \hline
-\end{tabular}
-
-\subsubsection{Exported Constants}
-\begin{itemize}
-\item \textbf{PROFILE\_UPDATE\_INTERVAL}: 24 hours (time interval for automatic profile updates)
-\item \textbf{DEFAULT\_PROFILE\_PICTURE}: "default\_doctor.png" (default profile picture for doctors without a custom one)
-\item \textbf{DEFAULT\_SPECIALTY}: "Radiologist" (default specialty for doctors without a specified specialty)
-\end{itemize}
-
-\subsection{Environment Variables}
-\begin{itemize}
-\item \textbf{profileDataPath}: Path to the data source containing doctor profile information.
-\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
-\end{itemize}
-
-\subsection{Assumptions}
-\begin{itemize}
-\item Assumes that the User Authentication Module (M5) ensures only authorized doctors can view their profiles.
-\item Assumes the profile data is accurately stored and updated in the Data Persistence Module (M15).
-\end{itemize}
-
-\subsection{Access Routine Semantics}
-\subsubsection{viewDoctorProfile(doctorID)}
-\begin{itemize}
-    \item \textbf{Transition}: Retrieves the profile information of the specified doctor.
-    \item \textbf{Output}: Returns the doctor profile details or throws a \texttt{ProfileNotFoundException} if the profile cannot be found.
-\end{itemize}
-
-
-\subsection{Local Functions}
-\begin{itemize}
-\item \textbf{fetchProfileData(doctorID)}: Retrieves profile data from the data source.
-\item \textbf{updateProfilePicture(doctorID, picturePath)}: Updates the profile picture of the doctor.
-\item \textbf{logProfileAccess(doctorID)}: Logs each time a doctor accesses their profile for auditing purposes.
-\end{itemize}
-
 % /********************* M7 *********************/
 \section{Patient List View Module}
 
@@ -813,14 +749,13 @@ handleRequest(request)
 \item \textbf{logRecordsAccess(patientID)}: Logs access to a patient's medical records list for auditing purposes.
 \end{itemize}
 % /********************* M11 *********************/
-\section{Medical Record View Module}
+\section{X-ray Report View Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
 \item M1: Web Application Server Module
 \item M2: HTTP Server Module
 \item M11: User Authentication Module
-\item M12: X-Ray Report View
 \item M15: Data Persistence Module
 \end{itemize}
 
@@ -872,61 +807,6 @@ handleRequest(request)
 \item \textbf{logRecordAccess(recordID)}: Logs access to the specific medical record for auditing purposes.
 \end{itemize}
 
-% /********************* M12 *********************/
-\section{X-Ray Report View}
-
-\subsection{place holder}
-\begin{itemize}
-\item M1: Web Application Server Module
-\item M2: HTTP Server Module
-\item M15: User Authentication Module
-\item M13: Disease Prediction Server Module 
-\item M15: Data Persistence Server Module
-\end{itemize}
-
-\subsection{State Variables}
-\begin{itemize}
-\item \textbf{place holder}: place holder
-\end{itemize}
-
-\subsection{Exported Constants and Access Programs}
-\subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline 
-    \texttt{place holder} & place holder & place holder & \texttt{place holder} \\
-    \hline
-\end{tabular}
-
-\subsubsection{Exported Constants}
-\begin{itemize}
-\item \textbf{place holder}: "place holder" 
-\end{itemize}
-
-\subsection{Environment Variables}
-\begin{itemize}
-\item \textbf{place holder}: place holder
-\end{itemize}
-
-\subsection{Assumptions}
-\begin{itemize}
-    \item place holder
-    \item place holder
-\end{itemize}
-
-
-\subsection{Access Routine Semantics}
-\subsubsection{place holder(place holder)}
-\begin{itemize}
-    \item \textbf{place holder}: place holder
-\end{itemize}
-
-\subsection{Local Functions}
-\begin{itemize}
-\item \textbf{place holder(place holder)}: place holder
-\end{itemize}
-
 % /********************* M13 *********************/
 \section{Disease Progression Module}
 \label{Disease Progression Module}
@@ -950,7 +830,8 @@ handleRequest(request)
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-  \begin{tabular}{|l|l|l|l|}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{|l|X|X|X|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -964,7 +845,7 @@ handleRequest(request)
     \hline
     \texttt{forecastProgression} & patientID : String & ForecastResult & \texttt{ForecastException} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
 \end{center}
 
 \subsubsection{Exported Constants}
@@ -1150,7 +1031,8 @@ handleRequest(request)
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-  \begin{tabular}{|l|l|l|l|}
+  \renewcommand{\arraystretch}{1.2} % Adjust row height for better readability
+  \begin{tabularx}{\textwidth}{|l|X|X|X|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -1168,7 +1050,7 @@ handleRequest(request)
     \hline
     \texttt{restoreDatabase} & backupPath : String & - & \texttt{RestoreException} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
 \end{center}
 
 \subsubsection{Exported Constants}
