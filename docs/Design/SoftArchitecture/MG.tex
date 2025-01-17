@@ -7,6 +7,7 @@
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{pdflscape}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -47,8 +48,9 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Jan 10 & 1.0 & Ayman and Kelly worked on Anticipated changes and introduction\\
+Jan 12 & 1.1 & Reza worked on design timeline and the architecture\\
+Jan 13 & 1.2 & Nathan completed list of modules and the architecture, and Patrick worked on the module decomposition and the traceability with requirements\\
 \bottomrule
 \end{tabularx}
 
@@ -215,6 +217,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mReportView}:] X-Ray Report View
 \item [\refstepcounter{mnum} \mthemnum \label{mProgressModel}:] Disease Progression Model 
 \item [\refstepcounter{mnum} \mthemnum \label{mPredictModel}:] Disease Prediction Model
+\item [\refstepcounter{mnum} \mthemnum \label{mRecord}:] Medical Record Management
 \item [\refstepcounter{mnum} \mthemnum \label{mDataStore}:] Data Persistent 
 \end{description}
 
@@ -244,6 +247,7 @@ actually be implemented.
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
 & Disease Prediction Model\\
+& Medical Record Management\\
 & Data Persistent \\
 \bottomrule
 
@@ -397,44 +401,45 @@ implementing software is given under the \emph{Implemented By} title. If the
 entry is \emph{OS}, this means that the module is provided by the operating
 system or by standard programming language libraries.  \emph{\progname{}} means the
 module will be implemented by the \progname{} software.
-
+\newline
 Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules}
-
+\subsection{Hardware-Hiding Modules}
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
-\item[Implemented By:] OS
+\item[Secrets:] The data structures and algorithms used to implement the virtual hardware layer that abstracts infrastructure complexities.
+\item[Services:] Provides virtualized hardware interfaces to the rest of the system, enabling hardware-independent operation.
+\item[Implemented By:] --
 \end{description}
+
 \subsubsection{Web Application Server Module (\mref{mWebApp})}
 \begin{description}
-\item[Secrets:] Infrastructure configuration, load balancing strategies, and server deployment patterns for handling concurrent medical requests.
-\item[Services:] Manages web application hosting, handles HTTP requests routing, provides scalable infrastructure for serving the X-Ray Analysis interface, and ensures high availability.
-\item[Implemented By:] Flask
+\item[Secrets:] The web server implementation and configuration details for handling web UI requests.
+\item[Services:] Provides a platform for hosting and serving the web application to users.
+\item[Implemented By:] Docker Engine
 \end{description}
+
 \subsubsection{HTTP Server Module (\mref{mHTTP})}
 \begin{description}
-\item[Secrets:] Protocol implementation details, request/response handling mechanisms, and network-level security configurations.
-\item[Services:] Handles HTTP/HTTPS protocol implementation, manages network connections, processes incoming requests, and implements security measures for medical data transmission.
-\item[Implemented By:] Flask
+\item[Secrets:] The implementation details of HTTP protocol handling and network communication.
+\item[Services:] Provides HTTP communication interface for client-server interactions.
+\item[Implemented By:] Docker Engine
 \end{description}
+
 \subsubsection{Disease Prediction Server Module (\mref{mDiseasePredict})}
 \begin{description}
-\item[Secrets:] GPU memory allocation strategies, CUDA resource management patterns, and hardware-level optimizations for ML model inference.
-\item[Services:] Manages GPU resources for disease prediction models, handles batch processing of X-ray images, coordinates model inference requests, and optimizes hardware utilization while acting as a controller for prediction workflows.
-\item[Implemented By:] Python and CUDA
+\item[Secrets:] The implementation details of GPU resource management and ML model pipeline.
+\item[Services:] Provides computational resources for disease prediction model execution.
+\item[Implemented By:] Docker Engine and CUDA
 \end{description}
+
 \subsubsection{Disease Progression Server Module (\mref{mDiseaseProgress})}
 \begin{description}
-\item[Secrets:] Multi-GPU resource allocation, parallel processing patterns, and memory management strategies for comparing temporal X-ray data.
-\item[Services:] Coordinates progression analysis workflows, manages GPU resources for temporal analysis, handles parallel processing of multiple X-rays, and serves as a controller for progression detection pipelines.
-\item[Implemented By:] Python and CUDA
+\item[Secrets:] The implementation details of parallel processing and GPU resource allocation for temporal progression analysis.
+\item[Services:] Provides computational resources for disease progression analysis.
+\item[Implemented By:] Docker Engine and CUDA
+\item[Type of Module:] Hardware-Hiding
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
@@ -525,11 +530,19 @@ to be implemented.
 \item[Type of Module:] Abstract Object
 \end{description}
 
+\subsubsection{Medical Record Management Module (\mref{mRecord})}
+\begin{description}
+\item[Secrets:] Record data structure organization, state management patterns, and client-side caching strategies for efficient record handling and display.
+\item[Services:] Manages medical record data operations including creation, updates, and retrieval of patient records, prescriptions, and associated medical history while maintaining data consistency.
+\item[Implemented By:] Flask
+\item[Type of Module:] Abstract Object
+\end{description}
+
 \subsubsection{Data Persistence Module (\mref{mDataStore})}
 \begin{description}
 \item[Secrets:] The organization and relationships between different types of patient data, and the rules for maintaining data consistency and accessibility.
 \item[Services:] Manages data storage and retrieval using AWS S3 for Patient Data including X-Ray Images, prescriptions, clinical notes, and DynamoDB for structured data.
-\item[Implemented By:] AWS S3 and DynamoDB
+\item[Implemented By:] AWS S3 and DynamoD
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -620,27 +633,57 @@ HS2: Clear disclaimers about AI limitations & \mref{mReportView} \\
 \label{TblACT}
 \end{table}
 
+\begin{landscape}
 \section{Use Hierarchy Between Modules} \label{SecUse}
-
+In this section, the uses hierarchy between modules is
+provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
+correct execution of B may be necessary for A to complete the task described in
+its specification. That is, A {\em uses} B if there exist situations in which
+the correct functioning of A depends upon the availability of a correct
+implementation of B.  Figure \ref{FigUH} illustrates the use relation between
+the modules. It can be seen that the graph is a directed acyclic graph
+(DAG). Each level of the hierarchy offers a testable and usable subset of the
+system, and modules in the higher level of the hierarchy are essentially simpler
+because they use modules from the lower levels. For viewing the image with better clarity please cleas
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.1\textwidth]{../../assets/ContextDesignFlow.png}
+\includegraphics[width=1.45\textwidth]{../../assets/ContextDesignFlow.png}
 \caption{Use Hierarchy Diagram showing module interactions}
 \label{FigUH}
 \end{figure}
+\end{landscape}
+\subsection{Architecture Summary}
+\noindent This system is organized into three main layers---a User Interface layer, an Application/Domain layer, and a Data Persistence layer---each with clear responsibilities and well-defined interfaces:
 
-\noindent The architecture follows a hybrid design pattern combining Model-View-Controller (MVC) for the machine learning components and client-server architecture for the view modules. The machine learning modules are structured with clear separation between the model logic, view presentation, and control flow. The view modules interact with patient data through requests to the web server module, which in turn communicates with the data persistence module. For simplicity, the diagram omits the request arrows between views and the web server module, as well as between modules and the data persistence layer. This modular design enables independent testing and development of components while maintaining clear interfaces between layers.
+\begin{enumerate}
+    \item \textbf{User Interface Layer} \\
+    This layer provides all patient-facing and clinician-facing views. For example, the Patient List View, Patient Overview View, Medical Record List View, Disease Progression View, and X-Ray Report View each issue function calls (e.g., ``Get Patient Information,'' ``Get Records for Patient,'' etc.) to request data and operations.These views communicate with the Web Application Server in the Application/Domain layer.
 
+    \item \textbf{Application/Domain Layer} \\
+    At this layer, the Web Application Server routes requests to the HTTP Server, which in turn orchestrates calls to the core modules:
+    \begin{itemize}
+        \item[-] \textbf{User Authentication Module} -- Manages user login, sign-up, edit, and authentication.
+        \item[-] \textbf{Disease Progression Module} -- Retrieves and processes progression data, possibly delegating to the external Disease Progression Server via HTTP.
+        \item[-] \textbf{Disease Prediction Module} -- Handles machine-learning predictions for patient records, again leveraging an external Disease Prediction Server.
+        \item[-] \textbf{Medical Record Management Module} -- Allows creating, reading, editing, and deleting patient records and prescriptions.
+    \end{itemize}
+    These modules may also request X-ray images from the Data Persistence layer or send them to the Disease Progression / Prediction servers for further analysis.
 
-\begin{figure}[H]
-\centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
-\caption{Use hierarchy among modules}
-\label{FigUH}
-\end{figure}
+    \item \textbf{Data Persistence Layer} \\
+    The Data Persistence Module handles storage and retrieval of patient information, records, and X-ray images. All modules in the Application/Domain layer can communicate with this layer to read or persist data as needed.
+\end{enumerate}
+
+\noindent By separating concerns into these three layers, the architecture remains modular, enabling independent development, testing, and maintenance of each layer while also decoupling the disease prediction and progression machine learning models.
+% \begin{figure}[H]
+% \centering
+% %\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+% % \caption{Use hierarchy among modules}
+% % \label{FigUH}
+% % \end{figure}
 
 %\section*{References}
 
+\newpage
 \section{User Interfaces}
 The user interface design consists of several key pages that have been prototyped in Figma:
 
