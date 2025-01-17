@@ -254,36 +254,25 @@ handleRequest(request)
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{4cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: UserDetail & user: User & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{sign_in} & email, password & token, user & \texttt{NotAuthorizedException, InternalServerError} \\
+    \texttt{sign\_in\_user} & user\_email: string, \newline password: string & bearer\_token: string & \texttt{Unauthorized}, \newline \texttt{IncorrectCredentials}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{sign_up} & userInfo & token, user & \texttt{EmailAlreadyTakenException, InternalServerError} \\
+    \texttt{get\_self\_user} & bearer\_token: string & user: User & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get_user_by_id} & userId & user & \texttt{UserNotFoundException, InternalServerError} \\
+    \texttt{get\_user\_by\_id} & uuid: string & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{update_user_by_id} & userId, userDetails & user & \texttt{UserNotFoundException, InternalServerError} \\
+    \texttt{update\_user\_by\_id} & uuid: string, \newline updated\_user\_json: UserUpdateData & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{paginated_records_by_userId} & userId & records & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{handle_record_by_id} & httpMethod, userId, recordId & record & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{create_new_record} & userId, recordDetails & record & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{paginated_prescriptions_by_recordId} & userId, recordId & prescriptions & \texttt{Unauthorized, RecordNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{handle_prescription_by_id} & httpMethod, userId, recordId & prescription & \texttt{Unauthorized, RecordNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{create_new_prescription} & userId, recordId, prescriptionDetails & prescription & \texttt{Unauthorized, RecordNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{get_progression_report} & recordId1, recordId2 & progressionReport & \texttt{Unauthorized, RecordNotFoundException, InternalServerError} \\
-    \hline
-    \texttt{health_check} &  & 200 OK & \texttt{InternalServerError} \\
-    \hline
-
 \end{tabular}
+\end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
@@ -412,13 +401,17 @@ handleRequest(request)
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{3.5cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{generate\_progression} & XrayImageURL1, XrayImageURL2 & Progression & \texttt{InternalServerError} \\
+    \texttt{generate\_ progression} & XrayImageURL1: string, \newline XrayImageURL2: string & Progression: ProgressionData & \texttt{InternalServer} \\
     \hline
 \end{tabular}
+\end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
@@ -469,7 +462,7 @@ handleRequest(request)
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|p{4.5cm}|p{3cm}|p{2.5cm}|p{5cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -910,13 +903,13 @@ This module does not export any constants
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
 \begin{center}
-  \begin{tabular}{|l|l|l|l|}
+  \begin{tabular}{|p{4.5cm}|p{3cm}|p{2.5cm}|p{4cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{get\_progression} & XrayImageURL1, XrayImageURL2 & ProgressionResult & \texttt{InternalServerError} \\
+    \texttt{get\_progression} & XrayImageURL1: string, \newline XrayImageURL2: string & Progression Result & \texttt{InternalServerError} \\
     \hline
-    \texttt{get\_latest\_progression\_by\_userId} & userId & ProgressionResult & \texttt{UserNotFoundException, InternalServerError} \\
+    \texttt{get\_latest\_ progression\_by\_userId} & userId: string & Progression Result & \texttt{UserNotFound Exception, InternalServerError} \\
     \hline
   \end{tabular}
 \end{center}
@@ -1034,27 +1027,31 @@ This module does not export any constants
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+\small  % Reduce font size
+\renewcommand{\arraystretch}{1.5}  % Increase vertical spacing between rows
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{2.5cm}|p{4cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{get\_paginated\_prescription\_by\_recordId} & recordId, limit & prescriptions & \texttt{RecordNotFoundException, InternalServerError} \\
+    \texttt{get\_paginated\_ prescription\_ by\_ recordId} & recordId: string, \newline limit: int & prescriptions: [Prescription] & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_prescription\_by\_id} & uuid & prescription & \texttt{PrescriptionNotFoundException, InternalServerError} \\
+    \texttt{get\_prescription\_ by\_id} & uuid: string & prescription: Prescription & \texttt{PrescriptionNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{create\_new\_prescription} & recordId, prescription & prescription & \texttt{RecordNotFoundException, InternalServerError} \\
+    \texttt{create\_new\_ prescription} & recordId: string, \newline prescription: Prescription & prescription: Prescription & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{update\_prescription\_by\_id} & uuid, prescription & prescription & \texttt{PrescriptionNotFoundException, InternalServerError} \\
+    \texttt{update\_ prescription\_ by\_id} & uuid: string, \newline prescription: Prescription & prescription: Prescription & \texttt{PrescriptionNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_paginated\_record\_by\_userId} & userId, limit & records & \texttt{UserNotFoundException, InternalServerError} \\
+    \texttt{get\_paginated\_ record\_by\_ userId} & userId: string, \newline limit: int & records: [Record] & \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_record\_by\_id} & uuid & record & \texttt{RecordNotFoundException, InternalServerError} \\
+    \texttt{get\_record\_ by\_id} & uuid: string & record: Record & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{create\_new\_record} & userId, record & record & \texttt{InternalServerError} \\
+    \texttt{create\_new\_ record} & userId: string, \newline record: Record & record: Record & \texttt{InternalServer} \\
     \hline
-    \texttt{update\_record\_by\_id} & uuid, record & record & \texttt{RecordNotFoundException, InternalServerError} \\
+    \texttt{update\_record\_ by\_id} & uuid: string, \newline record: Record & record: Record & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
     \hline
 \end{tabular}
+\end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
