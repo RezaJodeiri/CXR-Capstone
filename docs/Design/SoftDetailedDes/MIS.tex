@@ -109,10 +109,7 @@ Jan 17 & 1.5 & Finalized Documents\\
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for the
- application. Complementary documents include the Module Guide.
-
-\noindent The full documentation and implementation can be found at \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
+The following document provides an in-depth look at the Module Interface Specifications (MIS) for the Chest X-ray (CXR) application. These specifications outline how each module is structured and how they interact with one another. A broader architectural perspective is offered in the accompanying Module Guide. For the complete project documentation and source code, please visit the official GitHub repository: \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
 
 \section{Notation}
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. The mathematical notation follows standard conventions for sets, sequences, and functions. The notation includes symbols for ML model operations and medical data processing.
@@ -134,7 +131,8 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     \bottomrule
     \end{tabular} 
     \end{center}
-\subsection{Data Types from Libraries}
+    For detailed mathematical notations and specifications, please refer to the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} document \citep{SRS}.
+    \subsection{Data Types from Libraries}
 \begin{table}[H]
     \centering
     \renewcommand{\arraystretch}{1.2}
@@ -167,7 +165,7 @@ The following table is taken directly from the Module Guide document for this pr
     \textbf{Level 1} & \textbf{Level 2}\\
     \midrule
     
-    {Hardware-Hiding Module} &  Web Application Server\\
+    {Hardware-Hiding Module} &  Web Application\\
     & HTTP Server \\
     & Disease Prediction Server\\
     & Disease Progression Server\\
@@ -183,6 +181,7 @@ The following table is taken directly from the Module Guide document for this pr
     
     \multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
     & Disease Prediction Model\\
+    & Medical Record Management\\
     & Data Persistent \\
     \bottomrule
     
@@ -960,7 +959,7 @@ N/A
     \hline
     \texttt{getprogression} & XrayImage1: binary, \newline XrayImage2: binary & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
     \hline
-    \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailedExeception} \\
+    \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailed Exeception} \\
     \hline
   \end{tabular}
 \end{center}
