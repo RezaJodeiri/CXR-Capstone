@@ -157,7 +157,7 @@ The following table is taken directly from the Module Guide document for this pr
     \textbf{Level 1} & \textbf{Level 2}\\
     \midrule
     
-    {Hardware-Hiding Module} &  Web Application\\
+    {Hardware-Hiding Module} &  Web Application Server\\
     & HTTP Server \\
     & Disease Prediction Server\\
     & Disease Progression Server\\
@@ -173,7 +173,6 @@ The following table is taken directly from the Module Guide document for this pr
     
     \multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
     & Disease Prediction Model\\
-    & Medical Record Management\\
     & Data Persistent \\
     \bottomrule
     
@@ -184,65 +183,65 @@ The following table is taken directly from the Module Guide document for this pr
 ~\newpage
 % /********************* M1 *********************/
 \section{Web Application Server Module} 
-
-\subsection{Module}
-Web Application Server
+Note: This is being handled by React server
 \subsection{Other Modules the Current Module Uses}
-N/A
-\subsection{Syntax}
-\subsubsection{Exported Constants}
-N/A
+\begin{itemize}
+    \item M2: HTTP Server Module
+\end{itemize}
+\subsection{State Variables}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-
 \begin{center}
 \begin{tabular}{p{2.5cm} p{3.5cm} p{3.5cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-handleRequest & HTTP request & HTTP response & InvalidRequestException \\
+HandleRequest & HTTP request & HTTP response & InvalidRequestException \\
+\hline
+Routes & User Action & HTML & N/A \\
 \hline
 \end{tabular}
 \end{center}
-\subsection{Semantics}
-\subsubsection{State Variables}
+\subsubsection{Exported Constants}
 \begin{itemize}
-  \item \textbf{sessionData}: Stores current session information.
-  \item \textbf{activeUsers}: Keeps track of currently active users.
+    \item N/A
 \end{itemize}
-\subsubsection{Environment Variables}
+\subsection{Environment Variables}
 \begin{itemize}
-  \item \textbf{serverPort}: The port on which the server listens for incoming connections.
-  \item \textbf{hostAddress}: The server's host address.
+  \item N/A
 \end{itemize}
-\subsubsection{Assumptions}
+\subsection{Assumptions}
 \begin{itemize}
   \item Assumes the HTTP Server Module (M2) is properly configured and running.
-  \item Assumes valid HTTP requests are received.
 \end{itemize}
-\subsubsection{Access Routine Semantics}
+\subsection{Access Routine Semantics}
 
-handleRequest(request)
+\subsubsection{HandleRequest(HTTP request)}
 \begin{itemize}
-  \item transition:  Processes the incoming HTTP request and routes it to the appropriate view module.
-  \item output: Returns the HTTP response based on the request.
+  \item \textbf{Transition}:  Processes the incoming HTTP request and routes it to the appropriate view module.
+  \item \textbf{Output}: Returns the HTTP response based on the request.
 \end{itemize}
-\subsubsection{Local Functions}
+\subsubsection{Routes(user Action)}
 \begin{itemize}
-  \item \textbf{parseRequest(request)}: Parses the incoming HTTP request to extract necessary information.
-  \item \textbf{generateResponse(data)}: Constructs an HTTP response based on the processed data.
-  \item \textbf{authenticateUser(credentials)}: Verifies the user's credentials before processing the request.
+  \item \textbf{Transition}: Accepts user interaction or actions.
+  \item \textbf{Output}: Produces the corresponding HTML for rendering.
 \end{itemize}
-\newpage
 
-\newpage
+\subsection{Local Functions}
+\begin{itemize}
+\item N/A
+\end{itemize}
 % /********************* M2 *********************/
 \section{HTTP Server Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-  \item User Authentication Module
-  \item Disease Progression Module
-  \item Medical Record Module
+  \item M5: User Authentication Module
+  \item M8: Disease Progression Module
+  \item M10: Medical Record Module
 \end{itemize}
 
 \subsection{State Variables}
@@ -262,22 +261,22 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: UserDetail & user: User & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
     \hline
     \texttt{sign\_in\_user} & user\_email: string, \newline password: string & bearer\_token: string & \texttt{Unauthorized}, \newline \texttt{IncorrectCredentials}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_self\_user} & bearer\_token: string & user: User & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
+    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_user\_by\_id} & uuid: string & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{get\_user\_by\_id} & uuid: string & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{update\_user\_by\_id} & uuid: string, \newline updated\_user\_json: UserUpdateData & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{update\_user\_by\_id} & uuid: string, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
 \end{tabular}
 \end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
@@ -287,12 +286,12 @@ handleRequest(request)
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Access Routine Semantics}
 
-\subsubsection{heath\_check()}
+\subsubsection{health\_check()}
 \begin{itemize}
     \item \textbf{Inputs}: None
     \item \textbf{Outputs}: 200 OK response or 500 InternalServerError
@@ -333,7 +332,6 @@ handleRequest(request)
     \item \textbf{model}: The pre-trained model from \texttt{torchxrayvision} used for predicting lung diseases from X-ray images.
     \item \textbf{modelAccuracy}: Tracks the accuracy of the current model after training and validation.
     \item \textbf{predictionThreshold}: A constant threshold to determine the classification outcome (e.g., disease presence).
-    \item \textbf{patientImageData}: Holds the chest X-ray image data used for prediction.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -342,14 +340,13 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & XRayImageURL & DiseasePrediction & \texttt{InvalidImageException} \\
+    \texttt{predictDisease} & XRayImage:binary & DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
     \item \textbf{PREDICTION\_THRESHOLD}: 0.75 (threshold for classification of disease presence)
-    \item \textbf{MODEL\_PATH}: Path to the pre-trained model (e.g., \texttt{./models/chest\_xray\_model.pth})
     \item \textbf{MAX\_PREDICTIONS}: 1000 (maximum number of predictions to handle concurrently)
 \end{itemize}
 
@@ -367,7 +364,7 @@ handleRequest(request)
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{predictDisease(XRayImageURL)}
+\subsubsection{predictDisease(XRayImage)}
 \begin{itemize}
     \item \textbf{Transition}: Uses the loaded model to make predictions based on the provided X-ray image data.
     \item \textbf{Output}: Returns the disease prediction (e.g., probability of a disease being present) or throws an \texttt{InvalidImageException} if the image is invalid.
@@ -375,7 +372,6 @@ handleRequest(request)
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item \textbf{downloadXRay(imageURL)}: Download an X-ray image based on a given URL of the image.
     \item \textbf{loadModel()}: Loads the pre-trained model from disk or cloud storage using \texttt{torchxrayvision}'s functionality.
     \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
     \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
@@ -397,7 +393,6 @@ handleRequest(request)
     \item \textbf{model}: The pre-trained model used for tracking lung diseases from 2 X-ray images.
     \item \textbf{modelAccuracy}: Tracks the accuracy of the current model after training and validation.
     \item \textbf{predictionThreshold}: A constant threshold to determine the classification outcome (e.g., disease presence).
-    \item \textbf{patientImagePair}: Pair of two x-ray images that the model use to make generate progression.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -409,28 +404,31 @@ handleRequest(request)
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{generate\_ progression} & XrayImageURL1: string, \newline XrayImageURL2: string & Progression: ProgressionData & \texttt{InternalServer} \\
+    \texttt{trackProgression} & XrayImage1: binary, \newline XrayImage2: binary & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
     \hline
 \end{tabular}
 \end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-    \item \textbf{endpoint}: The endpoint that this model is hosted on Docker host machine.
+    \item \textbf{modelPath}: The path where the pre-trained model is saved or loaded from.
+    \item \textbf{predictionEndpoint}: The endpoint that this model is hosted on Docker host machine.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item The model is pre-trained, changes in model architecture will need the server to be re-deployed.
+    \item Assumes the pre-trained model is available and compatible with the data provided.
+    \item Assumes valid X-ray images data is available for processing.
+    \item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(XrayImageURL1, XrayImageURL2)}
+\subsubsection{trackProgression(XrayImage1, XrayImage2)}
 \begin{itemize}
     \item \textbf{Transition}: Uses the existing model to calculate disease progression based on the provided X-ray images.
     \item \textbf{Output}: Returns the disease progression.
@@ -438,10 +436,10 @@ handleRequest(request)
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item \textbf{downloadXRay(imageURL)}: Download an X-ray image based on a given URL of the image.
+    \item \textbf{loadModel()}: Loads the pre-trained model from disk or cloud storage.
     \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
     \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
-    \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a hJSON.
+    \item \textbf{postprocessImages()}: Processes the raw output from the model (e.g., probabilities) back to pictures.
 \end{itemize}
 
 % /********************* M5 *********************/
@@ -460,28 +458,31 @@ handleRequest(request)
     \item \textbf{client\_secret}: Password of the User Authentication Module, used in conjunction with client\_id to authenticate with AWS Cognito.
 \end{itemize}
 
+\begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \setlength{\tabcolsep}{4pt}
 
-\subsection{Exported Constants and Access Programs}
-\subsubsection{Exported Access Programs}
-\begin{tabular}{|p{4.5cm}|p{3cm}|p{2.5cm}|p{5cm}|}
+  \begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|p{5cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{sign\_up\_user} & user\_email, password, user\_detail & user & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: int, \newline user\_detail: JSON & user: user & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
     \hline
-    \texttt{sign\_in\_user} & user\_email, password & bearer\_token & \texttt{Unauthorized, IncorrectCredentials, InternalServerError} \\
+    \texttt{sign\_in\_user} & user\_email: string, \newline password: int & bearer\_token: string & \texttt{Unauthorized, IncorrectCredentials, InternalServerError} \\
     \hline
-    \texttt{get\_self\_user} & bearer\_token & user & \texttt{Unauthorized, InternalServerError} \\
+    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized, InternalServerError} \\
     \hline
-    \texttt{get\_user\_by\_id} & uuid & user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \texttt{get\_user\_by\_id} & uuid: int & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
     \hline
-    \texttt{update\_user\_by\_id} & uuid, updated\_user\_json & user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \texttt{update\_user\_by\_id} & uuid: int, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
     \hline
-\end{tabular}
-
+  \end{tabular}
+\end{center}
 
 \subsubsection{Exported Constants}
-This module does not export any constants
+\begin{itemize}
+    \item N/A
+\end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
@@ -614,17 +615,20 @@ This module does not export any constants
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{|l|X|X|X|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewPatientList} & Doctor ID, filters & List of patient details & \texttt{PatientListNotFoundException} \\
+    \texttt{viewPatientList} & Doctor ID: int, filters: [string] & Patients: [user] & PatientListNotFoundException \\
     \hline
-    \texttt{applyFilter} & Filter parameters & Filtered patient list & \texttt{InvalidFilterException} \\
+    \texttt{sortList} & Sorting criteria: [string] & Patients: [user] & None \\
     \hline
-    \texttt{sortList} & Sorting criteria & Sorted patient list & None \\
+    \texttt{addPatient} & Form Data: JSON & Patient: user & FailedToCreateUserException \\
     \hline
-\end{tabular}
+  \end{tabularx}
+\end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
@@ -634,14 +638,13 @@ This module does not export any constants
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{patientDataPath}: Path to the data source containing patient records.
-\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
+\item N/A
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
 \item Assumes that the User Authentication Module (M5) is responsible for verifying that the user is a doctor with access to the list.
-\item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M15).
+\item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M14).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
@@ -652,13 +655,6 @@ This module does not export any constants
     \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
 \end{itemize}
 
-\subsubsection{applyFilter(filters)}
-
-\begin{itemize}
-    \item \textbf{Transition}: Applies the given filters to the current patient list.
-    \item \textbf{Output}: Returns the filtered patient list or throws an \texttt{InvalidFilterException} if the filters are invalid.
-\end{itemize}
-
 \subsubsection{sortList(criteria)}
 
 \begin{itemize}
@@ -666,11 +662,15 @@ This module does not export any constants
     \item \textbf{Output}: Returns the sorted patient list.
 \end{itemize}
 
+\subsubsection{addPatient(fromData)}
+\begin{itemize}
+    \item \textbf{Transition}: Submits the provided form data to the backend service for processing.
+    \item \textbf{Output}: Returns the created patient data.
+\end{itemize}
+
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{filterPatients(filters)}: Filters the patient list according to the specified parameters.
 \item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
-\item \textbf{logListAccess(doctorID)}: Logs each time a doctor accesses the patient list for auditing purposes.
 \end{itemize}
 % /********************* M7 *********************/
 \section{Patient Overview Module}
@@ -682,7 +682,7 @@ This module does not export any constants
 
 \subsection{State Variables}
 \begin{itemize}
-\item \textbf{patientOverview}: Stores the summary information of a selected patient, including personal details, recent medical history, and current treatment plans.
+\item \textbf{patientOverviews}: Stores the summary information of a selected patient, including personal details, recent medical history, and current treatment plans.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -691,29 +691,28 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{getPatient} & Patient ID & Patient overview details & \texttt{OverviewNotFoundException} \\
+    \texttt{getPatient} & Patient ID: int & Patient overview details: [detail] & \texttt{OverviewNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{OVERVIEW\_REFRESH\_INTERVAL}: 15 minutes (interval for refreshing the patient overview data)
+\item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{overviewDataPath}: Path to the data source containing patient overview information.
-\item \textbf{authenticationService}: URL or endpoint of the service used for user authentication.
+\item N/A
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
 \item Assumes the User Authentication Module (M5) ensures that only authorized users can view the patient overview.
-\item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M15).
+\item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M14).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{viewPatientOverview(patientID)}
+\subsubsection{getPatient(patientID)}
 \begin{itemize}
     \item \textbf{Transition}: Retrieves the overview information of the specified patient.
     \item \textbf{Output}: Returns the patient overview details or throws an \texttt{OverviewNotFoundException} if the overview cannot be found.
@@ -721,9 +720,7 @@ This module does not export any constants
 
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{fetchOverviewData(patientID)}: Retrieves overview data from the data source.
-\item \textbf{generateOverviewSummary(patientID)}: Creates a summary of the patient's current status.
-\item \textbf{logOverviewAccess(patientID)}: Logs each time a patient overview is accessed for auditing purposes.
+\item \textbf{updateView(patientOverview)}: Retrieves overview data from the data source, and update page view.
 \end{itemize}
 % /********************* M8 *********************/
 \section{Diseases Progression View}
@@ -735,7 +732,7 @@ This module does not export any constants
 
 \subsection{State Variables}
 \begin{itemize}
-    \item \textbf{Title}: fill this 
+    \item \textbf{progressionData}: a image or a list of images stored.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -744,44 +741,40 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewProgression} & Patient ID & Progression data & \texttt{ProgressionNotFoundException} \\
+    \texttt{viewProgression} & Patient ID: int & Progression Data: PregressionResult & \texttt{ProgressionNotFoundException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{PROGRESSION\_UPDATE\_INTERVAL}: 12 hours (time interval for updating disease progression data)
 \item \textbf{DEFAULT\_CHART\_TEMPLATE}: "default\_progression\_chart.html" (default template for displaying disease progression charts)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{progressionDataPath}: Path to the data source containing disease progression information.
-\item \textbf{chartRenderingService}: URL or endpoint of the service used for rendering progression charts.
+\item \textbf{DieaseProgressionModuleURL}: URL or endpoint of the service used for progression.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item Assumes the User Authentication Module (M11) ensures that only authorized users can view the disease progression.
-    \item Assumes the data is regularly updated and maintained in the Data Persistence Module (M15).
+    \item Assumes the User Authentication Module (M5) ensures that only authorized users can view the disease progression.
+    \item Assumes data fetched and updated properly in the Data Persistence Module (M14).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
 \subsubsection{viewDiseaseProgression(patientID)}
 \begin{itemize}
     \item \textbf{Transition}: Retrieves the disease progression details for the specified patient.
-    \item \textbf{Output}: Returns the progression details or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
+    \item \textbf{Output}: Returns the progression data or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
 \end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{fetchProgressionData(patientID)}: Retrieves disease progression data from the data source.
-\item \textbf{generateProgressionChart(patientID)}: Generates a visual chart of the disease progression.
-\item \textbf{logProgressionAccess(patientID)}: Logs access to a patient's disease progression data for auditing purposes.
+\item \textbf{updateView(progressionData)}: Retrieves progression data from the data source, and update page view.
 \end{itemize}
 
 % /********************* M9 *********************/
-\section{Medical Records List View Module}
+\section{Medical Records List View}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
@@ -790,7 +783,7 @@ This module does not export any constants
 
 \subsection{State Variables}
 \begin{itemize}
-\item \textbf{medicalRecordsList}: Contains a list of all medical records associated with a specific patient, including dates, record types, and summaries.
+\item \textbf{medicalRecords}: Contains a list of all medical records associated with a specific patient, including dates, record types, and summaries.
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -799,40 +792,43 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewMedicalRecordsList} & Patient ID & List of medical records & \texttt{RecordsNotFoundException} \\
+    \texttt{viewMedicalRecordsList} & Patient ID: int & Medical records: [records] & \texttt{RecordsNotFoundException} \\
+    \hline
+    \texttt{createNewRecord} & Form: JSON & Medical Record: record & \texttt{CreateRecordFailedException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item \textbf{RECORDS\_REFRESH\_INTERVAL}: 10 minutes (interval for refreshing the list of medical records)
 \item \textbf{DEFAULT\_LIST\_TEMPLATE}: "default\_records\_list\_template.html" (default template for displaying the list of medical records)
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{recordsDataPath}: Path to the data source containing the patient's medical records.
-\item \textbf{recordSummaryService}: URL or endpoint of the service used for summarizing medical records.
+\item N/A
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
 \item Assumes the User Authentication Module (M5) ensures that only authorized users can view the medical records.
-\item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M15).
+\item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M14).
 \end{itemize}
 
 \subsection{Access Routine Semantics}
 \subsubsection{viewMedicalRecordsList(patientID)}
 \begin{itemize}
     \item \textbf{Transition}: Retrieves the list of medical records for the specified patient.
-    \item \textbf{Output}: Returns the list of medical records or throws a \texttt{RecordsNotFoundException} if no records are found.
+    \item \textbf{Output}: Returns the list of medical records or throw \texttt{RecordsNotFoundException}.
+\end{itemize}
+\subsubsection{createNewRecord}
+\begin{itemize}
+    \item \textbf{Transition}: Pass all information to the backbend server endpoint for creating a new record.
+    \item \textbf{Output}: Returns the created patient record data or throw \texttt{CreateRecordFailedException}.
 \end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{fetchMedicalRecords(patientID)}: Retrieves the list of medical records from the data source.
-\item \textbf{generateRecordsSummary(patientID)}: Creates summaries for each record in the list.
-\item \textbf{logRecordsAccess(patientID)}: Logs access to a patient's medical records list for auditing purposes.
+\item \textbf{updateView(medicalRecords)}: Retrieves medical records data from the data source, and update page view.
 \end{itemize}
 
 % /********************* M10 *********************/
@@ -845,8 +841,10 @@ This module does not export any constants
 
 \subsection{State Variables}
 \begin{itemize}
-\item \textbf{place holder}: place holder
+  \item \textbf{isEditing}: A state variable that tracks whether the user is currently editing.
+  \item \textbf{ReportDetails}: Contains the information associated with the reports.
 \end{itemize}
+
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
@@ -854,7 +852,7 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{place holder} & place holder & place holder & \texttt{place holder} \\
+    \texttt{ViewReport} & ReportDetails:  & place holder & \texttt{place holder} \\
     \hline
 \end{tabular}
 
@@ -897,9 +895,9 @@ This module does not export any constants
 \end{itemize}
 
 \subsection{State Variables}
-\begin{description}
-    \item None
-\end{description}
+\begin{itemize}
+    \item N/A
+\end{itemize}
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
@@ -908,41 +906,42 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{get\_progression} & XrayImageURL1: string, \newline XrayImageURL2: string & Progression Result & \texttt{InternalServerError} \\
+    \texttt{getprogression} & XrayImage1: binary, \newline XrayImage2: binary & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
     \hline
-    \texttt{get\_latest\_ progression\_by\_userId} & userId: string & Progression Result & \texttt{UserNotFound Exception, InternalServerError} \\
+    \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailedExeception} \\
     \hline
   \end{tabular}
 \end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-  \item \textbf{PROGRESSION\_SERVER\_URL}: URL of \textbf{Disease Progression Server Module}
+  \item \textbf{PROGRESSION\_SERVER\_URL}: URL of \textbf{Disease Progression Server}
 
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item The Progression Server Module has high availability. 
-    \item The Progression Server Module expose a single endpoint of \texttt{/progression}
+    \item All received image data is assumed to be valid and correctly formatted.
+    \item The disease progression server endpoint is assumed to be accessible and functioning properly.
 \end{itemize}
+
 \subsection{Access Routine Semantics}
 
-\subsubsection{get\_progression(XrayImageURL1, XrayImageURL2)}
+\subsubsection{getProgression(XrayImage1, XrayImage2)}
 \begin{itemize}
     \item \textbf{Transition}: Make an HTTP call to the \textbf{Disease Progression Server Module}
-    \item \textbf{Output}: Returns a \texttt{ProgressionResult} containing the disease progression information (Disease gets worsen or better).
+    \item \textbf{Output}: Returns a \texttt{ProgressionResult} containing the disease progression information (Disease gets worsen or better) or throws \texttt{ProgressionFailedException}.
 \end{itemize}
 
-\subsubsection{get\_latest\_progression\_by\_userId(userId)}
+\subsubsection{getLatestProgression(userId)}
 \begin{itemize}
-    \item \textbf{Transition}: Gets the latest 2 records from user, via function call to \textbf{Medical Record Module}. With the two latest record, the module will extract the 2 X-Ray URls and calls \texttt{get\_progression}
-    \item \textbf{Exception}: Throws \texttt{InvalidStageException} if \texttt{stageData} is invalid.
+    \item \textbf{Transition}: Gets the latest 2 records from user, via function call to \textbf{Medical Record Module}. With the two latest record, the module will extract the 2 X-Ray and calls \texttt{getProgression}
+    \item \textbf{Output}: Returns a \texttt{ProgressionResult} containing the disease progression information or throws \texttt{LastestProgressionFailedExeception}.
 \end{itemize}
 
 \subsection{Local Functions}
@@ -956,13 +955,12 @@ This module does not export any constants
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item M5: User Authentication Module
     \item M3: Disease Prediction Server Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -971,49 +969,41 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & patientData & PredictionResult & \texttt{InternalServerError} \\
+    \texttt{predictDisease} & XrayImage: binary & Prediction Result: \newline PredictionResult & \texttt{PredictionFailedException} \\
     \hline
 \end{tabular}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-  \item \textbf{PredictionServerURL}: URL of \textbf{Prediction Server Module}
+  \item \textbf{PREDICTION\_SERVER\_URL}: URL of \textbf{Disease Prediction Server}
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item The Prediction Server Module has high availability. 
-    \item The Prediction Server Module expose a single endpoint of \texttt{/predict}
+    \item All received image data is assumed to be valid and correctly formatted.
+    \item The disease prediction server endpoint is assumed to be accessible and functioning properly.
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{loadModel(modelPath)}
-
-\begin{itemize}
-    \item \textbf{Transition}: Loads the disease prediction model from the specified \texttt{modelPath}.
-    \item \textbf{Exception}: Throws \texttt{ModelLoadException} if the model cannot be loaded.
-\end{itemize}
-
 \subsubsection{predictDisease(patientData)}
 \begin{itemize}
-    \item \textbf{Inputs}: \texttt{patientData} is an dictionary contains user information (name, age, sex, etc.) and the url to X-ray image.
-    \item \textbf{Output}: Returns a \texttt{PredictionResult} containing the predicted disease information.
     \item \textbf{Transition}: Processes \texttt{patientData} using the current prediction model to generate a prediction.
-    \item \textbf{Exception}: Throws \texttt{InvalidInputException} if \texttt{patientData} is malformed or incomplete.
+    \item \textbf{Output}: Returns a \texttt{PredictionResult} containing the predicted disease information or throws \texttt{PredictionFailedException}.
 \end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
-  \item \textbf{executeHttpRequest(method, path)}: Send a generic HTTP request to a specified path
+\item \textbf{executeHttpRequest(method, path)}: Send a generic HTTP request to a specified
+path
 \end{itemize}
 
 % /********************* M13 *********************/
-\section{Medical Record Module}
+\section{Medical Record Management Module}
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
@@ -1023,7 +1013,7 @@ This module does not export any constants
 
 \subsection{State Variables}
 \begin{itemize}
-\item \textbf{place holder}: place holder
+\item N/A
 \end{itemize}
 
 \subsection{Exported Constants and Access Programs}
@@ -1035,44 +1025,43 @@ This module does not export any constants
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{get\_paginated\_ prescription\_ by\_ recordId} & recordId: string, \newline limit: int & prescriptions: [Prescription] & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{getPaginatedPrescriptionByRecordId} & recordId: string, \newline limit: int & prescriptions: [prescription] & \texttt{GetPaginatedException} \newline \texttt{RecordDoesNotExistException}\\
     \hline
-    \texttt{get\_prescription\_ by\_id} & uuid: string & prescription: Prescription & \texttt{PrescriptionNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{getPrescriptionById} & uuid: string & prescription: prescription & \texttt{GetPrescriptionException} \\
     \hline
-    \texttt{create\_new\_ prescription} & recordId: string, \newline prescription: Prescription & prescription: Prescription & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{createNewPrescription} & recordId: string, \newline prescription: prescription & prescription: prescription & \texttt{CreatePrescriptionException} \\
     \hline
-    \texttt{update\_ prescription\_ by\_id} & uuid: string, \newline prescription: Prescription & prescription: Prescription & \texttt{PrescriptionNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{updatePrescriptionById} & uuid: string, \newline prescription: Prescription & prescription: prescription & \texttt{UpdatePrescriptionException}, \newline \texttt{PrescriptionNotFoundException} \\
     \hline
-    \texttt{get\_paginated\_ record\_by\_ userId} & userId: string, \newline limit: int & records: [Record] & \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{getPaginatedRecordByUserId} & userId: string, \newline limit: int & records: [record] & \texttt{GetPaginatedRecordException}, \newline \texttt{UserNotFoundException} \\
     \hline
-    \texttt{get\_record\_ by\_id} & uuid: string & record: Record & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{getRecordById} & uuid: string & record: record & \texttt{GetRecordException}, \newline \texttt{RecordNotFoundException} \\
     \hline
-    \texttt{create\_new\_ record} & userId: string, \newline record: Record & record: Record & \texttt{InternalServer} \\
+    \texttt{createNewRecord} & userId: string, \newline record: record & record: record & \texttt{CreateRecordException} \\
     \hline
-    \texttt{update\_record\_ by\_id} & uuid: string, \newline record: Record & record: Record & \texttt{RecordNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{updateRecordById} & uuid: string, \newline record: record & record: record & \texttt{UpdateRecordException}, \newline \texttt{RecordNotFoundException} \\
     \hline
 \end{tabular}
 \end{center}
 
 \subsubsection{Exported Constants}
 \begin{itemize}
-\item None
+\item N/A
 \end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
-  \item None
+  \item N/A
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item The underlying Data Persistence Module persist data into storage on AWS
+    \item The underlying Data Persistence Module persist data into storage on AWS.
     \item The underlying Data Persistence Module stays highly available and bug prone.
 \end{itemize}
 
 
-\subsection{Access Routine Semantics}
-\subsubsection{get\_paginated\_prescription\_by\_recordId(recordId, limit)}
+\subsubsection{getPaginatedPrescriptionByRecordId(recordId, limit)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1082,13 +1071,13 @@ This module does not export any constants
     \item \textbf{Outputs}: A list of prescription objects associated with the provided \texttt{recordId}, limited by the \texttt{limit} parameter.
 \end{itemize}
 
-\subsubsection{get\_prescription\_by\_id(uuid)}
+\subsubsection{getPrescriptionById(uuid)}
 \begin{itemize}
     \item \textbf{Inputs}: \textbf{uuid}: Unique identifier of the prescription (string).
     \item \textbf{Outputs}: The prescription object corresponding to the given \texttt{uuid}.
 \end{itemize}
 
-\subsubsection{create\_new\_prescription(recordId, prescription)}
+\subsubsection{createNewPrescription(recordId, prescription)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1098,7 +1087,7 @@ This module does not export any constants
     \item \textbf{Outputs}: The created prescription object
 \end{itemize}
 
-\subsubsection{update\_prescription\_by\_id(uuid, prescription)}
+\subsubsection{updatePrescriptionById(uuid, prescription)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1108,7 +1097,7 @@ This module does not export any constants
     \item \textbf{Outputs}: The updated prescription object
 \end{itemize}
 
-\subsubsection{get\_paginated\_record\_by\_userId(userId, limit)}
+\subsubsection{getPaginatedRecordByUserId(userId, limit)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1118,13 +1107,13 @@ This module does not export any constants
     \item \textbf{Outputs}: A list of records associated with the provided \texttt{userId}, limited by the \texttt{limit} parameter.
 \end{itemize}
 
-\subsubsection{get\_record\_by\_id(uuid)}
+\subsubsection{getRecordById(uuid)}
 \begin{itemize}
     \item \textbf{Inputs}: \textbf{uuid}: The unique identifier of the record to retrieve (string).
     \item \textbf{Outputs}: The record object corresponding to the given \texttt{uuid}.
 \end{itemize}
 
-\subsubsection{create\_new\_record(userId, record)}
+\subsubsection{createNewRecord(userId, record)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1134,7 +1123,7 @@ This module does not export any constants
     \item \textbf{Outputs}: The created record object.
 \end{itemize}
 
-\subsubsection{update\_record\_by\_id(uuid, record)}
+\subsubsection{updateRecordById(uuid, record)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
@@ -1144,10 +1133,9 @@ This module does not export any constants
     \item \textbf{Outputs}: The updated record object.
 \end{itemize}
 
-
 \subsection{Local Functions}
 \begin{itemize}
-\item None
+\item N/A
 \end{itemize}
 
 
@@ -1157,7 +1145,7 @@ This module does not export any constants
 
 \subsection{Other Modules the Current Module Uses}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 \subsection{State Variables}
@@ -1169,22 +1157,27 @@ This module does not export any constants
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{|l|X|X|X|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{get\_item\_by\_id} & uuid & item & \texttt{InternalServerError, ClientError} \\
+    \texttt{get\_item\_by\_id} & uuid: int & item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
     \hline
-    \texttt{create\_new\_item} & item & uuid, item & \texttt{InternalServerError, ClientError} \\
+    \texttt{create\_new\_item} & item: $\langle T \rangle$ & uuid: int, item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
     \hline
-    \texttt{update\_item\_by\_id} & uuid, item & item & \texttt{InternalServerError, ClientError} \\
+    \texttt{update\_item\_by\_id} & uuid: int, item: $\langle T \rangle$ & item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
     \hline
-    \texttt{get\_s3\_upload\_presigned\_url} & file\_name & presigned\_url & \texttt{InternalServerError, ClientError} \\
+    \texttt{get\_s3\_upload\_presigned\_url} & file\_name: string & presigned\_url: string & \texttt{InternalServerError, ClientError} \\
     \hline
-\end{tabular}
+  \end{tabularx}
+\end{center}
 
 \subsubsection{Exported Constants}
-This module does not export any constants
+\begin{itemize}
+    \item N/A
+\end{itemize}
 
 \subsection{Environment Variables}
 \begin{itemize}
@@ -1289,7 +1282,7 @@ This module does not export any constants
 
 \subsection{Local Functions}
 \begin{itemize}
-    \item None
+    \item N/A
 \end{itemize}
 
 
