@@ -53,8 +53,18 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Jan 2 & 1.0 & Section 4, 5, 7\\
+Jan 6 & 1.1 & Section 3\\
+Jan 8 & 1.2 & Section 6, 7, 8\\
+Jan 10 & 1.21 & Merges and fixes regarding pre-commited history\\
+Jan 11 & 1.22 & Section 5, 6, 7 changes\\
+Jan 12 & 1.3 & Section 5, 7, 9, 10\\
+Jan 13 & 1.31 & Reflection added\\
+Jan 14 & 1.32 & Fixes to keep MG and MIS consistant\\
+Jan 15 & 1.33 & Reflection 2,3,4\\
+Jan 15 & 1.34 & Reflection 5,6\\
+Jan 16 & 1.4 & Docs edited based on TA feedbacks\\
+Jan 17 & 1.5 & Finalized Documents\\
 \bottomrule
 \end{tabularx}
 
@@ -181,6 +191,7 @@ The following table is taken directly from the Module Guide document for this pr
     \label{TblMH}
     \end{table}
 ~\newpage
+
 % /********************* M1 *********************/
 \section{Web Application Server Module} 
 Note: This is being handled by React server
@@ -190,21 +201,19 @@ Note: This is being handled by React server
 \end{itemize}
 \subsection{State Variables}
 \begin{itemize}
-    \item N/A
+    \item \textbf{navigate}: Stores the navigation state of the page.
 \end{itemize}
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{center}
-\begin{tabular}{p{2.5cm} p{3.5cm} p{3.5cm} p{3cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-HandleRequest & HTTP request & HTTP response & InvalidRequestException \\
-\hline
-Routes & User Action & HTML & N/A \\
-\hline
+
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    App & User Action: $\langle T \rangle$ & React.components: HTML \& Javascript & N/A \\
+    \hline
 \end{tabular}
-\end{center}
+
 \subsubsection{Exported Constants}
 \begin{itemize}
     \item N/A
@@ -218,22 +227,17 @@ Routes & User Action & HTML & N/A \\
   \item Assumes the HTTP Server Module (M2) is properly configured and running.
 \end{itemize}
 \subsection{Access Routine Semantics}
-
-\subsubsection{HandleRequest(HTTP request)}
-\begin{itemize}
-  \item \textbf{Transition}:  Processes the incoming HTTP request and routes it to the appropriate view module.
-  \item \textbf{Output}: Returns the HTTP response based on the request.
-\end{itemize}
 \subsubsection{Routes(user Action)}
 \begin{itemize}
   \item \textbf{Transition}: Accepts user interaction or actions.
-  \item \textbf{Output}: Produces the corresponding HTML for rendering.
+  \item \textbf{Output}: Produces the corresponding HTML \& Javascript page for rendering.
 \end{itemize}
 
 \subsection{Local Functions}
 \begin{itemize}
 \item N/A
 \end{itemize}
+
 % /********************* M2 *********************/
 \section{HTTP Server Module}
 
@@ -319,6 +323,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{handle\_exception(e)}: Return HTTP error as JSON objects when exceptions occurs, instead of default HTML page of Flask.
 \end{itemize}
 
+\newpage
 % /********************* M3 *********************/
 \section{Disease Prediction Server Module}
 
@@ -336,7 +341,7 @@ Routes & User Action & HTML & N/A \\
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|l|p{4cm}|l|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
@@ -377,9 +382,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
     \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a human-readable format (e.g., disease labels).
 \end{itemize}
-
-
-
+\newpage
 % /********************* M4 *********************/
 \section{Disease Progression Server Module}
 
@@ -400,7 +403,7 @@ Routes & User Action & HTML & N/A \\
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{3.5cm}|}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3cm}|l|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -441,7 +444,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
     \item \textbf{postprocessImages()}: Processes the raw output from the model (e.g., probabilities) back to pictures.
 \end{itemize}
-
+\newpage
 % /********************* M5 *********************/
 \section{User Authentication Module}
 
@@ -599,6 +602,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{\_get\_user\_by\_email}: Fetching user from AWS Cognito via their email. 
 \end{itemize}
 
+\newpage
 % /********************* M6 *********************/
 \section{Patient List View Module}
 
@@ -617,7 +621,7 @@ Routes & User Action & HTML & N/A \\
 \subsubsection{Exported Access Programs}
 \begin{center}
   \renewcommand{\arraystretch}{1.2}
-  \begin{tabularx}{\textwidth}{|l|X|X|X|}
+  \begin{tabularx}{\textwidth}{|l|X|X|l|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -672,6 +676,8 @@ Routes & User Action & HTML & N/A \\
 \begin{itemize}
 \item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
 \end{itemize}
+
+\newpage
 % /********************* M7 *********************/
 \section{Patient Overview Module}
 
@@ -719,6 +725,8 @@ Routes & User Action & HTML & N/A \\
 \end{itemize}
 
 \subsection{Local Functions}
+
+\newpage
 \begin{itemize}
 \item \textbf{updateView(patientOverview)}: Retrieves overview data from the data source, and update page view.
 \end{itemize}
@@ -737,7 +745,7 @@ Routes & User Action & HTML & N/A \\
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|l|p{3.25cm}|l|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -768,6 +776,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{Output}: Returns the progression data or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
 \end{itemize}
 
+\newpage
 \subsection{Local Functions}
 \begin{itemize}
 \item \textbf{updateView(progressionData)}: Retrieves progression data from the data source, and update page view.
@@ -788,7 +797,7 @@ Routes & User Action & HTML & N/A \\
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|l|p{3cm}|p{6cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -826,6 +835,7 @@ Routes & User Action & HTML & N/A \\
     \item \textbf{Output}: Returns the created patient record data or throw \texttt{CreateRecordFailedException}.
 \end{itemize}
 
+\newpage
 \subsection{Local Functions}
 \begin{itemize}
 \item \textbf{updateView(medicalRecords)}: Retrieves medical records data from the data source, and update page view.
@@ -834,54 +844,96 @@ Routes & User Action & HTML & N/A \\
 % /********************* M10 *********************/
 \section{X-Ray Report View}
 
-\subsection{place holder}
+\subsection{Other Modules the Current Module Uses}
 \begin{itemize}
   \item M6: Patient List View Module
 \end{itemize}
 
 \subsection{State Variables}
 \begin{itemize}
-  \item \textbf{isEditing}: A state variable that tracks whether the user is currently editing.
-  \item \textbf{ReportDetails}: Contains the information associated with the reports.
+  \item \textbf{xrayReport}: Stores the complete X-ray report data, including any AI-generated analysis and human annotations.
+  \item \textbf{doctorAnnotations}: Contains doctor-provided annotations or edits to the AI-generated analysis.
 \end{itemize}
 
 
-\subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3cm}|p{4cm}|p{3cm}|p{5.45cm}|}
     \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \textbf{Name} & \textbf{Inputs} & \textbf{Outputs} & \textbf{Exceptions} \\
     \hline 
-    \texttt{ViewReport} & ReportDetails:  & place holder & \texttt{place holder} \\
+    \texttt{getReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string
+        \end{tabular} 
+      & Report: Report 
+      & ReportNotFoundException \\
+    \hline
+    \texttt{editReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string, \\ 
+          annotations: [string]
+        \end{tabular} 
+      & Report: Report 
+      & ReportNotFoundException \\
+    \hline
+    \texttt{approveReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string
+        \end{tabular} 
+      & Report: Report 
+      & \begin{tabular}{@{}l@{}}
+          UnauthorizedAccessException, \\ 
+          ReportNotFoundException
+        \end{tabular} \\
     \hline
 \end{tabular}
+\end{center}
+
 
 \subsubsection{Exported Constants}
-\begin{itemize}
-\item \textbf{place holder}: "place holder" 
-\end{itemize}
+N/A
 
 \subsection{Environment Variables}
 \begin{itemize}
-\item \textbf{place holder}: place holder
+  \item \textbf{reportAnalysisService}: URL or endpoint of the service used for generating the AI-based analysis of X-ray images.
 \end{itemize}
 
 \subsection{Assumptions}
 \begin{itemize}
-    \item place holder
-    \item place holder
+  \item Assumes the User Authentication Module ensures that only authorized users (e.g., doctors) can edit or finalize an X-ray report.
+  \item Assumes the X-ray data is accurate and kept in sync with the Data Persistence Module (M14).
+  \item Assumes AI analysis can be updated or re-run as necessary.
 \end{itemize}
-
 
 \subsection{Access Routine Semantics}
-\subsubsection{place holder(place holder)}
+
+\subsubsection{getReport(recordID)}
 \begin{itemize}
-    \item \textbf{place holder}: place holder
+  \item \textbf{Transition}:  Fetch the latest X-ray report data, including AI analysis and any existing doctor annotations.
+  \item \textbf{Output}: Returns the combined X-ray report details or throws \texttt{ReportNotFoundException} if no matching record exists.
 \end{itemize}
 
+\subsubsection{editReport(recordID, annotations)}
+\begin{itemize}
+  \item \textbf{Transition}: Retrieves the existing X-ray report data, merges new annotations (including doctor comments and corrections) with the existing AI analysis, updates the report with the combined results, and saves the changes to the data source.
+  \item \textbf{Output}: Returns the updated X-ray report details or throws \texttt{ReportNotFoundException} if no matching record exists.
+\end{itemize}
+
+\subsubsection{approveReport(recordID)}
+\begin{itemize}
+  \item \textbf{Transition}: Flags the report as finalized and generates a PDF or stored artifact of the final X-ray report.
+  \item \textbf{Output}: 
+    Returns a confirmation or the final X-ray report object or Throws \texttt{ReportNotFoundException} if the record cannot be found.
+\end{itemize}
+
+\newpage
 \subsection{Local Functions}
 \begin{itemize}
-\item \textbf{place holder(place holder)}: place holder
+  \item \textbf{fetchXRayData(recordID)}: Retrieves raw X-ray image data and associated metadata from the data source.
+  \item \textbf{generateAIAnalysis(recordID)}: Calls the modules related to disease prediction to generate the AI report summary.
+  \item \textbf{mergeAnnotations(annotations)}: Integrates new doctor annotations with existing AI analysis.
 \end{itemize}
 
 % /********************* M11 *********************/
@@ -902,7 +954,7 @@ Routes & User Action & HTML & N/A \\
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
 \begin{center}
-  \begin{tabular}{|p{4.5cm}|p{3cm}|p{2.5cm}|p{4cm}|}
+  \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{3.5cm}|p{6cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
@@ -949,6 +1001,7 @@ Routes & User Action & HTML & N/A \\
   \item \textbf{executeHttpRequest(method, path)}: Send a generic HTTP request to a specified path
 \end{itemize}
 
+\newpage
 % /********************* M12 *********************/
 \section{Disease Prediction Module}
 \label{Disease Prediction Module}
@@ -965,11 +1018,11 @@ Routes & User Action & HTML & N/A \\
 
 \subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|p{3cm}|p{5cm}|p{5.5cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & XrayImage: binary & Prediction Result: \newline PredictionResult & \texttt{PredictionFailedException} \\
+    \texttt{predictDisease} & \texttt{XrayImage: binary} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
     \hline
 \end{tabular}
 
@@ -1002,6 +1055,7 @@ Routes & User Action & HTML & N/A \\
 path
 \end{itemize}
 
+\newpage
 % /********************* M13 *********************/
 \section{Medical Record Management Module}
 
@@ -1021,7 +1075,7 @@ path
 \begin{center}
 \small  % Reduce font size
 \renewcommand{\arraystretch}{1.5}  % Increase vertical spacing between rows
-\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{2.5cm}|p{4cm}|}
+\begin{tabular}{|l|p{2.15cm}|p{2.25cm}|p{5.75cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
@@ -1138,7 +1192,7 @@ path
 \item N/A
 \end{itemize}
 
-
+\newpage
 % /********************* M14 *********************/
 \section{Data Persistent Module}
 \label{Data Persistence Module}
@@ -1159,7 +1213,7 @@ path
 \subsubsection{Exported Access Programs}
 \begin{center}
   \renewcommand{\arraystretch}{1.2}
-  \begin{tabularx}{\textwidth}{|l|X|X|X|}
+  \begin{tabularx}{\textwidth}{|l|X|X|p{4.5cm}|}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
