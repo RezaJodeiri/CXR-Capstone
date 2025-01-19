@@ -57,28 +57,6 @@ export const signUp = async (email, password, userDetails) => {
   );
 };
 
-export const getUserById = async (userId) => {
-
-  return executeHTTPRequest("GET", `/users/${userId}`);
-};
-
-export const editUserById = async (userId, userInfo) => {
-  const { firstName, lastName, location, occupation, organization } = userInfo;
-  return executeHTTPRequest(
-    "POST",
-    `/users/${userId}`,
-    {},
-    {
-      first_name: firstName,
-      last_name: lastName,
-      location: location,
-      occupation: occupation,
-      organization: organization,
-    }
-  );
-};
-
-
 export const getSelfUser = async (accessToken) => {
   return executeHTTPRequest("GET", "/oauth/self", {
     Authorization: `Bearer ${accessToken}`,
@@ -204,74 +182,4 @@ export const getMedicalRecord = async (recordId, token) => {
   }
   
   throw new Error('Medical record not found');
-};
-
-export const updateMedicalRecord = async (recordId,recordData,token) => {
-  for (const patientRecords of Object.values(allMedicalRecords)) {
-    const record = patientRecords.find(r => r.id === recordId);
-    if (record) {
-      return executeHTTPRequest(
-        "POST",
-        `/users/${userId}/records/${recordId}`,
-        {},
-        {
-          id: Date.now().toString(),
-          recordId: `MR-${Date.now()}`,
-          xRayUrl: recordData.xRayFile ? URL.createObjectURL(recordData.xRayFile) : null,
-          clinicalNotes: recordData.clinicalNotes,
-          treatmentPlan: recordData.treatmentPlan,
-          prescriptions: recordData.prescriptions,
-          priority: recordData.priority,
-          status: 'Pending',
-          timeCreated: new Date().toISOString(),
-          timeUpdated: new Date().toISOString()
-        }
-      );
-    }
-  }
-};
-
-export const createNewPrescription = async (userId,recordId,prescriptionData,token) => {
-  const { medication, dosage, frequency, time } = prescriptionData;
-  if (allMedicalRecords[userId]){
-    for (const patientRecords of Object.values(allMedicalRecords[userId])) {
-      const record = patientRecords.find(r => r.id === recordId);
-      if (record){
-        return executeHTTPRequest(
-          "POST",
-          `/users/${userId}/records/${recordId}/prescription`,
-          {},
-          {
-            medication: prescriptionData.medication,
-            dosage: prescriptionData.dosage,
-            frequency: prescriptionData.frequency,
-            time: prescriptionData.time
-          }
-        );
-      }
-    }
-  }
-}
-
-export const getPrescription = async (userId,recordId,prescriptionId,token) => {
-  return executeHTTPRequest("GET", `/users/${userId}/records/${recordId}/${prescriptionId}`);
-}
-
-export const getPaginatedPrescription = async (userId,recordId,prescriptionId,token) => {
-  return executeHTTPRequest("GET", `/users/${userId}/records/${recordId}/prescriptions?cursor=1f9d22fe-5465-4e8b-8b72-a7a95eb8225d&limit=10`);
-}
-
-export const UpdatePrescription = async (userId, recordId,prescriptionData, token) => {
-
-  return executeHTTPRequest(
-    "POST",
-    `/users/${userId}/records/${recordId}/prescriptions/${prescriptionId}`,
-    {},
-    {
-      medication: prescriptionData.medication,
-      dosage: prescriptionData.dosage,
-      frequency: prescriptionData.frequency,
-      time: prescriptionData.time
-    }
-  );
 };
