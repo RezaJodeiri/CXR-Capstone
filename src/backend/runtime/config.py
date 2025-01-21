@@ -9,6 +9,7 @@ load_dotenv()  # take environment variables from .env.
 class Config:
     def __init__(self):
         config = {
+            "OPENAPI_KEY": os.getenv("OPENAI_API_KEY", default=None),
             "FRONTEND_URL": os.getenv("FRONTEND_URL", default="http://localhost:3000"),
             "AWS_ACCESS_KEY_ID": os.getenv("AWS_ACCESS_KEY_ID", default=None),
             "AWS_SECRET_ACCESS_KEY": os.getenv("AWS_SECRET_ACCESS_KEY", default=None),

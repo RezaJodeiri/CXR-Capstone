@@ -62,3 +62,5 @@ def create_new_prescription_for_record_id(userId, recordId):
         jsonify(new_pre),
         200,
     )
+
+
