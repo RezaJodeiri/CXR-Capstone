@@ -1,13 +1,15 @@
-from runtime import MedicalRecordService
-from runtime import PredictionService
-from config import Config
-from data.aws_cognito import CognitoIdentityProvider
+from .aws_dynamodb.medical_record_service import MedicalRecordService as MRS
+from .prediction_services import PredictionService as PS
+from ..config import Config
+from .aws_cognito import CognitoIdentityProvider
 import openai
 
 RuntimeConfig = Config()
 
 IdentityProvider = CognitoIdentityProvider(
-    user_pool_id=RuntimeConfig.get("OPENAPI_KEY"),
+    user_pool_id=RuntimeConfig.get("COGNITO_USER_POOL_ID"),
+    client_id=RuntimeConfig.get("COGNITO_APP_CLIENT_ID"),
+    client_secret=RuntimeConfig.get("COGNITO_APP_CLIENT_SECRET"),
 )
 
 class ReportGenerationService:
@@ -18,9 +20,9 @@ class ReportGenerationService:
     def generate_report(self,userId, recordId):
         # Implement the logic to generate the report
         # in that fucntion first fetch record
-        record = MedicalRecordService.get_record_by_id(recordId)
+        record = MRS.get_record_by_id(recordId)
         # then fetch the image from the url
-        prediciton = PredictionService.predict_from_url(record["xrayImageUrl"])
+        prediciton = PS.predict_from_url(record["xrayImageUrl"])
         # fetch user
         user = IdentityProvider.get_user_by_id(userId)
 
@@ -40,9 +42,9 @@ class ReportGenerationService:
 
         def generate_report(self, userId, recordId):
             # Fetch record
-            record = MedicalRecordService.get_record_by_id(recordId)
+            record = MRS.get_record_by_id(recordId)
             # Fetch the image from the URL
-            prediction = PredictionService.predict_from_url(record["xrayImageUrl"])
+            prediction = PS.predict_from_url(record["xrayImageUrl"])
             # Fetch user
             user = IdentityProvider.get_user_by_id(userId)
 
