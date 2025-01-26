@@ -7,7 +7,7 @@ const executeHTTPRequest = async (
   path,
   headers = {},
   params = {},
-  body = {}
+  body = {},
 ) => {
   const config = {
     method: httpVerb,
@@ -40,7 +40,7 @@ export const signIn = async (email, password) => {
     {
       email,
       password,
-    }
+    },
   );
 };
 
@@ -53,7 +53,7 @@ export const signUp = async (email, password, userDetails) => {
       email,
       password,
     },
-    userDetails
+    userDetails,
   );
 };
 
@@ -65,7 +65,7 @@ export const getSelfUser = async (accessToken) => {
 
 export const predictImage = async (file, token) => {
   if (!token) {
-    throw new Error('Authentication token is required');
+    throw new Error("Authentication token is required");
   }
 
   const formData = new FormData();
@@ -75,7 +75,7 @@ export const predictImage = async (file, token) => {
     const response = await axios.post(`${API_BASE_URL}/predict`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -88,77 +88,100 @@ export const predictImage = async (file, token) => {
 // Mock patient data
 const mockPatients = [
   {
-    id: '1',
-    name: 'John Doe',
+    id: "1",
+    name: "John Doe",
     age: 45,
-    gender: 'Male',
-    lastVisit: '2024-03-20'
+    gender: "Male",
+    lastVisit: "2024-03-20",
   },
   {
-    id: '2',
-    name: 'Jane Smith',
+    id: "2",
+    name: "Jane Smith",
     age: 32,
-    gender: 'Female',
-    lastVisit: '2024-03-19'
-  }
+    gender: "Female",
+    lastVisit: "2024-03-19",
+  },
 ];
 
 // Mock data storage for all medical records (including newly created ones)
 let allMedicalRecords = {
-  '1': [
+  1: [
     {
-      id: '1',
-      recordId: 'MR-001',
-      priority: 'High',
-      status: 'In Progress',
-      timeCreated: '2024-03-20T10:00:00Z',
-      timeUpdated: '2024-03-20T10:00:00Z',
-      xRayUrl: '/file-upload.png',
-      clinicalNotes: 'Initial examination shows...',
-      treatmentPlan: 'Recommended treatment includes...',
+      id: "1",
+      recordId: "MR-001",
+      priority: "High",
+      status: "In Progress",
+      timeCreated: "2024-03-20T10:00:00Z",
+      timeUpdated: "2024-03-20T10:00:00Z",
+      xRayUrl: "/file-upload.png",
+      clinicalNotes: "Initial examination shows...",
+      treatmentPlan: "Recommended treatment includes...",
       prescriptions: [
         {
-          medication: 'Sample Medication',
-          dosage: '10mg',
-          frequency: 'Once daily',
-          time: 'Morning'
-        }
-      ]
-    }
-  ]
+          medication: "Sample Medication",
+          dosage: "10mg",
+          frequency: "Once daily",
+          time: "Morning",
+        },
+      ],
+    },
+  ],
 };
 
 export const getPatients = async (token) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return mockPatients;
 };
 
 export const getPatientById = async (patientId, token) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const patient = mockPatients.find(p => p.id === patientId);
-  if (!patient) throw new Error('Patient not found');
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const patient = mockPatients.find((p) => p.id === patientId);
+  if (!patient) throw new Error("Patient not found");
   return patient;
 };
 
+export const processDCMimg = async (file) => {
+  function isBase64(str) {
+    const base64Regex = /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}[A-Za-z0-9+\/=]{2}|[A-Za-z0-9+\/]{3}=)?$/;
+    return base64Regex.test(str);
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const response = await axios.post(`${API_BASE_URL}/processDCMimg`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      responseType: 'arraybuffer',
+    });
+    file = new File([response.data], 'NA.png', { type: 'image/png' });
+    console.log(file);
+    return file;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getMedicalRecords = async (patientId, token) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return allMedicalRecords[patientId] || [];
 };
 
 export const createMedicalRecord = async (patientId, recordData, token) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const newRecord = {
     id: Date.now().toString(),
     recordId: `MR-${Date.now()}`,
-    xRayUrl: recordData.xRayFile ? URL.createObjectURL(recordData.xRayFile) : null,
+    xRayUrl: recordData.xRayFile
+      ? URL.createObjectURL(recordData.xRayFile)
+      : null,
     clinicalNotes: recordData.clinicalNotes,
     treatmentPlan: recordData.treatmentPlan,
     prescriptions: recordData.prescriptions,
     priority: recordData.priority,
-    status: 'Pending',
+    status: "Pending",
     timeCreated: new Date().toISOString(),
-    timeUpdated: new Date().toISOString()
+    timeUpdated: new Date().toISOString(),
   };
 
   // Add the new record to our mock storage
@@ -171,15 +194,15 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
 };
 
 export const getMedicalRecord = async (recordId, token) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   // Search through all patient records to find the matching record
   for (const patientRecords of Object.values(allMedicalRecords)) {
-    const record = patientRecords.find(r => r.id === recordId);
+    const record = patientRecords.find((r) => r.id === recordId);
     if (record) {
       return record;
     }
   }
-  
-  throw new Error('Medical record not found');
+
+  throw new Error("Medical record not found");
 };

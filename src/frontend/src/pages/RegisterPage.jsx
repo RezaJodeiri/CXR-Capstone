@@ -33,23 +33,19 @@ function RegisterPage() {
       if (registerFormValue.password !== registerFormValue.confirmPassword) {
         throw new Error("Passwords do not match");
       }
-      
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(registerFormValue.email)) {
         throw new Error("Invalid email address format");
       }
-      
-      await register(
-        registerFormValue.email,
-        registerFormValue.password,
-        {
-          first_name: registerFormValue.firstName,
-          last_name: registerFormValue.lastName,
-          occupation: registerFormValue.occupation,
-          organization: registerFormValue.organization,
-          location: registerFormValue.location,
-        }
-      );
+
+      await register(registerFormValue.email, registerFormValue.password, {
+        first_name: registerFormValue.firstName,
+        last_name: registerFormValue.lastName,
+        occupation: registerFormValue.occupation,
+        organization: registerFormValue.organization,
+        location: registerFormValue.location,
+      });
       setRegisterSuccess(true);
     } catch (error) {
       console.error("Registration failed:", error);

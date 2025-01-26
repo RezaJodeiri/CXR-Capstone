@@ -188,8 +188,8 @@ function RegisterProgress({ currentStep, totalSteps, setCurrentStep }) {
               i < currentStep
                 ? "bg-secondary text-white"
                 : i === currentStep
-                ? "bg-white border-2 border-secondary text-secondary"
-                : "bg-white border-2 border-gray-200 text-gray-200"
+                  ? "bg-white border-2 border-secondary text-secondary"
+                  : "bg-white border-2 border-gray-200 text-gray-200"
             }`}
           >
             {i + 1}

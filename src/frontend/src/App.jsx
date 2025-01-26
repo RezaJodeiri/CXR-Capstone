@@ -20,55 +20,55 @@ function App() {
           <Route index element={<LoginPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route 
-            path="dashboard" 
+          <Route
+            path="dashboard"
             element={
               <ProtectedRoute>
                 <DashboardPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="prediction" 
+          <Route
+            path="prediction"
             element={
               <ProtectedRoute>
                 <PredictionPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients" 
+          <Route
+            path="patients"
             element={
               <ProtectedRoute>
                 <PatientsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients/:id" 
+          <Route
+            path="patients/:id"
             element={
               <ProtectedRoute>
                 <PatientDetailsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients/:id/create-record" 
+          <Route
+            path="patients/:id/create-record"
             element={
               <ProtectedRoute>
                 <PatientDetailsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/medical-records/:id" 
+          <Route
+            path="/medical-records/:id"
             element={
-              <CreateMedicalRecord 
-                viewMode={true} 
+              <CreateMedicalRecord
+                viewMode={true}
                 onBack={() => navigate(-1)}
                 onRecordCreated={() => {}}
               />
-            } 
+            }
           />
         </Routes>
       </div>

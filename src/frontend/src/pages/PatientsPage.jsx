@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FiMail, FiPhone, FiMoreVertical, FiPlus, FiTrash2, FiCheck, FiX } from 'react-icons/fi';
-import Sidebar from '../components/Sidebar';
-import TopBar from '../components/TopBar';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FiMail,
+  FiPhone,
+  FiMoreVertical,
+  FiPlus,
+  FiTrash2,
+  FiCheck,
+  FiX,
+} from "react-icons/fi";
+import Sidebar from "../components/Sidebar";
+import TopBar from "../components/TopBar";
 
 function PatientsPage() {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState('Overview');
+  const [activeTab, setActiveTab] = useState("Overview");
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [newPatient, setNewPatient] = useState({
-    patientId: '',
-    name: '',
-    age: '',
-    diagnosis: '',
-    gender: '',
-    status: 'Active',
-    contact: 'email'
+    patientId: "",
+    name: "",
+    age: "",
+    diagnosis: "",
+    gender: "",
+    status: "Active",
+    contact: "email",
   });
-  
+
   const [patients, setPatients] = useState([
     {
       id: 1,
-      patientId: 'PT-001',
-      name: 'Dianne Russell',
-      age: '45',
-      diagnosis: 'Hypertension',
-      gender: 'Female',
-      status: 'Active',
-      contact: 'email'
+      patientId: "PT-001",
+      name: "Dianne Russell",
+      age: "45",
+      diagnosis: "Hypertension",
+      gender: "Female",
+      status: "Active",
+      contact: "email",
     },
   ]);
 
@@ -47,11 +55,11 @@ function PatientsPage() {
   };
 
   const statusColors = {
-    'Active': 'bg-green-500',
-    'Pending': 'bg-blue-500',
-    'Critical': 'bg-red-500',
-    'Recovering': 'bg-cyan-500',
-    'Discharged': 'bg-gray-500'
+    Active: "bg-green-500",
+    Pending: "bg-blue-500",
+    Critical: "bg-red-500",
+    Recovering: "bg-cyan-500",
+    Discharged: "bg-gray-500",
   };
 
   const handlePatientClick = (patientId) => {
@@ -65,39 +73,42 @@ function PatientsPage() {
   const handleCancelAdd = () => {
     setIsAddingPatient(false);
     setNewPatient({
-      patientId: '',
-      name: '',
-      age: '',
-      diagnosis: '',
-      gender: '',
-      status: 'Active',
-      contact: 'email'
+      patientId: "",
+      name: "",
+      age: "",
+      diagnosis: "",
+      gender: "",
+      status: "Active",
+      contact: "email",
     });
   };
 
   const handleSavePatient = () => {
     if (newPatient.name && newPatient.patientId) {
-      setPatients(prev => [...prev, { 
-        id: Date.now(),
-        ...newPatient 
-      }]);
+      setPatients((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          ...newPatient,
+        },
+      ]);
       handleCancelAdd();
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewPatient(prev => ({
+    setNewPatient((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar 
-        isCollapsed={isCollapsed} 
-        toggleCollapse={() => setIsCollapsed(!isCollapsed)} 
+      <Sidebar
+        isCollapsed={isCollapsed}
+        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
       />
       <div className="flex-1 flex flex-col">
         <TopBar />
@@ -106,13 +117,13 @@ function PatientsPage() {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-6">
                 <div className="flex gap-6">
-                  {['Hospitalized', 'Outpatient'].map((tab) => (
+                  {["Hospitalized", "Outpatient"].map((tab) => (
                     <button
                       key={tab}
                       className={`pb-4 px-2 ${
                         activeTab === tab
-                          ? 'border-b-2 border-[#3C7187] text-[#3C7187] font-semibold'
-                          : 'text-gray-500'
+                          ? "border-b-2 border-[#3C7187] text-[#3C7187] font-semibold"
+                          : "text-gray-500"
                       }`}
                       onClick={() => setActiveTab(tab)}
                     >
@@ -127,15 +138,25 @@ function PatientsPage() {
                     className="pl-10 pr-4 py-2 border rounded-md w-64"
                   />
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <svg
+                      className="w-4 h-4 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
                     </svg>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <button 
+                <button
                   onClick={handleAddPatient}
                   className="flex items-center gap-2 bg-[#3C7187] text-white px-4 py-2 rounded-md"
                 >
@@ -247,8 +268,10 @@ function PatientsPage() {
                         onChange={handleInputChange}
                         className="w-full border rounded px-2 py-1"
                       >
-                        {Object.keys(statusColors).map(status => (
-                          <option key={status} value={status}>{status}</option>
+                        {Object.keys(statusColors).map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
                         ))}
                       </select>
                     </td>
@@ -265,13 +288,13 @@ function PatientsPage() {
                     </td>
                     <td className="py-4">
                       <div className="flex gap-2">
-                        <button 
+                        <button
                           onClick={handleSavePatient}
                           className="text-green-500 hover:text-green-700"
                         >
                           <FiCheck />
                         </button>
-                        <button 
+                        <button
                           onClick={handleCancelAdd}
                           className="text-red-500 hover:text-red-700"
                         >
@@ -297,12 +320,14 @@ function PatientsPage() {
                     <td className="py-4">{patient.gender}</td>
                     <td className="py-4">
                       <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${statusColors[patient.status]}`} />
+                        <div
+                          className={`w-2 h-2 rounded-full ${statusColors[patient.status]}`}
+                        />
                         <span>{patient.status}</span>
                       </div>
                     </td>
                     <td className="py-4">
-                      {patient.contact === 'email' ? (
+                      {patient.contact === "email" ? (
                         <FiMail className="text-gray-500" />
                       ) : (
                         <FiPhone className="text-gray-500" />
@@ -320,8 +345,8 @@ function PatientsPage() {
 
             <div className="flex justify-between items-center mt-6">
               <div className="flex gap-2">
-                <button 
-                  className={`px-3 py-1 border rounded ${currentPage === 1 ? 'text-gray-400' : ''}`}
+                <button
+                  className={`px-3 py-1 border rounded ${currentPage === 1 ? "text-gray-400" : ""}`}
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -331,15 +356,15 @@ function PatientsPage() {
                   <button
                     key={index + 1}
                     className={`px-3 py-1 border rounded ${
-                      currentPage === index + 1 ? 'bg-[#3C7187] text-white' : ''
+                      currentPage === index + 1 ? "bg-[#3C7187] text-white" : ""
                     }`}
                     onClick={() => handlePageChange(index + 1)}
                   >
                     {index + 1}
                   </button>
                 ))}
-                <button 
-                  className={`px-3 py-1 border rounded ${currentPage === totalPages ? 'text-gray-400' : ''}`}
+                <button
+                  className={`px-3 py-1 border rounded ${currentPage === totalPages ? "text-gray-400" : ""}`}
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >

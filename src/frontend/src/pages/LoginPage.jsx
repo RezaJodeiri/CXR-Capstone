@@ -58,10 +58,7 @@ function LoginPage() {
             />
 
             {error && <div className="text-error text-sm">{error}</div>}
-            <PrimaryButton
-              text="Sign In"
-              onClick={handleLogin}
-            />
+            <PrimaryButton text="Sign In" onClick={handleLogin} />
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"

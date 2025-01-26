@@ -1,22 +1,24 @@
-import React from 'react';
+import React from "react";
 
 function PatientInfo({ patient, activeTab, setActiveTab }) {
-  const tabs = ['Overview', 'Medical Record', 'Report'];
+  const tabs = ["Overview", "Medical Record", "Report"];
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Patient Info Section */}
       <div className="p-6">
         <div className="flex items-center gap-4">
-          <img 
-            src="/patient-avatar.jpg" 
-            alt="Patient" 
+          <img
+            src="/patient-avatar.jpg"
+            alt="Patient"
             className="w-12 h-12 rounded-full"
           />
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold">Marvin McKinney</h1>
-              <span className="bg-purple-100 text-purple-800 px-2 py-0.5 rounded text-sm">ICU</span>
+              <span className="bg-purple-100 text-purple-800 px-2 py-0.5 rounded text-sm">
+                ICU
+              </span>
             </div>
             <div className="text-gray-600 text-sm">
               <span>Male · Age 32</span>
@@ -40,8 +42,8 @@ function PatientInfo({ patient, activeTab, setActiveTab }) {
             key={tab}
             className={`py-4 relative ${
               activeTab === tab
-                ? 'text-[#3C7187] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#3C7187]'
-                : 'text-gray-500'
+                ? "text-[#3C7187] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#3C7187]"
+                : "text-gray-500"
             }`}
             onClick={() => setActiveTab(tab)}
           >
@@ -55,4 +57,4 @@ function PatientInfo({ patient, activeTab, setActiveTab }) {
   );
 }
 
-export default PatientInfo; 
+export default PatientInfo;
