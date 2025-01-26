@@ -1,7 +1,7 @@
 import React from 'react';
 
 function PatientInfo({ patient, activeTab, setActiveTab }) {
-  const tabs = ['Overview', 'Medical Record', 'Report'];
+  const tabs = ['Overview', 'Medical Record'];
 
   return (
     <div className="bg-white rounded-lg shadow-sm">
@@ -16,7 +16,6 @@ function PatientInfo({ patient, activeTab, setActiveTab }) {
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold">Marvin McKinney</h1>
-              <span className="bg-purple-100 text-purple-800 px-2 py-0.5 rounded text-sm">ICU</span>
             </div>
             <div className="text-gray-600 text-sm">
               <span>Male · Age 32</span>
@@ -38,14 +37,28 @@ function PatientInfo({ patient, activeTab, setActiveTab }) {
         {tabs.map((tab) => (
           <button
             key={tab}
-            className={`py-4 relative ${
-              activeTab === tab
-                ? 'text-[#3C7187] font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#3C7187]'
-                : 'text-gray-500'
-            }`}
+            className={`
+              py-4 px-2 relative transition-colors duration-200 ease-in-out
+              ${activeTab === tab 
+                ? 'text-[#3C7187] font-medium' 
+                : 'text-gray-600 hover:text-[#3C7187]'
+              }
+              outline-none focus:outline-none active:outline-none select-none
+              -webkit-tap-highlight-color-transparent
+            `}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
+            <div 
+              className={`
+                absolute bottom-0 left-0 right-0 h-0.5
+                transition-all duration-200 ease-in-out
+                ${activeTab === tab 
+                  ? 'bg-[#3C7187] opacity-100' 
+                  : 'bg-[#3C7187] opacity-0'
+                }
+              `}
+            />
           </button>
         ))}
       </div>
