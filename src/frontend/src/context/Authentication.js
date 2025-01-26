@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(response.user));
         setToken(response.token);
         setUser(response.user);
-        navigate("/dashboard");
+        navigate("/patients");
         return true;
       }
       return false;
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(response.user));
         setToken(response.token);
         setUser(response.user);
-        navigate("/dashboard");
+        navigate("/patients");
         return true;
       }
       return false;
