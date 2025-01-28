@@ -9,6 +9,7 @@ from api.predict import predict_bp
 from api.user import user_blueprint
 from api.record import record_blueprint
 from api.prescription import prescription_blueprint
+from api.doctor import doctor_bp
 
 app = Flask(__name__)
 CORS(
@@ -22,6 +23,7 @@ app.register_blueprint(predict_bp)
 app.register_blueprint(oauth_bp, url_prefix="/oauth")
 app.register_blueprint(user_blueprint, url_prefix="/users")
 app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
+app.register_blueprint(doctor_bp, url_prefix="/doctors/<doctorId>")
 app.register_blueprint(
     prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
 )
