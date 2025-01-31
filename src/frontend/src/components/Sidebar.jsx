@@ -7,12 +7,6 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
 
   const menuItems = [
     { 
-      icon: '/square.svg', 
-      label: 'Dashboard', 
-      path: '/dashboard',
-      customIcon: true 
-    },
-    { 
       icon: '/union.svg', 
       label: 'Patients', 
       path: '/patients',

@@ -16,14 +16,11 @@ function TopBar() {
     const segments = path.split('/').filter(Boolean);
 
     if (segments.length === 0) {
-      items.push({ label: 'Dashboard', path: '/dashboard' });
+      items.push({ label: 'Patients', path: '/patients' });
       return items;
     }
 
     switch(segments[0]) {
-      case 'dashboard':
-        items.push({ label: 'Dashboard', path: '/dashboard' });
-        break;
       case 'prediction':
         items.push({ label: 'Prediction', path: '/prediction' });
         break;
@@ -43,7 +40,7 @@ function TopBar() {
         }
         break;
       default:
-        items.push({ label: 'Dashboard', path: '/dashboard' });
+        items.push({ label: 'Patients', path: '/patients' });
     }
 
     return items;
@@ -52,10 +49,11 @@ function TopBar() {
   const isActivePath = (path) => {
     return location.pathname === path;
   };
+
   const getTitle = () => {
     const items = getBreadcrumbItems();
     if (items.length === 0) {
-      return "Dashboard"; // Default title
+      return "Patients"; // Default title
     }
     
     if (location.pathname.includes('/patients/')) {
