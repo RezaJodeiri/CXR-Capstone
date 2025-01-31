@@ -1,19 +1,19 @@
 services:
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - ${FRONTEND_HOST_PORT}:3000
-  #   environment:
-  #     - WATCHPACK_POLLING=${WATCHPACK_POLLING}
-  #     - WATCHPACK_POLLING_INTERVAL=2000
-  #     - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
-  #   command: npm start
-  #   depends_on:
-  #     - backend
-  #   image: neuralanalyzer/frontend:latest
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
+  frontend:
+    build: ./frontend
+    ports:
+      - ${FRONTEND_HOST_PORT}:3000
+    environment:
+      - WATCHPACK_POLLING=${WATCHPACK_POLLING}
+      - WATCHPACK_POLLING_INTERVAL=2000
+      - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
+    command: npm start
+    depends_on:
+      - backend
+    image: neuralanalyzer/frontend:latest
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   backend:
     build: ./backend
