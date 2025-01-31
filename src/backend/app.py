@@ -26,7 +26,7 @@ app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
 app.register_blueprint(
     prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
 )
-app.register_blueprint(s3_blueprint,url_prefix="/generate-upload-url")
+app.register_blueprint(s3_blueprint)
 
 @app.errorhandler(HTTPException)
 def handle_exception(e):
