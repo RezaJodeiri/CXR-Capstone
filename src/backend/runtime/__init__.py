@@ -18,6 +18,6 @@ IdentityProvider = CognitoIdentityProvider(
 PredictionService = PS()
 MedicalRecordService = MRS("capstone_medical_record", "us-west-2")
 MedicalPrescriptionService = MPS("capstone_medical_prescription", "us-west-2")
-S3Handler = s3('plzplzplz')
+S3PresignedURLHandler = s3('plzplzplz')
 
 RuntimeLogger = Logger().getLogger()
