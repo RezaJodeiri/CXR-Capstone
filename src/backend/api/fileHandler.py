@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, request
-from runtime import S3PresignedURLHandler
+from flask import Flask, jsonify, request, Blueprint
+from runtime import S3PresignedURLHandler 
 
-app = Flask(__name__)
+s3_blueprint = Blueprint("s3", __name__)
 
-@app.route('/generate-upload-url', methods=['GET'])
+@s3_blueprint.route('/generate-upload-url', methods=['GET'])
 def generate_upload_url(object_name):
     data = request.json
     object_name = data.get('object_name')
@@ -16,7 +16,7 @@ def generate_upload_url(object_name):
     return jsonify(url_response)
 
 
-@app.route('/generate-download-url', methods=['GET'])
+@s3_blueprint.route('/generate-download-url', methods=['GET'])
 def generate_download_url(object_name):
     data = request.json
     object_name = data.get('object_name')
@@ -29,4 +29,4 @@ def generate_download_url(object_name):
     return jsonify(url_response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    s3_blueprint.run(debug=True)

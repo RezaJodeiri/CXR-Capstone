@@ -9,6 +9,7 @@ from api.predict import predict_bp
 from api.user import user_blueprint
 from api.record import record_blueprint
 from api.prescription import prescription_blueprint
+from api.fileHandler import s3_blueprint
 
 app = Flask(__name__)
 CORS(
@@ -25,7 +26,7 @@ app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
 app.register_blueprint(
     prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
 )
-
+app.register_blueprint(s3_blueprint,url_prefix="/generate-upload-url")
 
 @app.errorhandler(HTTPException)
 def handle_exception(e):
