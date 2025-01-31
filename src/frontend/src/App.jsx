@@ -5,7 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthProvider } from "./context/Authentication";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import DashboardPage from "./pages/DashboardPage";
+// import DashboardPage from "./pages/DashboardPage";
 import PatientsPage from "./pages/PatientsPage";
 import PatientDetailsPage from "./pages/PatientDetailsPage";
 import CreateMedicalRecord from "./components/Patient/CreateMedicalRecord";
@@ -20,6 +20,7 @@ function App() {
           <Route index element={<LoginPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          {/* Dashboard route commented out
           <Route 
             path="dashboard" 
             element={
@@ -27,7 +28,7 @@ function App() {
                 <DashboardPage />
               </ProtectedRoute>
             } 
-          />
+          /> */}
           <Route 
             path="prediction" 
             element={

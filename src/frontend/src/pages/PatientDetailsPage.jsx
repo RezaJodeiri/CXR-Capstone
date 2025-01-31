@@ -9,12 +9,16 @@ import { IoChevronForward } from "react-icons/io5";
 function PatientDetailsPage() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('Overview');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const tabs = [
-    { id: 'Overview', icon: '/health.svg', label: 'Clinical History' },
-    { id: 'Medical Record', icon: '/info.svg', label: 'Treatment Plan' },
-    { id: 'Medication', icon: '/report.svg', label: 'Report' }
-  ];
+  const handleTabChange = (newTab) => {
+    if (newTab === activeTab) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 200);
+  };
 
   const renderTabContent = () => {
     switch(activeTab) {
@@ -22,8 +26,6 @@ function PatientDetailsPage() {
         return <PatientOverview />;
       case 'Medical Record':
         return <PatientMedicalRecords />;
-      case 'Medication':
-        return <div className="p-6">Medication Content</div>;
       default:
         return null;
     }
@@ -39,10 +41,19 @@ function PatientDetailsPage() {
             <PatientInfo 
               patient={{}} 
               activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              tabs={tabs}
+              setActiveTab={handleTabChange}
             />
-            {renderTabContent()}
+            <div 
+              className={`
+                transition-all duration-200 ease-in-out
+                ${isTransitioning 
+                  ? 'opacity-0 translate-y-1' 
+                  : 'opacity-100 translate-y-0'
+                }
+              `}
+            >
+              {renderTabContent()}
+            </div>
           </div>
         </div>
       </div>
