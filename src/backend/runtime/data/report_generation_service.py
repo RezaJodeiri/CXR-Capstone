@@ -15,13 +15,6 @@ IdentityProvider = CognitoIdentityProvider(
     client_secret=RuntimeConfig.get("COGNITO_APP_CLIENT_SECRET"),
 )
 
-record = MRS.get_record_by_id(recordId)
-# Fetch the image from the URL
-prediction = PS.predict_from_url(record["xrayImageUrl"])
-
-print(prediction)
-print(record)
-
 class ReportGenerationService:
     def __init__(self):
         if not RuntimeConfig.get("OPENAPI_KEY"):
