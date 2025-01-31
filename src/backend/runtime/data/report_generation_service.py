@@ -6,8 +6,11 @@ from openai import OpenAI
 
 
 # Get keys 
-client = OpenAI()
 RuntimeConfig = Config()
+
+client = OpenAI(
+    api_key=RuntimeConfig.get("OPENAI_API_KEY")
+)
 
 IdentityProvider = CognitoIdentityProvider(
     user_pool_id=RuntimeConfig.get("COGNITO_USER_POOL_ID"),
@@ -17,7 +20,7 @@ IdentityProvider = CognitoIdentityProvider(
 
 class ReportGenerationService:
     def __init__(self):
-        if not RuntimeConfig.get("OPENAPI_KEY"):
+        if not client.api_key:
             raise ValueError("OPENAPI_KEY is not set in the configuration")
     # recordId has the xray image url within it 
     def generate_report(self, userId, recordId):
