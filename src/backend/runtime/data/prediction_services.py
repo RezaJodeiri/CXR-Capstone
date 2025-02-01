@@ -39,3 +39,18 @@ class PredictionService:
         else:
             logger.error(f"Prediction failed with status code {response.status_code}")
             return None
+
+    def downloadImage(self, url):
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.content
+        else:
+            logger.error(f"Failed to download image from {url}")
+            return None
+    
+    def predict_from_url(self, url):
+        image = self.downloadImage(url)
+        if image is not None:
+            return self.predict(image)
+        else:
+            return None
