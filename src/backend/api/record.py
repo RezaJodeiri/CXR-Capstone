@@ -1,7 +1,6 @@
 from decorators.login_required import authentication_required
 from flask import Blueprint, jsonify, request
-from runtime import MedicalRecordService, MedicalPrescriptionService
-
+from runtime import MedicalPrescriptionService, MedicalRecordService
 
 record_blueprint = Blueprint("record", __name__)
 
