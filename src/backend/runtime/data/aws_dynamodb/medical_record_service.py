@@ -30,3 +30,6 @@ class MedicalRecordService(BaseDynamoService):
 
     def update_record_by_id(self, uuid, record):
         return super().update_item_by_id(uuid, record)
+    
+    def link_report_to_record(self, recordId, reportId):
+        return super().update_item_by_id(recordId, {"reportId": reportId})
