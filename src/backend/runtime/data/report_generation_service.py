@@ -24,8 +24,6 @@ class ReportGenerationService:
     # recordId has the xray image url within it 
     def generate_report(self, userId, imageUrl):
                 # Fetch the image from the URL
-                print(imageUrl)
-                print("Test")
                 PredictionService = PS()
                 prediction = PredictionService.predict_from_url(imageUrl)
                 # Fetch user
