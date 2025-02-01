@@ -1,10 +1,9 @@
 from decorators.login_required import authentication_required
 from flask import Blueprint, jsonify, request
 from runtime import MedicalRecordService, MedicalPrescriptionService
-
+from runtime import ReportGenerationService
 
 record_blueprint = Blueprint("record", __name__)
-
 
 @record_blueprint.route("/records", methods=["GET"])
 @authentication_required
@@ -55,13 +54,17 @@ def handle_record_by_id(userId, recordId):
 def create_new_record(userId):
     # When create a new record, check for a valid downloadable picture from the image URL. Then run the disease report on it
     # TODO
+    imageUrl  = request.json.get("imageUrl", "")
     record_info = {
-        "imageUrl": request.json.get("imageUrl", ""),
+        "imageUrl": imageUrl,
         "note": request.json.get("note", ""),
         "prescription": request.json.get("prescription", []),
+        "report": ReportGenerationService.generate_report(userId, imageUrl),
     }
     record = MedicalRecordService.create_new_record(userId, record_info)
     return (
         jsonify(record),
         200,
     )
+
+
