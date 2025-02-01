@@ -29,19 +29,6 @@ function PatientOverview() {
 
   return (
     <div className="p-6">
-      {/* Date Selection Row */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Overview</h2>
-        <div className="flex items-center gap-4">
-          <button className="px-3 py-1 bg-blue-50 text-blue-600 rounded">Today</button>
-          <div className="flex items-center gap-2">
-            <button className="p-1">←</button>
-            <span>Fri, 21 Jul 2024</span>
-            <button className="p-1">→</button>
-          </div>
-        </div>
-      </div>
-
       {/* Clinical History Section */}
       <div className="mb-6">
         <div className="border border-gray-200 rounded-2xl">
