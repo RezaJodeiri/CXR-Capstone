@@ -7,7 +7,6 @@ import TopBar from '../components/TopBar';
 function PatientsPage() {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState('Overview');
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [newPatient, setNewPatient] = useState({
     patientId: '',
@@ -15,7 +14,6 @@ function PatientsPage() {
     age: '',
     diagnosis: '',
     gender: '',
-    status: 'Active',
     contact: 'email'
   });
   
@@ -27,7 +25,6 @@ function PatientsPage() {
       age: '45',
       diagnosis: 'Hypertension',
       gender: 'Female',
-      status: 'Active',
       contact: 'email'
     },
   ]);
@@ -46,14 +43,6 @@ function PatientsPage() {
     }
   };
 
-  const statusColors = {
-    'Active': 'bg-green-500',
-    'Pending': 'bg-blue-500',
-    'Critical': 'bg-red-500',
-    'Recovering': 'bg-cyan-500',
-    'Discharged': 'bg-gray-500'
-  };
-
   const handlePatientClick = (patientId) => {
     navigate(`/patients/${patientId}`);
   };
@@ -70,7 +59,6 @@ function PatientsPage() {
       age: '',
       diagnosis: '',
       gender: '',
-      status: 'Active',
       contact: 'email'
     });
   };
@@ -103,36 +91,8 @@ function PatientsPage() {
         <TopBar />
         <div className="p-8">
           <div className="bg-white rounded-lg p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-6">
-                <div className="flex gap-6">
-                  {['Hospitalized', 'Outpatient'].map((tab) => (
-                    <button
-                      key={tab}
-                      className={`pb-4 px-2 ${
-                        activeTab === tab
-                          ? 'border-b-2 border-[#3C7187] text-[#3C7187] font-semibold'
-                          : 'text-gray-500'
-                      }`}
-                      onClick={() => setActiveTab(tab)}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="pl-10 pr-4 py-2 border rounded-md w-64"
-                  />
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-medium">Patients</h1>
 
               <div className="flex items-center gap-4">
                 <button 
@@ -148,29 +108,6 @@ function PatientsPage() {
               </div>
             </div>
 
-            <div className="flex gap-6 mb-6">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-sm text-gray-600">Discharged</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-500" />
-                <span className="text-sm text-gray-600">Report Pending</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-purple-500" />
-                <span className="text-sm text-gray-600">ICU</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-cyan-500" />
-                <span className="text-sm text-gray-600">In Recovery</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-red-500" />
-                <span className="text-sm text-gray-600">Life Support</span>
-              </div>
-            </div>
-
             <table className="w-full">
               <thead>
                 <tr className="text-left text-gray-500 text-sm">
@@ -179,7 +116,6 @@ function PatientsPage() {
                   <th className="pb-4">AGE</th>
                   <th className="pb-4">DIAGNOSIS</th>
                   <th className="pb-4">GENDER</th>
-                  <th className="pb-4">STATUS</th>
                   <th className="pb-4">CONTACT</th>
                   <th className="pb-4"></th>
                 </tr>
@@ -242,18 +178,6 @@ function PatientsPage() {
                     </td>
                     <td className="py-4">
                       <select
-                        name="status"
-                        value={newPatient.status}
-                        onChange={handleInputChange}
-                        className="w-full border rounded px-2 py-1"
-                      >
-                        {Object.keys(statusColors).map(status => (
-                          <option key={status} value={status}>{status}</option>
-                        ))}
-                      </select>
-                    </td>
-                    <td className="py-4">
-                      <select
                         name="contact"
                         value={newPatient.contact}
                         onChange={handleInputChange}
@@ -295,12 +219,6 @@ function PatientsPage() {
                     <td className="py-4">{patient.age}</td>
                     <td className="py-4">{patient.diagnosis}</td>
                     <td className="py-4">{patient.gender}</td>
-                    <td className="py-4">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${statusColors[patient.status]}`} />
-                        <span>{patient.status}</span>
-                      </div>
-                    </td>
                     <td className="py-4">
                       {patient.contact === 'email' ? (
                         <FiMail className="text-gray-500" />
