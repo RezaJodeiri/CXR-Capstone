@@ -1,12 +1,16 @@
 import React from "react";
 import { useAuth } from "../context/Authentication";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import { IoChevronForward } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
+import routerMapping from "../router.json";
+
+const menu = [{ label: "Profile", path: "/settings" }, { label: "Logout" }];
 function TopBar() {
   const { user } = useAuth();
   const location = useLocation();
   const params = useParams();
+  const navigate = useNavigate();
 
   const [showDropdown, setShowDropdown] = React.useState(false);
 
@@ -52,16 +56,13 @@ function TopBar() {
   };
 
   const getTitle = () => {
-    const items = getBreadcrumbItems();
-    if (items.length === 0) {
-      return "Patients"; // Default title
-    }
+    const ROUTER_PATHS = routerMapping.paths;
+    console.log(location.pathname);
 
-    if (location.pathname.includes("/patients/")) {
-      return "Patient: Marvin McKinney";
+    if (ROUTER_PATHS[location.pathname]) {
+      return ROUTER_PATHS[location.pathname].title;
     }
-
-    return items[0].label;
+    return "Patients";
   };
 
   return (
@@ -69,26 +70,6 @@ function TopBar() {
       <div className="px-6">
         <div className="py-2 flex justify-between items-center">
           <h1 className="text-xl font-medium">{getTitle()}</h1>
-
-          {/* <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md">
-            <div className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-600">
-              {user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <FaRegUser className="w-2/3 aspect-square object-cover text-gray-200" />
-              )}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-medium">
-                {`${user.first_name} ${user.last_name}`}
-              </span>
-              <span className="text-xs text-gray-500">{user.occupation}</span>
-            </div>
-          </div> */}
           <div className="relative">
             <div
               className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
@@ -114,18 +95,18 @@ function TopBar() {
             </div>
             {showDropdown && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                <Link
-                  to="/profile"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Profile
-                </Link>
-                <button
-                  onClick={void 0}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
+                {menu.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      navigate(item.path);
+                      setShowDropdown(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
             )}
           </div>

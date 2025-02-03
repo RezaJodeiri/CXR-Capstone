@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/Authentication";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 // import DashboardPage from "./pages/DashboardPage";
 import PatientsPage from "./pages/PatientsPage";
+import SettingsPage from "./pages/SettingPage";
 import PatientDetailsPage from "./pages/PatientDetailsPage";
 import CreateMedicalRecord from "./components/Patient/CreateMedicalRecord";
 
@@ -29,47 +30,55 @@ function App() {
               </ProtectedRoute>
             } 
           /> */}
-          <Route 
-            path="prediction" 
+          <Route
+            path="prediction"
             element={
               <ProtectedRoute>
                 <PredictionPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients" 
+          <Route
+            path="settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="patients"
             element={
               <ProtectedRoute>
                 <PatientsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients/:id" 
+          <Route
+            path="patients/:id"
             element={
               <ProtectedRoute>
                 <PatientDetailsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="patients/:id/create-record" 
+          <Route
+            path="patients/:id/create-record"
             element={
               <ProtectedRoute>
                 <PatientDetailsPage />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/medical-records/:id" 
+          <Route
+            path="/medical-records/:id"
             element={
-              <CreateMedicalRecord 
-                viewMode={true} 
+              <CreateMedicalRecord
+                viewMode={true}
                 onBack={() => navigate(-1)}
                 onRecordCreated={() => {}}
               />
-            } 
+            }
           />
         </Routes>
       </div>
