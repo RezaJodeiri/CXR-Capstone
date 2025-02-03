@@ -85,24 +85,6 @@ export const predictImage = async (file, token) => {
   }
 };
 
-// Mock patient data
-const mockPatients = [
-  {
-    id: "1",
-    name: "John Doe",
-    age: 45,
-    gender: "Male",
-    lastVisit: "2024-03-20",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    age: 32,
-    gender: "Female",
-    lastVisit: "2024-03-19",
-  },
-];
-
 // Mock data storage for all medical records (including newly created ones)
 let allMedicalRecords = {
   1: [
@@ -185,15 +167,59 @@ export const createPatient = async (doctorId, patientData, token) => {
 };
 
 export const getPatientById = async (patientId, token) => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  const patient = mockPatients.find((p) => p.id === patientId);
-  if (!patient) throw new Error("Patient not found");
-  return patient;
+  const patient = await executeHTTPRequest("GET", `/users/${patientId}`, {
+    Authorization: `Bearer ${token}`,
+  });
+  return parsePatientData(patient);
 };
 
-export const getMedicalRecords = async (patientId, token) => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return allMedicalRecords[patientId] || [];
+const parseRecordData = (record) => {
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+  return {
+    id: record.id,
+    friendlyId: "RID-" + record.id.split("-")[0],
+    xRayUrl: record.imageUrl,
+    // TODO: Refactor to enums (if have time)
+    priority: ["Emergency", "Low", "Medium"][Math.floor(Math.random() * 3)],
+    reportStatus: ["Completed", "In Progress", "Canceled"][
+      Math.floor(Math.random() * 3)
+    ],
+    status: record.status,
+    timeCreated: lastMonth.toISOString(),
+    timeUpdated: lastMonth.toISOString(),
+  };
+};
+export const getMedicalRecordsForPatient = async (
+  patientId,
+  token,
+  limit = 100
+) => {
+  const paginatedResponse = await executeHTTPRequest(
+    "GET",
+    `/users/${patientId}/records?limit=${limit}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
+  const records = paginatedResponse?.data || [];
+  const parsedRecords = records.map((record) => parseRecordData(record));
+
+  // Sort patients by status: Emergency, Medium, Low
+  const priorityOrder = { Emergency: 1, Medium: 2, Low: 3 };
+  const reportStatusOrder = { "In Progress": 1, Completed: 2, Canceled: 3 };
+
+  return parsedRecords.sort((a, b) => {
+    if (
+      reportStatusOrder[a.reportStatus] !== reportStatusOrder[b.reportStatus]
+    ) {
+      return (
+        reportStatusOrder[a.reportStatus] - reportStatusOrder[b.reportStatus]
+      );
+    }
+    return priorityOrder[a.priority] - priorityOrder[b.priority];
+  });
 };
 
 export const createMedicalRecord = async (patientId, recordData, token) => {
@@ -224,15 +250,5 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
 };
 
 export const getMedicalRecord = async (recordId, token) => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  // Search through all patient records to find the matching record
-  for (const patientRecords of Object.values(allMedicalRecords)) {
-    const record = patientRecords.find((r) => r.id === recordId);
-    if (record) {
-      return record;
-    }
-  }
-
   throw new Error("Medical record not found");
 };

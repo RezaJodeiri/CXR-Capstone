@@ -21,12 +21,12 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
       icon: "/settings.svg",
       customIcon: true,
     },
-    {
-      label: "Help",
-      path: "/help",
-      icon: "/help.svg",
-      customIcon: true,
-    },
+    // {
+    //   label: "Help",
+    //   path: "/help",
+    //   icon: "/help.svg",
+    //   customIcon: true,
+    // },
   ];
 
   return (
