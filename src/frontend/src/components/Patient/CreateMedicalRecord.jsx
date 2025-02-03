@@ -46,29 +46,8 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
     }
   };
 
-  const handleFileChange = async (file) => {
-    console.log("Attempting to Upload file...");
-    setFile(file); // Store the selected file locally
-  
-    // Prepare FormData for API call
-    //const formData = new FormData();
-    //formData.append("file", file);
-    try {
-      console.log("Uploading file...");
-      const response = await fetch("http://localhost:5001/generate-upload-url/test.pdf", {
-        method: "GET",
-        //body: formData,
-      });
-  
-      if (!response.ok) {
-        throw new Error("File upload failed");
-      }
-  
-      const data = await response.json();
-      setFormData((prev) => ({ ...prev, xRayUrl: data.imgUrl })); // Store URL returned by API
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+  const handleFileChange = (file) => {
+    setFile(file);
   };
 
   const handleInputChange = (e) => {
@@ -109,7 +88,6 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      console.log("File is uploaded...")
       const recordData = {
         xRayFile: file,
         clinicalNotes: formData.clinicalNotes,
@@ -117,6 +95,7 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
         prescriptions: prescriptions,
         priority: formData.priority
       };
+
       const newRecord = await createMedicalRecord(user?.id, recordData, user?.token);
       onRecordCreated(newRecord);
     } catch (error) {
@@ -125,8 +104,6 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="p-6">
@@ -211,10 +188,7 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                       <input
                         type="file"
                         accept=".jpg,.png,.gif,.dcm"
-                        onChange={(e) => {
-                          console.log("File is uploaded...");
-                          handleFileChange(e.target.files[0]);
-                        }}
+                        onChange={(e) => handleFileChange(e.target.files[0])}
                         className="hidden"
                         id="file-upload"
                       />
@@ -389,14 +363,11 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
       <div className="flex justify-end gap-4 mt-8">
         {!viewMode && (
           <button 
-            onClick={() => {
-              console.log('Continue to Analysis clicked');
-              handleSubmit();
-              onAnalyze({
+            onClick={() => onAnalyze({
               ...formData,
               file: file,
               prescriptions: prescriptions
-            })}}
+            })}
             className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
           >
             Continue to Analysis
