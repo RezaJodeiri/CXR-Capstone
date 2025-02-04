@@ -277,3 +277,12 @@ TSWLatexianTemp*
 
 # DS_Store file from Mac computers
 .DS_Store
+src/backend/.env
+src/frontend/package-lock.json
+src/frontend/node_modules/.package-lock.json
+src/backend/api/__pycache__/
+src/backend/api/migrations/__pycache__/
+src/backend/decorators/__pycache__/
+src/backend/runtime/__pycache__/
+src/backend/runtime/data/__pycache__/
+src/backend/runtime/data/aws_dynamodb/__pycache__/

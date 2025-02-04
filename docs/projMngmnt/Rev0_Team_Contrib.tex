@@ -11,8 +11,8 @@
 
 \date{}
 
-\input{../Comments}
-\input{../Common}
+\input{../packages/Comments}
+\input{../packages/Common}
 
 \begin{document}
 
@@ -39,18 +39,17 @@ number of team meetings held by the team.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 10\\
+Ayman Akhras & 6\\
+Nathan Luong & 8\\
+Patrick Zhou & 8\\
+Kelly Deng & 7\\
+Reza Jodeiri & 8\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
-
+All students had their own difficult problems to solve. People with higher meeting counts tended to meet with each other more often.
 \section{Supervisor/Stakeholder Meeting Attendance}
 
 \wss{For each team member how many supervisor/stakeholder team meetings have
@@ -66,12 +65,12 @@ stakeholders (potential users) that can serve a similar purpose.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 2\\
+Ayman Akhras & 2\\
+Nathan Luong & 2\\
+Patrick Zhou & 2\\
+Kelly Deng & 2\\
+Reza Jodeiri & 2\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -91,12 +90,12 @@ lectures since the beginning of the term.}
 \toprule
 \textbf{Student} & \textbf{Lectures}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 15\\
+Ayman Akhras & 1\\
+Nathan Luong & 1\\
+Patrick Zhou & 2\\
+Kelly Deng & 2\\
+Reza Jodeiri & 9\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -114,24 +113,20 @@ with the TA were attended over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Lectures}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 24\\
+Ayman Akhras & 8\\
+Nathan Luong & 1\\
+Patrick Zhou & 2\\
+Kelly Deng & 2\\
+Reza Jodeiri & 6\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the attendance can be provided here.}
+For the purpose of this report, any form of communication with the TA, including both formal meetings and informal messaging, is considered a "meeting." This includes questions asked and answered via email, messaging platforms, or any other medium of communication. The following table summarizes the number of such communications for each team member over the time period of interest.
 
 \section{Commits}
 
-\wss{For each team member how many commits to the main branch have been made
-over the time period of interest.  The total is the total number of commits for
-the entire team since the beginning of the term.  The percentage is the
-percentage of the total commits made by each team member.}
 
 \begin{table}[H]
 \centering
@@ -139,20 +134,17 @@ percentage of the total commits made by each team member.}
 \toprule
 \textbf{Student} & \textbf{Commits} & \textbf{Percent}\\
 \midrule
-Total & Num & 100\% \\
-Name 1 & Num & \% \\
-Name 2 & Num & \% \\
-Name 3 & Num & \% \\
-Name 4 & Num & \% \\
-Name 5 & Num & \% \\
+Total & 327 & 100\% \\
+Ayman Akhras & 59 & 18.04\%\\
+Nathan Luong & 53 & 16.21\%\\
+Patrick Zhou & 24 & 7.34\%\\
+Kelly Deng & 45 & 13.76\%\\
+Reza Jodeiri & 146 & 44.65\%\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.  For
-instance, if a team member has more commits to unmerged branches, these numbers
-can be provided here.  If multiple people contribute to a commit, git allows for
-multi-author commits.}
+
 
 \section{Issue Tracker}
 
@@ -166,11 +158,11 @@ issues (C only)) over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Name 1 & Num & Num \\
-Name 2 & Num & Num \\
-Name 3 & Num & Num \\
-Name 4 & Num & Num \\
-Name 5 & Num & Num \\
+Ayman Akhras  & 0 & 3 \\
+Nathan Luong & 3 & 3 \\
+Patrick Zhou & 1 & 3 \\
+Kelly Deng & 0 & 3 \\
+Reza Jodeiri & 25 & 10 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -178,10 +170,11 @@ Name 5 & Num & Num \\
 \wss{If needed, an explanation for the counts can be provided here.}
 
 \section{CICD}
+Our CI/CD pipeline ensures our project's code quality and automates essential processes like testing and deployment. It begins with setting up the environment, where the latest code is checked out from our repository, Python is configured, and dependencies are installed while utilizing cached pip packages for efficiency. Next, the pipeline performs linting and type checks using tools such as flake8 and mypy to maintain code consistency and catch potential issues early. Finally, it runs unit and integration tests using a framework like pytest or unittest to verify that changes do not break existing functionality. 
 
-\wss{Say how CICD is used in your project}
+To maintain code coverage, the pipeline integrates tools like coverage.py to measure the extent of code exercised by tests. The coverage reports are generated and analyzed to ensure that a high percentage of the codebase is tested. If the code coverage falls below a predefined threshold, the pipeline can be configured to fail, prompting developers to add necessary tests. This automated workflow is triggered whenever code is pushed or merged, streamlining our development process, reducing human errors, and ensuring a stable and reliable codebase.
 
-\wss{If your team has additional metrics of productivity, please feel free to
-add them to this report.}
+
+
 
 \end{document}
