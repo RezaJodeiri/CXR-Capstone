@@ -256,34 +256,46 @@ export const getMedicalRecord = async (recordId, token) => {
 // api.js
 // Generic file uploads (for x-ray images, for avatar)
 // Generic Use case
-export const uploadFile = async (file, token) => {
-  // Fetch your upload URL, GET request
-  const uploadURLRes = await executeHTTPRequest("GET", "/generate-upload-url/test5.pdf", {
-    Authorization: `Bearer ${token}`,
-  });
-  console.log(uploadURLRes)
+export const uploadFile = async (file) => {
   try {
-    // Perform the POST request
+    console.log('Uploading file:', { name: file.name, type: file.type });
     const response = await executeHTTPRequest(
-      "PUT",                    // HTTP verb
-      uploadURLRes,             // Full presigned URL
-      {
-        "Content-Type": file.type, // Dynamically set content type of the file
-      },
-      {},                       // No additional params
-      file                      // File is passed directly as the body
+      "GET", 
+      `/upload-url?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}`
     );
-  
-    console.log(response)
-    if (response.ok) {
-      console.log('File uploaded successfully!');
-    } else {
-      console.error('File upload failed:', response.status, await response.text());
+    
+    console.log('Pre-signed URL response:', response);
+
+    const { uploadUrl, fileUrl } = response;
+    
+    if (!uploadUrl || !fileUrl) {
+      throw new Error('Missing uploadUrl or fileUrl from backend');
     }
+
+    console.log('Attempting to upload to:', uploadUrl);
+
+
+    const uploadResponse = await axios.put(uploadUrl, file, {
+      headers: {
+        'Content-Type': file.type,
+        'x-amz-acl': 'public-read',
+      },
+
+      withCredentials: false,
+      maxBodyLength: Infinity,
+      maxContentLength: Infinity,
+    });
+
+    console.log('Upload successful:', uploadResponse);
+
+
+    return fileUrl;
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error details:', {
+      message: error.message,
+      response: error.response?.data,
+      uploadUrl: error.config?.url
+    });
+    throw error;
   }
-
-
-  return response;
 };

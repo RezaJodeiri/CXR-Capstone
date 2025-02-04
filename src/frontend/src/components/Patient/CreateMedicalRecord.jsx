@@ -103,19 +103,30 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      console.log("File is uploaded...")
+      // First upload the file to get the S3 URL
+      let xRayFileUrl = null;
+      if (file) {
+        console.log("Uploading file...");
+        xRayFileUrl = await uploadFile(file);
+      }
+
+      console.log("Creating medical record...");
       const recordData = {
-        xRayFile: file,
+        xRayUrl: xRayFileUrl, // Use the returned S3 URL
         clinicalNotes: formData.clinicalNotes,
         treatmentPlan: formData.treatmentPlan,
         prescriptions: prescriptions,
         priority: formData.priority
       };
-      const newRecord = await createMedicalRecord(user?.id, recordData, user?.token);
-      onRecordCreated(newRecord);
+
+      const record = await createMedicalRecord(id, recordData);
+      
+      if (onRecordCreated) {
+        onRecordCreated(record);
+      }
+      setLoading(false);
     } catch (error) {
-      console.error('Failed to create record:', error);
-    } finally {
+      console.error("Error creating medical record:", error);
       setLoading(false);
     }
   };

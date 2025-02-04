@@ -1,33 +1,65 @@
 import boto3
 import requests
 from botocore.config import Config
+from botocore.exceptions import ClientError
+import logging
+
+logger = logging.getLogger(__name__)
 
 class S3PresignedURLHandler:
-    def __init__(self, bucket_name, region="us-east-2"):
-        self.s3_client = boto3.client(
-            's3',
-            region_name=region,
-            config=Config(signature_version='s3v4')  # Ensure Signature Version 4
-        )
+    def __init__(self, bucket_name):
+        """Initialize the handler with a bucket name"""
+        self.s3_client = boto3.client('s3')
         self.bucket_name = bucket_name
-
-    def generate_upload_url(self,object_name,expiration=600):
+    
+    def generate_presigned_url(self, operation, params, expires_in=3600):
         """
-        Generate a presigned Amazon S3 URL that can be used to perform an action.
-        """
-        response = self.s3_client.generate_presigned_url(
-                'put_object',
-                Params={'Bucket': self.bucket_name, 'Key': object_name},
-                ExpiresIn=expiration
-                )
+        Generate a presigned URL for S3 operations
         
-        return response
+        Args:
+            operation (str): The S3 operation (e.g., 'put_object', 'get_object')
+            params (dict): Parameters for the operation
+            expires_in (int): URL expiration time in seconds
+            
+        Returns:
+            str: The presigned URL
+        """
+        try:
+            # Ensure bucket name is in params
+            params['Bucket'] = self.bucket_name
+            
+            # Generate the presigned URL
+            url = self.s3_client.generate_presigned_url(
+                ClientMethod=operation,
+                Params=params,
+                ExpiresIn=expires_in
+            )
+            
+            logger.debug(f"Generated presigned URL for operation {operation}: {url}")
+            return url
+            
+        except ClientError as e:
+            logger.error(f"Error generating presigned URL: {e}")
+            raise
+
+    def generate_upload_url(self, filename, content_type=None, expires_in=3600):
+        """
+        Generate a presigned URL specifically for uploading (PUT)
+        """
+        params = {
+            'Bucket': self.bucket_name,
+            'Key': filename,
+        }
+        if content_type:
+            params['ContentType'] = content_type
+            
+        return self.generate_presigned_url('put_object', params, expires_in)
     
     def generate_download_url(self,object_name,expiration=600):
         """Generates a pre-signed URL for downloading a file."""
-        response = self.s3_client.generate_presigned_url(
+        response = self.generate_presigned_url(
         'get_object',
-        Params={'Bucket': self.bucket_name, 'Key': object_name},
+        {'Bucket': 'plzplzplz', 'Key': object_name},
         ExpiresIn=expiration
         )
         return response
@@ -60,7 +92,7 @@ class S3PresignedURLHandler:
 #local_file_path = '/Users/kd0819/Downloads/test_local2.pdf'
 filename = 'test2.pdf'
 
-s3_handler = S3PresignedURLHandler('plzplzplz')
+s3_handler = S3PresignedURLHandler(bucket_name='plzplzplz')
 
 # #s3_handler.download_file(filename, local_file_path)
 print(s3_handler.generate_upload_url(filename))
