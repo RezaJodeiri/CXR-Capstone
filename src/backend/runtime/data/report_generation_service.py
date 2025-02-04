@@ -23,15 +23,31 @@ class ReportGenerationService:
             raise ValueError("OPENAPI_KEY is not set in the configuration")
     # recordId has the xray image url within it 
     def generate_report(self, userId, imageUrl):
+                report_template = """
+                    **Findings**  
+                    1. [Key finding 1]  
+                    2. [Key finding 2]  
+                    3. [Key finding 3]  
+                    4. [Key finding 4]  
+
+                    **Impression**  
+                    [Summary diagnosis or conclusion]. [Next steps or recommendations].
+                """
                 # Fetch the image from the URL
-                print(imageUrl)
-                print("Test")
                 PredictionService = PS()
                 prediction = PredictionService.predict_from_url(imageUrl)
                 # Fetch user
                 user = IdentityProvider.get_user_by_id(userId)
                 # Call GPT to generate the report, tokens are charged everytime this is run. 
-                prompt = f"Generate a medical report for the following prediction: {prediction} and user details: {user}"
+                prompt = f"""Fill in the following medical report template based on the given prediction and user details:
+                
+                Template:
+                {report_template}
+                
+                Prediction: {prediction}
+                User details: {user}
+                """
+                
                 response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[{"role": "user", "content": prompt}]
