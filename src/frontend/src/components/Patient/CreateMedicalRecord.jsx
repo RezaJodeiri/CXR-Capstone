@@ -57,9 +57,9 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
     //formData.append("file", file);
     try {
       console.log("Uploading file...");
-      const res = await uploadFile(file, token);
+      const imageURL = await uploadFile(file, token);
       // DO something with the response
-      setFormData((prev) => ({ ...prev, xRayUrl: data.imgUrl })); // Store URL returned by API
+      setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -169,7 +169,7 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
               {viewMode ? (
                 file || formData.xRayUrl ? (
                   <img
-                    src={file ? URL.createObjectURL(file) : formData.xRayUrl}
+                    src={formData.xRayUrl ? formData.xRayUrl: URL.createObjectURL(file)}
                     alt="X-Ray"
                     className="w-full rounded-lg"
                   />
