@@ -42,12 +42,23 @@ function PatientMedicalRecords({ patient }) {
       setMedicalRecords((prevRecords) => [
         {
           ...newRecord,
-          report: "Pending",
+          friendlyId: `RID-${Date.now()}`,
+          reportStatus: "Pending",
+          priority: recordData.priority || "Low",
+          timeCreated: new Date().toISOString(),
+          timeUpdated: new Date().toISOString(),
         },
         ...prevRecords,
       ]);
-      setIsCreating(false);
       setShowAnalysis(false);
+      setRecordData({
+        priority: "Low",
+        clinicalNotes: "",
+        treatmentPlan: "",
+        prescriptions: [],
+        file: null,
+      });
+      setIsCreating(false);
       setIsTransitioning(false);
     }, 300);
   };
@@ -424,7 +435,7 @@ function PatientMedicalRecords({ patient }) {
           <tbody className="divide-y divide-gray-200">
             {medicalRecords.map((record) => (
               <tr
-                key={record.friendlyId}
+                key={record.id || record.friendlyId || Date.now().toString()}
                 className="hover:bg-gray-50 transition-colors"
               >
                 <td className="px-6 py-4">
@@ -432,7 +443,7 @@ function PatientMedicalRecords({ patient }) {
                     onClick={() => setViewingRecord(record.id)}
                     className="text-sm text-[#3C7187] hover:text-[#2c5465] hover:underline"
                   >
-                    {record.friendlyId}
+                    {record.friendlyId || record.recordId || `RID-${record.id}`}
                   </button>
                 </td>
                 <td className="px-6 py-4">
@@ -450,8 +461,8 @@ function PatientMedicalRecords({ patient }) {
                             : "gray",
                       }}
                     ></div>
-                    <span className={`px-2 py-1 rounded-full text-xs `}>
-                      {record.priority}
+                    <span className="px-2 py-1 rounded-full text-xs">
+                      {record.priority || "Low"}
                     </span>
                   </div>
                 </td>
@@ -465,14 +476,14 @@ function PatientMedicalRecords({ patient }) {
                         : "bg-gray-100 text-gray-800"
                     }`}
                   >
-                    {record.reportStatus}
+                    {record.reportStatus || "Pending"}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-600">
-                  {record.timeCreated?.split("T")[0]}
+                  {record.timeCreated ? new Date(record.timeCreated).toLocaleDateString() : "-"}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-600">
-                  {record.timeUpdated?.split("T")[0]}
+                  {record.timeUpdated ? new Date(record.timeUpdated).toLocaleDateString() : "-"}
                 </td>
               </tr>
             ))}
