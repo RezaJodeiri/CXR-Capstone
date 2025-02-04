@@ -258,33 +258,34 @@ export const getMedicalRecord = async (recordId, token) => {
 // Generic Use case
 export const uploadFile = async (file, token) => {
   // Fetch your upload URL, GET request
-  const fileName = file.name
-  const uploadURLRes = await executeHTTPRequest("GET", `/generate-upload-url/${fileName}`, {
-    Authorization: `Bearer ${token}`,
-  });
-  console.log(uploadURLRes)
+  const fileName = file.name;
+  const uploadURL = await executeHTTPRequest(
+    "GET",
+    `/generate-upload-url/${fileName}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
   try {
     // Perform the PUT request
-    const response = await executeHTTPRequest(
-      "PUT",                    // HTTP verb
-      uploadURLRes,             // Full presigned URL
-      {
-        "Content-Type": file.type, // Dynamically set content type of the file
+    const uploadResponse = await axios.put(uploadURL, file, {
+      headers: {
+        "Content-Type": file.type,
       },
-      {},                       // No additional params
-      file                      // File is passed directly as the body
-    );
-  
-    console.log(response)
-    if (response.ok) {
-      console.log('File uploaded successfully!');
+    });
+
+    if (uploadResponse.ok) {
+      console.log("File uploaded successfully!");
     } else {
-      console.error('File upload failed:', response.status, await response.text());
+      console.error(
+        "File upload failed:",
+        uploadResponse.status,
+        await uploadResponse.text()
+      );
     }
+    const urlWithoutParams = uploadURL.split('?')[0];
+    return urlWithoutParams;
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error("Error uploading file:", error);
   }
-
-
-  return response;
 };
