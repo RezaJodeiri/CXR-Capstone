@@ -1,0 +1,12 @@
+Flask==2.2.5
+flask-cors==5.0.0
+numpy==1.21.0
+Pillow==9.5.0
+torch==2.0.1
+torchvision==0.15.2
+scikit-image==0.19.3
+pandas==1.5.3
+requests==2.28.2
+transformers==4.30.2
+safetensors==0.3.1
+timm==0.9.2
