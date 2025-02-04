@@ -258,7 +258,7 @@ export const getMedicalRecord = async (recordId, token) => {
 // Generic Use case
 export const uploadFile = async (file, token) => {
   // Fetch your upload URL, GET request
-  fileName = file.name
+  const fileName = file.name
   const uploadURLRes = await executeHTTPRequest("GET", `/generate-upload-url/${fileName}`, {
     Authorization: `Bearer ${token}`,
   });
