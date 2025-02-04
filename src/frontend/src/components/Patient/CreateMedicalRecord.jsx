@@ -391,12 +391,12 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
           <button 
             onClick={() => {
               console.log('Continue to Analysis clicked');
-              handleSubmit();
               onAnalyze({
-              ...formData,
-              file: file,
-              prescriptions: prescriptions
-            })}}
+                ...formData,
+                file: file,
+                prescriptions: prescriptions
+              });
+            }}
             className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
           >
             Continue to Analysis
