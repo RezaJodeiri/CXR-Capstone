@@ -252,3 +252,38 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
 export const getMedicalRecord = async (recordId, token) => {
   throw new Error("Medical record not found");
 };
+
+// api.js
+// Generic file uploads (for x-ray images, for avatar)
+// Generic Use case
+export const uploadFile = async (file, token) => {
+  // Fetch your upload URL, GET request
+  const uploadURLRes = await executeHTTPRequest("GET", "/generate-upload-url/test5.pdf", {
+    Authorization: `Bearer ${token}`,
+  });
+  console.log(uploadURLRes)
+  try {
+    // Perform the POST request
+    const response = await executeHTTPRequest(
+      "PUT",                    // HTTP verb
+      uploadURLRes,             // Full presigned URL
+      {
+        "Content-Type": file.type, // Dynamically set content type of the file
+      },
+      {},                       // No additional params
+      file                      // File is passed directly as the body
+    );
+  
+    console.log(response)
+    if (response.ok) {
+      console.log('File uploaded successfully!');
+    } else {
+      console.error('File upload failed:', response.status, await response.text());
+    }
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+
+
+  return response;
+};

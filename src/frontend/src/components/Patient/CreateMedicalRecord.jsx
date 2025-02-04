@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FileUploader } from "react-drag-drop-files";
 import { IoArrowBack } from "react-icons/io5";
 import { FaRegHeart, FaPlus, FaTrash } from "react-icons/fa";
-import { createMedicalRecord, getMedicalRecord } from '../../services/api';
+import { createMedicalRecord, getMedicalRecord, uploadFile} from '../../services/api';
 import { useAuth } from '../../context/Authentication';
 import { useParams } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
@@ -11,7 +11,7 @@ const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
 function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = false }) {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
     clinicalNotes: '',
@@ -47,24 +47,18 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
   };
 
   const handleFileChange = async (file) => {
+    // Uploading X-Ray DICOM Image 
+    // Application use case
     console.log("Attempting to Upload file...");
     setFile(file); // Store the selected file locally
-  
+
     // Prepare FormData for API call
     //const formData = new FormData();
     //formData.append("file", file);
     try {
       console.log("Uploading file...");
-      const response = await fetch("http://localhost:5001/generate-upload-url/test.pdf", {
-        method: "GET",
-        //body: formData,
-      });
-  
-      if (!response.ok) {
-        throw new Error("File upload failed");
-      }
-  
-      const data = await response.json();
+      const res = await uploadFile(file, token);
+      // DO something with the response
       setFormData((prev) => ({ ...prev, xRayUrl: data.imgUrl })); // Store URL returned by API
     } catch (error) {
       console.error("Error uploading file:", error);
