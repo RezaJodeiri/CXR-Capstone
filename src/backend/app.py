@@ -5,7 +5,6 @@ from werkzeug.exceptions import HTTPException
 from runtime import RuntimeConfig
 
 from api.oauth import oauth_bp
-from api.predict import predict_bp
 from api.user import user_blueprint
 from api.record import record_blueprint
 from api.prescription import prescription_blueprint
@@ -20,7 +19,6 @@ CORS(
     },
 )
 
-app.register_blueprint(predict_bp)
 app.register_blueprint(oauth_bp, url_prefix="/oauth")
 app.register_blueprint(user_blueprint, url_prefix="/users")
 app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
@@ -29,6 +27,7 @@ app.register_blueprint(
     prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
 )
 app.register_blueprint(s3_blueprint)
+
 
 @app.errorhandler(HTTPException)
 def handle_exception(e):

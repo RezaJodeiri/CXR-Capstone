@@ -11,16 +11,19 @@ class S3PresignedURLHandler:
         )
         self.bucket_name = bucket_name
 
-    def generate_upload_url(self, object_name, expiration=600):
-        """Generates a pre-signed URL for uploading a file."""
-        response = self.s3_client.generate_presigned_post(
-            Bucket=self.bucket_name,
-            Key=object_name,
-            ExpiresIn=expiration
-        )
+    def generate_upload_url(self,object_name,expiration=1000):
+        """
+        Generate a presigned Amazon S3 URL that can be used to perform an action.
+        """
+        response = self.s3_client.generate_presigned_url(
+                'put_object',
+                Params={'Bucket': self.bucket_name, 'Key': object_name},
+                ExpiresIn=expiration
+                )
+        
         return response
     
-    def generate_download_url(self,object_name,expiration=600):
+    def generate_download_url(self,object_name,expiration=1000):
         """Generates a pre-signed URL for downloading a file."""
         response = self.s3_client.generate_presigned_url(
         'get_object',
@@ -55,10 +58,10 @@ class S3PresignedURLHandler:
 
 
 #local_file_path = '/Users/kd0819/Downloads/test_local2.pdf'
-#filename = 'test.pdf'
+filename = 'test2.pdf'
 
-#s3_handler = S3PresignedURLHandler('plzplzplz')
+s3_handler = S3PresignedURLHandler('neuralanalyzer-xrays')
 
-#s3_handler.download_file(filename, local_file_path)
-#print(s3_handler.generate_upload_url(filename))
-#print(s3_handler.generate_download_url(filename))
+# #s3_handler.download_file(filename, local_file_path)
+print(s3_handler.generate_upload_url(filename))
+# #print(s3_handler.generate_download_url(filename))
