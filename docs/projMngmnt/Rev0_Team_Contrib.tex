@@ -24,14 +24,46 @@ Demo.  The time period of interest is the time between the POC demo and the Rev
 
 \section{Demo Plans}
 
-\wss{What will you be demonstrating}
+
+\subsection{Chest X ray interface, including pretrained model}
+\begin{itemize}
+    % Nathan's part
+    \item Demonstrate the dashboard and how our application targets medical doctors.
+    \item Demonstrate doctor profiles and how they can view their patients.
+    \item Demonstrate the patient priority feature and how it can be used to prioritize patients.
+    % \item Demonstrate the ability to add a new patient to the system. (Commented out)
+    
+    % Ayman's part
+    \item Demonstrate our medical record view and list view features, and how they are unique for each user.
+    \item Demonstrate the ability to view the uploaded chest X-ray image and the generated report.
+    
+    % Kelly's part 
+    \item Demonstrate the ability to upload a chest X-ray image for a patient and create a medical report. 
+    \item Explain how our model supports both object storage (blob storage) and MongoDB.
+    \item Discuss OpenAI’s role in report generation, mentioning how we have a decoupled system and can easily switch to a different model.
+
+\end{itemize}
+
+\subsection{Detection Transformer Model (DETR) for Localized Disease Detection and Progression}
+\begin{itemize}
+    % Patrick's Part
+    \item Describe the general structure of the machine learning model.
+    \item Demonstrate the DETR model and how it works, showing how the predicted bounding boxes are close to the ground truth.
+    \item Demonstrate the AUC and ROC curves for the model and explain their significance.
+\end{itemize}
+
+\subsection{Future Plans for Rev1}
+\begin{itemize}
+    % Reza's Part
+    \item Integrate the DETR model with the rest of the application.
+    
+    % Nathan's Part
+    \item Discuss future plans for continuous deployment (CD).
+\end{itemize}
+
+
 
 \section{Team Meeting Attendance}
-
-\wss{For each team member how many team meetings have they attended over the
-time period of interest.  This number should be determined from the meeting
-issues in the team's repo.  The first entry in the table should be the total
-number of team meetings held by the team.}
 
 \begin{table}[H]
 \centering
@@ -90,12 +122,12 @@ lectures since the beginning of the term.}
 \toprule
 \textbf{Student} & \textbf{Lectures}\\
 \midrule
-Total & 15\\
-Ayman Akhras & 1\\
-Nathan Luong & 1\\
-Patrick Zhou & 2\\
-Kelly Deng & 2\\
-Reza Jodeiri & 9\\
+Total & 47\\
+Ayman Akhras & 8\\
+Nathan Luong & 12\\
+Patrick Zhou & 10\\
+Kelly Deng & 7\\
+Reza Jodeiri & 10\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -111,18 +143,19 @@ with the TA were attended over the time period of interest.}
 \centering
 \begin{tabular}{ll}
 \toprule
-\textbf{Student} & \textbf{Lectures}\\
+\textbf{Student} & \textbf{Discussions}\\
 \midrule
 Total & 24\\
-Ayman Akhras & 8\\
-Nathan Luong & 1\\
-Patrick Zhou & 2\\
-Kelly Deng & 2\\
-Reza Jodeiri & 6\\
+Ayman Akhras & 11\\
+Nathan Luong & 7\\
+Patrick Zhou & 6\\
+Kelly Deng & 6\\
+Reza Jodeiri & 10\\
 \bottomrule
 \end{tabular}
 \end{table}
 
+This includes the meetings wiht the TA to dicuss preivous document such as problem statemnt, SRS, and etc.
 For the purpose of this report, any form of communication with the TA, including both formal meetings and informal messaging, is considered a "meeting." This includes questions asked and answered via email, messaging platforms, or any other medium of communication. The following table summarizes the number of such communications for each team member over the time period of interest.
 
 \section{Commits}
@@ -158,17 +191,12 @@ issues (C only)) over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Ayman Akhras  & 0 & 3 \\
-Nathan Luong & 3 & 3 \\
-Patrick Zhou & 1 & 3 \\
-Kelly Deng & 0 & 3 \\
-Reza Jodeiri & 25 & 10 \\
+Team & 26 & 12 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
-
+Issues are team wide and are not assigned to a specific team member. The team has authored 26 issues and 12 of those issues have been closed.
 \section{CICD}
 
 Our CI/CD pipeline ensures our project's code quality and automates essential processes like testing and deployment. It begins with setting up the environment, where the latest code is checked out from our repository, Python is configured, and dependencies are installed while utilizing cached pip packages for efficiency. Next, the pipeline performs linting and type checks using tools such as flake8 and mypy to maintain code consistency and catch potential issues early. Finally, it runs unit and integration tests using a framework like pytest or unittest to verify that changes do not break existing functionality. This automated workflow is triggered whenever code is pushed or merged, streamlining our development process, reducing human errors, and ensuring a stable and reliable codebase.
