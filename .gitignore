@@ -61,6 +61,8 @@ acs-*.bib
 *.snm
 *.vrb
 
+*.env
+
 # changes
 *.soc
 
@@ -282,7 +284,9 @@ src/frontend/package-lock.json
 src/frontend/node_modules/.package-lock.json
 src/backend/api/__pycache__/
 src/backend/api/migrations/__pycache__/
-src/backend/decorators/__pycache__/
+src/backend/decorators/__pycache_
 src/backend/runtime/__pycache__/
 src/backend/runtime/data/__pycache__/
 src/backend/runtime/data/aws_dynamodb/__pycache__/
+__pycache__
+.pytest_cache
