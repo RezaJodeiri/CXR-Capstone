@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { FileUploader } from "react-drag-drop-files";
-import { IoArrowBack } from "react-icons/io5";
-import { FaRegHeart, FaPlus, FaTrash } from "react-icons/fa";
-import { createMedicalRecord, getMedicalRecord, uploadFile} from '../../services/api';
-import { useAuth } from '../../context/Authentication';
-import { useParams } from 'react-router-dom';
-import { FiArrowLeft } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import {
+  createMedicalRecord,
+  getMedicalRecord,
+  uploadFile,
+} from "../../services/api";
+import { useAuth } from "../../context/Authentication";
+import { useParams } from "react-router-dom";
 
 const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
-function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = false }) {
+function CreateMedicalRecord({
+  onBack,
+  onRecordCreated,
+  onAnalyze,
+  viewMode = false,
+}) {
   const { id } = useParams();
   const { user, token } = useAuth();
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    clinicalNotes: '',
-    treatmentPlan: '',
-    priority: 'Low'
+    clinicalNotes: "",
+    treatmentPlan: "",
+    priority: "Low",
   });
   const [prescriptions, setPrescriptions] = useState([
-    { id: 1, medication: '', dosage: '', frequency: '', time: '' }
+    { id: 1, medication: "", dosage: "", frequency: "", time: "" },
   ]);
   const [loading, setLoading] = useState(false);
 
@@ -35,29 +41,26 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
       setFormData({
         clinicalNotes: record.clinicalNotes,
         treatmentPlan: record.treatmentPlan,
-        priority: record.priority
+        priority: record.priority,
       });
-      setPrescriptions(record.prescriptions.map((p, index) => ({
-        id: index + 1,
-        ...p
-      })));
+      setPrescriptions(
+        record.prescriptions.map((p, index) => ({
+          id: index + 1,
+          ...p,
+        }))
+      );
     } catch (error) {
-      console.error('Failed to load record:', error);
+      console.error("Failed to load record:", error);
     }
   };
 
   const handleFileChange = async (file) => {
-    // Uploading X-Ray DICOM Image 
-    // Application use case
-    console.log("Attempting to Upload file...");
+    // TODO
     setFile(file); // Store the selected file locally
 
-    // Prepare FormData for API call
-    //const formData = new FormData();
-    //formData.append("file", file);
     try {
-      console.log("Uploading file...");
       const imageURL = await uploadFile(file, token);
+      console.log(imageURL);
       // DO something with the response
       setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
     } catch (error) {
@@ -67,16 +70,16 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handlePrescriptionChange = (id, field, value) => {
-    setPrescriptions(prev => 
-      prev.map(prescription => 
-        prescription.id === id 
+    setPrescriptions((prev) =>
+      prev.map((prescription) =>
+        prescription.id === id
           ? { ...prescription, [field]: value }
           : prescription
       )
@@ -84,49 +87,51 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
   };
 
   const addPrescriptionRow = () => {
-    setPrescriptions(prev => [
+    setPrescriptions((prev) => [
       ...prev,
-      { 
-        id: prev.length + 1, 
-        medication: '', 
-        dosage: '', 
-        frequency: '', 
-        time: '' 
-      }
+      {
+        id: prev.length + 1,
+        medication: "",
+        dosage: "",
+        frequency: "",
+        time: "",
+      },
     ]);
   };
 
   const removePrescriptionRow = (id) => {
-    setPrescriptions(prev => prev.filter(row => row.id !== id));
+    setPrescriptions((prev) => prev.filter((row) => row.id !== id));
   };
 
   const handleSubmit = async () => {
+    // TODO
     setLoading(true);
     try {
-      console.log("File is uploaded...")
+      console.log("File is uploaded...");
       const recordData = {
         xRayFile: file,
         clinicalNotes: formData.clinicalNotes,
         treatmentPlan: formData.treatmentPlan,
         prescriptions: prescriptions,
-        priority: formData.priority
+        priority: formData.priority,
       };
-      const newRecord = await createMedicalRecord(user?.id, recordData, user?.token);
+      const newRecord = await createMedicalRecord(
+        user?.id,
+        recordData,
+        user?.token
+      );
       onRecordCreated(newRecord);
     } catch (error) {
-      console.error('Failed to create record:', error);
+      console.error("Failed to create record:", error);
     } finally {
       setLoading(false);
     }
   };
 
-
-
   return (
     <div className="p-6">
       {/* Header */}
 
-      
       {/* Steps Indicator */}
       <div className="flex items-center max-w-2xl mx-auto">
         <div className="flex-1 flex items-center">
@@ -169,7 +174,11 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
               {viewMode ? (
                 file || formData.xRayUrl ? (
                   <img
-                    src={formData.xRayUrl ? formData.xRayUrl: URL.createObjectURL(file)}
+                    src={
+                      formData.xRayUrl
+                        ? formData.xRayUrl
+                        : URL.createObjectURL(file)
+                    }
                     alt="X-Ray"
                     className="w-full rounded-lg"
                   />
@@ -183,7 +192,7 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                         alt="Preview"
                         className="w-full h-full object-cover rounded-lg"
                       />
-                      <button 
+                      <button
                         onClick={() => setFile(null)}
                         className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100"
                       >
@@ -197,22 +206,25 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                         alt="file upload icon"
                         className="w-20 h-20 object-contain"
                       />
-                      <p className="text-gray-600 font-medium">Drag & Drop X-Ray here</p>
+                      <p className="text-gray-600 font-medium">
+                        Drag & Drop X-Ray here
+                      </p>
                       <div className="relative w-32 flex items-center justify-center my-2">
                         <div className="absolute w-full h-[1px] bg-gray-300"></div>
-                        <span className="bg-gray-50 px-2 text-gray-500 text-sm">or</span>
+                        <span className="bg-gray-50 px-2 text-gray-500 text-sm">
+                          or
+                        </span>
                       </div>
                       <input
                         type="file"
                         accept=".jpg,.png,.gif,.dcm"
                         onChange={(e) => {
-                          console.log("File is uploaded...");
                           handleFileChange(e.target.files[0]);
                         }}
                         className="hidden"
                         id="file-upload"
                       />
-                      <label 
+                      <label
                         htmlFor="file-upload"
                         className="text-[#3C7187] border border-[#3C7187] px-4 py-2 rounded hover:bg-[#3C7187] hover:text-white transition-colors cursor-pointer"
                       >
@@ -297,10 +309,18 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                 <table className="w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">Medication</th>
-                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">Dosage</th>
-                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">Frequency</th>
-                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">Time</th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">
+                        Medication
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">
+                        Dosage
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">
+                        Frequency
+                      </th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">
+                        Time
+                      </th>
                       {!viewMode && <th className="px-4 py-2 w-10"></th>}
                     </tr>
                   </thead>
@@ -314,7 +334,13 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                             <input
                               type="text"
                               value={row.medication}
-                              onChange={(e) => handlePrescriptionChange(row.id, 'medication', e.target.value)}
+                              onChange={(e) =>
+                                handlePrescriptionChange(
+                                  row.id,
+                                  "medication",
+                                  e.target.value
+                                )
+                              }
                               className="w-full border-0 focus:ring-0"
                               placeholder="Enter medication"
                             />
@@ -327,7 +353,13 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                             <input
                               type="text"
                               value={row.dosage}
-                              onChange={(e) => handlePrescriptionChange(row.id, 'dosage', e.target.value)}
+                              onChange={(e) =>
+                                handlePrescriptionChange(
+                                  row.id,
+                                  "dosage",
+                                  e.target.value
+                                )
+                              }
                               className="w-full border-0 focus:ring-0"
                               placeholder="Enter dosage"
                             />
@@ -340,7 +372,13 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                             <input
                               type="text"
                               value={row.frequency}
-                              onChange={(e) => handlePrescriptionChange(row.id, 'frequency', e.target.value)}
+                              onChange={(e) =>
+                                handlePrescriptionChange(
+                                  row.id,
+                                  "frequency",
+                                  e.target.value
+                                )
+                              }
                               className="w-full border-0 focus:ring-0"
                               placeholder="Enter frequency"
                             />
@@ -353,7 +391,13 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
                             <input
                               type="text"
                               value={row.time}
-                              onChange={(e) => handlePrescriptionChange(row.id, 'time', e.target.value)}
+                              onChange={(e) =>
+                                handlePrescriptionChange(
+                                  row.id,
+                                  "time",
+                                  e.target.value
+                                )
+                              }
                               className="w-full border-0 focus:ring-0"
                               placeholder="Enter time"
                             />
@@ -382,13 +426,12 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
       {/* Action Buttons */}
       <div className="flex justify-end gap-4 mt-8">
         {!viewMode && (
-          <button 
+          <button
             onClick={() => {
-              console.log('Continue to Analysis clicked');
               onAnalyze({
                 ...formData,
                 file: file,
-                prescriptions: prescriptions
+                prescriptions: prescriptions,
               });
             }}
             className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
@@ -407,4 +450,4 @@ function CreateMedicalRecord({ onBack, onRecordCreated, onAnalyze, viewMode = fa
   );
 }
 
-export default CreateMedicalRecord; 
+export default CreateMedicalRecord;

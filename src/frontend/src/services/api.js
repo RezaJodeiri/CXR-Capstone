@@ -268,24 +268,40 @@ export const uploadFile = async (file, token) => {
   );
   try {
     // Perform the PUT request
-    const uploadResponse = await axios.put(uploadURL, file, {
+    await axios.put(uploadURL, file, {
       headers: {
         "Content-Type": file.type,
       },
     });
-
-    if (uploadResponse.ok) {
-      console.log("File uploaded successfully!");
-    } else {
-      console.error(
-        "File upload failed:",
-        uploadResponse.status,
-        await uploadResponse.text()
-      );
-    }
-    const urlWithoutParams = uploadURL.split('?')[0];
+    const urlWithoutParams = uploadURL.split("?")[0];
     return urlWithoutParams;
   } catch (error) {
     console.error("Error uploading file:", error);
   }
+};
+
+export const getPredictionAndReport = async (userId, xRayUrl, token) => {
+  const predictionRes = await executeHTTPRequest(
+    "POST",
+    `/users/${userId}/records/prediction`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      xrayUrl: xRayUrl,
+    }
+  );
+
+  const predictionsArray = Object.entries(predictionRes.predictions).map(
+    ([condition, confidence]) => ({
+      condition: condition,
+      confidence: confidence * 100,
+    })
+  );
+
+  predictionRes.predictions = predictionsArray.sort(
+    (a, b) => b.confidence - a.confidence
+  );
+  return predictionRes;
 };
