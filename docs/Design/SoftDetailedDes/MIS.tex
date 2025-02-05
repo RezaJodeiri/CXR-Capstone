@@ -32,9 +32,9 @@ urlcolor=cyan          % color of external links
 \usepackage{array}
 
 \externaldocument{../../SRS/SRS}
-
-\input{../../Comments}
-\input{../../Common}
+\input{../../packages/Comments.tex}
+\input{../../packages/Common.tex}
+\input{../../packages/Reflection.tex}
 
 \begin{document}
 
@@ -53,8 +53,18 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Jan 2 & 1.0 & Section 4, 5, 7\\
+Jan 6 & 1.1 & Section 3\\
+Jan 8 & 1.2 & Section 6, 7, 8\\
+Jan 10 & 1.21 & Merges and fixes regarding pre-commited history\\
+Jan 11 & 1.22 & Section 5, 6, 7 changes\\
+Jan 12 & 1.3 & Section 5, 7, 9, 10\\
+Jan 13 & 1.31 & Reflection added\\
+Jan 14 & 1.32 & Fixes to keep MG and MIS consistant\\
+Jan 15 & 1.33 & Reflection 2,3,4\\
+Jan 15 & 1.34 & Reflection 5,6\\
+Jan 16 & 1.4 & Docs edited based on TA feedbacks\\
+Jan 17 & 1.5 & Finalized Documents\\
 \bottomrule
 \end{tabularx}
 
@@ -62,9 +72,32 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{l l} 
+  \toprule		
+  \textbf{Symbol} & \textbf{Description}\\
+  \midrule 
+  SRS & Software Requirements Specification\\
+  AI & Artificial Intelligence\\
+  CNN & Convolutional Neural Network\\
+  DICOM & Digital Imaging and Communications in Medicine\\
+  IVDDs & In Vitro Diagnostic Devices\\
+  ML & Machine Learning\\
+  PACS & Picture Archiving and Communication System\\
+  SaMD & Software as a Medical Device\\
+  ROC & Receiver Operating Characteristic Curve\\
+  SLA & Service-Level Agreement\\
+  FR & Functional Requirement\\
+  NFR & Non-Functional Requirement\\
+  FSM & Finite State Machine\\
+  CXR & Chest X-Ray Project\\
+  POC & Proof of Concept\\
+  TM & Theoretical Model\\
+  AWS & Amazon Web Services\\
+  ECS & Elastic Container Service\\
+  ECR & Elastic Container Registry\\
+  \bottomrule
+\end{tabular}
 
 \newpage
 
@@ -76,195 +109,1277 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
-
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+The following document provides an in-depth look at the Module Interface Specifications (MIS) for the Chest X-ray (CXR) application. These specifications outline how each module is structured and how they interact with one another. A broader architectural perspective is offered in the accompanying Module Guide. For the complete project documentation and source code, please visit the official GitHub repository: \href{https://github.com/RezaJodeiri/CXR-Capstone}{CXR-Capstone}.
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
-with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
-multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
-
-The following table summarizes the primitive data types used by \progname. 
-
+The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. The mathematical notation follows standard conventions for sets, sequences, and functions. The notation includes symbols for ML model operations and medical data processing.
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
-\midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-\bottomrule
-\end{tabular} 
-\end{center}
+    \renewcommand{\arraystretch}{1.2}
+    \noindent 
+    \begin{tabular}{l l p{7.5cm}} 
+    \toprule 
+    \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+    \midrule
+    character & char & a single symbol or digit\\
+    integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$)\\
+    natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$)\\
+    real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+    tensor & $\mathbb{T}^{n}$ & an n-dimensional array of numerical values used for ML computations\\
+    probability & $\mathbb{P}$ & a real number in [0, 1] representing likelihood\\
+    matrix & $\mathbb{M}_{m,n}$ & a 2D array of size m×n containing numerical values\\
+    binary & $\mathbb{B}$ & boolean values {true, false}\\
+    \bottomrule
+    \end{tabular} 
+    \end{center}
+    For detailed mathematical notations and specifications, please refer to the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} document \citep{SRS}.
+    \subsection{Data Types from Libraries}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \noindent
+    \begin{tabular}{l l p{7.5cm}}
+    \toprule
+    \textbf{Data Type} & \textbf{Notation} & \textbf{Description} \\
+    \midrule
+    DICOM & DICOM & Digital Imaging and Communications in Medicine format, standard for medical imaging storage and transmission \\
+    PyTorch Tensor & torch.Tensor & Multi-dimensional matrix containing elements of a single data type, optimized for GPU operations \\
+    NumPy Array & np.ndarray & Multi-dimensional array for scientific computing and image processing \\
+    HTTP Request & HTTPRequest & Object containing HTTP request information including headers, body, and method \\
+    HTTP Response & HTTPResponse & Object containing HTTP response information including status code, headers, and body \\
+    DataFrame & pd.DataFrame & 2-dimensional labeled data structure for patient and medical records \\
+    Base64 & Base64 & Binary-to-text encoding scheme for transmitting binary image data \\
+    YAML & YAML & Human-readable data serialization format for configuration files \\
+    \bottomrule
+    \end{tabular}
+    \caption{Data types from libraries}
+    \end{table}
 
-\noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
-are defined by the data types of their inputs and outputs. Local functions are
-described by giving their type signature followed by their specification.
-
+\newpage
 \section{Module Decomposition}
 
 The following table is taken directly from the Module Guide document for this project.
-
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
-\end{table}
-
-\newpage
+    \centering
+    \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1} & \textbf{Level 2}\\
+    \midrule
+    
+    {Hardware-Hiding Module} &  Web Application\\
+    & HTTP Server \\
+    & Disease Prediction Server\\
+    & Disease Progression Server\\
+    \midrule
+    
+    \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & User Authentication \\
+    & Patients List View\\
+    & Patient Overview View \\
+    & Disease Progression View \\
+    & Medical Records List View\\
+    & X-Ray Report View\\
+    \midrule
+    
+    \multirow{3}{0.3\textwidth}{Software Decision Module} & Disease Progression Model \\
+    & Disease Prediction Model\\
+    & Medical Record Management\\
+    & Data Persistent \\
+    \bottomrule
+    
+    \end{tabular}
+    \caption{Module Hierarchy}
+    \label{TblMH}
+    \end{table}
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
-\subsection{Module}
-
-\wss{Short name for the module}
-
-\subsection{Uses}
-
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
+% /********************* M1 *********************/
+\section{Web Application Server Module} 
+Note: This is being handled by React server
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M2: HTTP Server Module
+\end{itemize}
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{navigate}: Stores the navigation state of the page.
+\end{itemize}
+\subsection{Exported Constants and Access Programs}
 \subsubsection{Exported Access Programs}
 
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    App & User Action: $\langle T \rangle$ & React.components: HTML \& Javascript & N/A \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\subsection{Environment Variables}
+\begin{itemize}
+  \item N/A
+\end{itemize}
+\subsection{Assumptions}
+\begin{itemize}
+  \item Assumes the HTTP Server Module (M2) is properly configured and running.
+\end{itemize}
+\subsection{Access Routine Semantics}
+\subsubsection{App(User Action)}
+\begin{itemize}
+  \item \textbf{Transition}: Accepts user interaction or actions.
+  \item \textbf{Output}: Produces the corresponding HTML \& Javascript page for rendering.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+% /********************* M2 *********************/
+\section{HTTP Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M5: User Authentication Module
+  \item M8: Disease Progression Module
+  \item M10: Medical Record Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{CORS\_setting}: holds Cross-Origin Resource Sharing settings to only allows web application server to access resources. 
+    \item \textbf{runtime.IdentityProvider}: A class that represents \textbf{User Authentication Module}
+    \item \textbf{runtime.MedicalRecordService}: A class that represents \textbf{Medical Record Module}
+    \item \textbf{runtime.ProgressionService}: A class that represents \textbf{Disease Progression Module}
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{4cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
+    \hline
+    \texttt{sign\_in\_user} & user\_email: string, \newline password: string & bearer\_token: string & \texttt{Unauthorized}, \newline \texttt{IncorrectCredentials}, \newline \texttt{InternalServer} \\
+    \hline
+    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
+    \hline
+    \texttt{get\_user\_by\_id} & uuid: string & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \hline
+    \texttt{update\_user\_by\_id} & uuid: string, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \hline
 \end{tabular}
 \end{center}
 
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
-
-\subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}():
+\subsubsection{Exported Constants}
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+    \item N/A
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{FRONTEND\_URL}: URL of front-end service, must be known at build time to enable CORS policy for front-end.
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\subsection{Assumptions}
+\begin{itemize}
+    \item N/A
+\end{itemize}
 
-\subsubsection{Local Functions}
+\subsection{Access Routine Semantics}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\subsubsection{health\_check()}
+\begin{itemize}
+    \item \textbf{Inputs}: None
+    \item \textbf{Outputs}: 200 OK response or 500 InternalServerError
+    \item \textbf{Preconditions}: The server can be at any states
+    \item \textbf{Postconditions}: If the server returns 200 OK, all modules that this module, and it's child modules are working as expected.
+\end{itemize}
+
+\subsubsection{sign\_in(), sign\_up(), get\_user\_by\_id(), update\_user\_by\_id()}
+\begin{itemize}
+    \item Existing routines from \textbf{User Authentication Module} that are made available for web application server to interact with via HTTP.
+\end{itemize}
+
+\subsubsection{paginated\_records\_by\_userId(), handle\_record\_by\_id(), create\_new\_record(), paginated\_prescriptions\_by\_recordId(), handle\_prescription\_by\_id(), create\_new\_prescription() }
+\begin{itemize}
+    \item Existing routines from \textbf{Medical Record Module} that are made available for web application server to interact with via HTTP.
+\end{itemize}
+
+\subsubsection{get\_progression\_report()}
+\begin{itemize}
+    \item Existing routine from \textbf{Disease Progression Module} that are made available for web application server to interact with via HTTP.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{handle\_exception(e)}: Return HTTP error as JSON objects when exceptions occurs, instead of default HTML page of Flask.
+\end{itemize}
 
 \newpage
+% /********************* M3 *********************/
+\section{Disease Prediction Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M14: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{model}: The pre-trained model from \texttt{torchxrayvision} used for predicting lung diseases from X-ray images.
+    \item \textbf{modelAccuracy}: Tracks the accuracy of the current model after training and validation.
+    \item \textbf{predictionThreshold}: A constant threshold to determine the classification outcome (e.g., disease presence).
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|p{4cm}|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{predictDisease} & XRayImage:binary & DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item \textbf{PREDICTION\_THRESHOLD}: 0.75 (threshold for classification of disease presence)
+    \item \textbf{MAX\_PREDICTIONS}: 1000 (maximum number of predictions to handle concurrently)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{modelPath}: The path where the \texttt{torchxrayvision} pre-trained model is saved or loaded from.
+    \item \textbf{predictionEndpoint}: The endpoint that this model is hosted on Docker host machine.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the pre-trained \texttt{torchxrayvision} model is available and compatible with the data provided.
+    \item Assumes valid X-ray image data is available for predictions.
+    \item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{predictDisease(XRayImage)}
+\begin{itemize}
+    \item \textbf{Transition}: Uses the loaded model to make predictions based on the provided X-ray image data.
+    \item \textbf{Output}: Returns the disease prediction (e.g., probability of a disease being present) or throws an \texttt{InvalidImageException} if the image is invalid.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{loadModel()}: Loads the pre-trained model from disk or cloud storage using \texttt{torchxrayvision}'s functionality.
+    \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
+    \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
+    \item \textbf{postprocessPrediction()}: Processes the raw output from the model (e.g., probabilities) into a human-readable format (e.g., disease labels).
+\end{itemize}
+\newpage
+% /********************* M4 *********************/
+\section{Disease Progression Server Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M14: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{model}: The pre-trained model used for tracking lung diseases from 2 X-ray images.
+    \item \textbf{modelAccuracy}: Tracks the accuracy of the current model after training and validation.
+    \item \textbf{predictionThreshold}: A constant threshold to determine the classification outcome (e.g., disease presence).
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3cm}|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{trackProgression} & XrayImage1: binary, \newline XrayImage2: binary & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{modelPath}: The path where the pre-trained model is saved or loaded from.
+    \item \textbf{predictionEndpoint}: The endpoint that this model is hosted on Docker host machine.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the pre-trained model is available and compatible with the data provided.
+    \item Assumes valid X-ray images data is available for processing.
+    \item Assumes the Web Application Server Module (M1) and HTTP Server Module (M2) are properly configured and running.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{trackProgression(XrayImage1, XrayImage2)}
+\begin{itemize}
+    \item \textbf{Transition}: Uses the existing model to calculate disease progression based on the provided X-ray images.
+    \item \textbf{Output}: Returns the disease progression.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{loadModel()}: Loads the pre-trained model from disk or cloud storage.
+    \item \textbf{evaluateModel()}: Evaluates the model’s performance with a test dataset to calculate metrics like accuracy and sensitivity.
+    \item \textbf{preprocessImage()}: Preprocesses incoming X-ray image data to fit the model's input requirements (e.g., resizing, normalization).
+    \item \textbf{postprocessImages()}: Processes the raw output from the model (e.g., probabilities) back to pictures.
+\end{itemize}
+\newpage
+% /********************* M5 *********************/
+\section{User Authentication Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M14: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{cognito\_idp\_client}: AWS Cognito client, initialized via the AWS boto3 library.
+    \item \textbf{user\_pool\_id}: Identifier of the database at which AWS Cognito stores user's information such as username, password, first name, etc.
+    \item \textbf{client\_id}: Identifier of the User Authentication Module to authenticate with AWS Cognito (via OAUTH's client credential grant).
+    \item \textbf{client\_secret}: Password of the User Authentication Module, used in conjunction with client\_id to authenticate with AWS Cognito.
+\end{itemize}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \setlength{\tabcolsep}{4pt}
+
+  \begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|p{5cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: int, \newline user\_detail: JSON & user: user & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
+    \hline
+    \texttt{sign\_in\_user} & user\_email: string, \newline password: int & bearer\_token: string & \texttt{Unauthorized, IncorrectCredentials, InternalServerError} \\
+    \hline
+    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized, InternalServerError} \\
+    \hline
+    \texttt{get\_user\_by\_id} & uuid: int & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \hline
+    \texttt{update\_user\_by\_id} & uuid: int, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{AWS\_ACCESS\_KEY\_ID}: Access key to authenticate backend with AWS
+    \item \textbf{AWS\_SECRET\_ACCESS\_KEY}: Secret key to authenticate backend with AWS
+    \item \textbf{AWS\_REGION}: AWS Region of the backend infrastructure
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item AWS Cognito returns consistent json results with user fields, since neuralanalyzer backend expect certain fields from user object (custom:firstName, custom:organization, etc.)
+    \item AWS Cognito always stays online, since without this service, users wont be able to login into the application.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{sign\_up\_user(user\_email, password, user\_detail)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{user\_email}: Email address of the user.
+            \item \textbf{password}: Password for the user's account.
+            \item \textbf{user\_detail}: Additional user details, such as first name and organization, formatted as Python Dictionary.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the created user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The provided email is valid and not already registered.
+            \item Password meets AWS Cognito's security requirements.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully created and stored in the Cognito user pool.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{sign\_in\_user(user\_email, password)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{user\_email}: Email address of the user.
+            \item \textbf{password}: Password for the user's account.
+        \end{itemize}
+    \item \textbf{Outputs}: A bearer token for authenticated access to other services.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The user is registered in the Cognito user pool.
+            \item The provided credentials are correct.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully authenticated.
+            \item A bearer token is generated and returned for future authenticated requests.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{get\_self\_user(bearer\_token)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{bearer\_token}: User's Bearer token.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the created user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item The bearer\_token must be valid and not expired.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully retrieved from AWS Cognito.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{get\_user\_by\_id(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the user (string)
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item User's UUID must be valid, and attached to a registered user.
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item The user is successfully retrieved from AWS Cognito.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{update\_user\_by\_id(uuid, updated\_user\_json)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the user (string)
+            \item \textbf{updated\_user\_json}: Python Dictionary object that contains the field which the caller wants to update the user with.
+        \end{itemize}
+    \item \textbf{Outputs}: A user object containing the updated user's details.
+    \item \textbf{Preconditions}: 
+        \begin{itemize}
+            \item User's UUID must be valid, and attached to a registered user.
+            \item User's updated fields must belong to list of fields users are allowed to edit (ie: first and last name, role, organization, etc.)
+        \end{itemize}
+    \item \textbf{Postconditions}: 
+        \begin{itemize}
+            \item User with UUID must have the fields in updated\_user\_json updated on AWS Cognito.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\_parse\_user\_json\_from\_cognito\_user}: Convert user object returned from AWS Cognito, to a more application-friendly internal user object.
+    \item \textbf{\_parse\_cognito\_attr\_user\_from\_user\_json}: Convert the internal user object to the user data format that AWS Cognito requires.
+    \item \textbf{\_get\_username\_from\_email}: Converting user's email into their username. (ie: nathan@gmail.com will be converted to nathan\_gmail)
+    \item \textbf{\_get\_user\_by\_email}: Fetching user from AWS Cognito via their email. 
+\end{itemize}
+
+\newpage
+% /********************* M6 *********************/
+\section{Patient List View Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M1: Web Application Server Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{patientList}: Stores a list of patients assigned to a doctor, including their basic information such as name, age, and medical condition.
+\item \textbf{searchFilters}: Stores the current filters applied to the patient list for sorting and searching purposes.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{|l|X|X|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewPatientList} & Doctor ID: int, filters: [string] & Patients: [user] & PatientListNotFoundException \\
+    \hline
+    \texttt{sortList} & Sorting criteria: [string] & Patients: [user] & None \\
+    \hline
+    \texttt{addPatient} & Form Data: JSON & Patient: user & FailedToCreateUserException \\
+    \hline
+  \end{tabularx}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{MAX\_PATIENTS\_PER\_PAGE}: 20 (maximum number of patients displayed per page in the list)
+\item \textbf{DEFAULT\_SORT\_ORDER}: "alphabetical" (default order in which patients are listed)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes that the User Authentication Module (M5) is responsible for verifying that the user is a doctor with access to the list.
+\item Assumes the patient data is up-to-date and synchronized with the Data Persistence Module (M14).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewPatientList(doctorID, filters)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves a list of patients associated with the given doctor, applying the specified filters.
+    \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
+\end{itemize}
+
+\subsubsection{sortList(criteria)}
+
+\begin{itemize}
+    \item \textbf{Transition}: Sorts the current patient list based on the provided criteria.
+    \item \textbf{Output}: Returns the sorted patient list.
+\end{itemize}
+
+\subsubsection{addPatient(fromData)}
+\begin{itemize}
+    \item \textbf{Transition}: Submits the provided form data to the backend service for processing.
+    \item \textbf{Output}: Returns the created patient data.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
+\end{itemize}
+
+\newpage
+% /********************* M7 *********************/
+\section{Patient Overview Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M6: Patient List View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{patientOverviews}: Stores the summary information of a selected patient, including personal details, recent medical history, and current treatment plans.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{getPatient} & Patient ID: int & Patient overview details: [detail] & \texttt{OverviewNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes the User Authentication Module (M5) ensures that only authorized users can view the patient overview.
+\item Assumes the overview data is accurate and synchronized with the Data Persistence Module (M14).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{getPatient(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the overview information of the specified patient.
+    \item \textbf{Output}: Returns the patient overview details or throws an \texttt{OverviewNotFoundException} if the overview cannot be found.
+\end{itemize}
+
+\subsection{Local Functions}
+
+\newpage
+\begin{itemize}
+\item \textbf{updateView(patientOverview)}: Retrieves overview data from the data source, and update page view.
+\end{itemize}
+% /********************* M8 *********************/
+\section{Diseases Progression View}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M6: Patient List View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{progressionData}: a image or a list of images stored.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|p{3.25cm}|l|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewProgression} & Patient ID: int & Progression Data: PregressionResult & \texttt{ProgressionNotFoundException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{DEFAULT\_CHART\_TEMPLATE}: "default\_progression\_chart.html" (default template for displaying disease progression charts)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item \textbf{DieaseProgressionModuleURL}: URL or endpoint of the service used for progression.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item Assumes the User Authentication Module (M5) ensures that only authorized users can view the disease progression.
+    \item Assumes data fetched and updated properly in the Data Persistence Module (M14).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewDiseaseProgression(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the disease progression details for the specified patient.
+    \item \textbf{Output}: Returns the progression data or throws a \texttt{ProgressionNotFoundException} if the data cannot be found.
+\end{itemize}
+
+\newpage
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{updateView(progressionData)}: Retrieves progression data from the data source, and update page view.
+\end{itemize}
+
+% /********************* M9 *********************/
+\section{Medical Records List View}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M6: Patient List View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item \textbf{medicalRecords}: Contains a list of all medical records associated with a specific patient, including dates, record types, and summaries.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|l|p{3cm}|p{6cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{viewMedicalRecordsList} & Patient ID: int & Medical records: [records] & \texttt{RecordsNotFoundException} \\
+    \hline
+    \texttt{createNewRecord} & Form: JSON & Medical Record: record & \texttt{CreateRecordFailedException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item \textbf{DEFAULT\_LIST\_TEMPLATE}: "default\_records\_list\_template.html" (default template for displaying the list of medical records)
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Assumes the User Authentication Module (M5) ensures that only authorized users can view the medical records.
+\item Assumes the records data is accurate and up-to-date in the Data Persistence Module (M14).
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{viewMedicalRecordsList(patientID)}
+\begin{itemize}
+    \item \textbf{Transition}: Retrieves the list of medical records for the specified patient.
+    \item \textbf{Output}: Returns the list of medical records or throw \texttt{RecordsNotFoundException}.
+\end{itemize}
+\subsubsection{createNewRecord}
+\begin{itemize}
+    \item \textbf{Transition}: Pass all information to the backbend server endpoint for creating a new record.
+    \item \textbf{Output}: Returns the created patient record data or throw \texttt{CreateRecordFailedException}.
+\end{itemize}
+
+\newpage
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{updateView(medicalRecords)}: Retrieves medical records data from the data source, and update page view.
+\end{itemize}
+
+% /********************* M10 *********************/
+\section{X-Ray Report View}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M6: Patient List View Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+  \item \textbf{xrayReport}: Stores the complete X-ray report data, including any AI-generated analysis and human annotations.
+  \item \textbf{doctorAnnotations}: Contains doctor-provided annotations or edits to the AI-generated analysis.
+\end{itemize}
+
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3cm}|p{4cm}|p{3cm}|p{5.45cm}|}
+    \hline
+    \textbf{Name} & \textbf{Inputs} & \textbf{Outputs} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{getReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string
+        \end{tabular} 
+      & Report: Report 
+      & ReportNotFoundException \\
+    \hline
+    \texttt{editReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string, \\ 
+          annotations: [string]
+        \end{tabular} 
+      & Report: Report 
+      & ReportNotFoundException \\
+    \hline
+    \texttt{approveReport} 
+      & \begin{tabular}{@{}l@{}}
+          recordId: string
+        \end{tabular} 
+      & Report: Report 
+      & \begin{tabular}{@{}l@{}}
+          UnauthorizedAccessException, \\ 
+          ReportNotFoundException
+        \end{tabular} \\
+    \hline
+\end{tabular}
+\end{center}
+
+
+\subsubsection{Exported Constants}
+N/A
+
+\subsection{Environment Variables}
+\begin{itemize}
+  \item \textbf{reportAnalysisService}: URL or endpoint of the service used for generating the AI-based analysis of X-ray images.
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+  \item Assumes the User Authentication Module ensures that only authorized users (e.g., doctors) can edit or finalize an X-ray report.
+  \item Assumes the X-ray data is accurate and kept in sync with the Data Persistence Module (M14).
+  \item Assumes AI analysis can be updated or re-run as necessary.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{getReport(recordID)}
+\begin{itemize}
+  \item \textbf{Transition}:  Fetch the latest X-ray report data, including AI analysis and any existing doctor annotations.
+  \item \textbf{Output}: Returns the combined X-ray report details or throws \texttt{ReportNotFoundException} if no matching record exists.
+\end{itemize}
+
+\subsubsection{editReport(recordID, annotations)}
+\begin{itemize}
+  \item \textbf{Transition}: Retrieves the existing X-ray report data, merges new annotations (including doctor comments and corrections) with the existing AI analysis, updates the report with the combined results, and saves the changes to the data source.
+  \item \textbf{Output}: Returns the updated X-ray report details or throws \texttt{ReportNotFoundException} if no matching record exists.
+\end{itemize}
+
+\subsubsection{approveReport(recordID)}
+\begin{itemize}
+  \item \textbf{Transition}: Flags the report as finalized and generates a PDF or stored artifact of the final X-ray report.
+  \item \textbf{Output}: 
+    Returns a confirmation or the final X-ray report object or Throws \texttt{ReportNotFoundException} if the record cannot be found.
+\end{itemize}
+
+\newpage
+\subsection{Local Functions}
+\begin{itemize}
+  \item \textbf{fetchXRayData(recordID)}: Retrieves raw X-ray image data and associated metadata from the data source.
+  \item \textbf{generateAIAnalysis(recordID)}: Calls the modules related to disease prediction to generate the AI report summary.
+  \item \textbf{mergeAnnotations(annotations)}: Integrates new doctor annotations with existing AI analysis.
+\end{itemize}
+
+% /********************* M11 *********************/
+\section{Disease Progression Module}
+\label{Disease Progression Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M4: Disease Progression Server Module
+    \item M13: Medical Record Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{3.5cm}|p{6cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{getprogression} & XrayImage1: binary, \newline XrayImage2: binary & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
+    \hline
+    \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailed Exeception} \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+  \item \textbf{PROGRESSION\_SERVER\_URL}: URL of \textbf{Disease Progression Server}
+
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item All received image data is assumed to be valid and correctly formatted.
+    \item The disease progression server endpoint is assumed to be accessible and functioning properly.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{getProgression(XrayImage1, XrayImage2)}
+\begin{itemize}
+    \item \textbf{Transition}: Make an HTTP call to the \textbf{Disease Progression Server Module}
+    \item \textbf{Output}: Returns a \texttt{ProgressionResult} containing the disease progression information (Disease gets worsen or better) or throws \texttt{ProgressionFailedException}.
+\end{itemize}
+
+\subsubsection{getLatestProgression(userId)}
+\begin{itemize}
+    \item \textbf{Transition}: Gets the latest 2 records from user, via function call to \textbf{Medical Record Module}. With the two latest record, the module will extract the 2 X-Ray and calls \texttt{getProgression}
+    \item \textbf{Output}: Returns a \texttt{ProgressionResult} containing the disease progression information or throws \texttt{LastestProgressionFailedExeception}.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+  \item \textbf{executeHttpRequest(method, path)}: Send a generic HTTP request to a specified path
+\end{itemize}
+
+\newpage
+% /********************* M12 *********************/
+\section{Disease Prediction Module}
+\label{Disease Prediction Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item M3: Disease Prediction Server Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{tabular}{|l|p{3cm}|p{5cm}|p{5.5cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    \texttt{predictDisease} & \texttt{XrayImage: binary} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+  \item \textbf{PREDICTION\_SERVER\_URL}: URL of \textbf{Disease Prediction Server}
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item All received image data is assumed to be valid and correctly formatted.
+    \item The disease prediction server endpoint is assumed to be accessible and functioning properly.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+\subsubsection{predictDisease(patientData)}
+\begin{itemize}
+    \item \textbf{Transition}: Processes \texttt{patientData} using the current prediction model to generate a prediction.
+    \item \textbf{Output}: Returns a \texttt{PredictionResult} containing the predicted disease information or throws \texttt{PredictionFailedException}.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{executeHttpRequest(method, path)}: Send a generic HTTP request to a specified
+path
+\end{itemize}
+
+\newpage
+% /********************* M13 *********************/
+\section{Medical Record Management Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+  \item M12: Disease Prediction Module
+  \item M14: Data Persistence Module
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{center}
+\small  % Reduce font size
+\renewcommand{\arraystretch}{1.5}  % Increase vertical spacing between rows
+\begin{tabular}{|l|p{2.15cm}|p{2.25cm}|p{5.75cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{getPaginatedPrescriptionByRecordId} & recordId: string, \newline limit: int & prescriptions: [prescription] & \texttt{GetPaginatedException} \newline \texttt{RecordDoesNotExistException}\\
+    \hline
+    \texttt{getPrescriptionById} & uuid: string & prescription: prescription & \texttt{GetPrescriptionException} \\
+    \hline
+    \texttt{createNewPrescription} & recordId: string, \newline prescription: prescription & prescription: prescription & \texttt{CreatePrescriptionException} \\
+    \hline
+    \texttt{updatePrescriptionById} & uuid: string, \newline prescription: Prescription & prescription: prescription & \texttt{UpdatePrescriptionException}, \newline \texttt{PrescriptionNotFoundException} \\
+    \hline
+    \texttt{getPaginatedRecordByUserId} & userId: string, \newline limit: int & records: [record] & \texttt{GetPaginatedRecordException}, \newline \texttt{UserNotFoundException} \\
+    \hline
+    \texttt{getRecordById} & uuid: string & record: record & \texttt{GetRecordException}, \newline \texttt{RecordNotFoundException} \\
+    \hline
+    \texttt{createNewRecord} & userId: string, \newline record: record & record: record & \texttt{CreateRecordException} \\
+    \hline
+    \texttt{updateRecordById} & uuid: string, \newline record: record & record: record & \texttt{UpdateRecordException}, \newline \texttt{RecordNotFoundException} \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+  \item N/A
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item The underlying Data Persistence Module persist data into storage on AWS.
+    \item The underlying Data Persistence Module stays highly available and bug prone.
+\end{itemize}
+
+
+\subsubsection{getPaginatedPrescriptionByRecordId(recordId, limit)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{recordId}: Unique identifier of the medical record (string).
+            \item \textbf{limit}: Maximum number of prescriptions to retrieve (integer).
+        \end{itemize}
+    \item \textbf{Outputs}: A list of prescription objects associated with the provided \texttt{recordId}, limited by the \texttt{limit} parameter.
+\end{itemize}
+
+\subsubsection{getPrescriptionById(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}: \textbf{uuid}: Unique identifier of the prescription (string).
+    \item \textbf{Outputs}: The prescription object corresponding to the given \texttt{uuid}.
+\end{itemize}
+
+\subsubsection{createNewPrescription(recordId, prescription)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{recordId}: The unique identifier of the medical record to associate with the prescription (string).
+            \item \textbf{prescription}: The prescription object (dictionary) containing the prescription details.
+        \end{itemize}
+    \item \textbf{Outputs}: The created prescription object
+\end{itemize}
+
+\subsubsection{updatePrescriptionById(uuid, prescription)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the prescription to be updated (string).
+            \item \textbf{prescription}: The updated prescription object (dictionary).
+        \end{itemize}
+    \item \textbf{Outputs}: The updated prescription object
+\end{itemize}
+
+\subsubsection{getPaginatedRecordByUserId(userId, limit)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{userId}: The unique identifier of the user whose records are being requested (string).
+            \item \textbf{limit}: The maximum number of records to retrieve (integer).
+        \end{itemize}
+    \item \textbf{Outputs}: A list of records associated with the provided \texttt{userId}, limited by the \texttt{limit} parameter.
+\end{itemize}
+
+\subsubsection{getRecordById(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}: \textbf{uuid}: The unique identifier of the record to retrieve (string).
+    \item \textbf{Outputs}: The record object corresponding to the given \texttt{uuid}.
+\end{itemize}
+
+\subsubsection{createNewRecord(userId, record)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{userId}: The unique identifier of the user associated with the record (string).
+            \item \textbf{record}: The record object (dictionary) containing the medical record details.
+        \end{itemize}
+    \item \textbf{Outputs}: The created record object.
+\end{itemize}
+
+\subsubsection{updateRecordById(uuid, record)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the record to update (string).
+            \item \textbf{record}: The updated record object (dictionary).
+        \end{itemize}
+    \item \textbf{Outputs}: The updated record object.
+\end{itemize}
+
+\subsection{Local Functions}
+\begin{itemize}
+\item N/A
+\end{itemize}
+
+\newpage
+% /********************* M14 *********************/
+\section{Data Persistent Module}
+\label{Data Persistence Module}
+
+\subsection{Other Modules the Current Module Uses}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{State Variables}
+\begin{itemize}
+    \item \textbf{dynamodb}: AWS DynamoDB client (managed NoSQL service), initialized via aws boto3 library.
+    \item \textbf{table}: Name of the DynamoDB table.
+    \item \textbf{s3\_client}: AWS S3 client (managed blob storage service), initialized via aws boto3 library.
+\end{itemize}
+
+\subsection{Exported Constants and Access Programs}
+\subsubsection{Exported Access Programs}
+\begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{|l|X|X|p{4.5cm}|}
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline 
+    \texttt{get\_item\_by\_id} & uuid: int & item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{create\_new\_item} & item: $\langle T \rangle$ & uuid: int, item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{update\_item\_by\_id} & uuid: int, item: $\langle T \rangle$ & item: $\langle T \rangle$ & \texttt{InternalServerError, ClientError} \\
+    \hline
+    \texttt{get\_s3\_upload\_presigned\_url} & file\_name: string & presigned\_url: string & \texttt{InternalServerError, ClientError} \\
+    \hline
+  \end{tabularx}
+\end{center}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
+\subsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{AWS\_ACCESS\_KEY\_ID}: Access key to authenticate backend with AWS
+    \item \textbf{AWS\_SECRET\_ACCESS\_KEY}: Secret key to authenticate backend with AWS
+    \item \textbf{AWS\_REGION}: AWS Region of the backend infrastructure
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item AWS DynamoDB and AWS S3 returns consistent json results and error codes.
+    \item AWS DynamoDB and AWS S3 always stays online, without these services, users wont be able to create, view, update prescriptions and records.
+\end{itemize}
+
+\subsection{Access Routine Semantics}
+
+\subsubsection{get\_item\_by\_id(uuid)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: Unique identifier of the item to retrieve.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item The item object corresponding to the given `uuid`.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `uuid` exists in the DynamoDB table.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The item object is successfully retrieved from the database.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{create\_new\_item(item)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{item}: A Python Dictionary object containing the details of the item to be created.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the created item.
+            \item \textbf{item}: The created item object.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `item` dictionary is well-formed.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The new item is successfully added to the DynamoDB table.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{update\_item\_by\_id(uuid, item)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{uuid}: The unique identifier of the item to be updated.
+            \item \textbf{item}: A Python Dictionary containing the updated fields for the item.
+        \end{itemize}
+    \item \textbf{Outputs}:
+        \begin{itemize}
+            \item The updated item object.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `uuid` corresponds to an existing item in the DynamoDB table.
+            \item The `item` Dictionary contains valid fields for the update.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item The item is successfully updated in the database, and returned to user.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{get\_s3\_upload\_presigned\_url(file\_name)}
+\begin{itemize}
+    \item \textbf{Inputs}:
+        \begin{itemize}
+            \item \textbf{file\_name}:The name of the file to be uploaded to S3 (string).
+        \end{itemize}
+        \item \textbf{Outputs}:
+        \begin{itemize}
+            \item \textbf{presigned\_url}: A pre-signed URL allowing authorized upload of the specified file to AWS S3.
+        \end{itemize}
+    \item \textbf{Preconditions}:
+        \begin{itemize}
+            \item The `file\_name' is a valid, non-empty string
+            \item The S3 bucket configured in the s3\_client is accessible and writable by the authenticated user.
+        \end{itemize}
+    \item \textbf{Postconditions}:
+        \begin{itemize}
+            \item A valid pre-signed URL for uploading the specified file is generated and returned.
+            \item The generated pre-signed URL is only valid for 1 minute.
+        \end{itemize}
+\end{itemize}
+
+
+\subsection{Local Functions}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+
 
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
 \newpage
 
-\section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
-
-\newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741 projects}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.tex}
+
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
+  \newline\newline 
+  Our existing documentation, such as the detailed list of functional and non-functional requirements and the Module Interface Specification (MIS) we created, provided a solid roadmap for how the system should behave. This clarity made it easier to develop the design blueprint and the specifications for each module because we already knew what each part needed to do and how they should interact. Another big plus was the team’s early focus on a modular architecture, such as separating the machine learning (ML) services from the core backend. This approach kept our design documents organized and manageable, allowing us to develop, test, and maintain each module independently without getting overwhelmed. Additionally, having the core implementation set up during the Proof of Concept (POC) phase gave us a great direction for developing the specifications for our modules. It provided a tested foundation to build on, reducing uncertainties and making our specification development more precise and targeted.
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+    \newline\newline
+    We faced notable challenges while designing our Behavior Hiding Module, especially given our limited experience with standard healthcare user interface practices. To address this, we created an initial MVP concept UI and then conducted interviews with several healthcare professionals. Their feedback highlighted the need for straightforward interactions with patient profiles, a smooth process to upload chest X-ray scans, and a hassle-free way to create new records. In response, we iterated on our designs multiple times, adjusting layout structures, refining navigation flows, and simplifying labeling conventions to ensure the module felt intuitive and clinically relevant. Each revision brought us closer to delivering a user-centric interface that balances simplicity with the technical rigor necessary in medical settings,resulting in a solution that healthcare professionals can adopt with minimal friction.
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
   were not, why, and where did they come from?
+  \newline\newline
+  In our previous meeting with our supervisor, Dr. Moradi, we decided to prioritize designing a user-friendly interface specifically tailored for the use of radiologists. Based on their feedback, we focused on creating an intuitive and easy-to-navigate interface. Most of our time and research was dedicated to understanding and adhering to standard healthcare web interface guidelines to ensure the design aligns with the requirements of a healthcare setting. We decided to prioritize interpretability and transparency of AI-generated report (explainable AI) which comes from the discussions with stakeholder emphasizing trust in AI results. This would help doctors/radiologists to better understand the prediction results. As for non-client-informed decisions, we decided to implement a disease progression feature that is separated from the prediction model. It traces the patient disease progression over a certain period, allowing comparing different X-rays and reports to give a more straightforward understanding of patient condition overtime while also reviewing the effectiveness of the prescriptions given to the patient in that specifc period. By separating two models, they work independently and will still function if the other one goes down, allowing higher fault tolerance.
+
   \item While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  \newline\newline
+  In the process of drafting the design document, we identified the need to revise several aspects of our other documents, including the Software Requirements Specification (SRS) and the Hazard Analysis document, to align with newly introduced features and interface design changes. One of the key additions was the disease progression monitoring feature, implemented using a Detection Transformer (DETR). This feature required us to add new requirements in the SRS, detailing how disease progression should be visualized, the data flow for tracking multiple X-rays over time, and the integration of DETR-based models for reliable prediction. Furthermore, the design now incorporates processing DICOM metadata to extract relevant information, such as clinical history, imaging parameters, and patient demographics, which ensures that critical contextual data is seamlessly integrated into the system. This step enhances the accuracy and usability of the interface by providing doctors with a comprehensive view of patient history alongside imaging results. Additionally, we refined our interface design to primarily cater to doctors instead of only patients, shifting the focus to provide structured, clinically relevant data and user-friendly tools for interpreting complex results. This change necessitated updating user interface requirements in the SRS to include features such as advanced filtering, annotation tools, and report generation. Furthermore, the incorporation of these features introduced new safety and ethical considerations, leading us to revisit and expand the Hazard Analysis document. For example, we identified potential risks related to false positives or negatives in disease progression detection, which could impact clinical decision-making. To mitigate these risks, we documented fallback mechanisms such as manual review workflows and alerts for ambiguous cases.  
+  \item What are the limitations of your solution?  Put another way, given unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  \newline\newline
+  A significant limitation of our solution lies in the inherent bias and fairness concerns within our AI model. Training exclusively on the MIMIC-CXR dataset from Beth Israel Deaconess Medical Center means our model may exhibit performance disparities across different patient demographics. The limited diversity in our training data regarding age, gender, ethnicity, and socioeconomic status could result in reduced prediction accuracy for underrepresented populations, potentially compromising our system's ability to provide equitable healthcare solutions. Furthermore, since our training data originates from a single institution's imaging equipment, the model may demonstrate reduced effectiveness when processing X-rays captured using different machines, resolutions, or configurations. This technical limitation could disproportionately affect healthcare facilities utilizing different or older equipment specifications. Given unlimited resources, we would prioritize expanding our training dataset to encompass a broader spectrum of patient populations from multiple healthcare institutions and diverse imaging equipment. We would implement comprehensive testing protocols to evaluate model performance across various demographic groups and establish robust monitoring systems to track performance metrics across different population segments and equipment configurations. While our current implementation demonstrates promising results, addressing these limitations would be essential for future iterations to ensure the system delivers consistent and equitable care across all patient populations and healthcare settings.
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+  \newline\newline
+  We considered both MVC and a layered architecture for our medical imaging system, particularly to accommodate disease prediction and progression pipelines. While MVC separates data, business logic, and presentation, it can introduce tight coupling between controllers and views, ultimately complicating upgrades and integrations of AI components. In contrast, a layered approach naturally decouples these processes into discrete layers such as presentation, application, and data—ensuring each layer can be maintained, replaced, or updated independently. This flexibility is especially vital given our need to integrate complex machine learning and imaging algorithms that may evolve or expand over time. Additionally, layering simplifies the implementation of security, logging, and regulatory compliance by localizing those concerns within specific strata of the system. By providing a clear, top-to-bottom sequence for data flow, the layered model also reduces communication complexity, making it easier to integrate and manage our disease prediction and progression modules. Ultimately, we selected layered architecture for its modularity, maintainability, and scalability.
 \end{enumerate}
 
 
-\end{document}
+  \end{document}
