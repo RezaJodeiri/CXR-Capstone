@@ -5,6 +5,7 @@ from runtime import ReportGenerationService
 
 record_blueprint = Blueprint("record", __name__)
 
+
 @record_blueprint.route("/records", methods=["GET"])
 @authentication_required
 def paginated_records_by_userId(userId):
@@ -54,12 +55,11 @@ def handle_record_by_id(userId, recordId):
 def create_new_record(userId):
     # When create a new record, check for a valid downloadable picture from the image URL. Then run the disease report on it
     # TODO
-    imageUrl  = request.json.get("imageUrl", "")
+    imageUrl = request.json.get("imageUrl", "")
     record_info = {
         "imageUrl": imageUrl,
         "note": request.json.get("note", ""),
         "prescription": request.json.get("prescription", []),
-        "report": ReportGenerationService.generate_report(userId, imageUrl),
     }
     record = MedicalRecordService.create_new_record(userId, record_info)
     return (
@@ -68,3 +68,18 @@ def create_new_record(userId):
     )
 
 
+@record_blueprint.route("/records/prediction", methods=["POST"])
+@authentication_required
+def generate_prediction_and_report(userId):
+    xrayUrl = request.json.get("xrayUrl", "")
+    (report, prediction) = ReportGenerationService.generate_report(userId, xrayUrl)
+    (findings, impression) = report
+    return (
+        jsonify(
+            {
+                "report": {"findings": findings, "impression": impression},
+                "predictions": prediction["predictions"],
+            }
+        ),
+        200,
+    )

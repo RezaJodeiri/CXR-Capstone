@@ -252,3 +252,56 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
 export const getMedicalRecord = async (recordId, token) => {
   throw new Error("Medical record not found");
 };
+
+// api.js
+// Generic file uploads (for x-ray images, for avatar)
+// Generic Use case
+export const uploadFile = async (file, token) => {
+  // Fetch your upload URL, GET request
+  const fileName = file.name;
+  const uploadURL = await executeHTTPRequest(
+    "GET",
+    `/generate-upload-url/${fileName}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
+  try {
+    // Perform the PUT request
+    await axios.put(uploadURL, file, {
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
+    const urlWithoutParams = uploadURL.split("?")[0];
+    return urlWithoutParams;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+  }
+};
+
+export const getPredictionAndReport = async (userId, xRayUrl, token) => {
+  const predictionRes = await executeHTTPRequest(
+    "POST",
+    `/users/${userId}/records/prediction`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      xrayUrl: xRayUrl,
+    }
+  );
+
+  const predictionsArray = Object.entries(predictionRes.predictions).map(
+    ([condition, confidence]) => ({
+      condition: condition,
+      confidence: confidence * 100,
+    })
+  );
+
+  predictionRes.predictions = predictionsArray.sort(
+    (a, b) => b.confidence - a.confidence
+  );
+  return predictionRes;
+};

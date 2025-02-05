@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
   FiPlus,
-  FiArrowUp,
   FiUpload,
   FiZoomIn,
   FiZoomOut,
   FiRotateCw,
 } from "react-icons/fi";
 import CreateMedicalRecord from "./CreateMedicalRecord";
-import { getMedicalRecordsForPatient } from "../../services/api";
+import {
+  getMedicalRecordsForPatient,
+  getPredictionAndReport,
+} from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 
 function PatientMedicalRecords({ patient }) {
@@ -17,7 +19,7 @@ function PatientMedicalRecords({ patient }) {
   const [viewingRecord, setViewingRecord] = useState(null);
   const [medicalRecords, setMedicalRecords] = useState([]);
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState("Upper Left");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [recordData, setRecordData] = useState({
     priority: "Low",
@@ -25,10 +27,14 @@ function PatientMedicalRecords({ patient }) {
     treatmentPlan: "",
     prescriptions: [],
     file: null,
+    xrayUrl: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [findings, setFindings] = useState("");
-  const [impression, setImpression] = useState("");
+  const [prediction, setPrediction] = useState({
+    findings: "",
+    impression: "",
+    predictions: [],
+  });
 
   useEffect(() => {
     getMedicalRecordsForPatient(patient.id, token).then((data) =>
@@ -66,21 +72,26 @@ function PatientMedicalRecords({ patient }) {
   const handleAnalyzeClick = (formData) => {
     setRecordData({
       ...formData,
-      file: formData.file,
     });
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setShowAnalysis(true);
-      setIsTransitioning(false);
-    }, 300);
+    getPredictionAndReport(patient.id, formData.xRayUrl, token).then((data) => {
+      setIsTransitioning(true);
+      setPrediction({
+        ...prediction,
+        findings: data.report.findings,
+        impression: data.report.impression,
+        predictions: data.predictions,
+      });
+      setTimeout(() => {
+        setShowAnalysis(true);
+        setIsTransitioning(false);
+      }, 300);
+    });
   };
 
   const handleBackToRecord = () => {
     setIsTransitioning(true);
-    setTimeout(() => {
-      setShowAnalysis(false);
-      setIsTransitioning(false);
-    }, 300);
+    setShowAnalysis(false);
+    setIsTransitioning(false);
   };
 
   // If viewing a record
@@ -215,17 +226,23 @@ function PatientMedicalRecords({ patient }) {
                       <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
                         <div>
                           <h4 className="font-medium text-red-900">
-                            Pneumonia
+                            <a
+                              href={`https://www.google.com?q=${prediction.predictions[0].condition}`}
+                              target="_blank"
+                            >
+                              {prediction.predictions[0].condition}
+                            </a>
                           </h4>
                           <p className="text-sm text-red-700 mt-1">
-                            Right Lower Lobe | Confidence: 98%
+                            Confidence:{" "}
+                            {prediction.predictions[0].confidence.toFixed(2)}%
                           </p>
                         </div>
                       </div>
 
                       {/* Region Analysis */}
                       <div className="space-y-3">
-                        <h4 className="font-medium text-gray-700">
+                        {/* <h4 className="font-medium text-gray-700">
                           Region Analysis
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
@@ -252,13 +269,13 @@ function PatientMedicalRecords({ patient }) {
                               {region}
                             </button>
                           ))}
-                        </div>
+                        </div> */}
 
                         {/* Region-specific Detection Results */}
                         {selectedRegion && (
                           <div className="mt-4 space-y-3">
-                            <h5 className="text-sm font-medium text-gray-600">
-                              Top Findings for{" "}
+                            {/* <h5 className="text-sm font-medium text-gray-600">
+                              Top Findings for
                               {selectedRegion
                                 .split("-")
                                 .map(
@@ -266,37 +283,33 @@ function PatientMedicalRecords({ patient }) {
                                     word.charAt(0).toUpperCase() + word.slice(1)
                                 )
                                 .join(" ")}
-                            </h5>
+                            </h5> */}
                             <div className="space-y-2">
-                              {[
-                                { condition: "Atelectasis", confidence: 30 },
-                                { condition: "Consolidation", confidence: 19 },
-                                { condition: "Infiltration", confidence: 15 },
-                                { condition: "Pneumothorax", confidence: 12 },
-                                { condition: "Edema", confidence: 8 },
-                              ].map((finding, index) => (
-                                <div
-                                  key={index}
-                                  className="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100"
-                                >
-                                  <span className="text-sm text-gray-700 font-medium">
-                                    {finding.condition}
-                                  </span>
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                      <div
-                                        className="h-full bg-[#3C7187] rounded-full"
-                                        style={{
-                                          width: `${finding.confidence}%`,
-                                        }}
-                                      />
-                                    </div>
-                                    <span className="text-sm text-gray-500 min-w-[3ch]">
-                                      {finding.confidence}%
+                              {prediction.predictions
+                                .slice(0, 5)
+                                .map((finding, index) => (
+                                  <div
+                                    key={index}
+                                    className="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100"
+                                  >
+                                    <span className="text-sm text-gray-700 font-medium">
+                                      {finding.condition}
                                     </span>
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div
+                                          className="h-full bg-[#3C7187] rounded-full"
+                                          style={{
+                                            width: `${finding.confidence}%`,
+                                          }}
+                                        />
+                                      </div>
+                                      <span className="text-sm text-gray-500 min-w-[3ch]">
+                                        {finding.confidence.toFixed(2)}%
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
                           </div>
                         )}
@@ -312,12 +325,17 @@ function PatientMedicalRecords({ patient }) {
                     {isEditing ? (
                       <textarea
                         className="w-full border border-gray-200 rounded-lg p-4 min-h-[120px] text-sm text-gray-700 focus:ring-2 focus:ring-[#3C7187] focus:border-transparent"
-                        value={findings}
-                        onChange={(e) => setFindings(e.target.value)}
+                        value={prediction.findings}
+                        onChange={(e) =>
+                          setPrediction({
+                            ...prediction,
+                            findings: e.target.value,
+                          })
+                        }
                       />
                     ) : (
                       <div className="w-full border border-gray-200 rounded-lg p-4 min-h-[120px] text-sm text-gray-700 whitespace-pre-line">
-                        {findings ||
+                        {prediction.findings ||
                           "1. Right lower lobe consolidation with air bronchograms\n2. No pleural effusion\n3. Heart size within normal limits\n4. No pneumothorax"}
                       </div>
                     )}
@@ -331,13 +349,17 @@ function PatientMedicalRecords({ patient }) {
                     {isEditing ? (
                       <textarea
                         className="w-full border border-gray-200 rounded-lg p-4 min-h-[100px] text-sm text-gray-700 focus:ring-2 focus:ring-[#3C7187] focus:border-transparent"
-                        value={impression}
-                        onChange={(e) => setImpression(e.target.value)}
+                        value={prediction.impression}
+                        onChange={(e) =>
+                          setPrediction({
+                            ...prediction,
+                            impression: e.target.value,
+                          })
+                        }
                       />
                     ) : (
                       <div className="w-full border border-gray-200 rounded-lg p-4 min-h-[100px] text-sm text-gray-700 whitespace-pre-line">
-                        {impression ||
-                          "Right lower lobe pneumonia. Follow-up radiograph recommended after completion of treatment to ensure resolution."}
+                        {prediction.impression}
                       </div>
                     )}
                   </div>
@@ -480,10 +502,14 @@ function PatientMedicalRecords({ patient }) {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-600">
-                  {record.timeCreated ? new Date(record.timeCreated).toLocaleDateString() : "-"}
+                  {record.timeCreated
+                    ? new Date(record.timeCreated).toLocaleDateString()
+                    : "-"}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-600">
-                  {record.timeUpdated ? new Date(record.timeUpdated).toLocaleDateString() : "-"}
+                  {record.timeUpdated
+                    ? new Date(record.timeUpdated).toLocaleDateString()
+                    : "-"}
                 </td>
               </tr>
             ))}
