@@ -10,6 +10,7 @@ import CreateMedicalRecord from "./CreateMedicalRecord";
 import {
   getMedicalRecordsForPatient,
   getPredictionAndReport,
+  createMedicalRecord,
 } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 
@@ -22,12 +23,12 @@ function PatientMedicalRecords({ patient }) {
   const [selectedRegion, setSelectedRegion] = useState("Upper Left");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [recordData, setRecordData] = useState({
+    xRayUrl: "",
+    note: "",
     priority: "Low",
-    clinicalNotes: "",
     treatmentPlan: "",
     prescriptions: [],
     file: null,
-    xrayUrl: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [prediction, setPrediction] = useState({
@@ -42,31 +43,22 @@ function PatientMedicalRecords({ patient }) {
     );
   }, []);
 
-  const handleRecordCreated = (newRecord) => {
+  const handleRecordCreated = async (newRecord, prediction) => {
+    const newRecordWithPredictions = { ...newRecord, ...prediction };
     setIsTransitioning(true);
-    setTimeout(() => {
-      setMedicalRecords((prevRecords) => [
-        {
-          ...newRecord,
-          friendlyId: `RID-${Date.now()}`,
-          reportStatus: "Pending",
-          priority: recordData.priority || "Low",
-          timeCreated: new Date().toISOString(),
-          timeUpdated: new Date().toISOString(),
-        },
-        ...prevRecords,
-      ]);
-      setShowAnalysis(false);
-      setRecordData({
-        priority: "Low",
-        clinicalNotes: "",
-        treatmentPlan: "",
-        prescriptions: [],
-        file: null,
-      });
-      setIsCreating(false);
-      setIsTransitioning(false);
-    }, 300);
+    // persist
+    const dbRecord = await createMedicalRecord(
+      patient.id,
+      newRecordWithPredictions,
+      token
+    );
+    // Update state
+    setRecordData(dbRecord);
+    setMedicalRecords([dbRecord, ...medicalRecords]);
+    // Reset
+    setShowAnalysis(false);
+    setIsCreating(false);
+    setIsTransitioning(false);
   };
 
   const handleAnalyzeClick = (formData) => {
@@ -106,10 +98,8 @@ function PatientMedicalRecords({ patient }) {
           viewMode={true}
           onBack={() => {
             setIsTransitioning(true);
-            setTimeout(() => {
-              setViewingRecord(null);
-              setIsTransitioning(false);
-            }, 300);
+            setViewingRecord(null);
+            setIsTransitioning(false);
           }}
           recordId={viewingRecord}
           onRecordCreated={() => {}}
@@ -174,9 +164,9 @@ function PatientMedicalRecords({ patient }) {
               <div className="lg:col-span-7 space-y-6">
                 {/* Image Display Area */}
                 <div className="relative rounded-lg overflow-hidden bg-gray-900 aspect-[3/3.5] w-3/5 mx-auto">
-                  {recordData?.file ? (
+                  {recordData?.xRayUrl ? (
                     <img
-                      src={URL.createObjectURL(recordData.file)}
+                      src={recordData.xRayUrl}
                       alt="X-Ray"
                       className="w-full h-full object-contain"
                     />
@@ -384,15 +374,7 @@ function PatientMedicalRecords({ patient }) {
               <button
                 onClick={() => {
                   setIsTransitioning(true);
-                  setTimeout(() => {
-                    handleRecordCreated({
-                      id: Date.now(),
-                      recordId: `PT-${Date.now()}`,
-                      priority: recordData.priority,
-                      timeCreated: new Date().toISOString(),
-                      timeUpdated: new Date().toISOString(),
-                    });
-                  }, 300);
+                  handleRecordCreated(recordData, prediction);
                 }}
                 className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
               >
@@ -474,7 +456,7 @@ function PatientMedicalRecords({ patient }) {
                       className="h-2 aspect-square rounded-full"
                       style={{
                         backgroundColor:
-                          record.priority === "Emergency"
+                          record.priority === "High"
                             ? "red"
                             : record.priority === "Low"
                             ? "green"

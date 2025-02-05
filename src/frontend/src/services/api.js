@@ -85,31 +85,6 @@ export const predictImage = async (file, token) => {
   }
 };
 
-// Mock data storage for all medical records (including newly created ones)
-let allMedicalRecords = {
-  1: [
-    {
-      id: "1",
-      recordId: "MR-001",
-      priority: "High",
-      status: "In Progress",
-      timeCreated: "2024-03-20T10:00:00Z",
-      timeUpdated: "2024-03-20T10:00:00Z",
-      xRayUrl: "/file-upload.png",
-      clinicalNotes: "Initial examination shows...",
-      treatmentPlan: "Recommended treatment includes...",
-      prescriptions: [
-        {
-          medication: "Sample Medication",
-          dosage: "10mg",
-          frequency: "Once daily",
-          time: "Morning",
-        },
-      ],
-    },
-  ],
-};
-
 const parsePatientData = (patient) => {
   const birthDate = new Date(patient.birthdate);
   const age = new Date().getFullYear() - birthDate.getFullYear();
@@ -174,21 +149,16 @@ export const getPatientById = async (patientId, token) => {
 };
 
 const parseRecordData = (record) => {
-  const lastMonth = new Date();
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-
   return {
-    id: record.id,
+    ...record,
     friendlyId: "RID-" + record.id.split("-")[0],
-    xRayUrl: record.imageUrl,
-    // TODO: Refactor to enums (if have time)
-    priority: ["Emergency", "Low", "Medium"][Math.floor(Math.random() * 3)],
     reportStatus: ["Completed", "In Progress", "Canceled"][
       Math.floor(Math.random() * 3)
     ],
-    status: record.status,
-    timeCreated: lastMonth.toISOString(),
-    timeUpdated: lastMonth.toISOString(),
+    timeCreated: record.created_at,
+    timeUpdated: record.updated_at,
+    findings: record.report.findings,
+    impression: record.report.impression,
   };
 };
 export const getMedicalRecordsForPatient = async (
@@ -222,35 +192,57 @@ export const getMedicalRecordsForPatient = async (
   });
 };
 
-export const createMedicalRecord = async (patientId, recordData, token) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  const newRecord = {
-    id: Date.now().toString(),
-    recordId: `MR-${Date.now()}`,
-    xRayUrl: recordData.xRayFile
-      ? URL.createObjectURL(recordData.xRayFile)
-      : null,
-    clinicalNotes: recordData.clinicalNotes,
-    treatmentPlan: recordData.treatmentPlan,
-    prescriptions: recordData.prescriptions,
-    priority: recordData.priority,
-    status: "Pending",
-    timeCreated: new Date().toISOString(),
-    timeUpdated: new Date().toISOString(),
-  };
-
-  // Add the new record to our mock storage
-  if (!allMedicalRecords[patientId]) {
-    allMedicalRecords[patientId] = [];
-  }
-  allMedicalRecords[patientId].unshift(newRecord);
-
-  return newRecord;
+export const getMedicalRecordById = async (userId, recordId, token) => {
+  const record = await executeHTTPRequest(
+    "GET",
+    `/users/${userId}/records/${recordId}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
+  return parseRecordData(record);
 };
 
-export const getMedicalRecord = async (recordId, token) => {
-  throw new Error("Medical record not found");
+export const createMedicalRecord = async (patientId, recordData, token) => {
+  const newRecord = {
+    xRayUrl: recordData.xRayUrl,
+    predictions: recordData.predictions.reduce((acc, item) => {
+      acc[item.condition] = item.confidence / 100;
+      return acc;
+    }, {}),
+    report: {
+      findings: recordData.findings,
+      impression: recordData.impression,
+    },
+    note: recordData.note,
+    priority: recordData.priority,
+    treatmentPlan: recordData.treatmentPlan,
+    // prescriptions: recordData.prescriptions,
+    prescriptions: [],
+  };
+  console.log(newRecord);
+
+  const createdRecord = await executeHTTPRequest(
+    "POST",
+    `/users/${patientId}/record`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    newRecord
+  );
+  return parseRecordData(createdRecord);
+};
+
+export const getMedicalRecord = async (userId, recordId, token) => {
+  const record = await executeHTTPRequest(
+    "GET",
+    `/users/${userId}/records/${recordId}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
+  return parseRecordData(record);
 };
 
 // api.js
@@ -289,7 +281,7 @@ export const getPredictionAndReport = async (userId, xRayUrl, token) => {
     },
     {},
     {
-      xrayUrl: xRayUrl,
+      xRayUrl: xRayUrl,
     }
   );
 

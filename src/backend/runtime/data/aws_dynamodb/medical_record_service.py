@@ -15,21 +15,28 @@ class MedicalRecordService(BaseDynamoService):
         if cursor:
             kwargs["ExclusiveStartKey"] = {"userId": userId, "id": cursor}
         response = self.table.query(**kwargs)
+        data = response.get("Items", [])
+        data.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
+
         nextCursor = response.get("LastEvaluatedKey", None)
         return {
-            "data": response.get("Items", []),
+            "data": data,
             "next": nextCursor["id"] if nextCursor else None,
         }
 
     def get_record_by_id(self, uuid):
-        return super().get_item_by_id(uuid)
+        record = super().get_item_by_id(uuid)
+        record["predictions"] = {
+            key: float(value) for key, value in record["predictions"].items()
+        }
+        return record
 
     def create_new_record(self, userId, record):
         record["userId"] = userId
+        record["predictions"] = {
+            key: str(value) for key, value in record["predictions"].items()
+        }
         return super().create_new_item(record)
 
     def update_record_by_id(self, uuid, record):
         return super().update_item_by_id(uuid, record)
-    
-    def link_report_to_record(self, recordId, reportId):
-        return super().update_item_by_id(recordId, {"reportId": reportId})

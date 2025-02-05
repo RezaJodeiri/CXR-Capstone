@@ -1,3 +1,4 @@
+import datetime
 import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
@@ -35,6 +36,8 @@ class BaseDynamoService:
         """
         try:
             item["id"] = str(uuid.uuid4())
+            item["created_at"] = datetime.datetime.now().isoformat()
+            item["updated_at"] = datetime.datetime.now().isoformat()
             self.table.put_item(Item=item)
             return self.get_item_by_id(item["id"])
         except ClientError as e:
@@ -50,6 +53,7 @@ class BaseDynamoService:
         :return: The updated item or None on failure.
         """
         try:
+            updated_item["updated_at"] = datetime.datetime.now().isoformat()
             update_expression = "SET " + ", ".join(
                 f"#{k} = :{k}" for k in updated_item.keys()
             )

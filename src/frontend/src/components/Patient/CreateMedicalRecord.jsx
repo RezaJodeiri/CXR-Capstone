@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
-import {
-  createMedicalRecord,
-  getMedicalRecord,
-  uploadFile,
-} from "../../services/api";
+import { getMedicalRecord, uploadFile } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 import { useParams } from "react-router-dom";
 
 const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
-function CreateMedicalRecord({
+function CreateMedicalRecordView({
   onBack,
-  onRecordCreated,
   onAnalyze,
   viewMode = false,
+  recordId = "",
 }) {
   const { id } = useParams();
-  const { user, token } = useAuth();
+  const { token } = useAuth();
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    clinicalNotes: "",
+    note: "",
     treatmentPlan: "",
     priority: "Low",
+    xRayUrl: "",
   });
-  const [prescriptions, setPrescriptions] = useState([
-    { id: 1, medication: "", dosage: "", frequency: "", time: "" },
-  ]);
-  const [loading, setLoading] = useState(false);
+  const [prescriptions, setPrescriptions] = useState([]);
 
   useEffect(() => {
     if (viewMode && id) {
@@ -36,36 +30,20 @@ function CreateMedicalRecord({
   }, [id, viewMode]);
 
   const loadRecord = async () => {
-    try {
-      const record = await getMedicalRecord(id, user?.token);
-      setFormData({
-        clinicalNotes: record.clinicalNotes,
-        treatmentPlan: record.treatmentPlan,
-        priority: record.priority,
-      });
-      setPrescriptions(
-        record.prescriptions.map((p, index) => ({
-          id: index + 1,
-          ...p,
-        }))
-      );
-    } catch (error) {
-      console.error("Failed to load record:", error);
-    }
+    const record = await getMedicalRecord(id, recordId, token);
+    setFormData({
+      note: record.note,
+      treatmentPlan: record.treatmentPlan,
+      priority: record.priority,
+      xRayUrl: record.xRayUrl,
+    });
+    // TODO
+    setPrescriptions([]);
   };
 
   const handleFileChange = async (file) => {
-    // TODO
-    setFile(file); // Store the selected file locally
-
-    try {
-      const imageURL = await uploadFile(file, token);
-      console.log(imageURL);
-      // DO something with the response
-      setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    const xRayUrl = await uploadFile(file, token);
+    setFormData((prev) => ({ ...prev, xRayUrl: xRayUrl }));
   };
 
   const handleInputChange = (e) => {
@@ -101,31 +79,6 @@ function CreateMedicalRecord({
 
   const removePrescriptionRow = (id) => {
     setPrescriptions((prev) => prev.filter((row) => row.id !== id));
-  };
-
-  const handleSubmit = async () => {
-    // TODO
-    setLoading(true);
-    try {
-      console.log("File is uploaded...");
-      const recordData = {
-        xRayFile: file,
-        clinicalNotes: formData.clinicalNotes,
-        treatmentPlan: formData.treatmentPlan,
-        prescriptions: prescriptions,
-        priority: formData.priority,
-      };
-      const newRecord = await createMedicalRecord(
-        user?.id,
-        recordData,
-        user?.token
-      );
-      onRecordCreated(newRecord);
-    } catch (error) {
-      console.error("Failed to create record:", error);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
@@ -172,23 +125,19 @@ function CreateMedicalRecord({
                 Upload X-Ray Image
               </label>
               {viewMode ? (
-                file || formData.xRayUrl ? (
+                formData?.xRayUrl ? (
                   <img
-                    src={
-                      formData.xRayUrl
-                        ? formData.xRayUrl
-                        : URL.createObjectURL(file)
-                    }
+                    src={formData.xRayUrl}
                     alt="X-Ray"
                     className="w-full rounded-lg"
                   />
                 ) : null
               ) : (
                 <div className="flex flex-col justify-center items-center gap-3 border-2 border-dashed border-gray-300 rounded-lg p-10 hover:border-gray-400 transition-colors bg-gray-50">
-                  {file ? (
+                  {formData?.xRayUrl ? (
                     <div className="w-full aspect-square relative">
                       <img
-                        src={URL.createObjectURL(file)}
+                        src={formData.xRayUrl}
                         alt="Preview"
                         className="w-full h-full object-cover rounded-lg"
                       />
@@ -263,8 +212,8 @@ function CreateMedicalRecord({
                 Clinical Notes
               </label>
               <textarea
-                name="clinicalNotes"
-                value={formData.clinicalNotes}
+                name="note"
+                value={formData.note}
                 onChange={handleInputChange}
                 disabled={viewMode}
                 rows={4}
@@ -450,4 +399,4 @@ function CreateMedicalRecord({
   );
 }
 
-export default CreateMedicalRecord;
+export default CreateMedicalRecordView;
