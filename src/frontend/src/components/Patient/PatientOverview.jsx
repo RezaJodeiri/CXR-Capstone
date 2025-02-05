@@ -1,23 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getMedicalRecordsForPatient } from "../../services/api";
+import { useAuth } from "../../context/Authentication";
 
-function PatientOverview() {
-  const treatmentData = [
-    {
-      medicine: "Ursofalk 300",
-      dosage: "2 Pills",
-      time: "02:00 PM",
-      type: "Routine Medicine",
-      notes: "No observations or notes",
-    },
-    {
-      medicine: "Indever 20",
-      dosage: "1 Pill",
-      time: "02:20 PM",
-      type: "Emergency",
-      notes:
-        "Patient observed to be having seizures. Indever given to reduce blood pressure",
-    },
-  ];
+function PatientOverview({ patient }) {
+  const { token } = useAuth();
+  const [firstRecord, setFirstRecord] = useState(null);
+
+  useEffect(() => {
+    getMedicalRecordsForPatient(patient.id, token, 1).then((records) => {
+      setFirstRecord(records[0]);
+    });
+  }, []);
 
   return (
     <div className="p-6">
@@ -30,15 +23,16 @@ function PatientOverview() {
             </div>
           </div>
           <div className="px-6 pb-6">
-            <div className="grid grid-cols-6 gap-6">
-              This is an note and this section needed to be filled out
-            </div>
+            <p>
+              {firstRecord?.note ||
+                "This user doesn't have any outstanding note"}
+            </p>
           </div>
         </div>
       </div>
 
       {/* Treatment Plan Section */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <div className="border border-gray-200 rounded-2xl">
           <div className="flex items-center gap-2 px-6 pt-6 mb-4">
             <div className="flex items-center gap-2 bg-[#F8F8F8] px-3 py-1.5 rounded-full">
@@ -68,7 +62,7 @@ function PatientOverview() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* AI Analysis Section */}
       <div>
@@ -79,8 +73,17 @@ function PatientOverview() {
               <span className="font-medium text-[#7F7F7F]">AI Analysis</span>
             </div>
           </div>
-          <div className="px-6 pb-6">
-            This is another section that needed to be filled out
+          <div className="px-6 pb-6 flex flex-col gap-4">
+            <p>
+              <p className="font-bold">Findings:</p>
+              {firstRecord?.findings ||
+                "This user doesn't have any outstanding findings"}
+            </p>
+            <p>
+              <p className="font-bold">Impression:</p>
+              {firstRecord?.impression ||
+                "This user doesn't have any outstanding impressions"}
+            </p>
           </div>
         </div>
       </div>
