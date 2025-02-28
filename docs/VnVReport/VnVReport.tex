@@ -65,6 +65,122 @@ Date 2 & 1.1 & Notes\\
 This document ...
 
 \section{Functional Requirements Evaluation}
+\subsection{Functional Requirement 1}
+\begin{itemize}
+  \item Description: The system shall accept chest X-ray images as input from authorized users.
+  \item Type: Manual
+  \item Verification: Calling HTTP Server Module API to get a presigned URL for uploading the image with and without authorization token.
+  \item Validation: Presigned URL doesn\'t return if the user is not authorized.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 2}
+\begin{itemize}
+  \item Description: The system shall enable users to input additional patient symptoms, such as cough, chest pain, or fever
+  \item Type: Automated
+  \item Verification: Execute integration tests on the Medical Record Management Module to include additional patient symptoms.
+  \item Validation: Check if the additional patient symptoms are included in the medical record from the Data Persistent Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 3}
+\begin{itemize}  
+  \item Description: The system shall analyze chest X-ray images to detect the presence or absence of specific diseases with an accuracy of 85\% or higher.
+  \item Type: Automated
+  \item Verification: Execute Validation Script on the Disease Detection Module to check the accuracy of the AI model.
+  \item Validation: Check if the accuracy of the AI model is 85\% or higher.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 4}
+\begin{itemize}  
+  \item Description: The system shall indicate whether a patient\'s condition has improved, worsened, or remained stable between scans.
+  \item Type: Automated
+  \item Verification: Execute integration tests on the Disease Progression Module, with pre-defined patient conditions.
+  \item Validation: Validated the output of the Module to include improved, worsened, or remained stable conditions.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 5}
+\begin{itemize}  
+  \item Description: The system shall generate visual aids by highlighting affected areas on the chest X-ray images.
+  \item Type: Manual
+  \item Verification: Manually create a medical record on the X-Ray Report View Module.
+  \item Validation: Validated the output of the Module to include highlighted affected areas.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 6}
+\begin{itemize}  
+  \item Description: The system shall produce a structured, human-readable report summarizing key findings, disease detection results, and progression status.
+  \item Type: Automated
+  \item Verification: Execute integration tests on the Internal Report Generation Service, with pre-defined patient conditions.
+  \item Validation: Validated the output of the Service to include key findings, disease detection results, and progression status.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 7}
+\begin{itemize}  
+  \item Description: The system shall store patient data, including images and reports, in a secure database for future reference.
+  \item Type: Automated
+  \item Verification: Execute integration tests on Medical Record Management Module to create a medical record with images and reports.
+  \item Validation: Validated that all medical records, findings, and X-Ray images are stored in the Data Persistent Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 8}
+\begin{itemize}  
+  \item Description: The system shall provide alerts to clinicians if significant changes in a patient\'s condition are detected between scans.
+  \item Type: Manual
+  \item Verification: Manually create a medical record on the Disease Progression Module with significant changes in a patient\'s condition.
+  \item Validation: Validated that the drastic changes in a patient\'s condition are presence on the UI of Patient List View Module and Patient Overview Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 9}
+\begin{itemize}  
+  \item Description: The system shall allow healthcare professionals to adjust treatment plans based on the X-ray analysis results
+  \item Type: Manual
+  \item Verification: Manually edit a medical record on the X-Ray Report View Module with adjusted treatment plans.
+  \item Validation: Validated that the adjusted treatment plans are presence on the UI of Patient List View Module and Data Persistent Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 10}
+\begin{itemize}  
+  \item Description: The system shall display confidence levels for disease detection and progression analysis results through an intuitive user interface that requires minimal training to operate.
+  \item Type: Manual
+  \item Verification: Manually create a medical record on the X-Ray Report View Module with known disease confidence levels.
+  \item Validation: Validated that the confidence levels are accurately shown on the UI of X-Ray Report View Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 11}
+\begin{itemize}  
+  \item Description: The system shall support multiple user roles with appropriate access levels (e.g., physician, patient).
+  \item Type: Automated
+  \item Verification: Execute integration tests on the User Management Module to create doctors and patients.
+  \item Validation: Validated that created doctors has the is_doctor flag set to true and newly created patient always attached to a doctor via the doctor_id field.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 12}
+\begin{itemize}  
+  \item Description: The system shall create a new copy of a patient\'s X-ray before running the AI model for analysis.
+  \item Type: Automated
+  \item Verification: Execute integration tests on the Medical Record Management Module to make a new record.
+  \item Validation: Validated that patient\'s X-ray is already copied into the Data Persistent Module before running through the Disease Detection and Progression Module.
+  \item Result: Pass
+\end{itemize}
+
+\subsection{Functional Requirement 13}
+\begin{itemize}  
+  \item Description: The system shall support regular updates to the AI model to incorporate new data and improve accuracy over time.
+  \item Type: Automated
+  \item Verification: Execute integration tests on the AI Model Update Module to ensure updates are applied correctly.
+  \item Validation: Validate that the AI model\'s accuracy improves over time with new data.
+  \item Result: Pass
+\end{itemize}
 
 \section{Nonfunctional Requirements Evaluation}
 
