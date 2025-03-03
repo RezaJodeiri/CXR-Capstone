@@ -6,4 +6,3 @@ pytest-cov==3.0.0
 types-requests==2.31.0
 flake8==6.0.0
 mypy==1.4.1
-moto==4.2.3
