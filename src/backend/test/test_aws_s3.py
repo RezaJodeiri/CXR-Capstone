@@ -52,6 +52,6 @@ class TestS3PresignedURLHandler(unittest.TestCase):
         self.assertEqual(response["Contents"][0]["Key"], object_name)
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
 
