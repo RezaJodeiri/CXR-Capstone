@@ -68,12 +68,262 @@ This document ...
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
+\subsection{Look and Feel}
+\begin{enumerate}
 
-\subsection{etc.}
-	
+\item{NFR-LF1\\}\label{NFR-LF1}
+
+Initial State: The system must be installed and accessible.
+
+Input/Condition: Adjust window/level settings. Navigate between other tabs. Apply basic tools (zoom, pan, measure). Export or save images from the viewer.
+
+Expected Output/Result: The system responds to user interactions.
+
+Actual Output: The system responds to user interactions promptly and correctly.
+
+Result: Pass
+
+\item{NFR-LF2\\}\label{NFR-LF2}
+
+Initial State: The system under test is installed and accessible on the target device. The monitor brightness is set to a comfortable level to ensure consistency during the test.
+
+Input/Condition: User interaction with the interface for typical workflows.
+
+Expected Output/Result: Color contrast ratio is 4.5:1 or higher for text. Font sizes at least 12-14 points for normal text.
+
+Actual Output: All systemm interface showed valid color contrast ratioand appropriate font size 
+
+Result: Pass
+
+\end{enumerate}
+
+\subsubsection{Usability and Humanity}
+
+\begin{enumerate}
+
+  \item{NFR-UH1\\}\label{NFR-UH1}
+  
+  Initial State: User accounts and access credentials are prepared for all healthcare professionals participating in the test. Any required files or images are pre-loaded and accessible for the tasks.
+  
+  Input/Condition: Test user given a list of specified tasks and user accounts.
+  
+  Expected Output/Result: User successfully login each user account and perform: upload a chest X-ray image to the system, view analysis results or processed reports, adjust image settings (e.g., window/level, zoom), and export the analysis or report to a local folder.
+  
+  Actual Output: User can login as doctor / patient and upload chest X-ray image to the system, view analysis results or processed reports.
+
+  Result: Fail. Not able to adjust image settings (e.g., window/level, zoom), and export the analysis or report to a local folder.
+
+\item{NFR-UH2\\}\label{NFR-UH2}
+
+Initial State: List of user accounts and access credentials are prepared. Full access to the user interface. Interface elements (buttons, icons, menus) are accessible for interaction.
+
+Input/Condition: Automated script with a list of interactions specified to interact with the tabs and other listed functionalities.
+
+Expected Output/Result: Log whether tool-tips and help content were displayed correctly for each element tested.
+
+Actual Output: No tool bar / help content was displayed 
+
+Result: Fail
+
+\end{enumerate}
+
+\subsubsection{Performance}
+\item{NFR-PR1\\}\label{NFR-PR1}
+
+Initial State: User is logged in. Standard chest X-ray images are available for testing in PNG/JPG format (depending on system requirements).
+
+Input/Condition: Test user interacts with the system to upload an X-Ray image.
+
+Expected Output/Result: AI-analyzed results of the X-Ray image is displayed in user interface within 1 minute of uploading the X-ray image.
+
+Actual Output: Disease probabilities was produced by AI model in user interface along with summaries.
+
+Result: Pass
+
+\item{NFR-PR2\\}\label{NFR-PR2}
+
+Initial State: A monitoring system is set up to log availability metrics, such as downtime events, mean time to recovery, and uptime percentage.
+
+Input/Condition: Server outages, network issues, high number of concurrent users.
+
+Expected Output/Result: Uptime percentage; downtime events (log the number, duration, and cause of any disruptions or downtime); mean time to recovery.
+
+Actual: Uptime percentage of the system is above 99%. No downtime was detected. 
+
+Result: Pass
+
+\item{NFR-PR3\\}\label{NFR-PR3}
+
+Initial State: All dependencies (database, network, storage, and image processing engine) are configured and operational. Monitoring tools are available to track system performance, including CPU and memory usage, image processing times.
+
+Input/Condition: Collections of 20 identical or varied images, multiple user accounts. Baseline for each image processing is 20 seconds.
+
+Expecetd Output/Result: Processing time (float), system resource utilization (float), images uploading success/fail (boolean).
+
+Actual Output: Image uploading function is working. Processing time is within 20 seconds for all images. System resource utilization showed 15%.
+
+Result: Pass.
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental}
+
+\begin{enumerate}
+
+  \item{NFR-OE1\\}\label{NFR-OE1}
+  
+  Initial State: The AI system and the PACS are both connected to the same hospital network and the DICOM configuration for both systems is correctly set.
+  
+  Input/Condition: AI-processed results including annotations or diagnostic report as an image (in DICOM format). Metadata with patient ID (string) and instance number (string).
+  
+  Expected Output/Result: Boolean indicating whether the PACS successfully stores the AI-processed results with correct format (annotated image or report). The stored result is associated with the correct patient ID and instance number in the PACS.
+  
+  Actual Outout: The AI system was not able to connect to a hospital network.
+
+  Result: Fail
+
+  \item{NFR-OE2\\}\label{NFR-OE2}
+
+  Initial State: The network is configured normally with minimal latency and no packet loss initially. Necessary patient data and chest X-ray studies are available for retrieval.
+
+  Input/Condition: Retrieve and process a chest X-ray image, store the processed result, and send the data to external.
+
+  Expected Output/Result: Latency is within a reasonable time (190ms~220ms), logs include latency and packet loss statistics.
+
+  Actual Output: Logs showing that latency is around ~190ms and no packet loss detected.
+
+  Result: Pass
+
+\end{enumerate}
+
+\subsubsection{Security and Privacy}
+\item{NFR-SR1\\}\label{NFR-SR1}
+
+Initial State: AES-256 encryption libraries (such as OpenSSL or Cryptography in Python) are configured for the system. Patient data (including DICOM images and reports) is stored on the system or transmitted over the network.
+
+Input/Condition: X-ray image and diagnostic report with patient ID and instance number. Secret key and initialization vector (IV) for AES-256 encryption.
+
+Expected Output/Result: All patient data, including images and reports, is encrypted using AES-256 both during storage and transmission.
+
+Actual Output: Paitent data was not encrypted with AES-256 standar.
+
+Result: Fail
+
+\item{NFR-SR2\\}\label{NFR-SR2}
+
+Initial State: The AI system has different user accounts with different assigned roles. Each role has specific permissions defined.
+
+Input/Condition: Role 1: Doctor view diagnostic results and patient images. Role 2: Administrator—can manage user accounts and system configurations (user\_radiologist, user\_admin).
+
+Expected Output/Result: Doctor should be able to view diagnostic reports and images and should not be able to manage accounts. Administrator should be able to create and manage user accounts and should not have access to patient diagnostic reports.
+
+Actual Output: Administrator role is not defined. Doctor is able to view diagnostic reports and not be able to manage accounts.
+
+Result: Fail.
+
+\end{enumerate}
+
+\subsubsection{Maintainability and Support}
+
+\begin{enumerate}
+
+  \item{NFR-MS1\\}\label{NFR-MS1}
+  
+  Initial State: The AI system code-base is deployed in a version-controlled environment. Documentation for each module (e.g., README files, API references, inline comments) is available in the repository.
+  
+  Input/Condition: All modules within the code repository are accessible.
+  
+  Expected Output/Result: All key functionalities (e.g., data ingestion, inference, reporting) are encapsulated in separate, well-defined modules. Modules can function independently with minimal coupling. Dependencies between modules are well-documented.
+  
+  Actual Output: All modules are separated and follows SOLID principles. Modules are self-contained that can be modified without breaking other parts.
+  
+  Result: Pass
+
+  \item{NFR-MS2\\}\label{NFR-MS2}
+
+  Initial State: Code repository contains the entire AI system, automated testing framework (e.g., JUnit, Pytest) is installed and configured in the project. Tests include unit tests, integration tests, system tests, and end-to-end tests. Code coverage tool (e.g., coverage.py, JaCoCo) is integrated.
+
+  Input/Condition: Unit tests, integration tests, and end-to-end tests.
+
+  Expected Output/Result: Code coverage log.
+
+  Actual Output: Code coverage log included as part of CI/CD pipeline which will be triggered everytime there's a new commit.
+
+  Result: Pass
+
+\end{enumerate}
+
+\subsubsection{Cultural}
+\item{NFR-CR1\\}\label{NFR-CR1}
+Initial State: The language options (English and French) are available in the settings menu.
+
+Input/Condition: Switch language between English and French. Generate report in English and French.
+
+Expected Output/Result: No untranslated or misaligned content should appear.
+
+Actual Output: System does not show French content.
+
+Result: Fail 
+
+\end{enumerate}
+
+\subsubsection{Legal}
+\begin{enumerate}
+
+  \item{NFR-LR1\\}\label{NFR-LR1}
+  
+  Initial State: HIPAA and PIPEDA documentation are in place, development artifacts and source code are available.
+  
+  Input/Condition: Development artifacts, system design documentation.
+  
+  Expected Output/Result: System design aligns with the requirements of HIPAA (US) and PIPEDA (Canada). If not, all software risks are identified, evaluated, and mitigated.
+  
+  Actual output: System design fully followd HIPAA (US) and PIPEDA (Canada). 
+
+  Result: Pass
+  \item{NFR-LR2\\}\label{NFR-LR2}
+
+Initial State: ISO 13485 documentation is in place, development artifacts are available (verification and validation plans, risk analysis reports, requirements, design documents, test plans, etc.).
+
+Input/Condition: Development artifacts, processes (software lifecycle management process, design review process, etc.).
+
+Expected Output/Result: All development processes align with the requirements of ISO 13485 and if not, all software risks are identified, evaluated, and mitigated.
+
+Actual Output: Development artifacts and processes follow SO 13485 guidelines.
+
+Result: Pass
+
+\end{enumerate}
+
+\subsubsection{Health and Safety}
+
+
+\begin{enumerate}
+
+  \item{NFR-HS1\\}\label{NFR-HS1}
+
+  Initial State: User roles are configured within the system, including Radiologist, Clinician, etc.
+
+  Input/Condition: AI-generated report, Radiologist user account.
+  
+  Expected Output/Result: Logs including radiologist’s review action (confirm/reject) with a timestamp.
+
+  Actual Output: Logs including doctor's action were shown in docker as the system is running.
+
+  Result: Pass
+
+  \item{NFR-HS2\\}\label{NFR-HS2}
+
+  Initial State: The AI system is deployed and accessible to radiologists, clinicians, and other users.
+
+  Input/Condition: Access the AI-generated diagnostic report and view the user interface displaying AI results.
+
+  Expected Output/Result: Disclaimer is prominently displayed and easy to read.
+
+  Actual Output: No disclaimer is displayed.
+
+  Result: Fail
+
 \section{Comparison to Existing Implementation}	
 
 This section will not be appropriate for every project.
