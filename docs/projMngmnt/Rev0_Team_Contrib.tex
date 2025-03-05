@@ -11,8 +11,8 @@
 
 \date{}
 
-\input{../Comments}
-\input{../Common}
+\input{../packages/Comments}
+\input{../packages/Common}
 
 \begin{document}
 
@@ -24,41 +24,66 @@ Demo.  The time period of interest is the time between the POC demo and the Rev
 
 \section{Demo Plans}
 
-\wss{What will you be demonstrating}
+
+\subsection{Chest X ray interface, including pretrained model}
+\begin{itemize}
+    % Nathan's part
+    \item Demonstrate the dashboard and how our application targets medical doctors.
+    \item Demonstrate doctor profiles and how they can view their patients.
+    \item Demonstrate the patient priority feature and how it can be used to prioritize patients.
+    % \item Demonstrate the ability to add a new patient to the system. (Commented out)
+    
+    % Ayman's part
+    \item Demonstrate our medical record view and list view features, and how they are unique for each user.
+    \item Demonstrate the ability to view the uploaded chest X-ray image and the generated report.
+    
+    % Kelly's part 
+    \item Demonstrate the ability to upload a chest X-ray image for a patient and create a medical report. 
+    \item Explain how our model supports both object storage (blob storage) and MongoDB.
+    \item Discuss OpenAI’s role in report generation, mentioning how we have a decoupled system and can easily switch to a different model.
+
+\end{itemize}
+
+\subsection{Detection Transformer Model (DETR) for Localized Disease Detection and Progression}
+\begin{itemize}
+    % Patrick's Part
+    \item Describe the general structure of the machine learning model.
+    \item Demonstrate the DETR model and how it works, showing how the predicted bounding boxes are close to the ground truth.
+    \item Demonstrate the AUC and ROC curves for the model and explain their significance.
+\end{itemize}
+
+\subsection{Future Plans for Rev1}
+\begin{itemize}
+    % Reza's Part
+    \item Integrate the DETR model with the rest of the application.
+    
+    % Nathan's Part
+    \item Discuss future plans for continuous deployment (CD).
+\end{itemize}
+
+
 
 \section{Team Meeting Attendance}
 
-\wss{For each team member how many team meetings have they attended over the
-time period of interest.  This number should be determined from the meeting
-issues in the team's repo.  The first entry in the table should be the total
-number of team meetings held by the team.}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 10\\
+Ayman Akhras & 6\\
+Nathan Luong & 8\\
+Patrick Zhou & 8\\
+Kelly Deng & 7\\
+Reza Jodeiri & 8\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
-
+All students had their own difficult problems to solve. People with higher meeting counts tended to meet with each other more often.
 \section{Supervisor/Stakeholder Meeting Attendance}
 
-\wss{For each team member how many supervisor/stakeholder team meetings have
-they attended over the time period of interest.  This number should be determined
-from the supervisor meeting issues in the team's repo.  The first entry in the
-table should be the total number of supervisor and team meetings held by the
-team.  If there is no supervisor, there will usually be meetings with
-stakeholders (potential users) that can serve a similar purpose.}
 
 \begin{table}[H]
 \centering
@@ -66,72 +91,59 @@ stakeholders (potential users) that can serve a similar purpose.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 2\\
+Ayman Akhras & 2\\
+Nathan Luong & 2\\
+Patrick Zhou & 2\\
+Kelly Deng & 2\\
+Reza Jodeiri & 2\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
 
 \section{Lecture Attendance}
 
-\wss{For each team member how many lectures have they attended over the time
-period of interest.  This number should be determined from the lecture issues in
-the team's repo.  The first entry in the table should be the total number of
-lectures since the beginning of the term.}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \toprule
 \textbf{Student} & \textbf{Lectures}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 47\\
+Ayman Akhras & 8\\
+Nathan Luong & 12\\
+Patrick Zhou & 10\\
+Kelly Deng & 7\\
+Reza Jodeiri & 10\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the lecture attendance can be provided here.}
 
 \section{TA Document Discussion Attendance}
 
-\wss{For each team member how many of the informal document discussion meetings
-with the TA were attended over the time period of interest.}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \toprule
-\textbf{Student} & \textbf{Lectures}\\
+\textbf{Student} & \textbf{Discussions}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 24\\
+Ayman Akhras & 11\\
+Nathan Luong & 7\\
+Patrick Zhou & 6\\
+Kelly Deng & 6\\
+Reza Jodeiri & 10\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the attendance can be provided here.}
+This includes the meetings wiht the TA to dicuss preivous document such as problem statemnt, SRS, and etc.
+For the purpose of this report, any form of communication with the TA, including both formal meetings and informal messaging, is considered a "meeting." This includes questions asked and answered via email, messaging platforms, or any other medium of communication. The following table summarizes the number of such communications for each team member over the time period of interest.
 
 \section{Commits}
 
-\wss{For each team member how many commits to the main branch have been made
-over the time period of interest.  The total is the total number of commits for
-the entire team since the beginning of the term.  The percentage is the
-percentage of the total commits made by each team member.}
 
 \begin{table}[H]
 \centering
@@ -139,26 +151,19 @@ percentage of the total commits made by each team member.}
 \toprule
 \textbf{Student} & \textbf{Commits} & \textbf{Percent}\\
 \midrule
-Total & Num & 100\% \\
-Name 1 & Num & \% \\
-Name 2 & Num & \% \\
-Name 3 & Num & \% \\
-Name 4 & Num & \% \\
-Name 5 & Num & \% \\
+Total & 327 & 100\% \\
+Ayman Akhras & 59 & 18.04\%\\
+Nathan Luong & 53 & 16.21\%\\
+Patrick Zhou & 24 & 7.34\%\\
+Kelly Deng & 45 & 13.76\%\\
+Reza Jodeiri & 146 & 44.65\%\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.  For
-instance, if a team member has more commits to unmerged branches, these numbers
-can be provided here.  If multiple people contribute to a commit, git allows for
-multi-author commits.}
+
 
 \section{Issue Tracker}
-
-\wss{For each team member how many issues have they authored (including open and
-closed issues (O+C)) and how many have they been assigned (only counting closed
-issues (C only)) over the time period of interest.}
 
 \begin{table}[H]
 \centering
@@ -166,22 +171,17 @@ issues (C only)) over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Name 1 & Num & Num \\
-Name 2 & Num & Num \\
-Name 3 & Num & Num \\
-Name 4 & Num & Num \\
-Name 5 & Num & Num \\
+Team & 26 & 12 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
-
+Issues are team wide and are not assigned to a specific team member. The team has authored 26 issues and 12 of those issues have been closed.
 \section{CICD}
 
-\wss{Say how CICD is used in your project}
+Our CI/CD pipeline ensures our project's code quality and automates essential processes like testing and deployment. It begins with setting up the environment, where the latest code is checked out from our repository, Python is configured, and dependencies are installed while utilizing cached pip packages for efficiency. Next, the pipeline performs linting and type checks using tools such as flake8 and mypy to maintain code consistency and catch potential issues early. Finally, it runs unit and integration tests using a framework like pytest or unittest to verify that changes do not break existing functionality. This automated workflow is triggered whenever code is pushed or merged, streamlining our development process, reducing human errors, and ensuring a stable and reliable codebase.
 
-\wss{If your team has additional metrics of productivity, please feel free to
-add them to this report.}
+
+
 
 \end{document}

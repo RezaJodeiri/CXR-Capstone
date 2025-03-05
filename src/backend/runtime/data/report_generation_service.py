@@ -25,10 +25,8 @@ class ReportGenerationService:
     def generate_report(self, userId, imageUrl):
         report_template = """
                     **Findings**  
-                    1. [Key finding 1]  
-                    2. [Key finding 2]  
-                    3. [Key finding 3]  
-                    4. [Key finding 4]  
+                    [Talk about the diseases with the highest probability and what are the symptoms] 
+
 
                     **Impression**  
                     [Summary diagnosis or conclusion]. [Next steps or recommendations].
