@@ -62,7 +62,7 @@ function RegisterPage() {
       {!registerSuccess ? (
         <div className="w-[70%] h-[60%] max-w-[1100px] bg-white flex">
           <div className="h-full w-1/2 bg-gradient-to-tl from-primary to-[#00B6AD] flex flex-col items-center justify-center gap-4">
-            <h1 className="text-white text-4xl font-medium">Neuralanalyzer.</h1>
+            <h1 className="text-white text-4xl font-medium">LungVision AI</h1>
             <h4 className="text-white">Already has an account?</h4>
             <Link to="/login">
               <SecondaryButton text="Sign In" onClick={void 0} />
@@ -87,7 +87,7 @@ function RegisterPage() {
                 Welcome, {registerFormValue.firstName}{" "}
                 {registerFormValue.lastName}
               </h1>
-              <h3 className="text-gray-600">to Neuralanalyzer 🫀</h3>
+              <h3 className="text-gray-600">to LungVision AI🫀</h3>
             </div>
 
             <Link to="/dashboard">
