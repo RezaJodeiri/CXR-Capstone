@@ -277,3 +277,23 @@ TSWLatexianTemp*
 
 # DS_Store file from Mac computers
 .DS_Store
+src/backend/.env
+src/backend/api/__pycache__/oauth.cpython-38.pyc
+src/backend/api/__pycache__/predict.cpython-38.pyc
+src/backend/api/__pycache__/prescription.cpython-38.pyc
+src/backend/api/__pycache__/record.cpython-38.pyc
+src/backend/api/__pycache__/user.cpython-38.pyc
+src/backend/decorators/__pycache__/__init__.cpython-38.pyc
+src/backend/decorators/__pycache__/login_required.cpython-38.pyc
+src/backend/runtime/__pycache__/__init__.cpython-38.pyc
+src/backend/runtime/__pycache__/config.cpython-38.pyc
+src/backend/runtime/__pycache__/logger.cpython-38.pyc
+src/backend/runtime/data/__pycache__/aws_cognito.cpython-38.pyc
+src/backend/runtime/data/__pycache__/prediction_services.cpython-38.pyc
+src/backend/runtime/data/__pycache__/report_generation_service.cpython-38.pyc
+src/backend/runtime/data/aws_dynamodb/__pycache__/base_service.cpython-38.pyc
+src/backend/runtime/data/aws_dynamodb/__pycache__/medical_prescription_service.cpython-38.pyc
+src/backend/runtime/data/aws_dynamodb/__pycache__/medical_record_service.cpython-38.pyc
+docs/VnVReport/VnVReport.pdf
+src/frontend/package-lock.json
+src/frontend/node_modules/.package-lock.json
