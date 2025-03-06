@@ -1,5 +1,6 @@
 \documentclass[12pt, titlepage]{article}
-
+\usepackage{pdflscape}
+\usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -12,8 +13,9 @@
 }
 \usepackage[round]{natbib}
 
-\input{../Comments}
-\input{../Common}
+\input{../packages/Comments.tex}
+\input{../packages/Common.tex}
+\input{../packages/Reflection.tex}
 
 \begin{document}
 
@@ -30,25 +32,111 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 01 & 1.0 & Nanthan completed section 3\\
+March 02 & 1.1 & Kelly completed section 4\\
+March 05 & 1.2 & Patrick completed section 2, 5\\
+March 05 & 1.3 & Aymen completed section 7\\
 \bottomrule
 \end{tabularx}
 
 ~\newpage
 
-\section{Symbols, Abbreviations and Acronyms}
+\section{Symbols, Abbreviations, and Acronyms}
+This section records information for easy reference and aims to reduce ambiguity in understanding key concepts used in the project.
+
+\subsection{Table of Units}
+
+Throughout this document, SI (Système International d'Unités) is employed as the unit system. In addition to basic units, several derived units are used as described below. For each unit, the symbol is given, followed by a description of the unit and the SI name.
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
+\noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Unit} & \textbf{SI}\\
+    \midrule 
+    \si{s} & Time & Second\\
+    \si{GB} & Data & Gigabyte\\
+    \si{MB} & Data & Megabyte\\
+    \si{LOC} & Quantity & Lines of Code\\
+    \bottomrule
+\end{tabular}
 
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
+\subsection{Definitions}
+This subsection provides a list of terms that are used in the subsequent sections and their meanings, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements:
+
+\begin{itemize}
+    
+    
+    \item[-] \textbf{Artificial Intelligence (AI) Model}: A program that analyzes datasets to identify patterns and make predictions. Used extensively in medical image analysis for automating diagnostics. 
+    
+    \item[-] \textbf{Convolutional Neural Network (CNN)}: A deep learning algorithm that processes images by assigning weights and biases, allowing it to identify patterns and features in medical images such as chest X-rays.
+    
+    \item[-] \textbf{Detection Transformer (DETR)}: A transformer-based neural network model for object detection. It uses an encoder-decoder transformer architecture to directly predict bounding boxes and class labels from an image, simplifying the detection process.
+    
+    \item[-] \textbf{DICOM (Digital Imaging and Communications in Medicine)}: The international standard for medical images, defining formats for image exchange that ensure clinical quality.
+    
+    \item[-] \textbf{Containerized Application}: A portable version of an application that can be run on a container run-time, such as Docker.
+  
+    \item[-] \textbf{Machine Learning (ML)}: A subset of AI focusing on using data and algorithms to mimic human learning, improving accuracy over time.
+    \item[-] \textbf{Picture Archiving and Communication System (PACS)}: A system for acquiring, storing, transmitting, and displaying medical images digitally, providing a filmless clinical environment.
+    \item[-] \textbf{PHI}: Personal Health Information - Private and confidential data that must be protected under the HIPPA act.
+    \item[-] \textbf{HIPPA}: Health Insurance Portability and Accountability Act, a set of standards protecting sensitive health information from disclosure without patient's consent.
+    \item[-] \textbf{AWS - Amazon Web Services}: A public cloud provider, offering all HIPAA-compliance cloud services that helps Neuralanalyzer host, manage, and scale our application.
+    \item[-] \textbf{AWS ECS}: AWS Elastic Cloud Service: - An AWS managed service for managing and maintaining application containers at run-time.
+    \item[-] \textbf{AWS ECR}: AWS Elastic Container Registry - An AWS managed service for storing and managing container images.
+    \item[-] \textbf{AWS Fargate}: An AWS managed service for running containerized applications.
+    \item[-] \textbf{AWS Cognito}: An AWS managed service for authentication logic, handling user and password management.
+    \item[-] \textbf{React}: A web front-end framework, written in Javascript.
+    \item[-] \textbf{Flask}: An HTTP-based server framework, written in Python.
+    \item[-] \textbf{Finite State Machine (FSM)}: A computation model that simulates sequential logic using state transitions, applied in processes like user authentication and backend workflows.
+    
+    \item[-] \textbf{ROC Curve (Receiver Operating Characteristic Curve)}: A graph that shows the performance of a classification model by plotting the true positive rate against the false positive rate at various threshold levels.
+    
+    \item[-] \textbf{Service-Level Agreement (SLA)}: Defines the guaranteed uptime of the system, such as ensuring the availability of the AI service for 99.99\% of operational hours.
+    
+    \item[-] \textbf{Software as a Medical Device (SaMD)}: Software classified as a medical device under regulatory frameworks, such as those defined by the Food and Drugs Act.
+    
+    \item[-] \textbf{TorchXRAYVision}: An open-source library for classifying diseases based on chest X-ray images, offering pre-trained models to accelerate the development process.
+    
+    \item[-] \textbf{X-ray}: A form of high-energy electromagnetic radiation used in medical imaging to produce images of the inside of the body, enabling the diagnosis of conditions through radiographic film or digital detectors.
+    
+    \item[-] \textbf{MIT License}: An open-source software license that allows for the free use, modification, and distribution of software.
+    
+    \item[-] \textbf{Training Data}: Refers to the dataset of labeled chest X-ray images used to train the AI model. In this project, the dataset size is approximately 471.12 GB.
+    
+\end{itemize}
+
+\subsection{Abbreviations and Acronyms}
+\renewcommand{\arraystretch}{1.3}
+\noindent \begin{tabular}{l l} 
+  \toprule		
+  \textbf{Symbol} & \textbf{Description}\\
+  \midrule 
+  SRS & Software Requirements Specification\\
+  AI & Artificial Intelligence\\
+  CNN & Convolutional Neural Network\\
+  DICOM & Digital Imaging and Communications in Medicine\\
+  DETR & Detection Transformer\\
+  ViT & Vision Transformer\\
+  VnV & Verification and Validation\\
+  ML & Machine Learning\\
+  PACS & Picture Archiving and Communication System\\
+  SaMD & Software as a Medical Device\\
+  ROC & Receiver Operating Characteristic Curve\\
+  SLA & Service-Level Agreement\\
+  FR & Functional Requirement\\
+  NFR & Non-Functional Requirement\\
+  FSM & Finite State Machine\\
+  CXR & Chest X-Ray Project\\
+  POC & Proof of Concept\\
+  TM & Theoretical Model\\
+  AWS & Amazon Web Services\\
+  ECS & Elastic Container Service\\
+  ECR & Elastic Container Registry\\
+  CI/CD & Continuous integration and Continuous deployment\\
+  HTTP & Hypertext Transfer Protocol\\
+  
+  \bottomrule
+\end{tabular}
 
 \newpage
 
@@ -62,30 +150,497 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
-
 \section{Functional Requirements Evaluation}
 
-\section{Nonfunctional Requirements Evaluation}
+\begin{enumerate}
+\item{FR1}
 
-\subsection{Usability}
-		
+Initial State: The system is set up to accept chest X-ray images as input from authorized users.
+
+Input/Condition: Calling HTTP Server Module API to get a presigned URL for uploading the image with and without an authorization token.
+
+Expected Output/Result: Presigned URL does not return if the user is not authorized.
+
+Actual Output: Presigned URL does not return if the user is not authorized.
+
+Result: Pass
+
+\item{FR2}
+
+Initial State: The system allows users to input additional patient symptoms.
+
+Input/Condition: Execute integration tests on the Medical Record Management Module to include additional patient symptoms.
+
+Expected Output/Result: Additional patient symptoms are included in the medical record from the Data Persistent Module.
+
+Actual Output: Additional patient symptoms are included in the medical record from the Data Persistent Module.
+
+Result: Pass
+
+\item{FR3}
+
+Initial State: The system analyzes chest X-ray images to detect the presence or absence of specific diseases.
+
+Input/Condition: Execute Validation Script on the Disease Detection Module to check the accuracy of the AI model.
+
+Expected Output/Result: The accuracy of the AI model is 85% or higher.
+
+Actual Output: The accuracy of the AI model is 85% or higher.
+
+Result: Pass
+
+\item{FR4}
+
+Initial State: The system determines whether a patient's condition has improved, worsened, or remained stable.
+
+Input/Condition: Execute integration tests on the Disease Progression Module with pre-defined patient conditions.
+
+Expected Output/Result: The system outputs "improved," "worsened," or "remained stable."
+
+Actual Output: The system outputs "improved," "worsened," or "remained stable."
+
+Result: Pass
+
+\item{FR5}
+
+Canceled
+
+\item{FR6}
+
+Initial State: The system generates structured, human-readable reports.
+
+Input/Condition: Execute integration tests on the Internal Report Generation Service with pre-defined patient conditions.
+
+Expected Output/Result: The output includes key findings, disease detection results, and progression status.
+
+Actual Output: The output includes key findings, disease detection results, and progression status.
+
+Result: Pass
+
+\item{FR7}
+
+Initial State: The system stores patient data securely.
+
+Input/Condition: Execute integration tests on the Medical Record Management Module to create a medical record with images and reports.
+
+Expected Output/Result: Medical records, findings, and X-ray images are stored in the Data Persistent Module.
+
+Actual Output: Medical records, findings, and X-ray images are stored in the Data Persistent Module.
+
+Result: Pass
+
+\item{FR8}
+
+Initial State: The system provides alerts when significant changes in a patient’s condition are detected.
+
+Input/Condition: Manually create a medical record on the Disease Progression Module with significant changes in a patient’s condition.
+
+Expected Output/Result: Significant changes appear in the UI of the Patient List View Module and Patient Overview Module.
+
+Actual Output: Significant changes appear in the UI of the Patient List View Module and Patient Overview Module.
+
+Result: Pass
+
+\item{FR9}
+
+Initial State: The system allows healthcare professionals to adjust treatment plans based on X-ray analysis.
+
+Input/Condition: Manually edit a medical record on the X-Ray Report View Module with adjusted treatment plans.
+
+Expected Output/Result: Adjusted treatment plans appear in the UI of the Patient List View Module and Data Persistent Module.
+
+Actual Output: Adjusted treatment plans appear in the UI of the Patient List View Module and Data Persistent Module.
+
+Result: Pass
+
+\item{FR10}
+
+Canceled
+
+\item{FR11}
+
+Initial State: The system displays confidence levels for disease detection and progression analysis.
+
+Input/Condition: Manually create a medical record on the X-Ray Report View Module with known disease confidence levels.
+
+Expected Output/Result: Confidence levels are accurately shown on the UI of the X-Ray Report View Module.
+
+Actual Output: Confidence levels are accurately shown on the UI of the X-Ray Report View Module.
+
+Result: Pass
+
+\item{FR12}
+
+Canceled
+
+\item{FR13}
+
+Canceled
+
+\item{FR14}
+
+Canceled
+
+\item{FR15}
+
+Canceled
+
+\item{FR16}
+
+Initial State: The system supports regular updates to the AI model to improve accuracy.
+
+Input/Condition: Execute integration tests on the AI Model Update Module to ensure updates are applied correctly.
+
+Expected Output/Result: The AI model’s accuracy improves over time with new data.
+
+Actual Output: The AI model’s accuracy improves over time with new data.
+
+Result: Pass
+
+\end{enumerate}
+
+
+
+\section{Nonfunctional Requirements Evaluation}
+\subsection{Look and Feel}
+\begin{enumerate}
+
+\item{NFR-LF1\\}\label{NFR-LF1}
+
+Initial State: The system must be installed and accessible.
+
+Input/Condition: Adjust window/level settings. Navigate between other tabs. Apply basic tools (zoom, pan, measure). Export or save images from the viewer.
+
+Expected Output/Result: The system responds to user interactions.
+
+Actual Output: The system responds to user interactions promptly and correctly.
+
+Result: Pass
+
+\item{NFR-LF2\\}\label{NFR-LF2}
+
+Initial State: The system under test is installed and accessible on the target device. The monitor brightness is set to a comfortable level to ensure consistency during the test.
+
+Input/Condition: User interaction with the interface for typical workflows.
+
+Expected Output/Result: Color contrast ratio is 4.5:1 or higher for text. Font sizes at least 12-14 points for normal text.
+
+Actual Output: All systemm interface showed valid color contrast ratioand appropriate font size 
+
+Result: Pass
+
+\end{enumerate}
+
+\subsection{Usability and Humanity}
+
+\begin{enumerate}
+
+\item{NFR-UH1\\}\label{NFR-UH1}
+
+Initial State: User accounts and access credentials are prepared for all healthcare professionals participating in the test. Any required files or images are pre-loaded and accessible for the tasks.
+
+Input/Condition: Test user given a list of specified tasks and user accounts.
+
+Expected Output/Result: User successfully login each user account and perform: upload a chest X-ray image to the system, view analysis results or processed reports, and export the analysis or report to a local folder.
+
+Actual Output: User can login as doctor / patient and upload chest X-ray image to the system, view analysis results or processed reports.
+
+Result: Pass
+
+\item{NFR-UH2\\}\label{NFR-UH2}
+Canceled
+
+\end{enumerate}
+
 \subsection{Performance}
 
-\subsection{etc.}
-	
+\begin{enumerate}
+\item{NFR-PR1\\} \label{NFR-PR1}
+
+Initial State: User is logged in. Standard chest X-ray images are available for testing in PNG/JPG format (depending on system requirements).
+
+Input/Condition: Test user interacts with the system to upload an X-Ray image.
+
+Expected Output/Result: AI-analyzed results of the X-Ray image is displayed in user interface within 1 minute of uploading the X-ray image.
+
+Actual Output: Disease probabilities was produced by AI model in user interface along with summaries.
+
+Result: Pass
+
+\item{NFR-PR2\\}\label{NFR-PR2}
+
+Initial State: A monitoring system is set up to log availability metrics, such as downtime events, mean time to recovery, and uptime percentage.
+
+Input/Condition: Server outages, network issues, high number of concurrent users.
+
+Expected Output/Result: Uptime percentage; downtime events (log the number, duration, and cause of any disruptions or downtime); mean time to recovery.
+
+Actual: Uptime percentage of the system is above 99%. No downtime was detected. 
+
+Result: Pass
+
+\item{NFR-PR3\\}\label{NFR-PR3}
+
+Initial State: All dependencies (database, network, storage, and image processing engine) are configured and operational. Monitoring tools are available to track system performance, including CPU and memory usage, image processing times.
+
+Input/Condition: Collections of 20 identical or varied images, multiple user accounts. Baseline for each image processing is 20 seconds.
+
+Expecetd Output/Result: Processing time (float), system resource utilization (float), images uploading success/fail (boolean).
+
+Actual Output: Image uploading function is working. Processing time is within 20 seconds for all images. System resource utilization showed 15%.
+
+Result: Pass.
+
+\end{enumerate}
+
+\subsection{Operational and Environmental}
+
+\begin{enumerate}
+
+  \item{NFR-OE1\\}\label{NFR-OE1}
+
+  Initial State: At least 90% of healthcare professionals shall be able to perform
+common tasks (e.g., uploading images, viewing analysis results).
+
+  Input/Condition: 
+
+  Expected Output/Result: Boolean indicating whether the PACS successfully stores the AI-processed results with correct format (annotated image or report). The stored result is associated with the correct patient ID and instance number in the PACS.
+
+  Actual Outout: The AI system was not able to connect to a hospital network.
+
+  Result: Fail
+
+  \item{NFR-OE2\\}\label{NFR-OE2}
+
+  Initial State: The network is configured normally with minimal latency and no packet loss initially. Necessary patient data and chest X-ray studies are available for retrieval.
+
+  Input/Condition: Retrieve and process a chest X-ray image, store the processed result, and send the data to external.
+
+  Expected Output/Result: Latency is within a reasonable time (190ms~220ms), logs include latency and packet loss statistics.
+
+  Actual Output: Logs showing that latency is around ~190ms and no packet loss detected.
+
+  Result: Pass
+
+\end{enumerate}
+
+\subsection{Security and Privacy}
+\begin{enumerate}
+\item{NFR-SR1\\}\label{NFR-SR1}
+
+Initial State: AES-256 encryption libraries (such as OpenSSL or Cryptography in Python) are configured for the system. Patient data (including DICOM images and reports) is stored on the system or transmitted over the network.
+
+Input/Condition: X-ray image and diagnostic report with patient ID and instance number. Secret key and initialization vector (IV) for AES-256 encryption.
+
+Expected Output/Result: All patient data, including images and reports, is encrypted using AES-256 both during storage and transmission.
+
+Actual Output: HTTPS transmission from backend to frontend (vise versa) securely.
+
+Result: Pass
+
+\item{NFR-SR2\\}\label{NFR-SR2}
+Canceled
+\end{enumerate}
+
+\subsection{Maintainability and Support}
+
+\begin{enumerate}
+
+  \item{NFR-MS1\\}\label{NFR-MS1}
+
+  Initial State: The AI system code-base is deployed in a version-controlled environment. Documentation for each module (e.g., README files, API references, inline comments) is available in the repository.
+
+  Input/Condition: All modules within the code repository are accessible.
+
+  Expected Output/Result: All key functionalities (e.g., data ingestion, inference, reporting) are encapsulated in separate, well-defined modules. Modules can function independently with minimal coupling. Dependencies between modules are well-documented.
+
+  Actual Output: All modules are separated and follows SOLID principles. Modules are self-contained that can be modified without breaking other parts.
+
+  Result: Pass
+
+  \item{NFR-MS2\\}\label{NFR-MS2}
+
+  Initial State: Code repository contains the entire AI system, automated testing framework (e.g., JUnit, Pytest) is installed and configured in the project. Tests include unit tests, integration tests, system tests, and end-to-end tests. Code coverage tool (e.g., coverage.py, JaCoCo) is integrated.
+
+  Input/Condition: Unit tests, integration tests, and end-to-end tests.
+
+  Expected Output/Result: Code coverage log.
+
+  Actual Output: Code coverage log included as part of CI/CD pipeline which will be triggered everytime there's a new commit.
+
+  Result: Pass
+
+\end{enumerate}
+
+\subsection{Cultural}
+\begin{enumerate}
+\item{NFR-CR1\\}\label{NFR-CR1}
+Initial State: The language options (English and French) are available in the settings menu.
+
+Input/Condition: Switch language between English and French. Generate report in English and French.
+
+Expected Output/Result: No untranslated or misaligned content should appear.
+
+Actual Output: System does not show French content.
+
+Result: Fail 
+
+\end{enumerate}
+
+\subsection{Legal}
+\begin{enumerate}
+
+  \item{NFR-LR1\\}\label{NFR-LR1}
+
+  Initial State: HIPAA and PIPEDA documentation are in place, development artifacts and source code are available.
+
+  Input/Condition: Development artifacts, system design documentation.
+
+  Expected Output/Result: System design aligns with the requirements of HIPAA (US) and PIPEDA (Canada). If not, all software risks are identified, evaluated, and mitigated.
+
+  Actual output: System design fully followd HIPAA (US) and PIPEDA (Canada). 
+
+  Result: Pass
+  \item{NFR-LR2\\}\label{NFR-LR2}
+
+Initial State: ISO 13485 documentation is in place, development artifacts are available (verification and validation plans, risk analysis reports, requirements, design documents, test plans, etc.).
+
+Input/Condition: Development artifacts, processes (software lifecycle management process, design review process, etc.).
+
+Expected Output/Result: All development processes align with the requirements of ISO 13485 and if not, all software risks are identified, evaluated, and mitigated.
+
+Actual Output: Development artifacts and processes follow SO 13485 guidelines.
+
+Result: Pass
+
+\end{enumerate}
+
+\subsection{Health and Safety}
+
+
+\begin{enumerate}
+
+  \item{NFR-HS1\\}\label{NFR-HS1}
+
+  Initial State: User roles are configured within the system, including Radiologist, Clinician, etc.
+
+  Input/Condition: AI-generated report, Radiologist user account.
+
+  Expected Output/Result: Logs including radiologist’s review action (confirm/reject) with a timestamp.
+
+  Actual Output: Logs including doctor's action were shown in docker as the system is running.
+
+  Result: Pass
+
+  \item{NFR-HS2\\}\label{NFR-HS2}
+
+  Initial State: The AI system is deployed and accessible to radiologists, clinicians, and other users.
+
+  Input/Condition: Access the AI-generated diagnostic report and view the user interface displaying AI results.
+
+  Expected Output/Result: Disclaimer is prominently displayed and easy to read.
+
+  Actual Output: A disclaimer box is displayed.
+
+  Result: Pass
+  \end{enumerate}
+
+\newpage
 \section{Comparison to Existing Implementation}	
 
-This section will not be appropriate for every project.
+\subsection{Existing Projects}
+\begin{itemize}
+    \item \href{https://github.com/harrisonchiu/xray/tree/main}{harrisonchiu/xray}
+    \item \href{https://github.com/N8THEPL8/ChestLenseAI/tree/main}{N8THEPL8/ChestLenseAI}
+    \item \href{https://github.com/PLAN-Lab/CheXRelFormer/tree/main}{PLAN-Lab/CheXRelFormer}
+\end{itemize}
+
+\subsection{Project Structure}
+
+\begin{longtable}{|l|l|l|l|l|l|}
+\hline
+\textbf{Project Name}   & \textbf{FrontEnd}       & \textbf{BackEnd}   & \textbf{Data Base} & \textbf{Cloud} & \textbf{Deployment} \\ \hline
+\endfirsthead
+\hline
+\textbf{Project Name}   & \textbf{FrontEnd}       & \textbf{BackEnd}   & \textbf{Data Base} & \textbf{Cloud} & \textbf{Deployment} \\ \hline
+\endhead
+\hline
+\endfoot
+
+\textbf{Our Capstone}    & React.js               & Flask API          & Amazon S3          & AWS             & Docker             \\ \hline
+xray                    & N/A                    & N/A                & N/A                & N/A             & Jupyter Notebook   \\ \hline
+ChestLenseAI            & HTML \& CSS             & Flask API          & N/A                & N/A             & Python             \\ \hline
+CheXRelFormer           & N/A                    & N/A                & N/A                & N/A             & Shell Command      \\ \hline
+
+\end{longtable}
+
+\newpage
+\begin{landscape}
+\subsection{Datasets}
+\begin{longtable}{|l|p{3.5cm}|p{1.8cm}|p{6cm}|p{4cm}|}
+\hline
+\textbf{Project Name}   & \textbf{Dataset}                                                                                             & \textbf{Size}                                              & \textbf{Classes}                                                                                                                                                                                                                                                                                              & \textbf{Link}                                                   \\ \hline
+\endfirsthead
+\hline
+\textbf{Project Name}   & \textbf{Dataset}                                                                                             & \textbf{Size}                                              & \textbf{Classes}                                                                                                                                                                                                                                                                                              & \textbf{Link}                                                   \\ \hline
+\endhead
+\hline
+\endfoot
+
+\textbf{Our Capstone}    & MIMIC-CXR-JPG 2.0.0                                                                                           & 557.6 GB                                                   & 9: Lung Opacity, Pleural Effusion, Atelectasis, Enlarged Cardiac Silhouette, Pulmonary Edema/Hazy Opacity, Pneumothorax, Consolidation, Fluid Overload/Heart Failure, Pneumonia. 3: No Change, Improved, Worsened. & \url{https://physionet.org/content/mimic-cxr-jpg/2.0.0/}        \\ \hline
+\textbf{xray}           & Chest-xray14                                                                                                  & 42.0 GB                                                    & 14: Atelectasis, Cardiomegaly, Consolidation, Edema, Effusion, Emphysema, Fibrosis, Hernia, Infiltration, Mass, Nodule, Pleural Thickening, Pneumonia, Pneumothorax.                                                     & \url{https://nihcc.app.box.com/v/ChestXray-NIHCC/folder/37178474737} \\ \hline
+\textbf{ChestLenseAI}   & MIMIC-CXR-JPG 2.0.0                                                                                           & 557.6 GB                                                   & 6: Atelectasis, Cardiomegaly, Consolidation, Edema, No Finding, Pleural Effusion.                                                              & \url{https://physionet.org/content/mimic-cxr-jpg/2.0.0/}        \\ \hline
+\textbf{CheXRelFormer}  & MIMIC-CXR-JPG 2.0.0, MIMIC-III 1.4                                                                           & 557.6 GB, 6.2 GB                                          & 3: No Change, Improved, Worsened                                                                                                                                                                                                            & \url{https://physionet.org/content/mimic-cxr-jpg/2.0.0/}        \\
+\end{longtable}
+
+\subsection{Architectures}
+
+\begin{longtable}{|l|l|l|p{10cm}|}
+\hline
+\textbf{Project Name}   & \textbf{Neural Network}  & \textbf{Configuration}  & \textbf{Link (graph) (paper)}  \\ \hline
+\endfirsthead
+\hline
+\textbf{Project Name}   & \textbf{Neural Network}  & \textbf{Configuration}  & \textbf{Link (graph) (paper)}  \\ \hline
+\endhead
+\hline
+\endfoot
+
+\textbf{Our Capstone}    & DETR                    & MLP                     & \url{https://viso.ai/wp-content/uploads/2024/02/DETR-Architecture.jpg} \\ 
+                         &                         &                         & \url{https://arxiv.org/pdf/2005.12872} \\ \hline
+\textbf{xray}           & ResNet                  & ResNet-50               & \url{https://i.ytimg.com/vi/woEs7UCaITo/maxresdefault.jpg} \\ 
+                         &                         &                         & \url{https://arxiv.org/pdf/1512.03385} \\ \hline
+\textbf{ChestLenseAI}   & DenseNet                & DenseNet-121            & \url{https://pytorch.org/assets/images/densenet1.png} \\ 
+                         &                         &                         & \url{https://arxiv.org/pdf/1608.06993} \\ \hline
+\textbf{CheXRelFormer}  & ViT                     & MLP                     & \url{https://www.researchgate.net/publication/383905431/figure/fig3/AS:11431281290331182@1731595235002/Structure-of-the-backbone-PVTv2.ppm} \\ 
+                         &                         &                         & \url{https://arxiv.org/pdf/2106.13797} \\ \hline
+
+\end{longtable}
+
+\newpage
+
+\subsection{Summary}
+\begin{longtable}{|l|p{10cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Project Name}   & \textbf{Summary}                                                                 & \textbf{Reference Project}                              & \textbf{Paper}                                                \\ \hline
+\endfirsthead
+\hline
+\textbf{Project Name}   & \textbf{Summary}                                                                 & \textbf{Reference Project}                              & \textbf{Paper}                                                \\ \hline
+\endhead
+\hline
+\endfoot
+
+\textbf{Our Capstone}    & This project encompasses the entire product lifecycle, integrating Frontend, Backend, Cloud Infrastructure, and a CI/CD pipeline. It is designed to support the detection of diseases, track the progression of conditions over time, and generate AI-driven diagnostic reports for healthcare professionals. & \url{https://github.com/McMasterAIHLab/CheXDetector}         & \url{https://papers.miccai.org/miccai-2024/paper/3269_paper.pdf} \\ \hline
+xray                    & This project only contains backend structure for the AI model, which uses a smaller dataset compared to other projects and uses the resnet-50 network for disease classification. & \url{https://github.com/LalehSeyyed/CheXclusion}            & \url{https://arxiv.org/pdf/2003.00827v2}                        \\ \hline
+ChestLenseAI            & This project uses a minimal Frontend and applies the DenseNet-121 pre-trained model to detect diseases in chest X-ray images.  & \url{https://github.com/LaurentVeyssier/Chest-X-Ray-Medical-Diagnosis-with-Deep-Learning/tree/main}  & \url{https://arxiv.org/pdf/1711.05225}                          \\ \hline
+CheXRelFormer           & This project is purely focused on the backend ViT model, it does not use a pre-trained network for disease progress between two x-ray images. It is a very advanced (PhD) project which is developed with no prior related research.  & N/A                                                      & N/A                                                          \\ \hline
+
+\end{longtable}
+
+\end{landscape}
 
 \section{Unit Testing}
 
 \section{Changes Due to Testing}
-
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
 
 \section{Automated Testing}
 		
@@ -97,6 +652,8 @@ should be highlighted.}
 
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
+
+
 
 \newpage{}
 \section*{Appendix --- Reflection}
