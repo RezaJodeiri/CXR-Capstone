@@ -57,7 +57,7 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
             isCollapsed ? "hidden" : ""
           }`}
         >
-          Neuralanalyzer
+          LungVision AI
         </h1>
       </div>
 
