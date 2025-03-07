@@ -82,6 +82,7 @@ def process_dicom(file_content):
         logger.error(f"Error processing DICOM: {str(e)}")
         return None, None, False
 
+
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
     try:
