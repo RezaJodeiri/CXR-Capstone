@@ -37,7 +37,7 @@ function CreateMedicalRecord({
 
   const loadRecord = async () => {
     try {
-      const record = await getMedicalRecord(id, user?.token);
+      const record = await getMedicalRecord(user?.id, id, user?.token);
       setFormData({
         clinicalNotes: record.clinicalNotes,
         treatmentPlan: record.treatmentPlan,
