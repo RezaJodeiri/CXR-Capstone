@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-const executeHTTPRequest = async (
+export const executeHTTPRequest = async (
   httpVerb,
   path,
   headers = {},
@@ -129,13 +129,14 @@ const parsePatientData = (patient) => {
 };
 
 export const getPatients = async (doctorId, token) => {
-  const patients = await executeHTTPRequest(
+  const response = await executeHTTPRequest(
     "GET",
     `/doctors/${doctorId}/patients`,
     {
       Authorization: `Bearer ${token}`,
     }
   );
+  const patients = response || [];
   const transformedList = patients.map((patient) => parsePatientData(patient));
 
   // Sort patients by status: Emergency, Medium, Low
@@ -198,10 +199,11 @@ export const getMedicalRecordsForPatient = async (
 ) => {
   const paginatedResponse = await executeHTTPRequest(
     "GET",
-    `/users/${patientId}/records?limit=${limit}`,
+    `/users/${patientId}/records`,
     {
       Authorization: `Bearer ${token}`,
-    }
+    },
+    { limit }
   );
   const records = paginatedResponse?.data || [];
   const parsedRecords = records.map((record) => parseRecordData(record));
@@ -249,8 +251,14 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
   return newRecord;
 };
 
-export const getMedicalRecord = async (recordId, token) => {
-  throw new Error("Medical record not found");
+export const getMedicalRecord = async (userId, recordId, token) => {
+  return executeHTTPRequest(
+    "GET", 
+    `/users/${userId}/records/${recordId}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
 };
 
 // api.js
@@ -304,4 +312,14 @@ export const getPredictionAndReport = async (userId, xRayUrl, token) => {
     (a, b) => b.confidence - a.confidence
   );
   return predictionRes;
+};
+
+export const getPrescriptionById = async (userId, recordId, prescriptionId, token) => {
+  return executeHTTPRequest(
+    "GET", 
+    `/users/${userId}/records/${recordId}/prescriptions/${prescriptionId}`,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
 };
