@@ -1,14 +1,9 @@
-import unittest
-from unittest.mock import patch, MagicMock
 from runtime import IdentityProvider
 
-class TestCognitoIdentityProvider(unittest.TestCase):
-    def setUp(self):
-        self.cognito_provider = IdentityProvider
-
+class TestCognitoIdentityProvider():
     def test_sign_up_doctor(self):
+        password = "test123!"
         user_email = "doctor@example.com"
-        password = "password123"
         user_detail = {
             "first_name": "John",
             "last_name": "Doe",
@@ -17,20 +12,21 @@ class TestCognitoIdentityProvider(unittest.TestCase):
             "occupation": "Doctor",
             "organization": "Health Org",
             "location": "City",
-            "is_doctor": "true",
-            "doctor_id": "doc123"
         }
 
-        # result = self.cognito_provider.sign_up_doctor(user_email, password, user_detail)
+        user = IdentityProvider.sign_up_doctor(user_email, password, user_detail)
+        print("---------------------------")
+        print("user", str(user))
+        print("---------------------------")
+        assert user["email"] == user_email
+        assert user["first_name"] == user_detail["first_name"]
+        assert user["last_name"] == user_detail["last_name"]
+        assert user["occupation"] == user_detail["occupation"]
+        assert user["organization"] == user_detail["organization"]
+        assert user["location"] == user_detail["location"]
+        assert user["is_doctor"] == True
 
-        # mock_get_username_from_email.assert_called_once_with(user_email)
-        # mock_sign_up_user.assert_called_once_with(user_email, password, user_detail)
-        # mock_cognito_idp_client.admin_confirm_sign_up.assert_called_once_with(
-        #     UserPoolId=self.cognito_provider.user_pool_id,
-        #     Username="test_user"
-        # )
-        # self.assertEqual(result["Username"], "test_user")
-        pass
+        # result = self.cognito_provider.sign_up_doctor(user_email, password, user_detail)
 
     def test_create_patient(self):
         pass
@@ -49,6 +45,3 @@ class TestCognitoIdentityProvider(unittest.TestCase):
 
     def test_update_user_by_id(self):
         pass
-
-if __name__ == "__main__":
-    unittest.main()
