@@ -13,9 +13,9 @@
 }
 \usepackage[round]{natbib}
 
-% \input{../packages/Comments.tex}
-% \input{../packages/Common.tex}
-% \input{../packages/Reflection.tex}
+\input{../packages/Comments.tex}
+\input{../packages/Common.tex}
+\input{../packages/Reflection.tex}
 
 \begin{document}
 
@@ -634,7 +634,7 @@ If any test or workflow fails, the detailed logs provide valuable insights into 
   \centering
   \begin{tabular}{|c|c|}
   \hline
-  \textbf{Column 1} & \textbf{Column 2} \\ \hline
+  \textbf{Requirement ID} & \textbf{Test ID} \\ \hline
   Cell 1            & Cell 2            \\ \hline
   Cell 3            & Cell 4            \\ \hline
   \end{tabular}
@@ -648,9 +648,21 @@ For additional information about our modules, please refer to our \href{https://
   \centering
   \begin{tabular}{|c|c|}
   \hline
-  \textbf{Column 1} & \textbf{Column 2} \\ \hline
-  Cell 1            & Cell 2            \\ \hline
-  Cell 3            & Cell 4            \\ \hline
+  \textbf{Requirement ID} & \textbf{Test ID} \\ \hline
+  M1           & PR2,OE3            \\ \hline
+  M2           & PR2,OE2            \\ \hline
+  M3           & PR1, PR3, MS2      \\ \hline
+  M4           & PR1, PR3, MS2      \\ \hline
+  M5           & UH2                \\ \hline
+  M6           & LF1, LF2, UH1, CR1 \\ \hline
+  M7           & LF1, LF2, UH1, CR1 \\ \hline
+  M8           & LF1, LF2, UH1, CR1 \\ \hline
+  M9           & LF1, LF2, UH1, CR1 \\ \hline
+  M10          & MS1, CR1, HS1, HS2 \\ \hline
+  M11          & PR1, PR3, MS1, MS2 \\ \hline
+  M12          & PR1, PR3, MS1, MS2 \\ \hline
+  M13          & MS2                \\ \hline
+  M14          & UH2, OE1, SR1, LR1, LR2 \\ \hline
   \end{tabular}
   \caption{Trace to Modules Table} 
   \end{table}
@@ -663,26 +675,32 @@ For additional information about our modules, please refer to our \href{https://
 
 \newpage{}
 \section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Reflection.
-
-% \input{../Reflection.tex}
-
-\begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which parts of this document stemmed from speaking to your client(s) or
-  a proxy (e.g. your peers)? Which ones were not, and why?
-  \item In what ways was the Verification and Validation (VnV) Plan different
-  from the activities that were actually conducted for VnV?  If there were
-  differences, what changes required the modification in the plan?  Why did
-  these changes occur?  Would you be able to anticipate these changes in future
-  projects?  If there weren't any differences, how was your team able to clearly
-  predict a feasible amount of effort and the right tasks needed to build the
-  evidence that demonstrates the required quality?  (It is expected that most
-  teams will have had to deviate from their original VnV Plan.)
-\end{enumerate}
+  \textbf{What went well while writing this deliverable?} \\\\
+  One aspect that went well in this deliverable was evaluating the functional and non-functional requirements. This process was relatively simple because we could trace these requirements back to our Verification and Validation (VnV) Plan and Software Requirements Specification (SRS) report. This ensured consistency and alignment with our initial project documentation.
+  \newline \newline \textbf{What pain points did you experience during this deliverable, and how did you resolve them?} \\\\
+  One major challenge was handling unexpected deviations from the VnV Plan. Some tests and validation activities required adjustments because real-world implementation differed from our initial assumptions. To address this, we removed certain tests and modified others to better fit the project scope. Another challenge was testing non-functional requirements (NFRs). To resolve this, our team decided to use an external tester via a Google Form. Additionally, creating unit tests for the code was a significant task. However, by effectively distributing the workload among team members, we successfully developed and passed all necessary tests.
+  \newline  \newline \textbf{Which parts of this document stemmed from speaking to your client(s) or a proxy (e.g., your peers)? Which ones were not, and why?}  \\\\
+  Certain parts of this document were directly influenced by discussions with clients or proxies. For example, verifying functional and non-functional requirements was guided by user needs, and stakeholder feedback shaped some test cases and validation methods to account for real-world constraints.
+  \newline
+  However, not all sections were based on client input. Technical implementation details, such as internal testing methodologies and the choice of specific testing frameworks, were determined by the development team. This distinction exists because clients typically focus on high-level functionality and usability, while the development team makes technical decisions regarding implementation and testing strategies. \\ 
+  \newline \textbf{In what ways was the Verification and Validation (VnV) Plan different from the activities that were actually conducted for VnV?} \\\\
+  Our VnV Plan differed from the actual activities conducted for several reasons:
+  \begin{itemize}
+      \item Some verification steps outlined in the plan proved impractical due to technical constraints, requiring modifications to testing approaches.
+      \item As development progressed, we identified gaps in the original plan, leading to the addition of test cases for overlooked edge cases.
+      \item The order of validation activities changed due to development dependencies and evolving priorities.
+  \end{itemize}
+  
+  These deviations were necessary due to evolving project requirements, stakeholder feedback, and resource limitations, all of which influenced the scope and execution of testing efforts.
+  
+  While deviations were unavoidable, they provided valuable insights for improving future VnV planning. To better anticipate such changes, our team could:
+  \begin{itemize}
+      \item Incorporate iterative planning.
+      \item Maintain flexibility in testing approaches.
+      \item Establish contingency measures for unexpected challenges.
+      \item Conduct more frequent stakeholder consultations to identify potential adjustments earlier.
+  \end{itemize}
+  
+  If no modifications were required, it would indicate that our team accurately predicted the necessary effort and tasks to generate sufficient evidence of system quality. However, most teams experience some level of deviation from their original VnV Plan, making adaptability a key factor in ensuring successful validation and verification.  
 
 \end{document}
