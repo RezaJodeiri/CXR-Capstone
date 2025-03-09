@@ -99,9 +99,9 @@ jobs:
           pip install -r src/backend/requirements.txt
           pip install -r src/backend/requirements-dev.txt
       
-      - name: Run tests with coverage
+      - name: Backend Tests and Coverage
         run: |
-          pytest test \
+          pytest src/backend/test \
             --cov=src \
             --cov-report=term \
             --cov-report=xml \
