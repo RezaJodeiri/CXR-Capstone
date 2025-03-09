@@ -13,6 +13,7 @@ env:
   AWS_REGION: us-east-1
   AWS_ACCESS_KEY_ID: mock-access-key
   AWS_SECRET_ACCESS_KEY: mock-secret-key
+  OPENAI_API_KEY: mock-openai-api-key
 
 jobs:
   setup:
