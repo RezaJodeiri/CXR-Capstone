@@ -1,25 +1,17 @@
-from .aws_dynamodb.medical_record_service import MedicalRecordService as MRS
-from .prediction_services import PredictionService as PS
 from ..config import Config
-from .aws_cognito import CognitoIdentityProvider
 from openai import OpenAI
 
 # Get keys
+
+
 RuntimeConfig = Config()
-
-client = OpenAI(api_key=RuntimeConfig.get("OPENAI_API_KEY"))
-
-IdentityProvider = CognitoIdentityProvider(
-    user_pool_id=RuntimeConfig.get("COGNITO_USER_POOL_ID"),
-    client_id=RuntimeConfig.get("COGNITO_APP_CLIENT_ID"),
-    client_secret=RuntimeConfig.get("COGNITO_APP_CLIENT_SECRET"),
-)
-
-
 class ReportGenerationService:
-    def __init__(self):
-        if not client.api_key:
+    def __init__(self, identity_provider=None, prediction_service=None):
+        self.client = OpenAI(api_key=RuntimeConfig.get("OPENAI_API_KEY"))
+        if not self.client.api_key:
             raise ValueError("OPENAPI_KEY is not set in the configuration")
+        self.identity_provider = identity_provider
+        self.prediction_service = prediction_service
 
     # recordId has the xray image url within it
     def generate_report(self, userId, imageUrl):
@@ -34,10 +26,9 @@ class ReportGenerationService:
                     [Summary diagnosis or conclusion]. [Next steps or recommendations].
                 """
         # Fetch the image from the URL
-        PredictionService = PS()
-        prediction = PredictionService.predict_from_url(imageUrl)
+        prediction = self.prediction_service.predict_from_url(imageUrl)
         # Fetch user
-        user = IdentityProvider.get_user_by_id(userId)
+        user = self.identity_provider.get_user_by_id(userId)
         # Call GPT to generate the report, tokens are charged everytime this is run.
         prompt = f"""Fill in the following medical report template based on the given prediction and user details:
                 
@@ -48,7 +39,7 @@ class ReportGenerationService:
                 User details: {user}
                 """
 
-        response = client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
         )
         report = response.choices[0].message.content.strip()
