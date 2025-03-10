@@ -29,7 +29,6 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
            
-           
       - name: Cache pip packages
         uses: actions/cache@v4
         with:
@@ -71,7 +70,7 @@ jobs:
             echo "Critical flake8 errors found!"
             exit 1
           fi
-      
+          
       - name: Upload flake8 report
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,8 +80,8 @@ jobs:
           if-no-files-found: warn
           include-hidden-files: false
 
-  test:
-    name: Run Tests
+  test-backend:
+    name: Run Backend Tests
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -118,24 +117,37 @@ jobs:
             coverage.xml
           if-no-files-found: warn
 
-  # build-and-push:
-  #   needs: test-and-lint
-  #   runs-on: ubuntu-latest
+  test-frontend:
+    name: Run Frontend Tests
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd src/frontend
+          npm install
+      
+      - name: Run frontend tests
+        run: |
+          cd src/frontend
+          npm test
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-
-  #     - name: Log in to GitHub Container Registry
-  #       uses: docker/login-action@v2
-  #       with:
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-
-  #     - name: Build and push backend Docker image
-  #       run: |
-  #         docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest ./src/backend
-  #         docker push ghcr.io/${{ github.repository_owner }}/backend:latest
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-results
+          path: src/frontend/test-results
+          if-no-files-found: warn
 
 permissions:
   pull-requests: write
