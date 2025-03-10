@@ -1,5 +1,5 @@
 import unittest
-from .mocks.mock_db import MedicalRecordService as MRS, MedicalPrescriptionService as MPS
+from .mocks.mock_db import MockMedicalRecordService as MRS, MockMedicalPrescriptionService as MPS
 
 MedicalRecordService = MRS("capstone_medical_record", "us-west-2")
 MedicalPrescriptionService = MPS("capstone_medical_prescription", "us-west-2")
