@@ -1,6 +1,7 @@
+import unittest
 from runtime import IdentityProvider
 
-class TestCognitoIdentityProvider():
+class TestCognitoIdentityProvider(unittest.TestCase):
     def test_sign_up_doctor(self):
         IdentityProvider.delete_mock_user()
         password = "test123!"
