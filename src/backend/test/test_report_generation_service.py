@@ -1,12 +1,7 @@
 import unittest
-from unittest.mock import patch, MagicMock
 from runtime import ReportGenerationService
-from runtime import PredictionService
 from openai import OpenAI
-from runtime import CognitoIdentityProvider
 from runtime import Config
-from runtime import PredictionService as PS
-import inspect
 
 # get OpenApi key
 RuntimeConfig = Config()
@@ -18,7 +13,7 @@ class TestReportGenerationService(unittest.TestCase):
         self.image_url = "https://mockurl.com/test-image.jpg"
 
         # Instantiate the ReportGenerationService
-        self.report_service = ReportGenerationService()
+        self.report_service = ReportGenerationService
 
     def test_openai_api_key_exists(self):
         """Test that the OpenAI API key is correctly set and is not None"""
@@ -36,9 +31,11 @@ class TestReportGenerationService(unittest.TestCase):
         self.assertIsNotNone(self.image_url, "Image URL should not be None")
         self.assertNotEqual(self.image_url, "", "Image URL should not be an empty string")
 
-    def test_report_generation_service_arguemnts(self):
-        """Test that the ReportGenerationService instance is created correctly with correct number of arguments"""
-        
-        # Get the number of arguments the ReportGenerationService constructor takes
-        num_args = len(inspect.signature(ReportGenerationService).parameters)
-        self.assertEqual(num_args, 2, "ReportGenerationService should take 2 argument")
+    def test_generate_report(self):
+        """Test that the generate_report method returns a report and prediction"""
+        report = self.report_service.generate_report(self.user_id, self.image_url)
+        ((findings, impression), prediction) = report
+        self.assertIsNotNone(report, "Report should not be None")
+        self.assertIsNotNone(findings, "Findings should not be None")
+        self.assertIsNotNone(impression, "Impression should not be None")
+        self.assertIsNotNone(prediction, "Prediction should not be None")
