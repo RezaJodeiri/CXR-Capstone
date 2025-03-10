@@ -69,6 +69,7 @@ jobs:
           if grep -q "^E" flake8-report.txt; then
             echo "Critical flake8 errors found!"
             exit 1
+          fi
           
       - name: Upload flake8 report
         if: always()
