@@ -37,7 +37,7 @@ class MockBoto3CognitoClient(MagicMock):
                 'xxx': 'xxx'
             },
             'AuthenticationResult': {
-                'AccessToken': 'xxx',
+                'AccessToken': 'xxxx',
                 'ExpiresIn': 123,
                 'TokenType': 'xxx',
                 'RefreshToken': 'xxx',

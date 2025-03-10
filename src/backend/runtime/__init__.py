@@ -18,7 +18,7 @@ IdentityProvider = CognitoIdentityProvider(
 PredictionService = PS()
 MedicalRecordService = MRS("capstone_medical_record", "us-west-2")
 MedicalPrescriptionService = MPS("capstone_medical_prescription", "us-west-2")
-ReportGenerationService = RGS()
+ReportGenerationService = RGS(IdentityProvider, PredictionService)
 S3PresignedURLHandler = s3('neuralanalyzer-xrays')
 
 RuntimeLogger = Logger().getLogger()
