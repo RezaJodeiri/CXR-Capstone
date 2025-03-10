@@ -39,7 +39,7 @@ class BaseDynamoService:
             return self.get_item_by_id(item["id"])
         except ClientError as e:
             print(f"Unable to put item: {e.response['Error']['Message']}")
-            return False
+            return None
 
     def update_item_by_id(self, uuid, updated_item):
         """
