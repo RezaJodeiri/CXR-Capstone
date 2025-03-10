@@ -9,7 +9,6 @@ from ..runtime.data.prediction_services import PredictionService as PS
 
 # Test class for report generation service
 class TestReportGenerationService(unittest.TestCase):
-
     def setUp(self):
         """Runs before each test to set up mocks and environment"""
         self.user_id = "12345"
