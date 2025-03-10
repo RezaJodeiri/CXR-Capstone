@@ -1,6 +1,22 @@
 from unittest.mock import MagicMock
 from runtime.data.aws_dynamodb.medical_record_service import MedicalRecordService
 from runtime.data.aws_dynamodb.medical_prescription_service import MedicalPrescriptionService
+from runtime.data.aws_dynamodb.base_service import BaseDynamoService
+
+class MockBaseDynamoService(MagicMock):
+    def __init__(self, table_name, region_name="us-west-2"):
+        super().__init__(table_name, region_name)
+
+    def get_item_by_id(self, uuid):
+        return {"id": uuid}
+
+    def create_new_item(self, item):
+        item["id"] = "xxxxxx"
+        return item
+
+    def update_item_by_id(self, uuid, updated_item):
+        updated_item["id"] = uuid
+        return updated_item
 
 class MockMedicalRecordService(MagicMock):
     def __init__(self, table_name, region_name="us-west-2"):
