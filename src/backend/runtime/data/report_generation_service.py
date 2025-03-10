@@ -1,4 +1,3 @@
-from .aws_dynamodb.medical_record_service import MedicalRecordService as MRS
 from .prediction_services import PredictionService as PS
 from ..config import Config
 from .aws_cognito import CognitoIdentityProvider
