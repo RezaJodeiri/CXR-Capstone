@@ -1,8 +1,8 @@
-from unittest import MagicMock
+from unittest.mock import MagicMock
 from runtime.data.aws_dynamodb.medical_record_service import MedicalRecordService
 from runtime.data.aws_dynamodb.medical_prescription_service import MedicalPrescriptionService
 
-class MockMedicalRecordService(MedicalRecordService):
+class MockMedicalRecordService(MagicMock):
     def __init__(self, table_name, region_name="us-west-2"):
         super().__init__(table_name, region_name)
 
@@ -24,7 +24,7 @@ class MockMedicalRecordService(MedicalRecordService):
     def link_report_to_record(self, recordId, reportId):
         return {"Attributes": 'xxxxxx'}
     
-class MockMedicalPrescriptionService(MedicalPrescriptionService):
+class MockMedicalPrescriptionService(MagicMock):
     def __init__(self, table_name, region_name="us-west-2"):
         super().__init__(table_name, region_name)
 
