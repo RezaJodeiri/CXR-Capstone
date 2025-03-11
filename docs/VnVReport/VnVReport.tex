@@ -11,11 +11,11 @@
 \usepackage[table]{xcolor}
 \usepackage{float}
 \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=red,
-    urlcolor=blue
+    colorlinks=true,    % Activate colored links
+    linkcolor=red,      % Color of internal links
+    citecolor=blue,     % Color of citation links
+    urlcolor=blue,      % Color of URL links
+    filecolor=black     % Color of file links
 }
 \usepackage[round]{natbib}
 
@@ -41,7 +41,8 @@
 March 01 & 1.0 & Nanthan completed section 3\\
 March 02 & 1.1 & Kelly completed section 4\\
 March 05 & 1.2 & Patrick completed section 2, 5\\
-March 05 & 1.3 & Aymen completed section 7\\
+March 05 & 1.3 & Ayman completed section 7\\
+March 10 & 1.4 & Reza revised all sections and added section 6,8,9,10,11\\
 \bottomrule
 \end{tabularx}
 
@@ -382,7 +383,17 @@ This subsection provides a list of terms that are used in the subsequent section
 \newpage
 \section{Nonfunctional Requirements}
 
-\begin{table}[h!]
+\noindent The verification and validation of nonfunctional requirements presented unique challenges, as many of these requirements could not be adequately assessed through traditional unit tests or automated testing alone. Our approach involved a combination of:
+
+\begin{itemize}
+    \item[-] Manual analysis through user surveys and feedback (see \hyperref[appendix:A]{Appendix A}) 
+    \item[-] Automated performance testing and monitoring (see \hyperref[appendix:B]{Appendix B})
+\end{itemize}
+
+\noindent For requirements involving user experience and interface elements, we conducted structured surveys with healthcare professionals. Performance-related requirements were validated through automated testing and continuous monitoring. The detailed results of these assessments can be found in the appendices, with user feedback data in \href{#appendix:A}{Appendix A} and performance metrics in \href{#appendix:B}{Appendix B}.
+
+\subsection{Look and Feel (LF)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -396,13 +407,13 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Adjustment of window/level settings, navigation between tabs, application of basic tools (zoom, pan, measure), and export/save of images from the viewer. \\
 \hline
-\textbf{Validation} & The system responds to user interactions promptly and correctly, with response times consistently under 400ms for all interactions. Interface transitions appear smooth and uninterrupted, with no perceptible lag when switching between different views or manipulating images. Refer to Appendix A, Figures 1 and 2 for survey results regarding interface responsiveness. \\
+\textbf{Validation} & The system responds to user interactions promptly and correctly, with response times consistently under 400ms for all interactions. Interface transitions appear smooth and uninterrupted, with no perceptible lag when switching between different views or manipulating images. Refer to \hyperref[appendix:A]{Appendix A, Figures 1 and 2} for survey results regarding interface responsiveness. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement LF1: Responsive Interface}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -416,13 +427,14 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & User interaction with the interface for typical workflows on a properly calibrated monitor under standard office lighting conditions. Testing included systematic evaluation of all screen elements using color contrast analyzers and font size measurements in various simulated lighting conditions. \\
 \hline
-\textbf{Validation} & Please efer to Appendix A, Figure 5 for survey results on visual accessibility. \\
+\textbf{Validation} & Please refer to \hyperref[appendix:A]{Appendix A, Figure 5} for survey results on visual accessibility. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement LF2: Visual Accessibility}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Usability and Humanity (UH)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -436,13 +448,14 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Test users performed a list of specified tasks using prepared user accounts, including login, image upload, viewing results, and accessing reports.\\
 \hline
-\textbf{Validation} & Users successfully completed all required tasks without significant assistance, with completion times within expected timeframes, demonstrating the workflow's intuitiveness. Refer to Appendix A, Figures 3 and 4 for survey results on workflow intuitiveness and ease of navigation. \\
+\textbf{Validation} & Users successfully completed all required tasks without significant assistance, with completion times within expected timeframes, demonstrating the workflow's intuitiveness. Refer to \hyperref[appendix:A]{Appendix A, Figures 3 and 4} for survey results on workflow intuitiveness and ease of navigation. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement UH1: Intuitive Workflow}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Performance (PR)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -456,13 +469,13 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Automated timing tests measuring elapsed time from upload completion to results display when submitting standard chest X-ray images in PNG/JPG format. The testing suite incorporated a variety of image sizes, resolutions, and quality levels to represent the range of inputs the system might encounter in production. \\
 \hline
-\textbf{Validation} & Disease probabilities and summaries were consistently produced and displayed within the one-minute threshold across multiple test runs. The 95th percentile processing time was 48 seconds, with an average of 32 seconds. Refer to Appendix B for detailed performance test results showing processing times under various loads. \\
+\textbf{Validation} & Disease probabilities and summaries were consistently produced and displayed within the one-minute threshold across multiple test runs. The 95th percentile processing time was 48 seconds, with an average of 32 seconds. Refer to \hyperref[appendix:B]{Appendix B} for detailed performance test results showing processing times under various loads. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement PR1: Processing Time}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -476,13 +489,13 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Dedicated monitoring system recorded availability metrics over a continuous 30-day test period, tracking downtime events, mean time to recovery, and overall uptime percentage. Simulated failure scenarios were introduced during controlled testing periods to verify the effectiveness of failover mechanisms. \\
 \hline
-\textbf{Validation} & System achieved an uptime percentage exceeding 99\% throughout the test period with no significant downtime events detected outside scheduled maintenance windows. The longest continuous downtime period was 4.3 minutes, well below the recovery time objective of 15 minutes. Refer to Appendix B for availability metrics. \\
+\textbf{Validation} & System achieved an uptime percentage exceeding 99\% throughout the test period with no significant downtime events detected outside scheduled maintenance windows. The longest continuous downtime period was 4.3 minutes, well below the recovery time objective of 15 minutes. Refer to \hyperref[appendix:B]{Appendix B} for availability metrics. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement PR2: System Availability}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -496,13 +509,14 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Automated stress testing processed collections of 20 identical or varied chest X-ray images while measuring CPU usage, memory consumption, disk I/O, and network utilization. The test suite gradually increased the number of concurrent image processing tasks to identify performance bottlenecks. \\
 \hline
-\textbf{Validation} & All images were processed within the target time threshold of 20 seconds each, and system resource utilization remained at approximately 15\% of available capacity, indicating efficient resource management even under load. Refer to Appendix B for detailed resource utilization metrics during stress testing. \\
+\textbf{Validation} & All images were processed within the target time threshold of 20 seconds each, and system resource utilization remained at approximately 15\% of available capacity, indicating efficient resource management even under load. Refer to \hyperref[appendix:B]{Appendix B} for detailed resource utilization metrics during stress testing. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement PR3: Resource Utilization}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Operational and Environmental (OE)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -516,13 +530,14 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Network performance monitoring during typical operations including retrieval and processing of chest X-ray images, storage of processed results, and transmission of data to external systems. Testing included measurement of network latency, throughput, packet loss, and connection stability. \\
 \hline
-\textbf{Validation} & Network latency consistently remained around 190ms, well below the 250ms threshold for acceptable performance, with no packet loss detected across multiple test runs. Refer to Appendix B for detailed network performance metrics under various conditions. \\
+\textbf{Validation} & Network latency consistently remained around 190ms, well below the 250ms threshold for acceptable performance, with no packet loss detected across multiple test runs. Refer to \hyperref[appendix:B]{Appendix B} for detailed network performance metrics under various conditions. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement OE2: Network Performance}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Security (SR)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -542,7 +557,8 @@ This subsection provides a list of terms that are used in the subsequent section
 \caption{Non-Functional Requirement SR1: Data Encryption}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Maintainability and Support (MS)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -562,7 +578,7 @@ This subsection provides a list of terms that are used in the subsequent section
 \caption{Non-Functional Requirement MS1: Modular Design}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -582,7 +598,8 @@ This subsection provides a list of terms that are used in the subsequent section
 \caption{Non-Functional Requirement MS2: Code Coverage}
 \end{table}
 
-\begin{table}[h!]
+\subsection{Legal Requirements (LR)}
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -601,8 +618,8 @@ This subsection provides a list of terms that are used in the subsequent section
 \end{tabular}
 \caption{Non-Functiona Requirement LR1: Privacy Compliance}
 \end{table}
-
-
+\newpage
+\subsection{Health and Safety (HS)}
 \begin{table}[h!]
 \centering
 \rowcolors{2}{white}{white}
@@ -623,7 +640,7 @@ This subsection provides a list of terms that are used in the subsequent section
 \caption{Non-Functional Requirement HS1: User Action Logging}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -637,7 +654,7 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Manual inspection of the user interface when accessing AI-generated diagnostic reports. Reviewing all screens where AI-generated content is displayed to confirm consistent presentation of disclaimers across different user roles and access paths. \\
 \hline
-\textbf{Validation} & A clearly visible disclaimer box is prominently displayed when viewing AI results, using appropriate positioning, with text explicitly stating that AI-generated results are for decision support only and should not replace professional medical judgment. Refer to Appendix A, Figure 7 for survey feedback on disclaimer clarity. \\
+\textbf{Validation} & A clearly visible disclaimer box is prominently displayed when viewing AI results, using appropriate positioning, with text explicitly stating that AI-generated results are for decision support only and should not replace professional medical judgment. Refer to \hyperref[appendix:A]{Appendix A, Figure 7} for survey feedback on disclaimer clarity. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement HS2: AI Disclaimer}
@@ -707,11 +724,11 @@ CheXRelFormer           & N/A                    & N/A                & N/A     
 
 \textbf{Our Capstone}    & DETR                    & MLP                     & \url{https://viso.ai/wp-content/uploads/2024/02/DETR-Architecture.jpg} \\ 
                          &                         &                         & \url{https://arxiv.org/pdf/2005.12872} \\ \hline
-\textbf{xray}           & ResNet                  & ResNet-50               & \url{https://i.ytimg.com/vi/woEs7UCaITo/maxresdefault.jpg} \\ 
+\textbf{xray}           & ResNet                  & ResNet-50 \citep{resnet2015}              & \url{https://i.ytimg.com/vi/woEs7UCaITo/maxresdefault.jpg} \\ 
                          &                         &                         & \url{https://arxiv.org/pdf/1512.03385} \\ \hline
-\textbf{ChestLenseAI}   & DenseNet                & DenseNet-121            & \url{https://pytorch.org/assets/images/densenet1.png} \\ 
+\textbf{ChestLenseAI}   & DenseNet                & DenseNet-121 \citep{densenet2017}           & \url{https://pytorch.org/assets/images/densenet1.png} \\ 
                          &                         &                         & \url{https://arxiv.org/pdf/1608.06993} \\ \hline
-\textbf{CheXRelFormer}  & ViT                     & MLP                     & \url{https://www.researchgate.net/publication/383905431/figure/fig3/AS:11431281290331182@1731595235002/Structure-of-the-backbone-PVTv2.ppm} \\ 
+\textbf{CheXRelFormer}  & ViT                     & MLP \citep{vit2021}                    & \url{https://www.researchgate.net/publication/383905431/figure/fig3/AS:11431281290331182@1731595235002/Structure-of-the-backbone-PVTv2.ppm} \\ 
                          &                         &                         & \url{https://arxiv.org/pdf/2106.13797} \\ \hline
 
 \end{longtable}
@@ -1285,6 +1302,7 @@ In our VNV plan it was decided that our team will conduct a survey to gather fee
 Dr.Mehdi Moradi, our supervisor, provided feedback on the system's performance and usability. He suggested that instead of the doctor or radiologists uploading a png file of the x-ray image, the system should be able to take in a DICOM (Digital Imaging and Communications in Medicine) files as input. This would allow the system to process the image with patient data embeded within it. Additionally, he recommended that the system should be able to handle multiple images at once, as this would be more practical in a real-world clinical setting. To address these suggestions, we updated the system to accept DICOM files as input and process multiple images simultaneously. This change improved the system's performance and usability, making it more efficient and user-friendly.
 \subsection{Changes due to performance testing}
 After conducting performance testing, we found that the system's ability to handle multiple users simultaneously was not optimal. Our application really started to slow down around 20 concurrent users. To address this issue our team decided to allocate more resources to the backend server to improve performance. We also optimized the code to reduce processing time and improve the system's overall efficiency. These changes helped the system handle more users simultaneously and improved the user experience.
+\newpage
 \section{Automated Testing}
 
 The tests mentioned in the Unit Testing section are systematically automated to ensure code quality and reliability. To run automated tests within a developer's local environment, a developer can execute commands to build and test the project.
@@ -1450,7 +1468,7 @@ UT-32 & M14 \\ \hline
   \clearpage
   \newpage
 \section{Code Coverage Metrics}
-The following code coverage analysis was obtained from the automated tests that were run on the CI/CD pipeline:
+The following code Coverage analysis was obtained from the automated tests that were run on the \href{https://github.com/RezaJodeiri/CXR-Capstone/actions/runs/13778734218}{CI/CD pipeline}:
 \begin{figure}[ht!]
   \centering
   \includegraphics[scale=0.6]{../assets/cov.png}
@@ -1498,39 +1516,45 @@ The following code coverage analysis was obtained from the automated tests that 
   \newline \newline \textbf{What pain points did you experience during this deliverable, and how did you resolve them?} \\\\
   One major challenge was handling unexpected deviations from the VnV Plan. Some tests and validation activities required adjustments because real-world implementation differed from our initial assumptions. To address this, we removed certain tests and modified others to better fit the project scope. Another challenge we faced was testing non-functional requirements (NFRs), particularly in gathering sufficient feedback from qualified testers. To address this, our team implemented an external testing approach using a Google Form to collect responses. However, we encountered difficulties in obtaining an adequate number of responses from eligible testers, such as medical professionals as our project was not in a collaboration with hospitals / medical services. The limited participation made it challenging to thoroughly validate certain NFRs, such as usability and performance in real-world scenarios. Additionally, creating unit tests for the code was a significant task. However, by effectively distributing the workload among team members, we successfully developed and passed all necessary tests.
   \newline  \newline \textbf{Which parts of this document stemmed from speaking to your client(s) or a proxy (e.g., your peers)? Which ones were not, and why?}  \\\\
-  Some aspects of this document stemmed from discussions with our proxies (peers), particularly regarding non-functional requirements testing as some of them couldn’t be tested directly via unit tests. (usability, user experience, and looks and feels). While unit tests focus on validating specific functions in isolation, they do not capture real-world interactions, user satisfaction, or how well the system meets stakeholder expectations. Surveys allowed us to gather qualitative and quantitative feedback from relevant users, helping us assess aspects like ease of use, efficiency, and overall satisfaction. Our unit tests were primarily designed to validate the correctness, reliability, and functionality of individual components in isolation. They focused on ensuring that each module adhered to its expected behavior based on predefined business logic, rather than incorporating input from peers or end-users.
+  Some aspects of this document stemmed from discussions with our proxies (peers), particularly regarding non-functional requirements testing as some of them couldn't be tested directly via unit tests. (usability, user experience, and looks and feels). While unit tests focus on validating specific functions in isolation, they do not capture real-world interactions, user satisfaction, or how well the system meets stakeholder expectations. Surveys allowed us to gather qualitative and quantitative feedback from relevant users, helping us assess aspects like ease of use, efficiency, and overall satisfaction. Our unit tests were primarily designed to validate the correctness, reliability, and functionality of individual components in isolation. They focused on ensuring that each module adhered to its expected behavior based on predefined business logic, rather than incorporating input from peers or end-users.
   \newline
   However, not all sections were based on client input. Technical implementation details, such as internal testing methodologies and the choice of specific testing frameworks, were determined by the development team. This distinction exists because clients typically focus on high-level functionality and usability, while the development team makes technical decisions regarding implementation and testing strategies. \\ 
   \newline
-  \textbf{In what ways was the Verification and Validation (VnV) Plan different from the activities that were actually conducted for VnV?} \\\\
-    Differences Between the VnV Plan and VnV Report
-    \begin{itemize}
-    \item[-] The original VnV Plan assumed static test data for validation, but as development progressed, we realized that model performance varied significantly across different datasets. The VnV Report reflects additional real-world test cases added to evaluate model robustness across various demographic and clinical conditions. This was also later changed in the VNV plan to match.
-    \item[-] The VnV Plan proposed an early-stage validation of disease prediction accuracy, but due to delays in backend integration with the web application, testing had to be restructured. The VnV Report captures how we adapted by first validating the model in isolation before conducting end-to-end system testing.
-    \item[-] Automated Report Generation: Initially planned as a basic text output, this feature was expanded in the VnV Report to include structured templates for easier clinical use.
-    \item[-] Fairness and Bias Mitigation: The original NFRs primarily focused on accuracy, but after testing, fairness requirements were added to ensure equal performance across demographic subgroups. The VnV Report details new fairness constraints to minimize bias.
+  \textbf{In what ways was the Verification and Validation (VnV) Plan different from the activities that were actually conducted for VnV?}
+  \vspace{-10pt}
+\subsubsection*{Differences Between the VnV Plan and VnV Report}
+  \begin{itemize}
+  \item[-] In the VnV Plan, we initially outlined the testing for functional and non-functional requirements. However, the project was not fully mature and due to this the VnV Report had to be adjusted to reflect the actual testing conducted. This was shown to be evident through the removal of NFRs and FRs while new ones being added.  
+  \item[-] The original VnV Plan assumed static test data for validation, but as development progressed, we realized that model performance varied significantly across different datasets. The VnV Report reflects additional real-world test cases added to evaluate model robustness across various demographic and clinical conditions. This was also later changed in the VNV plan to match.
+  \item[-] Initially planned as a basic text output, this feature was expanded in the VnV Report to include structured templates for easier clinical use.
+  \end{itemize}
+  
+\subsubsection*{Reasons for Deviations}
+  \noindent These deviations were necessary due to:
+  \begin{itemize}
+  \item[-] Technical constraints, particularly in model interpretability and performance generalization.
+  \item[-] Regulatory considerations, requiring expanded fairness and bias assessments beyond the original scope.
+  \item[-] Stakeholder feedback, which emphasized the need for more real-world validation scenarios. By doctors and radiologist to test the system and what they would want to see in our application.
+  \item[-] Resource limitations which led to adjustments in testing priorities and methodologies.
+  \end{itemize}
+  
+\subsubsection*{Lessons Learned for Future VnV Planning}
+  \noindent While deviations were unavoidable, they provided valuable insights for improving future VnV planning. To better anticipate such changes, our team could:
+  \begin{itemize}
+    \item[-] Planning during the early maturity of the project is difficult and should be revisited as the project matures.
+    \item[-] Early real-world testing is critical – testing only on predefined datasets missed real-world challenges, such as low-quality scans.
+    \item[-] Explainability should be prioritized from the start – assuming simple feature visualization was sufficient led to delays in meeting doctor expectations.
+    \item[-] Load testing should be iterative – scalability concerns were only identified late in development, making fixes more complex.
+    \item[-] Stakeholder feedback must be integrated earlier – doctors provided critical usability insights only after testing, when design changes were harder to implement.
     \end{itemize}
 
-    Reasons for Deviations:
-    \begin{itemize}
-    \item[-] Technical constraints, particularly in model interpretability and performance generalization.
-    \item[-] Regulatory considerations, requiring expanded fairness and bias assessments beyond the original scope.
-    \item[-] Stakeholder feedback, which emphasized the need for more real-world validation scenarios.
-    \item[-] Resource limitations, which led to adjustments in testing priorities and methodologies.
-    \end{itemize}
-    
-    \noindent While deviations were unavoidable, they provided valuable insights for improving future VnV planning. To better anticipate such changes, our team could:
-    \begin{itemize}
-      \item[-] Early real-world testing is critical – testing only on predefined datasets missed real-world challenges, such as low-quality scans.
-      \item[-] Explainability should be prioritized from the start – assuming simple feature visualization was sufficient led to delays in meeting doctor expectations.
-      \item[-] Continuous security evaluations are necessary – unexpected security vulnerabilities surfaced only during late-stage penetration testing.
-      \item[-] Load testing should be iterative – scalability concerns were only identified late in development, making fixes more complex.
-      \item[-] Stakeholder feedback must be integrated earlier – doctors provided critical usability insights only after testing, when design changes were harder to implement.
-      \end{itemize}
-    
-    \noindent If no modifications were required, it would indicate that our team accurately predicted the necessary effort and tasks to generate sufficient evidence of system reliability, fairness, and clinical validity. However, most AI-driven healthcare projects experience deviations due to the complexity of real-world data and evolving requirements, making adaptability a key factor in ensuring successful verification and validation.
+\subsection*{Conclusion}
+  In conclusion, the Verification and Validation process for our project has been a comprehensive and iterative journey. We have successfully evaluated both functional and non-functional requirements, ensuring that our system meets the high standards expected in a clinical setting by removing unnecessary requirements and adding new ones. The deviations from the original VnV Plan aided to address our challenges, technical constraints, and stakeholder feedback. These adjustments have refined our system, making it more robust, user-friendly, and aligned with regulatory requirements.
+  \noindent The lessons learned from this process highlight the importance of early and continuous testing, stakeholder engagement, and flexibility in planning. By incorporating these insights into future projects, we can improve our VnV strategies and deliver even more reliable and effective solutions.
+  \noindent Hence, the VnV activities have validated the performance, usability, and security of our system, providing confidence in its readiness for deployment in real-world healthcare environments.
+
   \newpage
-  \section*{Appendix A --- Survey Results (NFR quality 1)}
+  \section*{Appendix A --- Survey Results (NFR quality 1)}\label{appendix:A}
   
   \begin{figure}[ht!] 
     \centering
@@ -1589,7 +1613,7 @@ The following code coverage analysis was obtained from the automated tests that 
 
 \clearpage
 
-\section*{Appendix B --- Performance Test (NFR quality 2)}
+\section*{Appendix B --- Performance Test (NFR quality 2)}\label{appendix:B}
 \begin{figure}[ht!]
   \centering
   \includegraphics[scale=0.24]{../assets/Perf.png}
@@ -1603,131 +1627,4 @@ The following code coverage analysis was obtained from the automated tests that 
   \caption{Survey results for Question 8}
   \label{fig:survey8}
 \end{figure}
-\clearpage
-\section*{Appendix C --- CI/CD Pipeline Configuration}
-
-\subsection*{CI/CD Workflow Configuration}
-
-The following is the configuration of our GitHub Actions workflow used for automated testing:
-
-\begin{verbatim}
-name: CI/CD Pipeline
-
-on:
-  pull_request:
-    branches:
-      - '**'  
-
-env:
-  PYTHON_VERSION: "3.8"
-  COGNITO_USER_POOL_ID: mock-user-pool-id
-  COGNITO_APP_CLIENT_ID: mock-client-id
-  COGNITO_APP_CLIENT_SECRET: mock-client-secret
-  AWS_REGION: us-east-1
-  AWS_ACCESS_KEY_ID: mock-access-key
-  AWS_SECRET_ACCESS_KEY: mock-secret-key
-
-jobs:
-  setup:
-    name: Setup Environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-           
-      - name: Cache pip packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/pip
-            ~/.local/lib/python${{ env.PYTHON_VERSION }}/site-packages
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: |
-          pip install -r src/backend/requirements.txt
-          pip install -r src/backend/requirements-dev.txt
-
-  lint:
-    name: Lint and Type Check
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-          
-      - name: Install dependencies
-        run: |
-          pip install -r src/backend/requirements.txt
-          pip install -r src/backend/requirements-dev.txt
-      
-      - name: Run flake8
-        run: |
-          flake8 src test --output-file=flake8-report.txt --statistics --exit-zero
-          if grep -q "^E" flake8-report.txt; then
-            echo "Critical flake8 errors found!"
-            exit 1
-          fi
-      
-      - name: Upload flake8 report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: flake8-report
-          path: flake8-report.txt
-          if-no-files-found: warn
-          include-hidden-files: false
-
-  test:
-    name: Run Tests
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-          
-      - name: Install dependencies
-        run: |
-          pip install -r src/backend/requirements.txt
-          pip install -r src/backend/requirements-dev.txt
-      
-      - name: Run tests with coverage
-        run: |
-          pytest test \
-            --cov=src \
-            --cov-report=term \
-            --cov-report=xml \
-            --junitxml=pytest.xml
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-results
-          path: |
-            pytest.xml
-            coverage.xml
-          if-no-files-found: warn
-\end{verbatim}
-
 \end{document}
