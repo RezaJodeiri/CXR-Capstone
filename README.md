@@ -95,3 +95,26 @@ docker-compose down
 
 docker system prune -a
 ```
+
+# Project Evaluation and Issue Tracking
+
+| Section                 |  Title                          | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
+|-------------------------|--------------------------------------|-----------------------------|------------|----------------------|
+| **SRS**                 |                                      |                             |            |                      |
+|                         | Address TA Feedback                  | Issue description here      | `abc1234`  | TA John Doe          |
+|                         | Fix Functional Requirement 6         | Issue description here      | `def5678`  | Peer Jane Doe        |
+| **Hazard Analysis**     |                                      |                             |            |                      |
+|                         | Address TA Feedback                  | Issue description here      | `abc1234`  | TA John Doe          |
+|                         | Fix Functional Requirement 6         | Issue description here      | `def5678`  | Peer Jane Doe        |
+| **MIS**                 |                                      |                             |            |                      |
+|                         | Revise System Architecture          | Issue description here      | `ghi9012`  | TA Alex Smith        |
+|                         | Clarify Module Responsibilities     | Issue description here      | `jkl3456`  | Peer Mike Brown      |
+| **MG**                  |                                      |                             |            |                      |
+|                         | Improve Traceability                | Issue description here      | `mno7890`  | TA Sarah Lee        |
+|                         | Fix Incorrect Assumptions           | Issue description here      | `pqr1234`  | Peer Emily Davis     |
+| **V&V Plan**            |                                      |                             |            |                      |
+|                         | Add Unit Test Cases                 | Issue description here      | `stu5678`  | TA Alex Johnson      |
+|                         | Update Integration Testing Strategy | Issue description here      | `vwx9012`  | Peer Chris Evans     |
+| **V&V Report**          |                                      |                             |            |                      |
+|                         | Add Test Results Summary            | Issue description here      | `yz12345`  | TA Rachel Green      |
+|                         | Include Performance Test Findings   | Issue description here      | `abc6789`  | Peer Laura White     |
