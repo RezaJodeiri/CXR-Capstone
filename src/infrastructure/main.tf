@@ -280,7 +280,7 @@ resource "aws_ecs_task_definition" "backend" {
       essential = true
       portMappings = [{ containerPort = 5000 }]
       environment = [
-        { name = "FRONTEND_URL", value = "http://${aws_lb.frontend_lb.dns_name}:3000" },
+        { name = "FRONTEND_URL", value = "http://${aws_lb.frontend_lb.dns_name}:80" },
         { name = "TORCHXRAYVISION_MODEL_URL", value = "" },
         { name = "NEURALANALYZER_MODEL_URL", value = "" },
         { name = "COGNITO_USER_POOL_ID", value = "" },
