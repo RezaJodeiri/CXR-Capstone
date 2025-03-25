@@ -4,7 +4,7 @@ import unittest
 
 class TestS3PresignedURLHandler(unittest.TestCase): 
     def setUp(self):
-        self.s3_handler = MockS3PresignedURLHandler(bucket_name="test-bucket")
+        self.s3_handler = MockS3PresignedURLHandler(bucket_name="test.jpg-bucket")
 
     def test_generate_url(self):
         """Test if generate_presigned_url returns the mocked S3 URL"""
