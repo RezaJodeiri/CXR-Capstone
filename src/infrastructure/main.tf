@@ -4,6 +4,8 @@ provider "aws" {
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "public" {
@@ -100,6 +102,9 @@ resource "aws_security_group" "torch_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    Name = "torch_sg"
+  }
 }
 
 resource "aws_lb" "frontend_lb" {
@@ -167,12 +172,27 @@ resource "aws_ecs_task_definition" "frontend" {
   requires_compatibilities = ["FARGATE"]
   memory                   = "512"
   cpu                      = "256"
+  task_role_arn            = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
 
   container_definitions = jsonencode([
     {
       name      = "frontend"
       image     = "893123825267.dkr.ecr.us-west-2.amazonaws.com/neuralanalyzer/frontend:latest"
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.frontend_logs.name
+          awslogs-region        = "us-west-2"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+
       cpu       = 128
       memory    = 256
       essential = true
@@ -184,13 +204,24 @@ resource "aws_ecs_task_definition" "frontend" {
   ])
 }
 
+resource "aws_cloudwatch_log_group" "frontend_logs" {
+  name              = "/ecs/neuralanalyzer-frontend"
+  retention_in_days = 1
+}
+
 resource "aws_ecs_task_definition" "torchxrayvision" {
   family                   = "neuralanalyzer-torchxrayvision"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   memory                   = "512"
   cpu                      = "256"
+  task_role_arn            = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
+  #  Run on arm64 architecture
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
 
   container_definitions = jsonencode([
     {
@@ -201,8 +232,21 @@ resource "aws_ecs_task_definition" "torchxrayvision" {
       essential = true
       portMappings = [{ containerPort = 80 }]
       environment = []
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.torchxrayvision_logs.name
+          awslogs-region        = "us-west-2"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
+}
+
+resource "aws_cloudwatch_log_group" "torchxrayvision_logs" {
+  name              = "/ecs/neuralanalyzer-torchxrayvision"
+  retention_in_days = 1
 }
 
 resource "aws_ecs_task_definition" "backend" {
@@ -211,19 +255,49 @@ resource "aws_ecs_task_definition" "backend" {
   requires_compatibilities = ["FARGATE"]
   memory                   = "512"
   cpu                      = "256"
+  task_role_arn            = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
 
   container_definitions = jsonencode([
     {
       name      = "backend"
       image     = "893123825267.dkr.ecr.us-west-2.amazonaws.com/neuralanalyzer/backend:latest"
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.backend_logs.name
+          awslogs-region        = "us-west-2"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
       cpu       = 128
       memory    = 256
       essential = true
       portMappings = [{ containerPort = 5000 }]
-      environment = []
+      environment = [
+        { name = "FRONTEND_URL", value = "http://${aws_lb.frontend_lb.dns_name}:3000" },
+        { name = "TORCHXRAYVISION_MODEL_URL", value = "" },
+        { name = "NEURALANALYZER_MODEL_URL", value = "" },
+        { name = "COGNITO_USER_POOL_ID", value = "" },
+        { name = "COGNITO_APP_CLIENT_ID", value = "" },
+        { name = "COGNITO_APP_CLIENT_SECRET", value = "" },
+        { name = "AWS_REGION", value = "" },
+        { name = "AWS_ACCESS_KEY_ID", value = "" },
+        { name = "AWS_SECRET_ACCESS_KEY", value = "" },
+        { name = "OPENAI_API_KEY", value = "" }
+      ]
     }
   ])
+}
+
+resource "aws_cloudwatch_log_group" "backend_logs" {
+  name              = "/ecs/neuralanalyzer-backend"
+  retention_in_days = 1
 }
 
 
@@ -240,14 +314,6 @@ resource "aws_ecs_service" "torchxrayvision" {
     security_groups = [aws_security_group.torch_sg.id]
     assign_public_ip = false
   }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.backend_tg.arn
-    container_name   = "torchxrayvision"
-    container_port   = 80
-  }
-
-  depends_on = [aws_lb_listener.backend_listener]
 }
 
 resource "aws_ecs_service" "backend" {
@@ -295,3 +361,101 @@ resource "aws_ecs_service" "frontend" {
   depends_on = [aws_lb_listener.frontend_listener]
 }
 
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "private-route-table"
+  }
+}
+
+resource "aws_route_table_association" "private_subnet_association" {
+  count          = length(aws_subnet.private[*].id)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+
+# Security Group for ECR Endpoints
+resource "aws_security_group" "aws_services_related_endpoints_sg" {
+  name   = "aws-services-related-endpoints-sg"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "aws-services-related-endpoints-sg"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# ECR API Endpoint
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.us-west-2.ecr.api"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = aws_subnet.private[*].id
+  security_group_ids = [aws_security_group.aws_services_related_endpoints_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name = "ecr-api-endpoint"
+  }
+}
+
+# ECR Docker Registry Endpoint
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.us-west-2.ecr.dkr"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = aws_subnet.private[*].id
+  security_group_ids = [aws_security_group.aws_services_related_endpoints_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name = "ecr-dkr-endpoint"
+  }
+}
+
+# S3 Endpoint for ECR Layer Downloads
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = aws_vpc.main.id
+  service_name = "com.amazonaws.us-west-2.s3"
+  vpc_endpoint_type = "Gateway"
+  route_table_ids   = [
+    aws_route_table.public_rt.id,
+    aws_route_table.private_rt.id
+  ]
+
+  tags = {
+    Name = "s3-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "logs" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.us-west-2.logs"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = aws_subnet.private[*].id
+  security_group_ids = [aws_security_group.aws_services_related_endpoints_sg.id] 
+  private_dns_enabled = true
+
+  tags = {
+    Name = "cloudwatch-logs-endpoint"
+  }
+}
