@@ -8,7 +8,7 @@ RuntimeConfig = Config()
 # Test class for report generation service
 class TestReportGenerationService(unittest.TestCase):
     def setUp(self):
-        """Runs before each test to set up mocks and environment"""
+        """Runs before each test.jpg to set up mocks and environment"""
         self.user_id = "nathandagoat"
         self.image_url = "https://mockurl.com/test-image.jpg"
 
