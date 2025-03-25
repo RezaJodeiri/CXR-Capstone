@@ -117,7 +117,7 @@ resource "aws_lb" "frontend_lb" {
 
 resource "aws_lb_target_group" "frontend_tg" {
   name     = "frontend-tg"
-  port     = 3000 
+  port     = 80 
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
   target_type = "ip"
@@ -196,7 +196,7 @@ resource "aws_ecs_task_definition" "frontend" {
       cpu       = 128
       memory    = 256
       essential = true
-      portMappings = [{ containerPort = 3000 }]
+      portMappings = [{ containerPort = 80 }]
       environment = [
         { name = "REACT_APP_API_URL", value = "http://${aws_lb.backend_lb.dns_name}:5000" }
       ]
@@ -355,7 +355,7 @@ resource "aws_ecs_service" "frontend" {
   load_balancer {
     target_group_arn = aws_lb_target_group.frontend_tg.arn
     container_name   = "frontend"
-    container_port   = 3000
+    container_port   = 80
   }
 
   depends_on = [aws_lb_listener.frontend_listener]
