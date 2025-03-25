@@ -9,3 +9,11 @@ docker buildx build --platform linux/amd64 -t neuralanalyzer/torchxrayvision .
 docker tag <image_id> <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository>:<tag>
 docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository>:<tag>
 ```
+
+## Terraform
+
+Ask Devops person for the `state.config` file. This file contains the configuration for the Terraform state file.
+
+```bash
+terraform init -backend-config="state.config"
+```
