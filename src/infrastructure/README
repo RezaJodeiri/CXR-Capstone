@@ -1,0 +1,11 @@
+# Bookkeeping
+
+## Pushing onto AWS ECR to work with AWS Fargate
+
+Fargate only works with `amd64` images. To push the image to ECR, you need to tag the image with the ECR repository URI and then push it.
+
+```bash
+docker buildx build --platform linux/amd64 -t neuralanalyzer/torchxrayvision .
+docker tag <image_id> <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository>:<tag>
+docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository>:<tag>
+```
