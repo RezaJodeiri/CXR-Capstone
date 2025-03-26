@@ -90,10 +90,10 @@ resource "aws_security_group" "torch_sg" {
   vpc_id = aws_vpc.main.id
 
   ingress {
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    security_groups = [aws_security_group.backend_sg.id] # Allow only backend
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -224,8 +224,8 @@ resource "aws_ecs_task_definition" "torchxrayvision" {
   family                   = "neuralanalyzer-torchxrayvision"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  memory                   = "512"
-  cpu                      = "256"
+  memory                   = "2048"
+  cpu                      = "1024"
   task_role_arn            = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::893123825267:role/ecsTaskExecutionRole"
   #  Run on arm64 architecture
@@ -238,8 +238,8 @@ resource "aws_ecs_task_definition" "torchxrayvision" {
     {
       name      = "torchxrayvision"
       image     = "893123825267.dkr.ecr.us-west-2.amazonaws.com/neuralanalyzer/torchxrayvision:latest"
-      cpu       = 128
-      memory    = 256
+      memory    = 2048
+      cpu       = 1024
       essential = true
       portMappings = [{ containerPort = 80 }]
       environment = []
@@ -319,11 +319,12 @@ resource "aws_ecs_service" "torchxrayvision" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.torchxrayvision.arn
   launch_type     = "FARGATE"
+  desired_count   = 1
 
   network_configuration {
-    subnets         = aws_subnet.private[*].id
-    security_groups = [aws_security_group.torch_sg.id]
-    assign_public_ip = false
+    subnets         = aws_subnet.public[*].id
+    security_groups = [aws_security_group.backend_sg.id]
+    assign_public_ip = true
   }
 }
 
