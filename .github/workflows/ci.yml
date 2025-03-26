@@ -1,4 +1,4 @@
-name: Test and Lint
+name: CI Pipeline
 
 on:
   pull_request:
