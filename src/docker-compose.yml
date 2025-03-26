@@ -36,20 +36,20 @@ services:
       - backend_private_network
 
   # neuralanalyzer_model:
-  #   build: ./ai-services/neuralanalyzer
+  #   build: ./ai_services/neuralanalyzer
   #   command: python app.py
   #   image: neuralanalyzer:latest
   #   volumes:
-  #     - ./ai-services/neuralanalyzer:/app
+  #     - ./ai_services/neuralanalyzer:/app
   #   networks:
   #     - backend_private_network
 
   torchxrayvision_model:
-    build: ./ai-services/torchxrayvision
+    build: ./ai_services/torchxrayvision
     command: python torch_app.py
     image: torchxrayvision:latest
     volumes:
-      - ./ai-services/torchxrayvision:/app
+      - ./ai_services/torchxrayvision:/app
     networks:
       - backend_private_network
 

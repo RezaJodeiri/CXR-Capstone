@@ -1,9 +1,0 @@
-Flask
-scikit-image
-torch=
-torchxrayvision
-torchvision
-flask-cors
-pydicom
-numpy
-Pillow

@@ -107,7 +107,7 @@ jobs:
             --cov-report=xml \
             --junitxml=pytest.xml
 
-      - name: Upload test results
+      - name: Upload test.jpg results
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -141,12 +141,12 @@ jobs:
           cd src/frontend
           npm test
 
-      - name: Upload test results
+      - name: Upload test.jpg results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-test-results
-          path: src/frontend/test-results
+          name: frontend-test.jpg-results
+          path: src/frontend/test.jpg-results
           if-no-files-found: warn
 
 permissions:
