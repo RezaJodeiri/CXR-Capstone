@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
   deploy:
-    name: Deploy ${{ matrix.service }}
+    name: Deploy ${{ matrix.ecs_service_name }}
     needs: setup
     runs-on: ubuntu-latest
     strategy:
@@ -58,12 +58,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, Push, and Deploy
-        env:
-          ECR_REGISTRY: ${{ needs.setup.outputs.registry }}
         run: |
           cd ${{ matrix.source_code_path }}
-          docker build ${{matrix.build_args}} -t $ECR_REGISTRY/${{ matrix.image_name }} .
-          docker push $ECR_REGISTRY/${{ matrix.image_name }}:$latest
+          docker build ${{matrix.build_args}} -t ${{needs.setup.outputs.registry}}/${{ matrix.image_name }}:latest .
+          docker push ${{needs.setup.outputs.registry}}/${{ matrix.image_name }}:$latest
           aws ecs update-service \
             --cluster neuralanalyzer-cluster \
             --service ${{ matrix.ecs_service_name }} \
