@@ -83,6 +83,11 @@ def process_dicom(file_content):
         return None, None, False
 
 
+@predict_bp.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"status": "ok"}), 200
+
+
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
     try:
