@@ -75,7 +75,7 @@ resource "aws_security_group" "backend_sg" {
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
-    security_groups = [aws_security_group.frontend_sg.id] # Allow only frontend
+    cidr_blocks = ["0.0.0.0/0"] # Open to internet
   }
 
   egress {
@@ -136,10 +136,10 @@ resource "aws_lb_listener" "frontend_listener" {
 
 resource "aws_lb" "backend_lb" {
   name               = "backend-lb"
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.backend_sg.id]
-  subnets            = aws_subnet.private[*].id
+  subnets            = aws_subnet.public[*].id
 }
 
 resource "aws_lb_target_group" "backend_tg" {
@@ -148,6 +148,16 @@ resource "aws_lb_target_group" "backend_tg" {
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
   target_type = "ip"
+  health_check {
+    port = 5000
+    path = "/health"
+    protocol = "HTTP"
+    interval = 300
+    timeout = 10
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    matcher = 200
+  }
 }
 
 resource "aws_lb_listener" "backend_listener" {
@@ -198,7 +208,8 @@ resource "aws_ecs_task_definition" "frontend" {
       essential = true
       portMappings = [{ containerPort = 80 }]
       environment = [
-        { name = "REACT_APP_API_URL", value = "http://${aws_lb.backend_lb.dns_name}:5000" }
+        { name = "REACT_APP_API_URL", value = "http://${aws_lb.backend_lb.dns_name}:5000" },
+        { name = "AWS_REGION", value = var.AWS_REGION }
       ]
     }
   ])
@@ -280,16 +291,16 @@ resource "aws_ecs_task_definition" "backend" {
       essential = true
       portMappings = [{ containerPort = 5000 }]
       environment = [
-        { name = "FRONTEND_URL", value = "http://${aws_lb.frontend_lb.dns_name}:80" },
-        { name = "TORCHXRAYVISION_MODEL_URL", value = "" },
-        { name = "NEURALANALYZER_MODEL_URL", value = "" },
-        { name = "COGNITO_USER_POOL_ID", value = "" },
-        { name = "COGNITO_APP_CLIENT_ID", value = "" },
-        { name = "COGNITO_APP_CLIENT_SECRET", value = "" },
-        { name = "AWS_REGION", value = "" },
-        { name = "AWS_ACCESS_KEY_ID", value = "" },
-        { name = "AWS_SECRET_ACCESS_KEY", value = "" },
-        { name = "OPENAI_API_KEY", value = "" }
+        { name = "FRONTEND_URL", value = "http://${aws_lb.frontend_lb.dns_name}" },
+        { name = "TORCHXRAYVISION_MODEL_URL", value = var.TORCHXRAYVISION_MODEL_URL },
+        { name = "NEURALANALYZER_MODEL_URL", value = var.NEURALANALYZER_MODEL_URL },
+        { name = "COGNITO_USER_POOL_ID", value = var.COGNITO_USER_POOL_ID },
+        { name = "COGNITO_APP_CLIENT_ID", value = var.COGNITO_APP_CLIENT_ID },
+        { name = "COGNITO_APP_CLIENT_SECRET", value = var.COGNITO_APP_CLIENT_SECRET },
+        { name = "AWS_REGION", value = var.AWS_REGION },
+        { name = "AWS_ACCESS_KEY_ID", value = var.AWS_ACCESS_KEY_ID },
+        { name = "AWS_SECRET_ACCESS_KEY", value = var.AWS_SECRET_ACCESS_KEY },
+        { name = "OPENAI_API_KEY", value = var.OPENAI_API_KEY }
       ]
     }
   ])
@@ -321,11 +332,12 @@ resource "aws_ecs_service" "backend" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.backend.arn
   launch_type     = "FARGATE"
+  desired_count   = 1
 
   network_configuration {
-    subnets         = aws_subnet.private[*].id
+    subnets         = aws_subnet.public[*].id
     security_groups = [aws_security_group.backend_sg.id]
-    assign_public_ip = false
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -345,6 +357,7 @@ resource "aws_ecs_service" "frontend" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.frontend.arn
   launch_type     = "FARGATE"
+  desired_count   = 1
 
   network_configuration {
     subnets         = aws_subnet.public[*].id
