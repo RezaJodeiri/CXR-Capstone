@@ -2,6 +2,8 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 export const executeHTTPRequest = async (
   httpVerb,
   path,
