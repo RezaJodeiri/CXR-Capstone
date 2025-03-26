@@ -61,7 +61,7 @@ jobs:
         run: |
           cd ${{ matrix.source_code_path }}
           docker build ${{matrix.build_args}} -t 893123825267.dkr.ecr.us-west-2.amazonaws.com/${{ matrix.image_name }}:latest .
-          docker push 893123825267.dkr.ecr.us-west-2.amazonaws.com/${{ matrix.image_name }}:$latest
+          docker push 893123825267.dkr.ecr.us-west-2.amazonaws.com/${{ matrix.image_name }}:latest
           aws ecs update-service \
             --cluster neuralanalyzer-cluster \
             --service ${{ matrix.ecs_service_name }} \
