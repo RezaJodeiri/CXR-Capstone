@@ -654,7 +654,7 @@ Note: This is being handled by React server
 \subsubsection{viewPatientList(doctorID, filters)}
 
 \begin{itemize}
-    \item \textbf{Transition}: Retrieves a list of patients associated with the given doctor, applying the specified filters.
+    \item \textbf{Transition}: doctorID $\in$ Doctor $\land$ filters $\in$ FilterSet
     \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
 \end{itemize}
 
