@@ -60,6 +60,13 @@ resource "aws_security_group" "frontend_sg" {
     cidr_blocks = ["0.0.0.0/0"] # Open to internet
   }
 
+  ingress {
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -76,6 +83,13 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Open to internet
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -134,6 +148,19 @@ resource "aws_lb_listener" "frontend_listener" {
   }
 }
 
+resource "aws_lb_listener" "frontend_https_listener" {
+  load_balancer_arn = aws_lb.frontend_lb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_ssl_certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.frontend_tg.arn
+  }
+}
+
 resource "aws_lb" "backend_lb" {
   name               = "backend-lb"
   internal           = false
@@ -170,6 +197,20 @@ resource "aws_lb_listener" "backend_listener" {
     target_group_arn = aws_lb_target_group.backend_tg.arn
   }
 }
+
+resource "aws_lb_listener" "backend_https_listener" {
+  load_balancer_arn = aws_lb.backend_lb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_ssl_certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.backend_tg.arn
+  }
+}
+
 
 resource "aws_ecs_cluster" "main" {
   name = "neuralanalyzer-cluster"
@@ -319,7 +360,7 @@ resource "aws_ecs_service" "torchxrayvision" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.torchxrayvision.arn
   launch_type     = "FARGATE"
-  desired_count   = 1
+  desired_count   = 0
 
   network_configuration {
     subnets         = aws_subnet.public[*].id
