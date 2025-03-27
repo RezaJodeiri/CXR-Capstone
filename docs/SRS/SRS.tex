@@ -1,5 +1,3 @@
-% THIS DOCUMENT IS TAILORED TO REQUIREMENTS FOR SCIENTIFIC COMPUTING.  IT SHOULDN'T
-% BE USED FOR NON-SCIENTIFIC COMPUTING PROJECTS
 \documentclass[12pt]{article}
 
 \usepackage{amsmath, mathtools}
@@ -40,9 +38,9 @@
     urlcolor=cyan           % color of external links
 }
 
-\input{../packages/Comments.tex}
-\input{../packages/Common.tex}
-\input{../packages/Reflection.tex}
+\input{Comments.tex}
+\input{Common.tex}
+\input{Reflection.tex}
 
 % For easy change of table widths
 \newcommand{\colZwidth}{1.0\textwidth}
@@ -141,7 +139,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: Chest X-Ray Read} 
 \author{\authname}
 \date{\today}
 	
@@ -410,7 +408,7 @@ characteristics and lists the system constraints. \\
 
 \subsection{System Context}
  
-The below system context diagram shows that the system will take in an input(chest X-ray image) from the user after they login. The user upload the chest X-ray image to the system and then system will annotate and provide the interpretation of the X-ray image back to the user.
+The below system context diagram (Figure 1) shows that the system will take in an input(chest X-ray image) from the user after they login. The user upload the chest X-ray image to the system and then system will annotate and provide the interpretation of the X-ray image back to the user.
 
 
 
@@ -451,7 +449,7 @@ The software is typically used in medical and clinical contexts to support healt
 \subsubsection{Normal Operation}
 As observed in the use case diagram, the system begins with user input from either patients or radiologists, who upload chest X-ray images to be analyzed. These images can be stored locally or in the cloud for easy access. Once uploaded, the system processes the images using machine learning algorithms to detect abnormalities, annotate findings, and generate diagnostic reports. These reports include detailed analysis results and suggested diagnostic advice, which radiologists can review, edit, and compare with previous records if needed.The system also enables radiologists to refine patient treatment plans based on the AI-generated insights, ensuring a smooth and accurate workflow from image upload to delivering meaningful medical recommendations.
 \subsubsection{Undesired Event Handling}
-If an undesired event occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
+If an undesired event (normalization fails / error in report generation / session timeout) occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 Physicians / Radiologists: 
@@ -483,7 +481,7 @@ Hospitals and Clinics:
 \subsection{System Constraints}
 
 \subsubsection{Government Regulations}
-The system must comply with healthcare regulations and obtain approvals from bodies such as the FDA, adhering to PHIPA and other certifications before deployment. Compliance is critical, as non-compliance could result in legal consequences, fines, or restrictions on operation in certain regions.
+The system must comply with healthcare regulations and obtain approvals from bodies such as the FDA, adhering to PHIPA, PIPEDA, ISAO 13485 and HIPAA. Compliance is critical, as non-compliance could result in legal consequences, fines, or restrictions on operation in certain regions.
 
 \subsubsection{Data Usage Consent}
 The system must respect patients' consent for data usage, especially under regulations like PIPEDA in Canada. In some regions, even anonymized data may require explicit patient approval, which can limit available training datasets. Additionally, even anonymized data may fall under these regulations due to the risk of re-identification using advanced techniques. Non-compliance could lead to severe penalties, including fines, lawsuits, or suspension of the service.
@@ -492,13 +490,13 @@ The system must respect patients' consent for data usage, especially under regul
 Different regions and cultures may have varying levels of acceptance toward AI in healthcare, which can impact the system's deployment. Some countries may require human oversight for every AI-generated decision. Understanding these differences is crucial for identifying target markets and tailoring the rollout strategy to areas more receptive to AI-driven healthcare solutions.
 
 \subsubsection{Budget Limitations in Hospitals}
-The application may face constraints due to limited budgets in some healthcare organizations, requiring it to be affordable and sustainable. This limitation could restrict access to advanced hardware or impact the system's speed and performance. It is vital to ensure the application is lightweight and can leverage available resources from the hosting hospital to ensure functionality.
+The application may face constraints due to limited budgets in some healthcare organizations, requiring it to be affordable and sustainable. The budget for this project is up to 1000 CAD. This limitation could restrict access to advanced hardware or impact the system's speed and performance. It is vital to ensure the application is lightweight and can leverage available resources from the hosting hospital to ensure functionality.
 
 \subsubsection{Legal Liability}
 In cases of misdiagnosis, the application's legal responsibility may vary by region, necessitating protections or disclaimers. Obtaining patient consent and providing clear disclaimers are essential steps to mitigate risks of fines or legal action against the company.
 
 \subsubsection{Compatibility with Older Equipment}
-The system may need to integrate with older X-ray machines, work with limited computational resources, or function with restricted internet bandwidth in certain hospitals. These constraints are often non-negotiable due to existing infrastructure, and the system must be designed to function effectively under these conditions. Ensuring compatibility is critical, as the system relies on input from X-ray images to operate effectively.
+The system may need to integrate with older X-ray machines, work with limited computational resources, or function with restricted internet bandwidth in certain hospitals. These constraints are often non-negotiable due to existing infrastructure, and the system must be designed to function effectively under these conditions. Ensuring compatibility is critical, as the system relies on input from X-ray images to operate effectively. For excample, the system should be compatible with GE AMX 4 Portable X-ray Machine, which is common in many older or rural hospitals and often lacks high-speed image transmission or modern digital interfaces.
 
 
 \section{Specific System Description}
@@ -517,7 +515,7 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 75\% accuracy.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 85\% accuracy. Setting an 85\% threshold ensures the model performs close to human-level diagnostic reliability, which builds trust with clinicians and patients.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_ease_of_ML_intro}:] \textbf{Simple to introduce more ML models: }New classifier models must be simple and intuitive to be integrated with the system, with short time-to-market. This goal will require a containerized ML-plugin code template (in Python) and guidelines documentations for new models to follow.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_fault-tolerance}:] \textbf{High Fault-Tolerance: }Neuralanalyzer's system (front-end, back-end, ML-plugins) must handle run-time errors as clever as possible, to prevents run-time crashes, and unwanted downtime. Comprehensive unit and integration testings must be present, to reduce errors and bugs within the system.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_good_UI}:] \textbf{Intuitive UI/UX: }Neuralanalyzer's front-end must be user-friendly and straight-forward to be used. Front-end's core features such as login, account registration, and image-prediction should require as few clicks as possible.
@@ -528,7 +526,7 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
 \end{itemize}
 \newpage
 \subsection{Solution Characteristics Specification}
-\subsubsection{Overall Solution Architecture}
+\subsubsection{Overall Solution Architecture(Figure 3)}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{app-runtime.png}
@@ -546,7 +544,7 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
     \item \textbf{AWS Cloudwatch}: Act as a run-time monitoring service, responsible for storing logs, and alert the developers if any defined errors/ metrics has occurred.
 \end{itemize}
 
-\subsubsection{Overall Continuous Development and Delivery Pipeline}
+\subsubsection{Overall Continuous Development and Delivery Pipeline(Figure 4)}
 
 \begin{figure}[h!]
   \centering
@@ -702,7 +700,7 @@ This project must comply with critical legal and regulatory standards to ensure 
   \item Each input image \( x_i \) should be preprocessed to a fixed size (e.g., 224x224 pixels) to ensure compatibility with the model.
   \item The model should be trained on a diverse dataset that includes images from different demographics and disease categories.
 \end{itemize}
-\subsection{Finite State Machine Diagram}
+\subsection{Finite State Machine Diagram(Figure 5)}
 % addd the state.png file under finite state diagram subsection
 \begin{figure}[H]
     \centering
@@ -719,7 +717,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30} % Light gray for the first row (header)
-\textbf{FR1} & The system shall accept chest X-ray images as input from authorized users, including healthcare professionals and patients. \\
+\textbf{FR1} & Develop a system that accepts chest X-ray images as input from authorized users, such as healthcare professionals and patients. \\
 \hline
 \textbf{Rationale} & To perform analysis, the system requires chest X-ray images to be uploaded by users in supported formats (DICOM, JPEG, PNG). \\
 \hline
@@ -736,7 +734,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR2} & The system shall enable users to input additional patient symptoms, such as cough, chest pain, or fever. \\
+\textbf{FR2} & Develop a system that allows users to input additional patient symptoms, such as cough, chest pain, or fever \\
 \hline
 \textbf{Rationale} & Including patient symptoms helps provide more context for the AI model to enhance disease detection accuracy. Our goal is to make the AI more useful by giving it more information to work with. \\
 \hline
@@ -755,7 +753,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR3} & The system shall analyze chest X-ray images to detect the presence or absence of specific diseases with an accuracy of 85\% or higher. \\
+\textbf{FR3} & Develop a system that analyzes chest X-ray images to detect specific diseases with at least 85 percent accuracy. \\
 \hline
 \textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
 \hline
@@ -774,7 +772,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR4} & The system shall indicate whether a patient's condition has improved, worsened, or remained stable between scans. \\
+\textbf{FR4} & Develop a system that determines and indicates whether a patient's condition has improved, worsened, or remained stable between chest X-ray scans. \\
 \hline
 \textbf{Rationale} & This feature helps clinicians monitor disease progression or regression, which is vital for evaluating the effectiveness of treatments over time.\\
 \hline
@@ -793,7 +791,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR5} & The system shall generate visual aids by highlighting affected areas on the chest X-ray images. \\
+\textbf{FR5} & Develop a system that generates visual aids by highlighting affected regions on chest X-ray images. \\
 \hline
 \textbf{Rationale} & By highlighting affected regions, our system makes it easier for clinicians to identify the areas of concern in a chest X-ray. This improves their ability to act quickly. \\
 \hline
@@ -812,7 +810,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR6} & The system shall produce a structured, human-readable report summarizing key findings, disease detection results, and progression status. \\
+\textbf{FR6} & Develop a system that produce a structured, human-readable report summarizing key findings, disease detection results, and progression status. \\
 \hline
 \textbf{Rationale} & A comprehensive report makes it easier for clinicians to interpret the analysis results, especially in fast-paced environments where time is critical. \\
 \hline
@@ -831,7 +829,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR7} & The system shall store patient data, including images and reports, in a secure database for future reference. \\
+\textbf{FR7} & Develop a system that store patient data, including images and reports, in a secure database for future reference. \\
 \hline
 \textbf{Rationale} & Keeping patient records secure and accessible for future consultations or research is important for patient care continuity. \\
 \hline
@@ -851,7 +849,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR8} & The system shall provide alerts to clinicians if significant changes in a patient's condition are detected between scans. \\
+\textbf{FR8} & Develop a system that provide alerts to clinicians if significant changes in a patient's condition are detected between scans. \\
 \hline
 \textbf{Rationale} & Automated alerts can save time and ensure that urgent cases are handled quickly, improving patient outcomes. \\
 \hline
@@ -870,7 +868,7 @@ This project must comply with critical legal and regulatory standards to ensure 
   \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
   \hline
   \rowcolor{gray!30}
-  \textbf{FR9} & The system shall allow healthcare professionals to adjust treatment plans based on the X-ray analysis results. \\
+  \textbf{FR9} & Develop a system that would allow healthcare professionals to adjust treatment plans based on the X-ray analysis results. \\
   \hline
   \textbf{Rationale} & Allowing clinicians to modify treatment plans based on X-ray results helps to tailor patient care more effectively. This ensures that the system supports decision-making in real-time clinical settings. \\
   \hline
@@ -890,7 +888,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR10} & The system shall allow integration with electronic health record (EHR) systems to import and export patient data. \\
+\textbf{FR10} & Develop the system that allow integration with electronic health record (EHR) systems to import and export patient data. \\
 \hline
 \textbf{Rationale} & Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting. \\
 \hline
@@ -929,7 +927,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR12} & The system shall allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers. \\
+\textbf{FR12} & Develop a system that would allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers. \\
 \hline
 \textbf{Rationale} & Allowing patients to upload their own images increases engagement in their healthcare journey, though it must be made clear that professional interpretation is still necessary. \\
 \hline
@@ -949,7 +947,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR13} & The system shall support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient). \\
+\textbf{FR13} & Develop a system that would support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient). \\
 \hline
 \textbf{Rationale} & Different users need access to different features and data, so assigning roles ensures that each user can only perform actions they are authorized to. \\
 \hline
@@ -968,7 +966,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR14} & The system shall create a new copy of a patient’s X-ray before running the AI model for analysis. \\
+\textbf{FR14} & Develop a system that would create a new copy of a patient’s X-ray before running the AI model for analysis. \\
 \hline
 \textbf{Rationale} & Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis. \\
 \hline
@@ -987,7 +985,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR15} & The system shall support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis. \\
+\textbf{FR15} & Develop a system that would support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis. \\
 \hline
 \textbf{Rationale} & Supporting multiple imaging types expands the system's utility in various clinical scenarios. \\
 \hline
@@ -1007,7 +1005,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR16} & The system shall support regular updates to the AI model to incorporate new data and improve accuracy over time. \\
+\textbf{FR16} & Develop a system that would support regular updates to the AI model to incorporate new data and improve accuracy over time. \\
 \hline
 \textbf{Rationale} & Continuous learning enhances the model's performance and keeps it up-to-date with the latest medical knowledge. \\
 \hline
@@ -1749,7 +1747,7 @@ These requirements may be adjusted due to resource constraints, technical challe
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt} % Adjust the column separation to make it tighter
-\renewcommand{\arraystretch}{1.15} % Adjust row height for a tighter fit
+\renewcommand{\arraystretch}{1} % Adjust row height for a tighter fit
 \begin{tabular}{|p{1cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|}
 \hline
     & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\ 
@@ -1823,7 +1821,7 @@ These requirements may be adjusted due to resource constraints, technical challe
 \textbf{HS2} & & & & & & & & & & & & X & & & & \\ 
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements}
+\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements (column i depends on row j if there's a X presented in the cell)}
 \label{Table:Traceability}
 \end{table}
 \end{landscape}
