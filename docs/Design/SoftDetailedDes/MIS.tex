@@ -654,27 +654,23 @@ Note: This is being handled by React server
 \subsubsection{viewPatientList(doctorID, filters)}
 
 \begin{itemize}
-    \item \textbf{Transition}: doctorID $\in$ Doctor $\land$ filters $\in$ FilterSet
-    \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
+    \item \textbf{Transition}: $\text{doctorID} \in \text{Doctor} \land \text{filters} \in \text{FilterSet}, \quad \text{s.t. } \text{FilterSet} \subseteq \text{List[String]}$
+    \item \textbf{Output}: \text{getPatientDetails}
 \end{itemize}
 
-\subsubsection{sortList(criteria)}
+\subsubsection{sortList(criteria, Patients)}
 
 \begin{itemize}
-    \item \textbf{Transition}: Sorts the current patient list based on the provided criteria.
-    \item \textbf{Output}: Returns the sorted patient list.
+    \item \textbf{Transition}: where the function \texttt{sortList} takes two arugments: criteria or a set of applied filters in the form of a $String$  and Patients a $List[String]$ of the patients in the application. The function sorts the list of patients based on the criteria provided.
+    \item \textbf{Output}: Sorted List[String] of the List of Patients
 \end{itemize}
 
-\subsubsection{addPatient(fromData)}
+\subsubsection{addPatient(FormData)}
 \begin{itemize}
-    \item \textbf{Transition}: Submits the provided form data to the backend service for processing.
-    \item \textbf{Output}: Returns the created patient data.
+    \item \textbf{Transition}: $\text{addPatient} : \text{FormData} \to \text{PatientData}$, where the function \texttt{addPatient} maps an element $f \in \text{FormData}$ (representing the submitted form data) to an element $p \in \text{PatientData}$ representing the created patient data stored in the backend.
+    \item \textbf{Output}: createPatientData
 \end{itemize}
 
-\subsection{Local Functions}
-\begin{itemize}
-\item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
-\end{itemize}
 
 \newpage
 % /********************* M7 *********************/
