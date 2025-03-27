@@ -2,8 +2,8 @@ import os
 import torch
 
 from collections import defaultdict
-from src.ai_services.neuralanalyzer.models.classification.transfomer import TransformerNetwork
-from src.ai_services.neuralanalyzer.models.Detr.detr_api import get_features
+from .transfomer import TransformerNetwork
+from ..Detr.detr_api import get_features
 
 # Backend - Please ignore warning message
 torch._dynamo.config.verbose = True
@@ -21,6 +21,21 @@ diseases = [
     'consolidation',
     'fluid overload/heart failure',
     'pneumonia'
+]
+
+anatomical_regions = [
+    'right upper lung zone',
+    'right mid lung zone',
+    'right lower lung zone',
+    'right costophrenic angle',
+    'right hilar structures',
+    'right apical zone',
+    'left upper lung zone',
+    'left mid lung zone',
+    'left lower lung zone',
+    'left costophrenic angle',
+    'left hilar structures',
+    'cardiac silhouette',
 ]
 
 # Check Device
@@ -51,14 +66,4 @@ model.eval()
 def predict_classification(binary_data):
     features = get_features(binary_data)
     outputs = model(features.to(device))
-
-    dic = defaultdict(list)
-    for region, predictions in enumerate(outputs):
-        dic[region] = [torch.sigmoid(p).item() for p in predictions]
-
-    return dic
-
-# Output: Dictionary with key 0-11: value [0-1 float] * 9
-tmp = "00005197-869d72f3-66210bf4-fa2c9d83-b613c4e7"
-img_binary = open(f"{tmp}.jpg", 'rb').read()
-print(predict_classification(img_binary))
+    return {anatomical_regions[i]: {disease: float(pred) for disease, pred in zip(diseases, output)} for i, output in enumerate(torch.sigmoid(outputs))}

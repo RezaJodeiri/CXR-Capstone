@@ -23,9 +23,7 @@ app.register_blueprint(oauth_bp, url_prefix="/oauth")
 app.register_blueprint(user_blueprint, url_prefix="/users")
 app.register_blueprint(record_blueprint, url_prefix="/users/<userId>")
 app.register_blueprint(doctor_bp, url_prefix="/doctors/<doctorId>")
-app.register_blueprint(
-    prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>"
-)
+app.register_blueprint(prescription_blueprint, url_prefix="/users/<userId>/records/<recordId>")
 app.register_blueprint(s3_blueprint)
 
 
