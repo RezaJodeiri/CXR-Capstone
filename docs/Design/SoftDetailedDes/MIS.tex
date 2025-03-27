@@ -128,6 +128,7 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     probability & $\mathbb{P}$ & a real number in [0, 1] representing likelihood\\
     matrix & $\mathbb{M}_{m,n}$ & a 2D array of size m×n containing numerical values\\
     binary & $\mathbb{B}$ & boolean values {true, false}\\
+    Binary Number & $\mathbb{B}^*$ & a sequence of binary digits (0s and 1s)\\
     \bottomrule
     \end{tabular} 
     \end{center}
@@ -343,7 +344,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & XRayImage:binary & DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
+    \texttt{predictDisease} & XRayImage:Binary Number& DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
     \hline
 \end{tabular}
 
@@ -405,7 +406,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{trackProgression} & XrayImage1: binary, \newline XrayImage2: binary & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
+    \texttt{trackProgression} & XrayImage1: Binary Number, \newline XrayImage2: Binary Number & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
     \hline
 \end{tabular}
 \end{center}
@@ -956,7 +957,7 @@ N/A
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{getprogression} & XrayImage1: binary, \newline XrayImage2: binary & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
+    \texttt{getprogression} & XrayImage1: Binary Number, \newline XrayImage2: Binary Number & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
     \hline
     \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailed Exeception} \\
     \hline
@@ -1020,7 +1021,7 @@ N/A
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & \texttt{XrayImage: binary} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
+    \texttt{predictDisease} & \texttt{XrayImage: Binary Number} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
     \hline
 \end{tabular}
 
