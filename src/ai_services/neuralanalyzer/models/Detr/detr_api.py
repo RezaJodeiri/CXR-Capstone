@@ -3,7 +3,7 @@ import os
 import torch
 
 from PIL import Image, ImageDraw, ImageFont
-from src.ai_services.neuralanalyzer.models.Detr.detr import Detr
+from .detr import Detr
 
 # Constants
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "detr.ckpt")
@@ -67,7 +67,6 @@ def image_segmentation(binary_data):
     image.save(img_byte_arr, format='JPEG')
     img_byte_arr.seek(0)
 
-    image.save('test.jpg', "JPEG")
     return img_byte_arr
 
 def get_features(binary_data):
@@ -75,7 +74,3 @@ def get_features(binary_data):
     image = image.convert('RGB')
 
     return model.get_features(image)
-
-tmp = "00005197-869d72f3-66210bf4-fa2c9d83-b613c4e7"
-img_binary = open(f"{tmp}.jpg", 'rb').read()
-image_segmentation(img_binary)

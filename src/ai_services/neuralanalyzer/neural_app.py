@@ -1,13 +1,11 @@
 import io
 import logging
 import pydicom
-import numpy as np
 
 from PIL import Image
 from flask import Blueprint, Flask, jsonify, request, send_file
-
-from .models.Detr.detr_api import image_segmentation
-from .models.classification.classification_api import predict_classification
+from models.Detr.detr_api import image_segmentation
+from models.classification.classification_api import predict_classification
 
 app = Flask(__name__)
 
@@ -78,7 +76,7 @@ def process_dicom(file_content):
         return img_byte_arr, metadata, True
     except Exception as e:
         logger.error(f"Error processing DICOM: {str(e)}")
-        return None, None, False
+        return file_content, None, False
 
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
@@ -90,10 +88,8 @@ def predict():
         file = request.files["file"]
         file_content = file.read()
 
-        # Try to process as DICOM first
         img, metadata, is_dicom = process_dicom(file_content)
 
-        # If not DICOM, process as regular image
         if not is_dicom:
             file.seek(0)
             metadata = None
@@ -101,11 +97,7 @@ def predict():
         else:
             logger.info("Processing as DICOM image")
 
-        # Create prediction results
-        results = predict_classification(img)
-
-        # Prepare response
-        response = {"predictions": results}
+        response = {"predictions": predict_classification(img)}
         if metadata:
             response["metadata"] = metadata
 
@@ -126,10 +118,8 @@ def segments():
         file = request.files["file"]
         file_content = file.read()
 
-        # Try to process as DICOM first
         img, metadata, is_dicom = process_dicom(file_content)
 
-        # If not DICOM, process as regular image
         if not is_dicom:
             file.seek(0)
             logger.info("Processing as regular image")
@@ -137,7 +127,7 @@ def segments():
             logger.info("Processing as DICOM image")
 
         # Send image binary
-        send_file(image_segmentation(img))
+        return send_file(image_segmentation(img), mimetype='image/jpeg', as_attachment=True, download_name='segmented.jpg')
 
     except Exception as e:
         logger.error(f"Error during segments: {str(e)}")
@@ -147,4 +137,4 @@ app.register_blueprint(predict_bp)
 app.register_blueprint(segment_bp)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=9999)

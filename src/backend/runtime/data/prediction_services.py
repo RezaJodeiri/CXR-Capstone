@@ -15,7 +15,7 @@ AVAILABLE_MODELS = {
 class PredictionService:
 
     def __init__(self):
-        self.current_model_id = "TORCH_XRAY_VISION"
+        self.current_model_id = "NEURALANALYZER_MODEL_URL"
         self.current_model_url = AVAILABLE_MODELS[self.current_model_id]
 
     def get_available_models(self):
@@ -40,6 +40,16 @@ class PredictionService:
             logger.error(f"Prediction failed with status code {response.status_code}")
             return None
 
+    def segment(self, image):
+        files = {"file": image}
+        response = requests.post(f"{self.current_model_url}/segments", files=files)
+        logger.info(response)
+        if response.status_code == 200:
+            return response.content
+        else:
+            logger.error(f"Segmentation failed with status code {response.status_code}")
+            return None
+
     def downloadImage(self, url):
         response = requests.get(url)
         if response.status_code == 200:
@@ -52,5 +62,12 @@ class PredictionService:
         image = self.downloadImage(url)
         if image is not None:
             return self.predict(image)
+        else:
+            return None
+
+    def segment_from_url(self, url):
+        image = self.downloadImage(url)
+        if image is not None:
+            return self.segment(image)
         else:
             return None
