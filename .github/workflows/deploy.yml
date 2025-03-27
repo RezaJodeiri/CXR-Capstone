@@ -35,7 +35,7 @@ jobs:
           - ecs_service_name: frontend-service
             image_name: neuralanalyzer/frontend
             source_code_path: src/frontend
-            build_args: --build-arg REACT_APP_API_URL=http://backend-lb-1480840907.us-west-2.elb.amazonaws.com:5000
+            build_args: --build-arg REACT_APP_API_URL=https://api.neuralanalyzer.ca
           - ecs_service_name: backend-service
             image_name: neuralanalyzer/backend
             source_code_path: src/backend
