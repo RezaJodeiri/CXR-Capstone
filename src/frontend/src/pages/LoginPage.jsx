@@ -8,7 +8,7 @@ import { useAuth } from "../context/Authentication";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [loginFormValue, setLoginFormValue] = useState({
     email: "",
     password: "",
@@ -25,6 +25,11 @@ function LoginPage() {
       console.error("Login failed:", error);
     }
   };
+
+  // Redirect to the patients page if already authenticated
+  if (isAuthenticated()) {
+    navigate("/patients");
+  }
 
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -58,10 +63,7 @@ function LoginPage() {
             />
 
             {error && <div className="text-error text-sm">{error}</div>}
-            <PrimaryButton
-              text="Sign In"
-              onClick={handleLogin}
-            />
+            <PrimaryButton text="Sign In" onClick={handleLogin} />
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"

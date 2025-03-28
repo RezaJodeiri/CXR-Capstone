@@ -5,12 +5,21 @@ import { IoChevronForward } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import routerMapping from "../router.json";
 
-const menu = [{ label: "Profile", path: "/settings" }, { label: "Logout" }];
 function TopBar() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
   const params = useParams();
   const navigate = useNavigate();
+  const menu = [
+    {
+      label: "Profile",
+      onClick: () => navigate("/settings"),
+    },
+    {
+      label: "Logout",
+      onClick: logout,
+    },
+  ];
 
   const [showDropdown, setShowDropdown] = React.useState(false);
 
@@ -98,7 +107,7 @@ function TopBar() {
                   <button
                     key={index}
                     onClick={() => {
-                      navigate(item.path);
+                      item.onClick();
                       setShowDropdown(false);
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
