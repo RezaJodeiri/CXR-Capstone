@@ -87,31 +87,6 @@ export const predictImage = async (file, token) => {
   }
 };
 
-// Mock data storage for all medical records (including newly created ones)
-let allMedicalRecords = {
-  1: [
-    {
-      id: "1",
-      recordId: "MR-001",
-      priority: "High",
-      status: "In Progress",
-      timeCreated: "2024-03-20T10:00:00Z",
-      timeUpdated: "2024-03-20T10:00:00Z",
-      xRayUrl: "/file-upload.png",
-      clinicalNotes: "Initial examination shows...",
-      treatmentPlan: "Recommended treatment includes...",
-      prescriptions: [
-        {
-          medication: "Sample Medication",
-          dosage: "10mg",
-          frequency: "Once daily",
-          time: "Morning",
-        },
-      ],
-    },
-  ],
-};
-
 const parsePatientData = (patient) => {
   const birthDate = new Date(patient.birthdate);
   const age = new Date().getFullYear() - birthDate.getFullYear();
@@ -226,33 +201,6 @@ export const getMedicalRecordsForPatient = async (
   });
 };
 
-export const createMedicalRecord = async (patientId, recordData, token) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  const newRecord = {
-    id: Date.now().toString(),
-    recordId: `MR-${Date.now()}`,
-    xRayUrl: recordData.xRayFile
-      ? URL.createObjectURL(recordData.xRayFile)
-      : null,
-    clinicalNotes: recordData.clinicalNotes,
-    treatmentPlan: recordData.treatmentPlan,
-    prescriptions: recordData.prescriptions,
-    priority: recordData.priority,
-    status: "Pending",
-    timeCreated: new Date().toISOString(),
-    timeUpdated: new Date().toISOString(),
-  };
-
-  // Add the new record to our mock storage
-  if (!allMedicalRecords[patientId]) {
-    allMedicalRecords[patientId] = [];
-  }
-  allMedicalRecords[patientId].unshift(newRecord);
-
-  return newRecord;
-};
-
 export const getMedicalRecord = async (userId, recordId, token) => {
   return executeHTTPRequest(
     "GET",
@@ -299,7 +247,7 @@ export const getPredictionAndReport = async (userId, xRayUrl, token) => {
     },
     {},
     {
-      xrayUrl: xRayUrl,
+      xRayUrl: xRayUrl,
     }
   );
 
@@ -329,7 +277,7 @@ export const getSegmentationImage = async (userId, xRayUrl, token) => {
     },
     {},
     {
-      xrayUrl: xRayUrl,
+      xRayUrl: xRayUrl,
     }
   );
 
@@ -345,7 +293,7 @@ export const getSegmentationBoxes = async (userId, xRayUrl, token) => {
     },
     {},
     {
-      xrayUrl: xRayUrl,
+      xRayUrl: xRayUrl,
     }
   );
   const boxes = segmentationRes?.boxes || {};
@@ -368,3 +316,25 @@ export const getPrescriptionById = async (userId, recordId, prescriptionId, toke
     }
   );
 };
+
+export const createPrescription = async (userId, recordId, prescription, token) => {
+  return executeHTTPRequest(
+    "POST",
+    `/users/${userId}/records/${recordId}/prescription`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      "dosage": prescription?.dosage || "",
+      "dosageDuration": prescription?.dosageDuration || "",
+      "dosageFrequency": prescription?.dosageFrequency || "",
+      "time": prescription?.time || "",
+    }
+  );
+};
+
+
+export const createRecordForUser = async () => {
+
+}

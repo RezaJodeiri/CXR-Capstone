@@ -53,13 +53,13 @@ def handle_record_by_id(userId, recordId):
 @record_blueprint.route("/record", methods=["POST"])
 @authentication_required
 def create_new_record(userId):
-    # When create a new record, check for a valid downloadable picture from the image URL. Then run the disease report on it
-    # TODO
-    imageUrl = request.json.get("imageUrl", "")
     record_info = {
-        "imageUrl": imageUrl,
+        "xRayUrl": request.json.get("xRayUrl", ""),
         "note": request.json.get("note", ""),
         "prescription": request.json.get("prescription", []),
+        "priority": request.json.get("priority", ""),
+        "report": request.json.get("report", ""),
+        "treatmentPlan": request.json.get("treatmentPlan", ""),
     }
     record = MedicalRecordService.create_new_record(userId, record_info)
     return (
@@ -71,8 +71,8 @@ def create_new_record(userId):
 @record_blueprint.route("/records/prediction", methods=["POST"])
 @authentication_required
 def generate_prediction_and_report(userId):
-    xrayUrl = request.json.get("xrayUrl", "")
-    (report, prediction) = ReportGenerationService.generate_report(userId, xrayUrl)
+    xRayUrl = request.json.get("xRayUrl", "")
+    (report, prediction) = ReportGenerationService.generate_report(userId, xRayUrl)
     (findings, impression) = report
     return (
         jsonify(
@@ -87,8 +87,8 @@ def generate_prediction_and_report(userId):
 @record_blueprint.route("/records/segments", methods=["POST"])
 @authentication_required
 def generate_segments_from_xray(userId):
-    xrayUrl = request.json.get("xrayUrl", "")
-    segmented_image_url = PredictionService.segment_from_url(xrayUrl)
+    xRayUrl = request.json.get("xRayUrl", "")
+    segmented_image_url = PredictionService.segment_from_url(xRayUrl)
 
     return (
         jsonify({"segment": segmented_image_url}),
@@ -98,8 +98,8 @@ def generate_segments_from_xray(userId):
 @record_blueprint.route("/records/segmentation-boxes", methods=["POST"])
 @authentication_required
 def generate_segment_boxes_from_xray(userId):
-    xrayUrl = request.json.get("xrayUrl", "")
-    res = PredictionService.segment_boxes_from_url(xrayUrl)
+    xRayUrl = request.json.get("xRayUrl", "")
+    res = PredictionService.segment_boxes_from_url(xRayUrl)
 
     return (
         jsonify(res),

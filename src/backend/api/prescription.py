@@ -39,6 +39,7 @@ def handle_prescription_by_id(userId, recordId, prescriptionId):
             "dosage": request.json.get("dosage", ""),
             "dosageFrequency": request.json.get("dosageFrequency", ""),
             "dosageDuration": request.json.get("dosageDuration", ""),
+            "time": request.json.get("time", ""),
         }
         updated_prescription = MedicalPrescriptionService.update_prescription_by_id(
             prescriptionId, prescription
@@ -56,6 +57,7 @@ def create_new_prescription_for_record_id(userId, recordId):
         "dosage": request.json.get("dosage", ""),
         "dosageFrequency": request.json.get("dosageFrequency", ""),
         "dosageDuration": request.json.get("dosageDuration", ""),
+        "time": request.json.get("time", ""),
     }
     new_pre = MedicalPrescriptionService.create_new_prescription(recordId, prescription)
     return (

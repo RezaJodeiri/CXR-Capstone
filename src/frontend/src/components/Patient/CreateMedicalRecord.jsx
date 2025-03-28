@@ -19,7 +19,7 @@ function CreateMedicalRecord({
     priority: "Low",
   });
   const [prescriptions, setPrescriptions] = useState([
-    { id: 1, medication: "", dosage: "", frequency: "", time: "" },
+    { id: 1, dosage: "", dosageDuration: "", dosageFrequency: "", time: "" },
   ]);
 
   useEffect(() => {
