@@ -10,16 +10,18 @@ import CreateMedicalRecord from "./CreateMedicalRecord";
 import {
   getMedicalRecordsForPatient,
   getPredictionAndReport,
+  getSegmentationBoxes,
 } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
+import XrayWithSegmentationBoxes from "./XrayWithSegmentationBoxes";
 
 function PatientMedicalRecords({ patient }) {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [isCreating, setIsCreating] = useState(false);
   const [viewingRecord, setViewingRecord] = useState(null);
   const [medicalRecords, setMedicalRecords] = useState([]);
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("Upper Left");
+  const [selectedRegion, setSelectedRegion] = useState("cardiac silhouette");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [recordData, setRecordData] = useState({
     priority: "Low",
@@ -27,14 +29,22 @@ function PatientMedicalRecords({ patient }) {
     treatmentPlan: "",
     prescriptions: [],
     file: null,
-    xrayUrl: "",
+    xRayUrl: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [prediction, setPrediction] = useState({
     findings: "",
     impression: "",
     predictions: [],
+    segmentationBoxes: [],
   });
+
+  const getSelectedConditions = (selectedRegion) => {
+    const selectedPrediction = prediction?.predictions?.find(
+      (prediction) => prediction.region === selectedRegion
+    );
+    return selectedPrediction?.conditions || [];
+  };
 
   useEffect(() => {
     getMedicalRecordsForPatient(patient.id, token).then((data) =>
@@ -69,23 +79,42 @@ function PatientMedicalRecords({ patient }) {
     }, 300);
   };
 
-  const handleAnalyzeClick = (formData) => {
+  const handleAnalyzeClick = async (formData) => {
     setRecordData({
       ...formData,
     });
-    getPredictionAndReport(patient.id, formData.xRayUrl, token).then((data) => {
-      setIsTransitioning(true);
-      setPrediction({
-        ...prediction,
-        findings: data.report.findings,
-        impression: data.report.impression,
-        predictions: data.predictions,
-      });
-      setTimeout(() => {
-        setShowAnalysis(true);
-        setIsTransitioning(false);
-      }, 300);
+    setIsTransitioning(true);
+    const [predictionData, segmentationBoxData] = await Promise.all([
+      getPredictionAndReport(patient.id, formData.xRayUrl, token),
+      getSegmentationBoxes(user?.id, formData.xRayUrl, token),
+    ]);
+
+    console.log("predictionData", predictionData);
+    console.log("segmentationBoxData", segmentationBoxData);
+
+    setPrediction({
+      ...prediction,
+      findings: predictionData.report.findings,
+      impression: predictionData.report.impression,
+      predictions: predictionData.predictions,
+      segmentationBoxes: segmentationBoxData,
     });
+
+    setShowAnalysis(true);
+    setIsTransitioning(false);
+  };
+
+  const getColorForConfidence = (confidence) => {
+    if (confidence < 30) {
+      return "green";
+    } else if (confidence < 50) {
+      return "orange";
+    } else {
+      return "red";
+    }
+  };
+  const onSelectLabel = (label) => {
+    setSelectedRegion(label);
   };
 
   const handleBackToRecord = () => {
@@ -173,13 +202,17 @@ function PatientMedicalRecords({ patient }) {
               {/* Main Analysis Area */}
               <div className="lg:col-span-7 space-y-6">
                 {/* Image Display Area */}
-                <div className="relative rounded-lg overflow-hidden bg-gray-900 aspect-[3/3.5] w-3/5 mx-auto">
+                <div className="relative rounded-lg overflow-hidden bg-gray-900 aspect-square w-3/5 mx-auto">
                   {recordData?.file ? (
-                    <img
-                      src={URL.createObjectURL(recordData.file)}
-                      alt="X-Ray"
-                      className="w-full h-full object-contain"
-                    />
+                    // TODO
+                    <div className="relative">
+                      <XrayWithSegmentationBoxes
+                        src={recordData.xRayUrl}
+                        boundingBoxes={prediction.segmentationBoxes || []}
+                        onSelectLabel={onSelectLabel}
+                        selectedLabel={selectedRegion}
+                      />
+                    </div>
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center text-white">
                       <div className="text-center">
@@ -202,6 +235,32 @@ function PatientMedicalRecords({ patient }) {
                     </button>
                   </div>
                 </div>
+                <div className="w-full">
+                  <div className="grid grid-cols-3 gap-2">
+                    {prediction?.predictions.map((pred) => (
+                      <button
+                        key={pred.region}
+                        className={`flex items-center gap-3 justify-start px-3 py-2 border rounded-md text-sm transition-colors ${
+                          selectedRegion === pred.region
+                            ? "bg-[#9a9a9a] text-white"
+                            : "bg-gray-50 text-gray-700 hover:bg-gray-50"
+                        }`}
+                        onClick={() => setSelectedRegion(pred.region)}
+                      >
+                        <div
+                          className="flex-0 w-3 h-3 rounded-full"
+                          style={{
+                            backgroundColor: getColorForConfidence(
+                              pred.conditions[0].confidence
+                            ),
+                          }}
+                        />
+
+                        <p className="flex-1">{pred.region}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Analysis Results Panel */}
@@ -211,7 +270,7 @@ function PatientMedicalRecords({ patient }) {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-medium text-gray-900">
-                        Detection Results
+                        Selected Region
                       </h3>
                       <button
                         onClick={() => setIsEditing(!isEditing)}
@@ -226,66 +285,20 @@ function PatientMedicalRecords({ patient }) {
                       <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
                         <div>
                           <h4 className="font-medium text-red-900">
-                            <a
-                              href={`https://www.google.com?q=${prediction.predictions[0].condition}`}
-                              target="_blank"
-                            >
-                              {prediction.predictions[0].condition}
-                            </a>
+                            <h1>{selectedRegion.toUpperCase()}</h1>
                           </h4>
-                          <p className="text-sm text-red-700 mt-1">
-                            Confidence:{" "}
-                            {prediction.predictions[0].confidence.toFixed(2)}%
-                          </p>
                         </div>
                       </div>
-
                       {/* Region Analysis */}
                       <div className="space-y-3">
-                        {/* <h4 className="font-medium text-gray-700">
-                          Region Analysis
-                        </h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {[
-                            "Upper Right",
-                            "Upper Left",
-                            "Lower Right",
-                            "Lower Left",
-                          ].map((region) => (
-                            <button
-                              key={region}
-                              className={`px-3 py-2 border rounded-md text-sm transition-colors ${
-                                selectedRegion ===
-                                region.toLowerCase().replace(" ", "-")
-                                  ? "bg-[#3C7187] text-white border-[#3C7187]"
-                                  : "border-gray-200 text-gray-700 hover:bg-gray-50"
-                              }`}
-                              onClick={() =>
-                                setSelectedRegion(
-                                  region.toLowerCase().replace(" ", "-")
-                                )
-                              }
-                            >
-                              {region}
-                            </button>
-                          ))}
-                        </div> */}
-
                         {/* Region-specific Detection Results */}
+                        <h4 className="font-medium text-gray-700">
+                          Findings & Confidence
+                        </h4>
                         {selectedRegion && (
                           <div className="mt-4 space-y-3">
-                            {/* <h5 className="text-sm font-medium text-gray-600">
-                              Top Findings for
-                              {selectedRegion
-                                .split("-")
-                                .map(
-                                  (word) =>
-                                    word.charAt(0).toUpperCase() + word.slice(1)
-                                )
-                                .join(" ")}
-                            </h5> */}
                             <div className="space-y-2">
-                              {prediction.predictions
+                              {getSelectedConditions(selectedRegion)
                                 .slice(0, 5)
                                 .map((finding, index) => (
                                   <div

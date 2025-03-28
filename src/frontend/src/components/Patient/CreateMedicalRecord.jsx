@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
-import {
-  createMedicalRecord,
-  getMedicalRecord,
-  uploadFile,
-  getSegmentationImage,
-} from "../../services/api";
+import { getMedicalRecord, uploadFile } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 import { useParams } from "react-router-dom";
-
-const allowedFileTypes = ["JPG", "PNG", "GIF", "DCM"];
 
 function CreateMedicalRecord({
   onBack,
@@ -20,7 +13,6 @@ function CreateMedicalRecord({
   const { id } = useParams();
   const { user, token } = useAuth();
   const [file, setFile] = useState(null);
-  const [isGettingSegmentation, setIsGettingSegmentation] = useState(false);
   const [formData, setFormData] = useState({
     clinicalNotes: "",
     treatmentPlan: "",
@@ -29,7 +21,6 @@ function CreateMedicalRecord({
   const [prescriptions, setPrescriptions] = useState([
     { id: 1, medication: "", dosage: "", frequency: "", time: "" },
   ]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (viewMode && id) {
@@ -60,15 +51,8 @@ function CreateMedicalRecord({
     setFile(file); // Store the selected file locally
 
     try {
-      setIsGettingSegmentation(true);
       const imageURL = await uploadFile(file, token);
-      const segmentationImage = await getSegmentationImage(
-        user?.id,
-        imageURL,
-        token
-      );
-      setFormData((prev) => ({ ...prev, xRayUrl: segmentationImage })); // Store URL returned by API
-      setIsGettingSegmentation(false);
+      setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -107,30 +91,6 @@ function CreateMedicalRecord({
 
   const removePrescriptionRow = (id) => {
     setPrescriptions((prev) => prev.filter((row) => row.id !== id));
-  };
-
-  const handleSubmit = async () => {
-    // TODO
-    setLoading(true);
-    try {
-      const recordData = {
-        xRayFile: file,
-        clinicalNotes: formData.clinicalNotes,
-        treatmentPlan: formData.treatmentPlan,
-        prescriptions: prescriptions,
-        priority: formData.priority,
-      };
-      const newRecord = await createMedicalRecord(
-        user?.id,
-        recordData,
-        user?.token
-      );
-      onRecordCreated(newRecord);
-    } catch (error) {
-      console.error("Failed to create record:", error);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
@@ -190,14 +150,9 @@ function CreateMedicalRecord({
                 ) : null
               ) : (
                 <div className="flex flex-col justify-center items-center gap-3 border-2 border-dashed border-gray-300 rounded-lg p-10 hover:border-gray-400 transition-colors bg-gray-50">
-                  {isGettingSegmentation && <div className="w-full ">Analyzing ...</div>}
                   {file ? (
                     <div className="w-full aspect-square relative">
-                      <img
-                        src={isGettingSegmentation? URL.createObjectURL(file): formData.xRayUrl}
-                        alt="Preview"
-                        className="w-full h-full object-cover rounded-lg bg-black"
-                      />
+                      <img src={URL.createObjectURL(file)} />
                       <button
                         onClick={() => setFile(null)}
                         className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100"
@@ -433,8 +388,8 @@ function CreateMedicalRecord({
       <div className="flex justify-end gap-4 mt-8">
         {!viewMode && (
           <button
-            onClick={() => {
-              onAnalyze({
+            onClick={async () => {
+              await onAnalyze({
                 ...formData,
                 file: file,
                 prescriptions: prescriptions,

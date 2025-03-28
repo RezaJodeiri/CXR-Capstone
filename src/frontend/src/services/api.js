@@ -255,7 +255,7 @@ export const createMedicalRecord = async (patientId, recordData, token) => {
 
 export const getMedicalRecord = async (userId, recordId, token) => {
   return executeHTTPRequest(
-    "GET", 
+    "GET",
     `/users/${userId}/records/${recordId}`,
     {
       Authorization: `Bearer ${token}`,
@@ -304,15 +304,19 @@ export const getPredictionAndReport = async (userId, xRayUrl, token) => {
   );
 
   const predictionsArray = Object.entries(predictionRes.predictions).map(
-    ([condition, confidence]) => ({
-      condition: condition,
-      confidence: confidence * 100,
+    ([region, conditions]) => ({
+      region: region,
+      conditions: Object.entries(conditions).map(([condition, confidence]) => ({
+        condition: condition,
+        confidence: confidence * 100
+      }))
     })
   );
+  predictionsArray.forEach((region) => {
+    region.conditions.sort((a, b) => b.confidence - a.confidence);
+  });
 
-  predictionRes.predictions = predictionsArray.sort(
-    (a, b) => b.confidence - a.confidence
-  );
+  predictionRes.predictions = predictionsArray
   return predictionRes;
 };
 
@@ -335,7 +339,7 @@ export const getSegmentationImage = async (userId, xRayUrl, token) => {
 export const getSegmentationBoxes = async (userId, xRayUrl, token) => {
   const segmentationRes = await executeHTTPRequest(
     "POST",
-    `/users/${userId}/records/segments`,
+    `/users/${userId}/records/segmentation-boxes`,
     {
       Authorization: `Bearer ${token}`,
     },
@@ -344,13 +348,20 @@ export const getSegmentationBoxes = async (userId, xRayUrl, token) => {
       xrayUrl: xRayUrl,
     }
   );
-
-  return segmentationRes?.segment || null;
+  const boxes = segmentationRes?.boxes || {};
+  const boxes2 = Object.entries(boxes).map(([label, boxData]) => ({
+    label: label,
+    x1: boxData[1],
+    y1: boxData[2],
+    x2: boxData[3],
+    y2: boxData[4],
+  }));
+  return boxes2;
 };
 
 export const getPrescriptionById = async (userId, recordId, prescriptionId, token) => {
   return executeHTTPRequest(
-    "GET", 
+    "GET",
     `/users/${userId}/records/${recordId}/prescriptions/${prescriptionId}`,
     {
       Authorization: `Bearer ${token}`,
