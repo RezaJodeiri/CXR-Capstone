@@ -2,7 +2,7 @@ import React from "react";
 import PredictionPage from "./pages/PredictionPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/Authentication";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 // import DashboardPage from "./pages/DashboardPage";
@@ -21,15 +21,6 @@ function App() {
           <Route index element={<LoginPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          {/* Dashboard route commented out
-          <Route 
-            path="dashboard" 
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            } 
-          /> */}
           <Route
             path="prediction"
             element={
@@ -80,6 +71,8 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<Navigate to="/" />} />
+          {/* Redirect all unknown path to Home Page */}
         </Routes>
       </div>
     </AuthProvider>
