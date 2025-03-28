@@ -3,7 +3,12 @@ import requests
 from ..config import Config
 from ..logger import Logger
 
+from .aws_s3 import S3PresignedURLHandler as s3
+
+from uuid import uuid4
+
 logger = Logger().getLogger()
+S3PresignedURLHandler = s3('neuralanalyzer-xrays')
 
 RuntimeConfig = Config()
 AVAILABLE_MODELS = {
@@ -50,6 +55,16 @@ class PredictionService:
             logger.error(f"Segmentation failed with status code {response.status_code}")
             return None
 
+    def get_boxes_from_image_binary(self, image):
+        files = {"file": image}
+        response = requests.post(f"{self.current_model_url}/segments/box", files=files)
+        logger.info(response)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            logger.error(f"Box")
+            return None
+
     def downloadImage(self, url):
         response = requests.get(url)
         if response.status_code == 200:
@@ -68,6 +83,16 @@ class PredictionService:
     def segment_from_url(self, url):
         image = self.downloadImage(url)
         if image is not None:
-            return self.segment(image)
+            image_binary = self.segment(image)
+            segmented_image_url = S3PresignedURLHandler.upload_binary(image_binary, f"{uuid4()}.jpg")
+            return segmented_image_url
+            
+        else:
+            return None
+
+    def segment_boxes_from_url(self, url):
+        image = self.downloadImage(url)
+        if image is not None:
+            return self.get_boxes_from_image_binary(image)
         else:
             return None

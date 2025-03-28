@@ -4,7 +4,7 @@ import pydicom
 
 from PIL import Image
 from flask import Blueprint, Flask, jsonify, request, send_file
-from models.Detr.detr_api import image_segmentation
+from models.Detr.detr_api import image_segmentation, get_boxes
 from models.classification.classification_api import predict_classification
 
 app = Flask(__name__)
@@ -133,6 +133,30 @@ def segments():
 
         # Send image binary
         return send_file(image_segmentation(img), mimetype='image/jpeg', as_attachment=True, download_name='segmented.jpg')
+
+    except Exception as e:
+        logger.error(f"Error during segments: {str(e)}")
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+@predict_bp.route("/segments/box", methods=["POST"])
+def segment_box():
+    try:
+        if "file" not in request.files:
+            logger.warning("No file found in the request.")
+            return jsonify({"error": "No file uploaded"}), 400
+
+        file = request.files["file"]
+        file_content = file.read()
+
+        img, _, is_dicom = process_dicom(file_content)
+
+        if not is_dicom:
+            file.seek(0)
+            logger.info("Processing as regular image")
+        else:
+            logger.info("Processing as DICOM image")
+
+        return jsonify({"boxes": get_boxes(img)})
 
     except Exception as e:
         logger.error(f"Error during segments: {str(e)}")

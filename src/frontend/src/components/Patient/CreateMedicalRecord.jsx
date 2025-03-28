@@ -4,6 +4,7 @@ import {
   createMedicalRecord,
   getMedicalRecord,
   uploadFile,
+  getSegmentationImage,
 } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 import { useParams } from "react-router-dom";
@@ -19,6 +20,7 @@ function CreateMedicalRecord({
   const { id } = useParams();
   const { user, token } = useAuth();
   const [file, setFile] = useState(null);
+  const [isGettingSegmentation, setIsGettingSegmentation] = useState(false);
   const [formData, setFormData] = useState({
     clinicalNotes: "",
     treatmentPlan: "",
@@ -55,14 +57,18 @@ function CreateMedicalRecord({
   };
 
   const handleFileChange = async (file) => {
-    // TODO
     setFile(file); // Store the selected file locally
 
     try {
+      setIsGettingSegmentation(true);
       const imageURL = await uploadFile(file, token);
-      console.log(imageURL);
-      // DO something with the response
-      setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
+      const segmentationImage = await getSegmentationImage(
+        user?.id,
+        imageURL,
+        token
+      );
+      setFormData((prev) => ({ ...prev, xRayUrl: segmentationImage })); // Store URL returned by API
+      setIsGettingSegmentation(false);
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -107,7 +113,6 @@ function CreateMedicalRecord({
     // TODO
     setLoading(true);
     try {
-      console.log("File is uploaded...");
       const recordData = {
         xRayFile: file,
         clinicalNotes: formData.clinicalNotes,
@@ -185,12 +190,13 @@ function CreateMedicalRecord({
                 ) : null
               ) : (
                 <div className="flex flex-col justify-center items-center gap-3 border-2 border-dashed border-gray-300 rounded-lg p-10 hover:border-gray-400 transition-colors bg-gray-50">
+                  {isGettingSegmentation && <div className="w-full ">Analyzing ...</div>}
                   {file ? (
                     <div className="w-full aspect-square relative">
                       <img
-                        src={URL.createObjectURL(file)}
+                        src={isGettingSegmentation? URL.createObjectURL(file): formData.xRayUrl}
                         alt="Preview"
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover rounded-lg bg-black"
                       />
                       <button
                         onClick={() => setFile(null)}

@@ -59,7 +59,7 @@ model = TransformerNetwork(
 )
 model.to(device)
 model.compile()
-state_dict = {k.replace('_orig_mod.', ''): v for k, v in torch.load(MODEL_PATH).items()}
+state_dict = {k.replace('_orig_mod.', ''): v for k, v in torch.load(MODEL_PATH, map_location=device, weights_only=True ).items()}
 model.load_state_dict(state_dict)
 model.eval()
 

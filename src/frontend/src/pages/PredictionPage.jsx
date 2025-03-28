@@ -203,7 +203,6 @@ function PredictionPage() {
                     }
                     key={index}
                     onClick={() => {
-                      console.log(file.name);
                       setCurrentImageName(file.name);
                     }}
                   >

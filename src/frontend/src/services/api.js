@@ -316,6 +316,38 @@ export const getPredictionAndReport = async (userId, xRayUrl, token) => {
   return predictionRes;
 };
 
+export const getSegmentationImage = async (userId, xRayUrl, token) => {
+  const segmentationRes = await executeHTTPRequest(
+    "POST",
+    `/users/${userId}/records/segments`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      xrayUrl: xRayUrl,
+    }
+  );
+
+  return segmentationRes?.segment || null;
+};
+
+export const getSegmentationBoxes = async (userId, xRayUrl, token) => {
+  const segmentationRes = await executeHTTPRequest(
+    "POST",
+    `/users/${userId}/records/segments`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      xrayUrl: xRayUrl,
+    }
+  );
+
+  return segmentationRes?.segment || null;
+};
+
 export const getPrescriptionById = async (userId, recordId, prescriptionId, token) => {
   return executeHTTPRequest(
     "GET", 

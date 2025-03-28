@@ -4,6 +4,7 @@ import torch
 
 from PIL import Image, ImageDraw, ImageFont
 from .detr import Detr
+from collections import defaultdict
 
 # Constants
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "detr.ckpt")
@@ -46,12 +47,29 @@ model.eval()
 model = torch.compile(model)
 print("DETR Model loaded...")
 
+def get_boxes(binary_data):
+    image = Image.open(io.BytesIO(binary_data))
+    image = image.convert('RGB')
+
+    with torch.no_grad():
+        segmentations = model.get_boxes(image, scale=False)
+    
+    box = defaultdict(list)
+    
+    for segmentation in segmentations:
+        region, score, x1, y1, x2, y2 = segmentation.strip().split(" ")
+        region, score, x1, y1, x2, y2 = int(region), float(score), float(x1), float(y1), float(x2), float(y2)
+
+        box[anatomical_regions[region-1]] = [score, x1, y1, x2, y2]
+
+    return box
+
 def image_segmentation(binary_data):
     image = Image.open(io.BytesIO(binary_data))
     image = image.convert('RGB')
 
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 40)
+    font = ImageFont.load_default(size=20)
 
     with torch.no_grad():
         segmentations = model.get_boxes(image)
@@ -59,7 +77,7 @@ def image_segmentation(binary_data):
     for segmentation in segmentations:
         region, score, x1, y1, x2, y2 = segmentation.strip().split(" ")
         region, score, x1, y1, x2, y2 = int(region), float(score), float(x1), float(y1), float(x2), float(y2)
-        draw.rectangle([x1, y1, x2, y2], outline=color_dict[region], width=5)
+        draw.rectangle([x1, y1, x2, y2], outline=color_dict[region], width=3)
         label = f" {anatomical_regions[region-1]}: {score:.2f}"
         draw.text((x1, y1), text=label, fill=color_dict[region], font=font)
 

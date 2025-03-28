@@ -1,7 +1,7 @@
 from decorators.login_required import authentication_required
 from flask import Blueprint, jsonify, request
 from runtime import MedicalRecordService, MedicalPrescriptionService
-from runtime import ReportGenerationService
+from runtime import ReportGenerationService, PredictionService
 
 record_blueprint = Blueprint("record", __name__)
 
@@ -81,5 +81,27 @@ def generate_prediction_and_report(userId):
                 "predictions": prediction["predictions"],
             }
         ),
+        200,
+    )
+
+@record_blueprint.route("/records/segments", methods=["POST"])
+@authentication_required
+def generate_segments_from_xray(userId):
+    xrayUrl = request.json.get("xrayUrl", "")
+    segmented_image_url = PredictionService.segment_from_url(xrayUrl)
+
+    return (
+        jsonify({"segment": segmented_image_url}),
+        200,
+    )
+
+@record_blueprint.route("/records/segmentation-boxes", methods=["POST"])
+@authentication_required
+def generate_segment_boxes_from_xray(userId):
+    xrayUrl = request.json.get("xrayUrl", "")
+    res = PredictionService.segment_boxes_from_url(xrayUrl)
+
+    return (
+        jsonify(res),
         200,
     )

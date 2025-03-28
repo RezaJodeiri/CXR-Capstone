@@ -57,7 +57,6 @@ function TopBar() {
 
   const getTitle = () => {
     const ROUTER_PATHS = routerMapping.paths;
-    console.log(location.pathname);
 
     if (ROUTER_PATHS[location.pathname]) {
       return ROUTER_PATHS[location.pathname].title;

@@ -51,7 +51,7 @@ class Detr(pl.LightningModule):
         )
         return bbox_corners
 
-    def post_process_object_detection(self, outputs, last_hidden_state = [], threshold: float = 0.5, target_sizes = None):
+    def post_process_object_detection(self, outputs, last_hidden_state = [], threshold: float = 0.5, target_sizes = None, scale = True):
         """
         Converts the raw output of [`DetrForObjectDetection`] into final bounding boxes in (top_left_x, top_left_y,
         bottom_right_x, bottom_right_y) format. Only supports PyTorch.
@@ -91,7 +91,9 @@ class Detr(pl.LightningModule):
                 img_h, img_w = target_sizes.unbind(1)
 
             scale_fct = torch.stack([img_w, img_h, img_w, img_h], dim=1).to(boxes.device)
-            boxes = boxes * scale_fct[:, None, :]
+            
+            if scale:
+                boxes = boxes * scale_fct[:, None, :]
 
         results = []
 
@@ -137,7 +139,7 @@ class Detr(pl.LightningModule):
         return lines
 
 
-    def get_boxes(self, image):
+    def get_boxes(self, image, scale=True):
         encoding = image_processor(image, return_tensors="pt")
         pixel_values = encoding["pixel_values"].to(self.device)
         pixel_mask = encoding["pixel_mask"].to(self.device)
@@ -146,7 +148,7 @@ class Detr(pl.LightningModule):
             outputs = self.model(pixel_values=pixel_values, pixel_mask=pixel_mask)
 
         return self.unique_segementation(
-            self.post_process_object_detection(outputs, target_sizes=[(image.height, image.width)])[0]
+            self.post_process_object_detection(outputs, target_sizes=[(image.height, image.width)], scale=scale)[0]
         )
 
     def get_features(self, image):

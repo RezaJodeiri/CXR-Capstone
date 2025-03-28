@@ -26,9 +26,13 @@ class S3PresignedURLHandler:
     def generate_download_url(self,object_name,expiration=1000):
         """Generates a pre-signed URL for downloading a file."""
         response = self.s3_client.generate_presigned_url(
-        'get_object',
-        Params={'Bucket': self.bucket_name, 'Key': object_name},
-        ExpiresIn=expiration
+            'get_object',
+            Params={
+                'Bucket': self.bucket_name, 
+                'Key': object_name,
+                'ResponseContentDisposition': 'inline'
+            },
+            ExpiresIn=expiration
         )
         return response
 
@@ -56,12 +60,13 @@ class S3PresignedURLHandler:
         else:
             print(f"Download failed with status code {response.status_code}: {response.text}")
 
-
-#local_file_path = '/Users/kd0819/Downloads/test_local2.pdf'
-filename = 'test2.pdf'
-
-s3_handler = S3PresignedURLHandler('neuralanalyzer-xrays')
-
-# #s3_handler.download_file(filename, local_file_path)
-print(s3_handler.generate_upload_url(filename))
-# #print(s3_handler.generate_download_url(filename))
+    def upload_binary(self, binary_data, object_name, expiration=1000):
+        """Uploads a binary file to S3 and returns a pre-signed URL for accessing it."""
+        self.s3_client.put_object(
+            Bucket=self.bucket_name, 
+            Key=object_name, 
+            Body=binary_data,
+            ContentType='image/jpeg'
+            )
+        return self.generate_download_url(object_name, expiration)
+        
