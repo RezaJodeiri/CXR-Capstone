@@ -17,6 +17,78 @@ import {
 import { useAuth } from "../../context/Authentication";
 import XrayWithSegmentationBoxes from "./XrayWithSegmentationBoxes";
 
+const AnalysisLoader = () => (
+  <div className="fixed inset-0 bg-white/95 backdrop-filter backdrop-blur-md z-[9999] flex flex-col items-center justify-center">
+    <div className="text-center p-8 rounded-xl shadow-xl bg-white max-w-lg border border-gray-100 translate-y-[100%]">
+      <div className="mb-6">
+        <svg
+          className="w-24 h-24 mx-auto text-[#3C7187]"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="35"
+            stroke="#3C7187"
+            strokeWidth="5"
+            strokeDasharray="55 55"
+            fill="none"
+            strokeLinecap="round"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              repeatCount="indefinite"
+              dur="1.5s"
+              values="0 50 50;360 50 50"
+              keyTimes="0;1"
+            ></animateTransform>
+          </circle>
+          <circle
+            cx="50"
+            cy="50"
+            r="25"
+            stroke="#2c5465"
+            strokeWidth="5"
+            strokeDasharray="40 40"
+            fill="none"
+            strokeLinecap="round"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              repeatCount="indefinite"
+              dur="1s"
+              values="360 50 50;0 50 50"
+              keyTimes="0;1"
+            ></animateTransform>
+          </circle>
+        </svg>
+      </div>
+      <h2 className="text-2xl font-bold text-[#3C7187] mb-4 animate-pulse">
+        Analyzing X-Ray
+      </h2>
+      <p className="text-gray-600 max-w-sm mx-auto mb-10">
+        AI is processing your medical data and generating a comprehensive
+        analysis with region-specific findings
+      </p>
+      <div className="w-full h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
+        <div className="h-full bg-[#3C7187] animate-progress rounded-full"></div>
+      </div>
+      <div className="mt-6 flex justify-center gap-2">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={i}
+            className="w-2.5 h-2.5 rounded-full bg-[#3C7187] animate-bounce opacity-80"
+            style={{ animationDelay: `${i * 0.15}s` }}
+          ></div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 function PatientMedicalRecords({ patient }) {
   const { token, user } = useAuth();
   const [isCreating, setIsCreating] = useState(false);
@@ -25,6 +97,7 @@ function PatientMedicalRecords({ patient }) {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState("cardiac silhouette");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [recordData, setRecordData] = useState({
     priority: "Low",
     treatmentPlan: "",
@@ -78,6 +151,7 @@ function PatientMedicalRecords({ patient }) {
       ...formData,
     });
     setIsTransitioning(true);
+    setIsAnalyzing(true);
     const [predictionData, segmentationBoxData] = await Promise.all([
       getPredictionAndReport(patient.id, formData.xRayUrl, token),
       getSegmentationBoxes(user?.id, formData.xRayUrl, token),
@@ -96,6 +170,7 @@ function PatientMedicalRecords({ patient }) {
 
     setShowAnalysis(true);
     setIsTransitioning(false);
+    setIsAnalyzing(false);
   };
 
   const submitRecord = async () => {
@@ -143,6 +218,10 @@ function PatientMedicalRecords({ patient }) {
     setShowAnalysis(false);
     setIsTransitioning(false);
   };
+
+  if (isAnalyzing) {
+    return <AnalysisLoader />;
+  }
 
   // If creating a new record
   if (isCreating || viewingRecord) {
@@ -279,9 +358,9 @@ function PatientMedicalRecords({ patient }) {
 
                     <div className="space-y-4">
                       {/* Primary Finding */}
-                      <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
+                      <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                         <div>
-                          <h4 className="font-medium text-red-900">
+                          <h4 className="font-medium text-blue-900">
                             <h1>{selectedRegion.toUpperCase()}</h1>
                           </h4>
                         </div>
@@ -568,6 +647,48 @@ function PatientMedicalRecords({ patient }) {
             to {
               transform: scaleX(1);
             }
+          }
+
+          @keyframes progress {
+            0% {
+              width: 5%;
+            }
+            50% {
+              width: 70%;
+            }
+            100% {
+              width: 95%;
+            }
+          }
+          
+          .animate-progress {
+            animation: progress 2s ease-in-out infinite;
+          }
+          
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.7;
+            }
+          }
+          
+          .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          
+          @keyframes bounce {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-5px);
+            }
+          }
+          
+          .animate-bounce {
+            animation: bounce 1s ease-in-out infinite;
           }
         `}
       </style>
