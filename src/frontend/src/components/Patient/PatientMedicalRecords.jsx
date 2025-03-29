@@ -15,6 +15,35 @@ import {
 import { useAuth } from "../../context/Authentication";
 import XrayWithSegmentationBoxes from "./XrayWithSegmentationBoxes";
 
+const AnalysisLoader = () => (
+  <div className="fixed inset-0 bg-white/95 backdrop-filter backdrop-blur-md z-[9999] flex flex-col items-center justify-center">
+    <div className="text-center p-8 rounded-xl shadow-xl bg-white max-w-lg border border-gray-100 translate-y-[100%]">
+
+
+      <div className="mb-6">
+        <svg className="w-24 h-24 mx-auto text-[#3C7187]" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+          <circle cx="50" cy="50" r="35" stroke="#3C7187" strokeWidth="5" strokeDasharray="55 55" fill="none" strokeLinecap="round">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.5s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+          </circle>
+          <circle cx="50" cy="50" r="25" stroke="#2c5465" strokeWidth="5" strokeDasharray="40 40" fill="none" strokeLinecap="round">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="360 50 50;0 50 50" keyTimes="0;1"></animateTransform>
+          </circle>
+        </svg>
+      </div>
+      <h2 className="text-2xl font-bold text-[#3C7187] mb-4 animate-pulse">Analyzing X-Ray</h2>
+      <p className="text-gray-600 max-w-sm mx-auto mb-10">AI is processing your medical data and generating a comprehensive analysis with region-specific findings</p>
+      <div className="w-full h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
+        <div className="h-full bg-[#3C7187] animate-progress rounded-full"></div>
+      </div>
+      <div className="mt-6 flex justify-center gap-2">
+        {[1, 2, 3, 4, 5].map(i => (
+          <div key={i} className="w-2.5 h-2.5 rounded-full bg-[#3C7187] animate-bounce opacity-80" style={{ animationDelay: `${i * 0.15}s` }}></div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 function PatientMedicalRecords({ patient }) {
   const { token, user } = useAuth();
   const [isCreating, setIsCreating] = useState(false);
@@ -23,6 +52,7 @@ function PatientMedicalRecords({ patient }) {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState("cardiac silhouette");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [recordData, setRecordData] = useState({
     priority: "Low",
     clinicalNotes: "",
@@ -84,24 +114,41 @@ function PatientMedicalRecords({ patient }) {
       ...formData,
     });
     setIsTransitioning(true);
-    const [predictionData, segmentationBoxData] = await Promise.all([
-      getPredictionAndReport(patient.id, formData.xRayUrl, token),
-      getSegmentationBoxes(user?.id, formData.xRayUrl, token),
-    ]);
+    setIsAnalyzing(true);
+    d
+    setTimeout(() => {
 
-    console.log("predictionData", predictionData);
-    console.log("segmentationBoxData", segmentationBoxData);
+      Promise.all([
+        getPredictionAndReport(patient.id, formData.xRayUrl, token),
+        getSegmentationBoxes(user?.id, formData.xRayUrl, token),
+      ])
+      .then(([predictionData, segmentationBoxData]) => {
+        console.log("predictionData", predictionData);
+        console.log("segmentationBoxData", segmentationBoxData);
 
-    setPrediction({
-      ...prediction,
-      findings: predictionData.report.findings,
-      impression: predictionData.report.impression,
-      predictions: predictionData.predictions,
-      segmentationBoxes: segmentationBoxData,
-    });
+        setPrediction({
+          ...prediction,
+          findings: predictionData.report.findings,
+          impression: predictionData.report.impression,
+          predictions: predictionData.predictions,
+          segmentationBoxes: segmentationBoxData,
+        });
 
-    setShowAnalysis(true);
-    setIsTransitioning(false);
+
+        setTimeout(() => {
+          setShowAnalysis(true);
+          setIsTransitioning(false);
+          setIsAnalyzing(false);
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error during analysis:", error);
+        setTimeout(() => {
+          setIsTransitioning(false);
+          setIsAnalyzing(false);
+        }, 1000);
+      });
+    }, 1000);
   };
 
   const getColorForConfidence = (confidence) => {
@@ -119,9 +166,17 @@ function PatientMedicalRecords({ patient }) {
 
   const handleBackToRecord = () => {
     setIsTransitioning(true);
-    setShowAnalysis(false);
-    setIsTransitioning(false);
+    setTimeout(() => {
+      setShowAnalysis(false);
+      setIsTransitioning(false);
+      // Don't reset prediction data here as we want to keep it when going back to record
+    }, 300);
   };
+
+  // Render loading screen outside all conditions
+  if (isAnalyzing) {
+    return <AnalysisLoader />;
+  }
 
   // If viewing a record
   if (viewingRecord) {
@@ -386,8 +441,24 @@ function PatientMedicalRecords({ patient }) {
                 onClick={() => {
                   setIsTransitioning(true);
                   setTimeout(() => {
+                    // Reset all states completely
                     setIsCreating(false);
+                    setShowAnalysis(false);
                     setIsTransitioning(false);
+                    setPrediction({
+                      findings: "",
+                      impression: "",
+                      predictions: [],
+                      segmentationBoxes: [],
+                    });
+                    setRecordData({
+                      priority: "Low",
+                      clinicalNotes: "",
+                      treatmentPlan: "",
+                      prescriptions: [],
+                      file: null,
+                      xRayUrl: "",
+                    });
                   }, 300);
                 }}
                 className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
@@ -397,6 +468,10 @@ function PatientMedicalRecords({ patient }) {
               <button
                 onClick={() => {
                   setIsTransitioning(true);
+                  // Don't show analysis loader for submission
+                  // setIsAnalyzing(true);
+                  
+                  // Just use a transition effect
                   setTimeout(() => {
                     handleRecordCreated({
                       id: Date.now(),
@@ -405,7 +480,8 @@ function PatientMedicalRecords({ patient }) {
                       timeCreated: new Date().toISOString(),
                       timeUpdated: new Date().toISOString(),
                     });
-                  }, 300);
+                    // setIsAnalyzing(false);
+                  }, 500);
                 }}
                 className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
               >
@@ -414,9 +490,25 @@ function PatientMedicalRecords({ patient }) {
             </div>
           </div>
         ) : (
-          // Medical Record Creation Stage
           <CreateMedicalRecord
-            onBack={() => setIsCreating(false)}
+            onBack={() => {
+              // Reset all states when going back from record creation
+              setPrediction({
+                findings: "",
+                impression: "",
+                predictions: [],
+                segmentationBoxes: [],
+              });
+              setRecordData({
+                priority: "Low",
+                clinicalNotes: "",
+                treatmentPlan: "",
+                prescriptions: [],
+                file: null,
+                xRayUrl: "",
+              });
+              setIsCreating(false);
+            }}
             onRecordCreated={handleRecordCreated}
             onAnalyze={handleAnalyzeClick}
           />
@@ -567,6 +659,48 @@ function PatientMedicalRecords({ patient }) {
             to {
               transform: scaleX(1);
             }
+          }
+          
+          @keyframes progress {
+            0% {
+              width: 5%;
+            }
+            50% {
+              width: 70%;
+            }
+            100% {
+              width: 95%;
+            }
+          }
+          
+          .animate-progress {
+            animation: progress 2s ease-in-out infinite;
+          }
+          
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.7;
+            }
+          }
+          
+          .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          
+          @keyframes bounce {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-5px);
+            }
+          }
+          
+          .animate-bounce {
+            animation: bounce 1s ease-in-out infinite;
           }
         `}
       </style>
