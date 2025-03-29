@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --config jest.config.js",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -33,16 +33,16 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "latest",
-    "@babel/preset-react": "latest",
-    "@testing-library/jest-dom": "latest",
-    "@testing-library/react": "latest",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.4.21",
-    "axios-mock-adapter": "latest",
-    "babel-jest": "latest",
-    "identity-obj-proxy": "latest",
-    "jest": "latest",
-    "jest-environment-jsdom": "latest",
+    "axios-mock-adapter": "^1.21.5",
+    "babel-jest": "^29.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17"
   }
