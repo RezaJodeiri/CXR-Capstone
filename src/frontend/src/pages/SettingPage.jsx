@@ -1,12 +1,11 @@
 import _ from "lodash";
-import React, { useState } from "react";
-
-import Sidebar from "../components/Sidebar";
+import React, { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";
-import { FaRegUser } from "react-icons/fa";
 import { useAuth } from "../context/Authentication";
+import { FaRegUser } from "react-icons/fa";
 import { PrimaryButton, CancelButton } from "../components/Buttons";
 import { MdEdit } from "react-icons/md";
+
 function SettingsPage() {
   const { user } = useAuth();
 
@@ -28,13 +27,9 @@ function SettingsPage() {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar
-        isCollapsed={isCollapsed}
-        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
-      />
-      <div className="flex-1 flex flex-col">
-        <TopBar />
+    <div className="flex flex-col h-screen">
+      <TopBar />
+      <div className="flex-1 flex flex-col overflow-hidden">
         <div className="p-8">
           <div className="bg-white rounded-lg p-6 h-[85vh] flex flex-col">
             <div className="w-full h-[70%] flex flex-col gap-12">
