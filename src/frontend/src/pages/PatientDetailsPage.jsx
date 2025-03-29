@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";
-import Sidebar from "../components/Sidebar";
 import PatientInfo from "../components/Patient/PatientInfo";
 import PatientOverview from "../components/Patient/PatientOverview";
 import PatientMedicalRecords from "../components/Patient/PatientMedicalRecords";
@@ -11,7 +10,6 @@ import { getPatientById } from "../services/api";
 function PatientDetailsPage() {
   const { id: patientId } = useParams();
   const [patient, setPatient] = useState({});
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -40,34 +38,28 @@ function PatientDetailsPage() {
   };
 
   return (
-    <div className="flex h-screen">
-      <Sidebar
-        isCollapsed={isCollapsed}
-        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
-      />
-      <div className="flex-1 flex flex-col">
-        <TopBar />
-        <div className="flex-1 bg-gray-100 p-6 overflow-auto">
-          <div className="bg-white rounded-lg shadow-sm mb-6">
-            {!_.isEmpty(patient) && (
-              <PatientInfo
-                patient={patient}
-                activeTab={activeTab}
-                setActiveTab={handleTabChange}
-              />
-            )}
-            <div
-              className={`
-                transition-all duration-200 ease-in-out
-                ${
-                  isTransitioning
-                    ? "opacity-0 translate-y-1"
-                    : "opacity-100 translate-y-0"
-                }
-              `}
-            >
-              {renderTabContent(patient)}
-            </div>
+    <div className="flex flex-col h-screen">
+      <TopBar />
+      <div className="flex-1 bg-gray-100 p-6 overflow-auto">
+        <div className="bg-white rounded-lg shadow-sm mb-6">
+          {!_.isEmpty(patient) && (
+            <PatientInfo
+              patient={patient}
+              activeTab={activeTab}
+              setActiveTab={handleTabChange}
+            />
+          )}
+          <div
+            className={`
+              transition-all duration-200 ease-in-out
+              ${
+                isTransitioning
+                  ? "opacity-0 translate-y-1"
+                  : "opacity-100 translate-y-0"
+              }
+            `}
+          >
+            {renderTabContent(patient)}
           </div>
         </div>
       </div>
