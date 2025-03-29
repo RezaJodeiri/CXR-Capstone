@@ -130,9 +130,6 @@ export const getPatientById = async (patientId, token) => {
 };
 
 export const parseRecordData = (record) => {
-  const lastMonth = new Date();
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-
   return {
     id: record.id,
     friendlyId: "RID-" + record.id.split("-")[0],
@@ -140,8 +137,8 @@ export const parseRecordData = (record) => {
     priority: "Medium",
     reportStatus: "In Progress",
     status: record.status,
-    timeCreated: lastMonth.toISOString(),
-    timeUpdated: lastMonth.toISOString(),
+    timeCreated: record.created_at,
+    timeUpdated: record.updated_at,
   };
 };
 export const getMedicalRecordsForPatient = async (

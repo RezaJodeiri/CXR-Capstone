@@ -31,7 +31,7 @@ function PatientDetailsPage() {
   const renderTabContent = (patient) => {
     switch (activeTab) {
       case "Overview":
-        return <PatientOverview />;
+        return <PatientOverview patient={patient} />;
       case "Medical Record":
         return <PatientMedicalRecords patient={patient} />;
       default:

@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import {
+  getMedicalRecordsForPatient,
+  getMedicalRecord,
+} from "../../services/api";
+import { useAuth } from "../../context/Authentication";
 
-function PatientOverview() {
-  const treatmentData = [
-    {
-      medicine: "Ursofalk 300",
-      dosage: "2 Pills",
-      time: "02:00 PM",
-      type: "Routine Medicine",
-      notes: "No observations or notes",
-    },
-    {
-      medicine: "Indever 20",
-      dosage: "1 Pill",
-      time: "02:20 PM",
-      type: "Emergency",
-      notes:
-        "Patient observed to be having seizures. Indever given to reduce blood pressure",
-    },
-  ];
+function PatientOverview({ patient }) {
+  const { token } = useAuth();
+  const [latestRecord, setLatestRecord] = useState(null);
+
+  useEffect(() => {
+    getMedicalRecordsForPatient(patient.id, token).then((data) => {
+      data.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+      const firstRecordId = data[0]?.id;
+      if (!firstRecordId) return;
+      getMedicalRecord(patient.id, firstRecordId, token).then((fullRecord) => {
+        if (!data) return;
+        setLatestRecord(fullRecord);
+      });
+    });
+  }, [patient]);
+
+  const prescriptions = latestRecord?.prescriptions?.data || [];
 
   return (
     <div className="p-6">
@@ -30,14 +34,11 @@ function PatientOverview() {
             </div>
           </div>
           <div className="px-6 pb-6">
-            <div className="grid grid-cols-6 gap-6">
-              This is an note and this section needed to be filled out
-            </div>
+            <h1>{latestRecord?.note}</h1>
           </div>
         </div>
       </div>
 
-      {/* Treatment Plan Section */}
       <div className="mb-6">
         <div className="border border-gray-200 rounded-2xl">
           <div className="flex items-center gap-2 px-6 pt-6 mb-4">
@@ -48,20 +49,16 @@ function PatientOverview() {
           </div>
           <div className="px-6 pb-6">
             <div className="space-y-6">
-              {treatmentData.map((treatment, index) => (
+              {prescriptions.map((treatment, index) => (
                 <div key={index} className={index !== 0 ? "pt-6 border-t" : ""}>
                   <div className="flex">
-                    <div className="w-[130px]">
-                      <h3 className="font-semibold">{treatment.medicine}</h3>
-                      <p className="text-gray-500">
-                        {treatment.dosage} · {treatment.time}
-                      </p>
-                    </div>
-                    <div className="w-px bg-gray-200 mx-6"></div>
-                    <div>
-                      <h3 className="font-semibold">{treatment.type}</h3>
-                      <p className="text-gray-500">{treatment.notes}</p>
-                    </div>
+                    <h3 className="font-semibold">{`${treatment.dosage}`} </h3>
+                    <p>
+                      -
+                      {` ${treatment.dosageFrequency}@${
+                        treatment.time || "8PM"
+                      }`}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -70,7 +67,7 @@ function PatientOverview() {
         </div>
       </div>
 
-      {/* AI Analysis Section */}
+      {/* AI Analysis Section
       <div>
         <div className="border border-gray-200 rounded-2xl">
           <div className="flex items-center gap-2 px-6 pt-6 mb-4">
@@ -83,7 +80,7 @@ function PatientOverview() {
             This is another section that needed to be filled out
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -12,14 +12,12 @@ function CreateMedicalRecord({
 }) {
   const { user, token } = useAuth();
   const [file, setFile] = useState(null);
-  const [formData, setFormData] = useState({
+  const [record, setRecord] = useState({
     note: "",
     treatmentPlan: "",
     priority: "Low",
+    prescriptions: [],
   });
-  const [prescriptions, setPrescriptions] = useState([
-    { id: 1, dosage: "", dosageDuration: "", dosageFrequency: "", time: "" },
-  ]);
 
   useEffect(() => {
     if (viewMode && recordId) {
@@ -30,13 +28,7 @@ function CreateMedicalRecord({
   const loadRecord = async () => {
     try {
       const record = await getMedicalRecord(user?.id, recordId, token);
-      setFormData(record);
-      setPrescriptions(
-        record.prescriptions.map((p, index) => ({
-          id: index + 1,
-          ...p,
-        }))
-      );
+      setRecord({ ...record, prescriptions: record.prescriptions.data || [] });
     } catch (error) {
       console.error("Failed to load record:", error);
     }
@@ -47,7 +39,7 @@ function CreateMedicalRecord({
 
     try {
       const imageURL = await uploadFile(file, token);
-      setFormData((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
+      setRecord((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -55,38 +47,17 @@ function CreateMedicalRecord({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setRecord((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handlePrescriptionChange = (id, field, value) => {
-    setPrescriptions((prev) =>
-      prev.map((prescription) =>
-        prescription.id === id
-          ? { ...prescription, [field]: value }
-          : prescription
-      )
-    );
-  };
+  const handlePrescriptionChange = (id, field, value) => {};
 
-  const addPrescriptionRow = () => {
-    setPrescriptions((prev) => [
-      ...prev,
-      {
-        id: prev.length + 1,
-        medication: "",
-        dosage: "",
-        frequency: "",
-        time: "",
-      },
-    ]);
-  };
+  const addPrescriptionRow = () => {};
 
-  const removePrescriptionRow = (id) => {
-    setPrescriptions((prev) => prev.filter((row) => row.id !== id));
-  };
+  const removePrescriptionRow = (id) => {};
 
   return (
     <div className="p-6">
@@ -119,7 +90,7 @@ function CreateMedicalRecord({
         {viewMode ? (
           <div
             className="flex-1 text-center hover:cursor-pointer"
-            onClick={() => onClickAnalyze(formData)}
+            onClick={() => onClickAnalyze(record)}
           >
             <p className="font-medium text-[#3C7187]">AI Analysis</p>
             <p className="text-sm text-gray-500">Review AI findings</p>
@@ -142,9 +113,9 @@ function CreateMedicalRecord({
                 Upload X-Ray Image
               </label>
               {viewMode ? (
-                formData.xRayUrl || file ? (
+                record.xRayUrl || file ? (
                   <img
-                    src={formData.xRayUrl || URL.createObjectURL(file)}
+                    src={record.xRayUrl || URL.createObjectURL(file)}
                     alt="X-Ray"
                     className="w-full rounded-lg"
                   />
@@ -207,7 +178,7 @@ function CreateMedicalRecord({
               </label>
               <select
                 name="priority"
-                value={formData.priority}
+                value={record.priority}
                 onChange={handleInputChange}
                 disabled={viewMode}
                 className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#3C7187] focus:border-transparent disabled:bg-gray-50"
@@ -225,7 +196,7 @@ function CreateMedicalRecord({
               </label>
               <textarea
                 name="note"
-                value={formData.note}
+                value={record.note}
                 onChange={handleInputChange}
                 disabled={viewMode}
                 rows={4}
@@ -241,7 +212,7 @@ function CreateMedicalRecord({
               </label>
               <textarea
                 name="treatmentPlan"
-                value={formData.treatmentPlan}
+                value={record.treatmentPlan}
                 onChange={handleInputChange}
                 disabled={viewMode}
                 rows={4}
@@ -286,7 +257,7 @@ function CreateMedicalRecord({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {prescriptions.map((row) => (
+                    {record.prescriptions.map((row) => (
                       <tr key={row.id}>
                         <td className="px-4 py-2">
                           {viewMode ? (
@@ -328,15 +299,15 @@ function CreateMedicalRecord({
                         </td>
                         <td className="px-4 py-2">
                           {viewMode ? (
-                            row.frequency
+                            row.dosageFrequency
                           ) : (
                             <input
                               type="text"
-                              value={row.frequency}
+                              value={row.dosageFrequency}
                               onChange={(e) =>
                                 handlePrescriptionChange(
                                   row.id,
-                                  "frequency",
+                                  "dosageFrequency",
                                   e.target.value
                                 )
                               }
@@ -390,9 +361,9 @@ function CreateMedicalRecord({
           <button
             onClick={async () => {
               await onAnalyze({
-                ...formData,
+                ...record,
                 file: file,
-                prescriptions: prescriptions,
+                prescriptions: record.prescriptions,
               });
             }}
             className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"

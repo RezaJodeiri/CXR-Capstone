@@ -53,6 +53,26 @@ function PatientMedicalRecords({ patient }) {
     );
   }, []);
 
+  const resetAllStates = () => {
+    setIsCreating(false);
+    setViewingRecord(null);
+    setShowAnalysis(false);
+    setSelectedRegion("cardiac silhouette");
+    setRecordData({
+      priority: "Low",
+      treatmentPlan: "",
+      note: "",
+      file: null,
+      xRayUrl: "",
+    });
+    setPrediction({
+      findings: "",
+      impression: "",
+      predictions: [],
+      segmentationBoxes: [],
+    });
+  };
+
   const handleAnalyzeClick = async (formData) => {
     setRecordData({
       ...formData,
@@ -360,13 +380,7 @@ function PatientMedicalRecords({ patient }) {
             {/* Analysis Actions - Moved to bottom */}
             <div className="mt-8 flex justify-end gap-4 px-6">
               <button
-                onClick={() => {
-                  setIsTransitioning(true);
-                  setTimeout(() => {
-                    setIsCreating(false);
-                    setIsTransitioning(false);
-                  }, 300);
-                }}
+                onClick={resetAllStates}
                 className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
               >
                 Cancel
@@ -384,13 +398,7 @@ function PatientMedicalRecords({ patient }) {
         ) : (
           // Medical Record Creation Stage
           <CreateMedicalRecord
-            onBack={() => {
-              if (viewingRecord) {
-                setViewingRecord(null);
-              } else {
-                setIsCreating(false);
-              }
-            }}
+            onBack={resetAllStates}
             onAnalyze={handleAnalyzeClick}
             viewMode={!!viewingRecord}
             recordId={viewingRecord || null}
