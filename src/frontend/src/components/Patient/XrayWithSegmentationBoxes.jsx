@@ -48,7 +48,6 @@ export const XrayWithSegmentationBoxes = ({
           y2={box.y2}
           options={{
             label: box.label,
-            color: colorList[index % colorList.length],
             onSelectLabel: onSelectLabel,
             selectedLabel: selectedLabel,
           }}
@@ -67,11 +66,11 @@ const SegmentationBoxes = ({
   y2,
   options,
 }) => {
-  const { color, label, onSelectLabel, selectedLabel } = options;
+  const { label, onSelectLabel, selectedLabel } = options;
   const isSelected = selectedLabel === label;
   const style = {
     position: "absolute",
-    border: isSelected ? `3.5px solid red` : `0.5px solid ${color}`,
+    border: isSelected ? `2px solid rgb(220, 38, 38)` : `1px solid rgba(200, 200, 200, 0.8)`,
     boxSizing: "border-box",
     width: `${(x2 - x1) * imageWidth}px`,
     height: `${(y2 - y1) * imageHeight}px`,
@@ -84,25 +83,10 @@ const SegmentationBoxes = ({
       onClick={() => onSelectLabel(label)}
       style={style}
       className={
-        "hover:z-10 hover:scale-110 ease-in-out hover:duration-300 cursor-pointer"
+        "hover:z-10 hover:scale-105 ease-in-out hover:duration-300 cursor-pointer"
       }
     ></div>
   );
 };
-
-const colorList = [
-  "red",
-  "green",
-  "purple",
-  "orange",
-  "brown",
-  "pink",
-  "blue",
-  "olive",
-  "cyan",
-  "magenta",
-  "yellow",
-  "black",
-];
 
 export default XrayWithSegmentationBoxes;

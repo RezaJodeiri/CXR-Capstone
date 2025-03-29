@@ -336,10 +336,11 @@ function PatientMedicalRecords({ patient }) {
 
                     <div className="space-y-4">
                       {/* Primary Finding */}
-                      <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-red-900">
-                            <h1>{selectedRegion.toUpperCase()}</h1>
+                      <div className="p-4 bg-[#EBF5F8] border border-[#3C7187]/30 rounded-lg shadow-sm">
+                        <div className="flex items-center">
+                          <div className="w-1.5 h-10 bg-[#3C7187] rounded-full mr-4"></div>
+                          <h4 className="font-medium text-gray-800 text-lg tracking-wide">
+                            {selectedRegion.toUpperCase()}
                           </h4>
                         </div>
                       </div>
