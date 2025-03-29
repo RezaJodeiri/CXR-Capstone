@@ -147,7 +147,23 @@ function PatientMedicalRecords({ patient }) {
       ...prevRecords,
       parseRecordData(newRecord),
     ]);
+    
+    // Reset all states completely
     setIsCreating(false);
+    setShowAnalysis(false);
+    setPrediction({
+      findings: "",
+      impression: "",
+      predictions: [],
+      segmentationBoxes: [],
+    });
+    setRecordData({
+      priority: "Low",
+      note: "",
+      treatmentPlan: "",
+      file: null,
+      xRayUrl: "",
+    });
     setIsTransitioning(false);
   };
 
@@ -165,7 +181,16 @@ function PatientMedicalRecords({ patient }) {
         },
         ...prevRecords,
       ]);
+      
+      // Reset all states completely
       setShowAnalysis(false);
+      setIsCreating(false);
+      setPrediction({
+        findings: "",
+        impression: "",
+        predictions: [],
+        segmentationBoxes: [],
+      });
       setRecordData({
         priority: "Low",
         note: "",
@@ -173,8 +198,8 @@ function PatientMedicalRecords({ patient }) {
         file: null,
         xRayUrl: "",
       });
-      setIsCreating(false);
       setIsTransitioning(false);
+      setSelectedRegion("cardiac silhouette");
     }, 300);
   };
 
@@ -485,6 +510,7 @@ function PatientMedicalRecords({ patient }) {
                       file: null,
                       xRayUrl: "",
                     });
+                    setSelectedRegion("cardiac silhouette");
                   }, 300);
                 }}
                 className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
@@ -518,6 +544,7 @@ function PatientMedicalRecords({ patient }) {
                 file: null,
                 xRayUrl: "",
               });
+              setSelectedRegion("cardiac silhouette");
               if (viewingRecord) {
                 setViewingRecord(null);
               } else {
