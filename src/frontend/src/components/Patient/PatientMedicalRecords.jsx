@@ -115,7 +115,6 @@ function PatientMedicalRecords({ patient }) {
     });
     setIsTransitioning(true);
     setIsAnalyzing(true);
-    d
     setTimeout(() => {
 
       Promise.all([
@@ -337,9 +336,9 @@ function PatientMedicalRecords({ patient }) {
 
                     <div className="space-y-4">
                       {/* Primary Finding */}
-                      <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
+                      <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                         <div>
-                          <h4 className="font-medium text-red-900">
+                          <h4 className="font-medium text-blue-900">
                             <h1>{selectedRegion.toUpperCase()}</h1>
                           </h4>
                         </div>
