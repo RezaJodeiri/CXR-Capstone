@@ -77,7 +77,10 @@ function TopBar() {
     <div className="w-full bg-white border-b border-gray-200">
       <div className="px-6">
         <div className="py-2 flex justify-between items-center">
-          <h1 className="text-xl font-medium">{getTitle()}</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-semibold text-[#3C7187]">LungVision AI</h1>
+            <h2 className="text-lg font-medium text-gray-700">{getTitle()}</h2>
+          </div>
           <div className="relative">
             <div
               className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md"

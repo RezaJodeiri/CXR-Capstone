@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";
-import Sidebar from "../components/Sidebar";
 import PatientInfo from "../components/Patient/PatientInfo";
 import PatientOverview from "../components/Patient/PatientOverview";
 import PatientMedicalRecords from "../components/Patient/PatientMedicalRecords";
@@ -40,13 +39,9 @@ function PatientDetailsPage() {
   };
 
   return (
-    <div className="flex h-screen">
-      <Sidebar
-        isCollapsed={isCollapsed}
-        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
-      />
-      <div className="flex-1 flex flex-col">
-        <TopBar />
+    <div className="flex flex-col h-screen bg-gray-100">
+      <TopBar />
+      <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 bg-gray-100 p-6 overflow-auto">
           <div className="bg-white rounded-lg shadow-sm mb-6">
             {!_.isEmpty(patient) && (

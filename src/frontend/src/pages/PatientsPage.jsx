@@ -8,14 +8,12 @@ import {
   FiCheck,
   FiX,
 } from "react-icons/fi";
-import Sidebar from "../components/Sidebar";
 import TopBar from "../components/TopBar";
 import { useAuth } from "../context/Authentication";
 import { getPatients, createPatient } from "../services/api";
 
 function PatientsPage() {
   const navigate = useNavigate();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const { user: doctor, token } = useAuth();
   const [patients, setPatients] = useState([]);
@@ -87,13 +85,9 @@ function PatientsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar
-        isCollapsed={isCollapsed}
-        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
-      />
+    <div className="flex flex-col h-screen bg-gray-100">
+      <TopBar />
       <div className="flex-1 flex flex-col">
-        <TopBar />
         <div className="p-8">
           <div className="bg-white rounded-lg p-6 h-[85vh] flex flex-col justify-between">
             <div className="flex justify-between items-center mb-6">
