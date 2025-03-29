@@ -17,7 +17,7 @@ import XrayWithSegmentationBoxes from "./XrayWithSegmentationBoxes";
 
 const AnalysisLoader = () => (
   <div className="fixed inset-0 bg-white/95 backdrop-filter backdrop-blur-md z-[9999] flex flex-col items-center justify-center">
-    <div className="text-center p-8 rounded-xl shadow-xl bg-white max-w-lg border border-gray-100 translate-y-[100%]">
+    <div className="text-center p-8 rounded-xl shadow-xl bg-white max-w-lg border border-gray-100 translate-y-[80%]">
 
 
       <div className="mb-6">
@@ -115,7 +115,6 @@ function PatientMedicalRecords({ patient }) {
     });
     setIsTransitioning(true);
     setIsAnalyzing(true);
-    d
     setTimeout(() => {
 
       Promise.all([
