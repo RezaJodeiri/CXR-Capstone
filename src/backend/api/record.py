@@ -26,20 +26,24 @@ def paginated_records_by_userId(userId):
 def handle_record_by_id(userId, recordId):
     if request.method == "GET":
         record = MedicalRecordService.get_record_by_id(recordId)
+        if not record:
+            return (
+                jsonify({}),
+                404,
+            )
         prescriptions = (
             MedicalPrescriptionService.get_paginated_prescription_by_recordId(
                 recordId, 10
             )
         )
-
-        record["prescription"] = prescriptions
+        record["prescriptions"] = prescriptions
         return (
             jsonify(record),
             200,
         )
     elif request.method == "POST":
         record = {
-            "imageUrl": request.json.get("imageUrl", ""),
+            "xRayUrl": request.json.get("xRayUrl", ""),
             "note": request.json.get("note", ""),
             "prescription": request.json.get("prescription", []),
         }
@@ -56,14 +60,13 @@ def create_new_record(userId):
     record_info = {
         "xRayUrl": request.json.get("xRayUrl", ""),
         "note": request.json.get("note", ""),
-        "prescription": request.json.get("prescription", []),
         "priority": request.json.get("priority", ""),
         "report": request.json.get("report", ""),
         "treatmentPlan": request.json.get("treatmentPlan", ""),
     }
-    record = MedicalRecordService.create_new_record(userId, record_info)
+    newRecord = MedicalRecordService.create_new_record(userId, record_info)
     return (
-        jsonify(record),
+        jsonify(newRecord),
         200,
     )
 

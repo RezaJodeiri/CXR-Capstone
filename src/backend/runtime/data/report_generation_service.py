@@ -14,7 +14,7 @@ class ReportGenerationService:
         self.prediction_service = prediction_service
 
     # recordId has the xray image url within it
-    def generate_report(self, userId, imageUrl):
+    def generate_report(self, userId, xRayUrl):
         report_template = """
                     **Findings**  
                     1. [Key finding 1]  
@@ -26,7 +26,7 @@ class ReportGenerationService:
                     [Summary diagnosis or conclusion]. [Next steps or recommendations].
                 """
         # Fetch the image from the URL
-        prediction = self.prediction_service.predict_from_url(imageUrl)
+        prediction = self.prediction_service.predict_from_url(xRayUrl)
         # Fetch user
         user = self.identity_provider.get_user_by_id(userId)
         # Call GPT to generate the report, tokens are charged everytime this is run.

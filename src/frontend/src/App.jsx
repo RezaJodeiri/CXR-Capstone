@@ -1,5 +1,4 @@
 import React from "react";
-import PredictionPage from "./pages/PredictionPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
@@ -21,14 +20,6 @@ function App() {
           <Route index element={<LoginPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route
-            path="prediction"
-            element={
-              <ProtectedRoute>
-                <PredictionPage />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="settings"
             element={
@@ -67,7 +58,6 @@ function App() {
               <CreateMedicalRecord
                 viewMode={true}
                 onBack={() => navigate(-1)}
-                onRecordCreated={() => {}}
               />
             }
           />

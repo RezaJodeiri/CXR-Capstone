@@ -16,8 +16,11 @@ class MedicalRecordService(BaseDynamoService):
             kwargs["ExclusiveStartKey"] = {"userId": userId, "id": cursor}
         response = self.table.query(**kwargs)
         nextCursor = response.get("LastEvaluatedKey", None)
+        data = response.get("Items", [])
+        for item in data:
+            item.pop("report", None)
         return {
-            "data": response.get("Items", []),
+            "data": data,
             "next": nextCursor["id"] if nextCursor else None,
         }
 

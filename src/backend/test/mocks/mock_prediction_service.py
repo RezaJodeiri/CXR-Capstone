@@ -6,7 +6,7 @@ class MockPredictionService(PredictionService):
         self.current_model_url = "http://torchxrayvision_model/"
         
 
-    def predict_from_url(self, imageUrl):
+    def predict_from_url(self, xRayUrl):
         return {
             "Atelectasis": 0.9077080488204956,
             "Cardiomegaly": 0.7984980344772339,

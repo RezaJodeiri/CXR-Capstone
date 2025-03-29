@@ -11,6 +11,8 @@ import {
   getMedicalRecordsForPatient,
   getPredictionAndReport,
   getSegmentationBoxes,
+  createRecordForUser,
+  parseRecordData,
 } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
 import XrayWithSegmentationBoxes from "./XrayWithSegmentationBoxes";
@@ -25,9 +27,8 @@ function PatientMedicalRecords({ patient }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [recordData, setRecordData] = useState({
     priority: "Low",
-    clinicalNotes: "",
     treatmentPlan: "",
-    prescriptions: [],
+    note: "",
     file: null,
     xRayUrl: "",
   });
@@ -52,33 +53,6 @@ function PatientMedicalRecords({ patient }) {
     );
   }, []);
 
-  const handleRecordCreated = (newRecord) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setMedicalRecords((prevRecords) => [
-        {
-          ...newRecord,
-          friendlyId: `RID-${Date.now()}`,
-          reportStatus: "Pending",
-          priority: recordData.priority || "Low",
-          timeCreated: new Date().toISOString(),
-          timeUpdated: new Date().toISOString(),
-        },
-        ...prevRecords,
-      ]);
-      setShowAnalysis(false);
-      setRecordData({
-        priority: "Low",
-        clinicalNotes: "",
-        treatmentPlan: "",
-        prescriptions: [],
-        file: null,
-      });
-      setIsCreating(false);
-      setIsTransitioning(false);
-    }, 300);
-  };
-
   const handleAnalyzeClick = async (formData) => {
     setRecordData({
       ...formData,
@@ -89,8 +63,8 @@ function PatientMedicalRecords({ patient }) {
       getSegmentationBoxes(user?.id, formData.xRayUrl, token),
     ]);
 
-    console.log("predictionData", predictionData);
-    console.log("segmentationBoxData", segmentationBoxData);
+    // console.log("predictionData", predictionData);
+    // console.log("segmentationBoxData", segmentationBoxData);
 
     setPrediction({
       ...prediction,
@@ -101,6 +75,33 @@ function PatientMedicalRecords({ patient }) {
     });
 
     setShowAnalysis(true);
+    setIsTransitioning(false);
+  };
+
+  const submitRecord = async () => {
+    const recordWithPrediction = {
+      xRayUrl: recordData.xRayUrl,
+      note: recordData.note,
+      priority: recordData.priority,
+      treatmentPlan: recordData.treatmentPlan,
+      report: {
+        findings: prediction.findings,
+        impression: prediction.impression,
+        segmentationBoxes: prediction.segmentationBoxes,
+        predictions: prediction.predictions,
+      },
+    };
+
+    const newRecord = await createRecordForUser(
+      patient.id,
+      recordWithPrediction,
+      token
+    );
+    setMedicalRecords((prevRecords) => [
+      ...prevRecords,
+      parseRecordData(newRecord),
+    ]);
+    setIsCreating(false);
     setIsTransitioning(false);
   };
 
@@ -123,32 +124,8 @@ function PatientMedicalRecords({ patient }) {
     setIsTransitioning(false);
   };
 
-  // If viewing a record
-  if (viewingRecord) {
-    return (
-      <div
-        className={`transition-opacity duration-300 ${
-          isTransitioning ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <CreateMedicalRecord
-          viewMode={true}
-          onBack={() => {
-            setIsTransitioning(true);
-            setTimeout(() => {
-              setViewingRecord(null);
-              setIsTransitioning(false);
-            }, 300);
-          }}
-          recordId={viewingRecord}
-          onRecordCreated={() => {}}
-        />
-      </div>
-    );
-  }
-
   // If creating a new record
-  if (isCreating) {
+  if (isCreating || viewingRecord) {
     return (
       <div
         className={`transition-opacity duration-300 ${
@@ -203,7 +180,7 @@ function PatientMedicalRecords({ patient }) {
               <div className="lg:col-span-7 space-y-6">
                 {/* Image Display Area */}
                 <div className="relative rounded-lg overflow-hidden bg-gray-900 aspect-square w-3/5 mx-auto">
-                  {recordData?.file ? (
+                  {recordData?.file || recordData.xRayUrl ? (
                     // TODO
                     <div className="relative">
                       <XrayWithSegmentationBoxes
@@ -318,7 +295,7 @@ function PatientMedicalRecords({ patient }) {
                                         />
                                       </div>
                                       <span className="text-sm text-gray-500 min-w-[3ch]">
-                                        {finding.confidence.toFixed(2)}%
+                                        {Number(finding.confidence).toFixed(2)}%
                                       </span>
                                     </div>
                                   </div>
@@ -394,31 +371,47 @@ function PatientMedicalRecords({ patient }) {
               >
                 Cancel
               </button>
-              <button
-                onClick={() => {
-                  setIsTransitioning(true);
-                  setTimeout(() => {
-                    handleRecordCreated({
-                      id: Date.now(),
-                      recordId: `PT-${Date.now()}`,
-                      priority: recordData.priority,
-                      timeCreated: new Date().toISOString(),
-                      timeUpdated: new Date().toISOString(),
-                    });
-                  }, 300);
-                }}
-                className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
-              >
-                Submit Analysis
-              </button>
+              {!viewingRecord && (
+                <button
+                  onClick={submitRecord}
+                  className="px-6 py-2.5 bg-[#3C7187] text-white rounded-md hover:bg-[#3C7187]/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
+                >
+                  Submit Analysis
+                </button>
+              )}
             </div>
           </div>
         ) : (
           // Medical Record Creation Stage
           <CreateMedicalRecord
-            onBack={() => setIsCreating(false)}
-            onRecordCreated={handleRecordCreated}
+            onBack={() => {
+              if (viewingRecord) {
+                setViewingRecord(null);
+              } else {
+                setIsCreating(false);
+              }
+            }}
             onAnalyze={handleAnalyzeClick}
+            viewMode={!!viewingRecord}
+            recordId={viewingRecord || null}
+            onClickAnalyze={(currentRecord) => {
+              if (!viewingRecord) {
+                return;
+              }
+              setRecordData({
+                xRayUrl: currentRecord.xRayUrl,
+                note: currentRecord.note,
+                priority: currentRecord.priority,
+                treatmentPlan: currentRecord.treatmentPlan,
+              });
+              setPrediction({
+                findings: currentRecord.report.findings,
+                impression: currentRecord.report.impression,
+                predictions: currentRecord.report.predictions,
+                segmentationBoxes: currentRecord.report.segmentationBoxes,
+              });
+              setShowAnalysis(true);
+            }}
           />
         )}
       </div>

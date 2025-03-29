@@ -65,28 +65,6 @@ export const getSelfUser = async (accessToken) => {
   });
 };
 
-export const predictImage = async (file, token) => {
-  if (!token) {
-    throw new Error("Authentication token is required");
-  }
-
-  const formData = new FormData();
-  formData.append("image", file);
-
-  try {
-    const response = await axios.post(`${API_BASE_URL}/predict`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error uploading file", error);
-    throw error;
-  }
-};
-
 const parsePatientData = (patient) => {
   const birthDate = new Date(patient.birthdate);
   const age = new Date().getFullYear() - birthDate.getFullYear();
@@ -151,19 +129,16 @@ export const getPatientById = async (patientId, token) => {
   return parsePatientData(patient);
 };
 
-const parseRecordData = (record) => {
+export const parseRecordData = (record) => {
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
   return {
     id: record.id,
     friendlyId: "RID-" + record.id.split("-")[0],
-    xRayUrl: record.imageUrl,
-    // TODO: Refactor to enums (if have time)
-    priority: ["Emergency", "Low", "Medium"][Math.floor(Math.random() * 3)],
-    reportStatus: ["Completed", "In Progress", "Canceled"][
-      Math.floor(Math.random() * 3)
-    ],
+    xRayUrl: record.xRayUrl,
+    priority: "Medium",
+    reportStatus: "In Progress",
     status: record.status,
     timeCreated: lastMonth.toISOString(),
     timeUpdated: lastMonth.toISOString(),
@@ -335,6 +310,26 @@ export const createPrescription = async (userId, recordId, prescription, token) 
 };
 
 
-export const createRecordForUser = async () => {
+export const createRecordForUser = async (userId, record, token) => {
+  return executeHTTPRequest(
+    "POST",
+    `/users/${userId}/record`,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    {},
+    {
+      "xRayUrl": record.xRayUrl,
+      "note": record.note,
+      "priority": record.priority,
+      "report": {
+        segmentationBoxes: record.report.segmentationBoxes,
+        predictions: record.report.predictions,
+        findings: record.report.findings,
+        impression: record.report.impression,
+      },
+      "treatmentPlan": record.treatmentPlan,
+    },
+  );
 
 }

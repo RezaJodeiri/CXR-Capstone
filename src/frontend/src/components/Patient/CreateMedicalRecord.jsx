@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { getMedicalRecord, uploadFile } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
-import { useParams } from "react-router-dom";
 
 function CreateMedicalRecord({
   onBack,
-  onRecordCreated,
   onAnalyze,
   viewMode = false,
+  recordId = null,
+  onClickAnalyze = (currentRecord) => {},
 }) {
-  const { id } = useParams();
   const { user, token } = useAuth();
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    clinicalNotes: "",
+    note: "",
     treatmentPlan: "",
     priority: "Low",
   });
@@ -23,19 +22,15 @@ function CreateMedicalRecord({
   ]);
 
   useEffect(() => {
-    if (viewMode && id) {
+    if (viewMode && recordId) {
       loadRecord();
     }
-  }, [id, viewMode]);
+  }, [recordId, viewMode]);
 
   const loadRecord = async () => {
     try {
-      const record = await getMedicalRecord(user?.id, id, user?.token);
-      setFormData({
-        clinicalNotes: record.clinicalNotes,
-        treatmentPlan: record.treatmentPlan,
-        priority: record.priority,
-      });
+      const record = await getMedicalRecord(user?.id, recordId, token);
+      setFormData(record);
       setPrescriptions(
         record.prescriptions.map((p, index) => ({
           id: index + 1,
@@ -121,10 +116,20 @@ function CreateMedicalRecord({
           <p className="font-medium text-[#3C7187]">Record Details</p>
           <p className="text-sm text-gray-500">Enter medical information</p>
         </div>
-        <div className="flex-1 text-center">
-          <p className="font-medium text-gray-400">AI Analysis</p>
-          <p className="text-sm text-gray-500">Review AI findings</p>
-        </div>
+        {viewMode ? (
+          <div
+            className="flex-1 text-center hover:cursor-pointer"
+            onClick={() => onClickAnalyze(formData)}
+          >
+            <p className="font-medium text-[#3C7187]">AI Analysis</p>
+            <p className="text-sm text-gray-500">Review AI findings</p>
+          </div>
+        ) : (
+          <div className="flex-1 text-center">
+            <p className="font-medium text-gray-400">AI Analysis</p>
+            <p className="text-sm text-gray-500">Review AI findings</p>
+          </div>
+        )}
       </div>
 
       {/* Form Content */}
@@ -137,13 +142,9 @@ function CreateMedicalRecord({
                 Upload X-Ray Image
               </label>
               {viewMode ? (
-                file || formData.xRayUrl ? (
+                formData.xRayUrl || file ? (
                   <img
-                    src={
-                      formData.xRayUrl
-                        ? formData.xRayUrl
-                        : URL.createObjectURL(file)
-                    }
+                    src={formData.xRayUrl || URL.createObjectURL(file)}
                     alt="X-Ray"
                     className="w-full rounded-lg"
                   />
@@ -152,7 +153,10 @@ function CreateMedicalRecord({
                 <div className="flex flex-col justify-center items-center gap-3 border-2 border-dashed border-gray-300 rounded-lg p-10 hover:border-gray-400 transition-colors bg-gray-50">
                   {file ? (
                     <div className="w-full aspect-square relative">
-                      <img src={URL.createObjectURL(file)} />
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="Uploaded X-Ray"
+                      />
                       <button
                         onClick={() => setFile(null)}
                         className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100"
@@ -179,9 +183,7 @@ function CreateMedicalRecord({
                       <input
                         type="file"
                         accept=".jpg,.png,.gif,.dcm"
-                        onChange={(e) => {
-                          handleFileChange(e.target.files[0]);
-                        }}
+                        onChange={(e) => handleFileChange(e.target.files[0])}
                         className="hidden"
                         id="file-upload"
                       />
@@ -197,8 +199,6 @@ function CreateMedicalRecord({
               )}
             </div>
           </div>
-
-          {/* Right Column - Form Fields */}
           <div className="space-y-6">
             {/* Priority Selection */}
             <div>
@@ -224,8 +224,8 @@ function CreateMedicalRecord({
                 Clinical Notes
               </label>
               <textarea
-                name="clinicalNotes"
-                value={formData.clinicalNotes}
+                name="note"
+                value={formData.note}
                 onChange={handleInputChange}
                 disabled={viewMode}
                 rows={4}

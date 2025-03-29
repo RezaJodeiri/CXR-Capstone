@@ -2,6 +2,9 @@ import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 import uuid
+import json
+from decimal import Decimal
+import datetime
 
 
 class BaseDynamoService:
@@ -35,6 +38,11 @@ class BaseDynamoService:
         """
         try:
             item["id"] = str(uuid.uuid4())
+            # Created at current timestamp
+            now = datetime.datetime.now().isoformat()
+            item["created_at"] = now
+            item["updated_at"] = now
+            item = json.loads(json.dumps(item), parse_float=Decimal)
             self.table.put_item(Item=item)
             return self.get_item_by_id(item["id"])
         except ClientError as e:
