@@ -46,7 +46,7 @@ function PatientInfo({ patient, activeTab, setActiveTab }) {
             </div>
             <div className="flex gap-2 items-center">
               <FiPhone />
-              <p>+880 172524123123</p>
+              <p>N/A</p>
             </div>
           </div>
         </div>

@@ -6,5 +6,8 @@
     "@testing-library/react": "^16.2.0",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "react-dicom-viewer": "^0.0.10"
   }
 }

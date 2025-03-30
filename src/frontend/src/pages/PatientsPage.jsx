@@ -116,7 +116,6 @@ function PatientsPage() {
                   <th className="pb-4">CONTACT</th>
                   <th className="pb-4">AGE</th>
                   <th className="pb-4">GENDER</th>
-                  <th className="pb-4">DIAGNOSIS</th>
                   <th className="pb-4">STATUS</th>
                   <th className="pb-4"></th>
                 </tr>
@@ -168,7 +167,6 @@ function PatientsPage() {
                         <option value="">Select</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
-                        <option value="Other">Other</option>
                       </select>
                     </td>
                     <td className="py-4"></td>
@@ -209,13 +207,11 @@ function PatientsPage() {
                       </button>
                     </td>
                     <td className="py-4">{patient.name}</td>
-                    <td className="py-4 flex items-center gap-4">
-                      <FiPhone />
+                    <td className="py-4">
                       <FiMail />
                     </td>
                     <td className="py-4">{patient.age}</td>
                     <td className="py-4">{patient.gender}</td>
-                    <td className="py-4">{patient.diagnosis}</td>
                     <td className="py-4 flex items-center gap-2">
                       <div
                         className="h-2 aspect-square rounded-full"
@@ -233,7 +229,9 @@ function PatientsPage() {
                       <p>{patient.status}</p>
                     </td>
                     <td className="py-4">
-                      <button>
+                      <button
+                        className="text-[#3C7187] hover:underline text-left"
+                        onClick={() => handlePatientClick(patient.id)}>
                         <FiMoreVertical className="text-gray-500" />
                       </button>
                     </td>

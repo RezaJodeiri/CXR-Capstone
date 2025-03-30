@@ -198,17 +198,18 @@ function PatientMedicalRecords({ patient }) {
     ]);
     setIsCreating(false);
     setIsTransitioning(false);
+    setShowAnalysis(false);
   };
 
   const getColorForConfidence = (confidence) => {
-    if (confidence < 30) {
-      return "green";
-    } else if (confidence < 50) {
-      return "orange";
+    const h = 100 - confidence;
+    if (h > 50) {
+      return `rgb(${Math.floor(255 * (1 - (h - 50) / 50.0))}, 255, 0)`;
     } else {
-      return "red";
+      return `rgb(255, ${Math.floor(255 * (h / 50.0))}, 0)`;
     }
   };
+  
   const onSelectLabel = (label) => {
     setSelectedRegion(label);
   };
@@ -424,8 +425,7 @@ function PatientMedicalRecords({ patient }) {
                       />
                     ) : (
                       <div className="w-full border border-gray-200 rounded-lg p-4 min-h-[120px] text-sm text-gray-700 whitespace-pre-line">
-                        {prediction.findings ||
-                          "1. Right lower lobe consolidation with air bronchograms\n2. No pleural effusion\n3. Heart size within normal limits\n4. No pneumothorax"}
+                        {prediction.findings}
                       </div>
                     )}
                   </div>
@@ -463,6 +463,12 @@ function PatientMedicalRecords({ patient }) {
                 className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
               >
                 Cancel
+              </button>
+              <button
+                //TODO
+                className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
+              >
+                Approval
               </button>
               {!viewingRecord && (
                 <button
@@ -548,7 +554,9 @@ function PatientMedicalRecords({ patient }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {medicalRecords.map((record) => (
+          {medicalRecords
+            .sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated))  // Sort by timeCreated in descending order
+            .map((record) => (
               <tr
                 key={record.id || record.friendlyId || Date.now().toString()}
                 className="hover:bg-gray-50 transition-colors"
@@ -609,10 +617,8 @@ function PatientMedicalRecords({ patient }) {
           </tbody>
         </table>
 
-        {/* Pagination */}
-        <div className="flex items-center justify-between px-6 py-3 border-t">
+        {/* <div className="flex items-center justify-between px-6 py-3 border-t">
           <div className="text-sm text-gray-500">
-            {/* Showing 1 to 4 of 4 records */}
           </div>
           <div className="flex gap-2">
             <button
@@ -621,9 +627,6 @@ function PatientMedicalRecords({ patient }) {
             >
               Previous
             </button>
-            <button className="px-3 py-1 text-sm border rounded bg-[#3C7187] text-white transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
-              1
-            </button>
             <button
               className="px-3 py-1 text-sm border rounded text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:bg-white disabled:hover:shadow-none disabled:hover:translate-y-0"
               disabled
@@ -631,7 +634,7 @@ function PatientMedicalRecords({ patient }) {
               Next
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <style>

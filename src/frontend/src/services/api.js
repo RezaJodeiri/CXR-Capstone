@@ -74,7 +74,7 @@ const parsePatientData = (patient) => {
     name: `${patient.first_name} ${patient.last_name}`,
     age: age.toString(),
     status: "Emergency",
-    diagnosis: ["Type A", "Type B", "Type C"][Math.floor(Math.random() * 3)],
+    diagnosis: ["Type A", "Type B", "Type C"][Math.floor(Math.random() * 3)], // NOT NEEDED ANYMORE
     gender: patient.gender.charAt(0).toUpperCase() + patient.gender.slice(1),
     email: patient?.email || "",
     phone_number: patient?.phone_number || "",

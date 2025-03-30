@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { getMedicalRecord, uploadFile } from "../../services/api";
 import { useAuth } from "../../context/Authentication";
+import dicomParser from 'dicom-parser';
 
 function CreateMedicalRecord({
   onBack,
@@ -35,11 +36,127 @@ function CreateMedicalRecord({
   };
 
   const handleFileChange = async (file) => {
-    setFile(file); // Store the selected file locally
-
     try {
-      const imageURL = await uploadFile(file, token);
-      setRecord((prev) => ({ ...prev, xRayUrl: imageURL })); // Store URL returned by API
+      // CODE WORKS BRO - DO NOT TRY TO CHANGE THIS!!!
+      if (file?.name?.toLowerCase().endsWith('.dcm')) {
+        // Read the file content as an ArrayBuffer
+        const arrayBuffer = await file.arrayBuffer();
+      
+        // Parse the DICOM data
+        const byteArray = new Uint8Array(arrayBuffer);
+        const dataSet = dicomParser.parseDicom(byteArray);
+      
+        const pixelDataElement = dataSet.elements.x7fe00010; // Pixel data tag
+        const pixelData = new Uint8Array(dataSet.byteArray.buffer, pixelDataElement.dataOffset, pixelDataElement.length);
+      
+        // Extract rows and columns
+        const rows = dataSet.uint16('x00280010');  // Rows
+        const columns = dataSet.uint16('x00280011');  // Columns
+        const bitsAllocated = dataSet.uint16('x00280100'); // Bits allocated (should be 16 for 16-bit)
+      
+        // If it's 16-bit grayscale, we need to scale the pixel data
+        const is16Bit = bitsAllocated === 16;
+      
+        // Create image using canvas (assuming grayscale)
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = columns;
+        canvas.height = rows;
+      
+        const imageData = context.createImageData(columns, rows);
+        const data = imageData.data;
+        
+        // Find the min and max values in the image to auto-adjust contrast
+        let min = Infinity;
+        let max = -Infinity;
+        
+        if (is16Bit) {
+          let pixelIndex = 0;
+          for (let i = 0; i < rows * columns; i++) {
+            const pixelValue = (pixelData[pixelIndex + 1] << 8) | pixelData[pixelIndex];
+            min = Math.min(min, pixelValue);
+            max = Math.max(max, pixelValue);
+            pixelIndex += 2;
+          }
+        } else {
+          for (let i = 0; i < rows * columns; i++) {
+            min = Math.min(min, pixelData[i]);
+            max = Math.max(max, pixelData[i]);
+          }
+        }
+        
+        // Avoid division by zero and add a small buffer to prevent clipping
+        const range = max - min || 1;
+        const adjustedMin = min;
+        const adjustedMax = max;
+        
+        // Contrast enhancement factor (increase for higher contrast)
+        const contrastFactor = 1.2; 
+        // Brightness boost (increase for brighter image)
+        const brightnessBoost = 30;
+        
+        if (is16Bit) {
+          let pixelIndex = 0;
+          for (let i = 0; i < rows * columns; i++) {
+            const pixelValue = (pixelData[pixelIndex + 1] << 8) | pixelData[pixelIndex];
+            pixelIndex += 2;
+            
+            // Normalize to 0-1 range based on min/max
+            let normalizedValue = (pixelValue - adjustedMin) / range;
+            
+            // Apply contrast enhancement
+            normalizedValue = (normalizedValue - 0.5) * contrastFactor + 0.5;
+            
+            // Convert to 0-255 range and add brightness boost
+            let finalValue = Math.round(normalizedValue * 255) + brightnessBoost;
+            
+            // Clamp to valid range
+            finalValue = Math.max(0, Math.min(255, finalValue));
+            
+            const dataIndex = i * 4;
+            data[dataIndex] = finalValue;     // Red
+            data[dataIndex + 1] = finalValue; // Green
+            data[dataIndex + 2] = finalValue; // Blue
+            data[dataIndex + 3] = 255;        // Alpha
+          }
+        } else {
+          for (let i = 0; i < rows * columns; i++) {
+            // Normalize to 0-1 range based on min/max
+            let normalizedValue = (pixelData[i] - adjustedMin) / range;
+            
+            // Apply contrast enhancement
+            normalizedValue = (normalizedValue - 0.5) * contrastFactor + 0.5;
+            
+            // Convert to 0-255 range and add brightness boost
+            let finalValue = Math.round(normalizedValue * 255) + brightnessBoost;
+            
+            // Clamp to valid range
+            finalValue = Math.max(0, Math.min(255, finalValue));
+            
+            const dataIndex = i * 4;
+            data[dataIndex] = finalValue;     // Red
+            data[dataIndex + 1] = finalValue; // Green
+            data[dataIndex + 2] = finalValue; // Blue
+            data[dataIndex + 3] = 255;        // Alpha
+          }
+        }
+        
+        context.putImageData(imageData, 0, 0);
+      
+        // Convert canvas to blob
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg')); 
+      
+        // Create a new file from the blob
+        const convertedFile = new File([blob], file.name.replace('.dcm', '.jpg'), { type: 'image/jpeg' });
+      
+        setFile(convertedFile);
+        const imageURL = await uploadFile(convertedFile, token);
+        setRecord((prev) => ({ ...prev, xRayUrl: imageURL }));
+      }else {
+        setFile(file);
+        const imageURL = await uploadFile(file, token);
+        setRecord((prev) => ({ ...prev, xRayUrl: imageURL }));
+      }
     } catch (error) {
       console.error("Error uploading file:", error);
     }

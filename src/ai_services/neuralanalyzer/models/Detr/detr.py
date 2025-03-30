@@ -167,7 +167,7 @@ class Detr(pl.LightningModule):
 
         final_last_hidden_states = torch.zeros((12, 256), dtype=torch.float32)
 
-        for i in range(1,13):
+        for i in range(1,len(set(labels))):
             positions = np.where(labels == i)[0]
             if len(positions) == 0:
                 final_last_hidden_states[i] = 0

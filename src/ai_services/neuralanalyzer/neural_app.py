@@ -1,6 +1,7 @@
 import io
 import logging
 import pydicom
+import numpy as np
 
 from PIL import Image
 from flask import Blueprint, Flask, jsonify, request, send_file
@@ -65,15 +66,21 @@ def process_dicom(file_content):
             "view_position": safe_convert(getattr(dcm, "ViewPosition", "Unknown")),
             "patient_orientation": safe_convert(getattr(dcm, "PatientOrientation", "Unknown")),
         }
+        
+        shape = dcm.pixel_array.shape
 
-        # Convert DICOM image to binary directly
-        img = dcm.pixel_array
-        img_pil = Image.fromarray(img)
+
+        image_2d = dcm.pixel_array[0].astype(float)
+        image_2d_scaled = (np.maximum(image_2d,0) / image_2d.max()) * 255.0
+        image_2d_scaled = np.uint8(image_2d_scaled)
+        img_pil = Image.fromarray(image_2d_scaled)
+        
         img_byte_arr = io.BytesIO()
         img_pil.save(img_byte_arr, format='JPEG')
         img_byte_arr.seek(0)
 
-        return img_byte_arr, metadata, True
+        print("Image converted to binary")
+        return img_byte_arr.getvalue(), metadata, True
     except Exception as e:
         logger.error(f"Error processing DICOM: {str(e)}")
         return file_content, None, False
