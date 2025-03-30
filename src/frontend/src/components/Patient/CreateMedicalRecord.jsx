@@ -53,11 +53,38 @@ function CreateMedicalRecord({
     }));
   };
 
-  const handlePrescriptionChange = (id, field, value) => {};
+  const handlePrescriptionChange = (id, field, value) => {
+    setRecord(prevRecord => ({
+      ...prevRecord,
+      prescriptions: prevRecord.prescriptions.map(prescription => 
+        prescription.id === id 
+          ? { ...prescription, [field]: value } 
+          : prescription
+      )
+    }));
+  };
 
-  const addPrescriptionRow = () => {};
+  const addPrescriptionRow = () => {
+    const newPrescription = {
+      id: `temp-${Date.now()}`, // Temporary ID until saved to backend
+      medication: '',
+      dosage: '',
+      dosageFrequency: '',
+      time: ''
+    };
+    
+    setRecord(prevRecord => ({
+      ...prevRecord,
+      prescriptions: [...prevRecord.prescriptions, newPrescription]
+    }));
+  };
 
-  const removePrescriptionRow = (id) => {};
+  const removePrescriptionRow = (id) => {
+    setRecord(prevRecord => ({
+      ...prevRecord,
+      prescriptions: prevRecord.prescriptions.filter(prescription => prescription.id !== id)
+    }));
+  };
 
   return (
     <div className="p-6">
