@@ -95,6 +95,7 @@ docker-compose down
 
 docker system prune -a
 ```
+
 # Project Evaluation and Issue Tracking
 
 
@@ -120,3 +121,4 @@ docker system prune -a
 |                         | Unaligned FRs and NFRs | Align FRs and NFRs testings with current project scope  [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
 |                         | Unaligned Extras | Align extras with current project scope [#204](https://github.com/RezaJodeiri/CXR-Capstone/issues/204)                          | `0e53ce2`  | Team Feedback |
 | **V&V Report**          |                                      |                             |            |                      |
+
