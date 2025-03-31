@@ -95,6 +95,7 @@ docker-compose down
 
 docker system prune -a
 ```
+# Project Evaluation and Issue Tracking
 
 
 | Section                 | Title                              | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
@@ -106,10 +107,8 @@ docker system prune -a
 |                         | Document Content                  | Fix functional requirements. [#122](https://github.com/RezaJodeiri/CXR-Capstone/issues/122)                                               | `x`  | TA Yiding Li|
 |                         | Project Goals                     | Goal statements inconsistency. [#55](https://github.com/RezaJodeiri/CXR-Capstone/issues/55)                                               | `x`  | TA Yiding Li|
 |                         | Document Content                  | Fix FR and NFR to align with the current scope of the project. [#201](https://github.com/RezaJodeiri/CXR-Capstone/issues/201)             | `x`  | TA Yiding Li|
-
 | **Hazard Analysis**     |                                   |                                                                                |            |                      |
 |                         | Document Content                  | Fixed citation. [#202](https://github.com/RezaJodeiri/CXR-Capstone/issues/202) | `vwx9012`  | TA Yiding Li          |
-
 | **MIS**                 |                                      |                             |            |                      |
 |                         | Formalization                     | Fixed Formalization [#191](https://github.com/RezaJodeiri/CXR-Capstone/issues/191)                 | `x`  | TA Yiding Li|
 |                         | Input Representation              | Fixed Input Representation [#192](https://github.com/RezaJodeiri/CXR-Capstone/issues/192)          | `x`  | TA Yiding Li|
