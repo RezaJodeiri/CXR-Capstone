@@ -117,5 +117,6 @@ docker system prune -a
 | **V&V Plan**            |                                      |                             |            |                      |
 |                         | Nondynamic testing used as necessary & Improve Testing                 | Improve Testing [#196](https://github.com/RezaJodeiri/CXR-Capstone/issues/196)                                       | `eb96f46`  | TA Yiding Li  |
 |                         | General Information                                                    | Objective mismatching                                 [#195](https://github.com/RezaJodeiri/CXR-Capstone/issues/195) | `eb96f46`  | TA Yiding Li  |
-|                         | System Tests for Functional / Nonfunctional Requirements are specific | Requirements are not specific [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
+|                         | Unaligned FRs and NFRs | Align FRs and NFRs testings with current project scope  [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
+|                         | Unaligned Extras | Align extras with current project scope [#204](https://github.com/RezaJodeiri/CXR-Capstone/issues/204)                          | `0e53ce2`  | Team Feedback |
 | **V&V Report**          |                                      |                             |            |                      |
