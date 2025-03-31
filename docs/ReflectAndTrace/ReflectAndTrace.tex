@@ -103,6 +103,8 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
     \hline
     Team Feedback & System Tests for Functional / Nonfunctional Requirements are specific & Update based on team feedback & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/203}{\#203}\\
     \hline
+    Team Feedback & Extras & Change extras based on current scope & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/204}{\#204}\\
+    \hline
 
 \end{longtable}
 
@@ -146,26 +148,41 @@ users currently exist?}
 
 \section{Reflection on Project Management (LO24)}
 
-\plt{This question focuses on processes and tools used for project management.}
-
 \subsection{How Does Your Project Management Compare to Your Development Plan}
-
-\plt{Did you follow your Development plan, with respect to the team meeting plan, 
-team communication plan, team member roles and workflow plan.  Did you use the 
-technology you planned on using?}
+\begin{enumerate}
+    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1,Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
+    \item[-] Our primary communication tools(Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
+    \item[-] Roles and responsibilities as outlined in our development plan were largely adhered to. Each member focused on their assigned modules (e.g., frontend UI, model training, backend integration), and we successfully coordinated via our Git branching workflow and task tracking system (GitHub issues).
+    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model(DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
+\end{enumerate}
 
 \subsection{What Went Well?}
-
-\plt{What went well for your project management in terms of processes and 
-technology?}
+\begin{enumerate}
+    \item[-] Discord and GitHub Discussions helped streamline both quick check-ins and in-depth technical discussions. Clear communication reduced misunderstandings and sped up decision-making.
+    \item[-] Each member had a clearly defined role (e.g., frontend, model dev, backend), which minimized overlap and improved accountability. Tasks were assigned and tracked using GitHub Issues and Project Boards.
+    \item[-] Weekly meetings kept everyone aligned, and sprint planning ensured we had clear short-term goals. Checkpoints during development helped catch issues early.
+    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via Github was used effectively for collaboration and rollback when needed.
+    \item[-] Independent module development (e.g., AI model, UI, API) allowed parallel progress without bottlenecks. CI/CD setup helped with automated testing and smooth deployment.
+    
+\end{enumerate}
 
 \subsection{What Went Wrong?}
-
-\plt{What went wrong in terms of processes and technology?}
+\begin{enumerate}
+    \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
+    \item[-] Our original plan didn’t account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
+    \item[-] Early-stage code and design decisions weren’t always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
+    \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
+\end{enumerate}
 
 \subsection{What Would you Do Differently Next Time?}
 
-\plt{What will you do differently for your next project?}
+\begin{enumerate}
+    \item[-] Allocate extra time in the schedule for unexpected delays, model tuning, and integration/debugging.
+    \item[-] Build a rough end-to-end prototype early to identify integration pain points sooner, even before full model training is complete.
+    \item[-] Maintain consistent documentation practices from the start, including API specs, model details, and configuration notes, to reduce confusion later.
+    \item[-] Involve test users (or at least team cross-reviews) earlier in the UI development cycle to catch usability issues before final sprint.
+    \item[-] Identify high-risk components (e.g., novel model architectures) up front and create extra plans or fallback options.
+\end{enumerate}
 
 \section{Reflection on Capstone}
 
