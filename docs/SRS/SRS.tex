@@ -24,6 +24,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage[numbers]{natbib}
+\usepackage{ulem}
 \graphicspath{ {../assets/} }
 
 
@@ -888,18 +889,19 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR10} & Develop the system that allow integration with electronic health record (EHR) systems to import and export patient data. \\
+\sout{\textbf{FR10}} & \sout{Develop the system that allow integration with electronic health record (EHR) systems to import and export patient data.} \\
 \hline
-\textbf{Rationale} & Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting. \\
+\sout{\textbf{Rationale}} & \sout{Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting.} \\
 \hline
-\textbf{Verification} & Test the system’s ability to connect with standard EHR systems and exchange data using appropriate protocols. \\
+\sout{\textbf{Verification}} & \sout{Test the system’s ability to connect with standard EHR systems and exchange data using appropriate protocols.} \\
 \hline
-\textbf{Priority} & Low \\
+\sout{\textbf{Priority}} & \sout{Low} \\
 \hline
-\textbf{Traceability} & OE1, MS1, LR2, FR7 (data storage), FR9 (treatment adjustment) \\
+\sout{\textbf{Traceability}} & \sout{OE1, MS1, LR2, FR7 (data storage), FR9 (treatment adjustment)} \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR10}
+\textcolor{red}{Removed FR 10 due to changes in the scope of the project}
 \end{table}
 \begin{table}[h!]
 \centering
@@ -927,18 +929,19 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR12} & Develop a system that would allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers. \\
+\sout{\textbf{FR12}} & \sout{Develop a system that would allow patients to upload their own chest X-ray images for self-diagnosis purposes, subject to appropriate disclaimers.} \\
 \hline
-\textbf{Rationale} & Allowing patients to upload their own images increases engagement in their healthcare journey, though it must be made clear that professional interpretation is still necessary. \\
+\sout{\textbf{Rationale}} & \sout{Allowing patients to upload their own images increases engagement in their healthcare journey, though it must be made clear that professional interpretation is still necessary.} \\
 \hline
-\textbf{Verification} & Ensure that patients can upload images and that the system displays appropriate disclaimers before analysis. \\
+\sout{\textbf{Verification}} & \sout{Ensure that patients can upload images and that the system displays appropriate disclaimers before analysis.} \\
 \hline
-\textbf{Priority} & Low \\
+\sout{\textbf{Priority}} & \sout{Low} \\
 \hline
-\textbf{Traceability} & SR1, SR2, HS2, FR1 (image upload), FR13 (role management) \\
+\sout{textbf{Traceability}} & \sout{SR1, SR2, HS2, FR1 (image upload), FR13 (role management)} \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR12}
+\textcolor{red}{Removed FR 12 due to changes in the scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -947,18 +950,19 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR13} & Develop a system that would support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient). \\
+\sout{\textbf{FR13}} & \sout{Develop a system that would support multiple user roles with appropriate access levels (e.g., physician, radiologist, patient).} \\
 \hline
-\textbf{Rationale} & Different users need access to different features and data, so assigning roles ensures that each user can only perform actions they are authorized to. \\
+\sout{\textbf{Rationale}} & \sout{Different users need access to different features and data, so assigning roles ensures that each user can only perform actions they are authorized to.} \\
 \hline
-\textbf{Verification} & Verify that users are assigned roles and that their access is restricted to the appropriate features based on their role. \\
+\sout{\textbf{Verification}} & \sout{Verify that users are assigned roles and that their access is restricted to the appropriate features based on their role.} \\
 \hline
-\textbf{Priority} & High \\
+\sout{\textbf{Priority}} & \sout{High} \\
 \hline
-\textbf{Traceability} &  SR2, LR1, FR7 (data storage), FR12 (patient data access) \\
+\sout{\textbf{Traceability}} &  \sout{SR2, LR1, FR7 (data storage), FR12 (patient data access)} \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR13}
+\textcolor{red}{Removed FR 13 due to changes in the scope of the project}
 \end{table}
 \begin{table}[h!]
 \centering
@@ -966,18 +970,19 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR14} & Develop a system that would create a new copy of a patient’s X-ray before running the AI model for analysis. \\
+\sout{\textbf{FR14}} & \sout{Develop a system that would create a new copy of a patient’s X-ray before running the AI model for analysis.} \\
 \hline
-\textbf{Rationale} & Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis. \\
+\sout{\textbf{Rationale}} & \sout{Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis.} \\
 \hline
-\textbf{Verification} & Verify that the system creates a new X-ray copy, preserving the original file while the AI model runs on the duplicate. \\
+\sout{\textbf{Verification}} & \sout{Verify that the system creates a new X-ray copy, preserving the original file while the AI model runs on the duplicate.} \\
 \hline
-\textbf{Priority} & High \\
+\sout{\textbf{Priority}} & \sout{High} \\
 \hline
-\textbf{Traceability} & MS2, OE1, FR1 (image upload), FR3 (analysis) \\
+\sout{\textbf{Traceability}} & \sout{MS2, OE1, FR1 (image upload), FR3 (analysis)} \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR14}
+\textcolor{red}{Removed FR 14 due to changes in the scope of the project}
 \end{table}
 \begin{table}[h!]
 \centering
@@ -985,18 +990,19 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR15} & Develop a system that would support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis. \\
+\sout{\textbf{FR15}} & \sout{Develop a system that would support additional medical imaging modalities, such as CT scans and MRIs, for comprehensive analysis.} \\
 \hline
-\textbf{Rationale} & Supporting multiple imaging types expands the system's utility in various clinical scenarios. \\
+\sout{\textbf{Rationale}} & \sout{Supporting multiple imaging types expands the system's utility in various clinical scenarios.} \\
 \hline
-\textbf{Verification} & Test the system's ability to accept and analyze different image types (e.g., CT, MRI) without errors and provide accurate results. \\
+\sout{\textbf{Verification}} & \sout{Test the system's ability to accept and analyze different image types (e.g., CT, MRI) without errors and provide accurate results.} \\
 \hline
-\textbf{Priority} & Low \\
+\sout{\textbf{Priority}} & \sout{Low} \\
 \hline
-\textbf{Traceability} & PR3, LR2, FR1 (image input), FR7 (data storage) \\
+\sout{\textbf{Traceability}} & \sout{PR3, LR2, FR1 (image input), FR7 (data storage)} \\
 \hline
 \end{tabular}
 \caption{Functional Requirement FR15}
+\textcolor{red}{Removed FR 15 due to changes in the scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1030,7 +1036,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{LF1} & The system shall have a user interface consistent with standard medical imaging software, using familiar layouts and terminology. \\
+\textbf{LF1} & \sout{The system shall have a user interface consistent with standard medical imaging software, using familiar layouts and terminology.}The system shall provide a responsive user interface that reacts promptly to user interactions. \\
 \hline
 \textbf{Rationale} & Radiologists and healthcare professionals are accustomed to specific interface designs; maintaining consistency reduces the learning curve. \\
 \hline
@@ -1040,6 +1046,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LF1}
+\textcolor{red}{Changing NFR-LF1 to stay consistent with the current scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1068,7 +1075,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{UH1} & At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results). \\
+\textbf{UH1} & \sout{At least 90\% of healthcare professionals shall be able to perform common tasks (e.g., uploading images, viewing analysis results).}The system shall provide an intuitive workflow that allows healthcare professionals to perform common tasks with mini- mal training. The interface design must follow established pat- terns familiar to medical professionals, use consistent terminol- ogy aligned with clinical vocabulary, and organize information in a logical sequence. \\
 \hline
 \textbf{Rationale} & Busy professionals need to use the system efficiently without extensive training. \\
 \hline
@@ -1078,6 +1085,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH1}
+\textcolor{red}{Changing NFR-UH1 to stay consistent with the current scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1086,27 +1094,27 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{UH2} & The system shall provide context-sensitive help and tooltips for all interface elements to assist users in understanding functionalities. \\
+\sout{\textbf{UH2}} & \sout{The system shall provide context-sensitive help and tooltips for all interface elements to assist users in understanding functionalities.} \\
 \hline
-\textbf{Rationale} & Immediate assistance reduces errors and enhances the user experience. \\
+\sout{\textbf{Rationale}} & \sout{Immediate assistance reduces errors and enhances the user experience.} \\
 \hline
-\textbf{Fit Criterion} & All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens. \\
+\sout{\textbf{Fit Criterion}} & \sout{All interactive elements display helpful tooltips when hovered over, and a help section is accessible from all screens.} \\
 \hline
-\textbf{Traceability} & FR2, FR6, FR11 \\
+\sout{\textbf{Traceability}} &\sout{FR2, FR6, FR11} \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement UH2}
+\textcolor{red}{Removed NFR-UH2 to stay consistent with the current scope of the project}
 \end{table}
 \newpage
 \subsubsection{Performance Requirements}
-
 \begin{table}[h!]
 \centering
 \rowcolors{2}{white}{white}
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{PR1} & The system shall process and analyze a standard chest X-ray image within 30 seconds. \\
+\textbf{PR1} & The system shall process and analyze a standard chest X-ray image within \sout{30 seconds} 1 minute. \\
 \hline
 \textbf{Rationale} & Quick analysis is critical for timely diagnosis and treatment decisions in clinical settings. \\
 \hline
@@ -1116,6 +1124,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR1}
+\textcolor{red}{Changing NFR-PR1 to stay consistent with the current scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1128,12 +1137,13 @@ This project must comply with critical legal and regulatory standards to ensure 
 \hline
 \textbf{Rationale} & Continuous access is essential in healthcare environments to prevent delays in patient care. \\
 \hline
-\textbf{Fit Criterion} & System logs indicate an uptime of 99.9\% over a 6-month monitoring period. \\
+\textbf{Fit Criterion} & System logs indicate an uptime of \sout{99.9\%} 99\% over a \sout{6-month} continuous 30-day monitoring period. \\
 \hline
 \textbf{Traceability} & FR5, FR7 \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement PR2}
+\textcolor{red}{Changing NFR-PR2 to stay consistent with the current scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1162,16 +1172,17 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{OE1} & The system shall integrate with existing hospital Picture Archiving and Communication Systems (PACS) using standard protocols like DICOM. \\
+\sout{\textbf{OE1}} & \sout{The system shall integrate with existing hospital Picture Archiving and Communication Systems (PACS) using standard protocols like DICOM.} \\
 \hline
-\textbf{Rationale} & Seamless integration with PACS improves workflow efficiency and reduces manual data handling. \\
+\sout{\textbf{Rationale}} &\sout{ Seamless integration with PACS improves workflow efficiency and reduces manual data handling.} \\
 \hline
-\textbf{Fit Criterion} & The system successfully exchanges data with at least three major PACS solutions in a test environment. \\
+\sout{\textbf{Fit Criterion}} & \sout{The system successfully exchanges data with at least three major PACS solutions in a test environment.} \\
 \hline
-\textbf{Traceability} & FR7, FR10, FR14 \\
+\sout{\textbf{Traceability}} & \sout{FR7, FR10, FR14} \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement OE1}
+\textcolor{red}{Removed NFR-OE1 to stay consistent with the current scope of the project}
 \end{table}
 
 \begin{table}[h!]
@@ -1180,7 +1191,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{OE2} & The system shall operate effectively in network environments with latency up to 200ms and packet loss up to 1\%. \\
+\textbf{OE2} & The system shall operate effectively in network environments with latency up to \sout{200ms} 250ms and packet loss up to 1\%. \\
 \hline
 \textbf{Rationale} & Hospital networks may have variable conditions; the system must remain functional under less-than-ideal circumstances. \\
 \hline
@@ -1217,16 +1228,17 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{SR2} & The system shall implement role-based access control, ensuring users can only access functionalities and data appropriate to their roles (e.g., radiologist, radiographer, administrator). \\
+\sout{\textbf{SR2}} & \sout{The system shall implement role-based access control, ensuring users can only access functionalities and data appropriate to their roles (e.g., radiologist, radiographer, administrator).} \\
 \hline
-\textbf{Rationale} & Restricting access based on roles prevents unauthorized data access and potential data breaches. \\
+\sout{\textbf{Rationale}} & \sout{Restricting access based on roles prevents unauthorized data access and potential data breaches.} \\
 \hline
-\textbf{Fit Criterion} & Access control tests verify that users cannot access data or functions outside their permissions. \\
+\sout{\textbf{Fit Criterion}} & \sout{Access control tests verify that users cannot access data or functions outside their permissions.} \\
 \hline
-\textbf{Traceability} & FR13, FR12 \\
+\sout{\textbf{Traceability}} & \sout{FR13, FR12} \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement SR2}
+\textcolor{red}{Removed NFR-SR2 to stay consistent with the current scope of the project}
 \end{table}
 \newpage
 \subsubsection{Maintainability and Support Requirements}
@@ -1275,16 +1287,17 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{CR1} & The system shall support both English and French languages for the user interface and reports. \\
+\sout{\textbf{CR1}} & \sout{The system shall support both English and French languages for the user interface and reports.} \\
 \hline
-\textbf{Rationale} & Supporting Canada's official languages ensures accessibility for all users and meets legal requirements in certain provinces. \\
+\sout{\textbf{Rationale}} & \sout{Supporting Canada's official languages ensures accessibility for all users and meets legal requirements in certain provinces.} \\
 \hline
-\textbf{Fit Criterion} & Users can select English or French as the system language, with all interface elements and reports displayed accordingly. \\
+\sout{\textbf{Fit Criterion}} & \sout{Users can select English or French as the system language, with all interface elements and reports displayed accordingly.} \\
 \hline
-\textbf{Traceability} & FR6, FR12, FR13 \\
+\sout{\textbf{Traceability}} & \sout{FR6, FR12, FR13} \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement CR1}
+\textcolor{red}{Removed NFR-CR1 to stay consistent with the current scope of the project}
 \end{table}
 \subsubsection{Legal Requirements}
 
@@ -1312,16 +1325,17 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{LR2} & The system shall adhere to the ISO 13485 standard for medical device software development. \\
+\sout{\textbf{LR2}} & \sout{The system shall adhere to the ISO 13485 standard for medical device software development.} \\
 \hline
-\textbf{Rationale} & Following recognized standards ensures quality and safety in medical software. \\
+\sout{\textbf{Rationale}} & \sout{Following recognized standards ensures quality and safety in medical software.} \\
 \hline
-\textbf{Fit Criterion} & Certification or compliance reports demonstrate adherence to ISO 13485. \\
+\sout{\textbf{Fit Criterion}} & \sout{Certification or compliance reports demonstrate adherence to ISO 13485.} \\
 \hline
-\textbf{Traceability} & FR7, FR10, FR15 \\
+\sout{\textbf{Traceability}} & \sout{FR7, FR10, FR15} \\
 \hline
 \end{tabular}
 \caption{Non-functional Requirement LR2}
+\textcolor{red}{Removed NFR-LR1 to stay consistent with the current scope of the project}
 \end{table}
 \newpage
 \subsubsection{Health and Safety Requirements}
@@ -1386,11 +1400,11 @@ This project must comply with critical legal and regulatory standards to ensure 
   FR11 & \textbf{Completion Date:} November 20, 2023\\
        & \textbf{Rationale:} FR11 improves user trust by displaying confidence levels. An intuitive UI is essential for user adoption. \\
   \midrule
-  FR13 & \textbf{Completion Date:} November 25, 2023\\
-       & \textbf{Rationale:} FR13 is necessary for security and compliance, ensuring proper access control from the start. Implementing it early helps us protect sensitive data effectively. \\
+   \sout{FR13}&  \sout{\textbf{Completion Date:} November 25, 2023}\\
+       &  \sout{\textbf{Rationale:} FR13 is necessary for security and compliance, ensuring proper access control from the start. Implementing it early helps us protect sensitive data effectively.} \\
   \midrule
-  FR14 & \textbf{Completion Date:} November 15, 2023\\
-       & \textbf{Rationale:} FR14 safeguards the integrity of original X-ray images.\\
+  \sout{FR14} & \sout{\textbf{Completion Date:} November 15, 2023}\\
+       & \sout{\textbf{Rationale:} FR14 safeguards the integrity of original X-ray images.}\\
   \bottomrule
   \end{tabular}
   \end{table}
@@ -1427,14 +1441,14 @@ This project must comply with critical legal and regulatory standards to ensure 
   FR8 & \textbf{Completion Date:} February 10, 2024\\
       & \textbf{Rationale:} FR8 offers alerts for significant condition changes. It's useful but not essential for initial deployment, so we scheduled it after higher-priority tasks. \\
   \midrule
-  FR10 & \textbf{Completion Date:} February 11, 2024\\
-       & \textbf{Rationale:} FR10 involves integrating with EHR systems, which adds complexity. We plan to address this later to focus on core functionalities first. \\
+  \sout{FR10} & \sout{\textbf{Completion Date:} February 11, 2024}\\
+       & \sout{\textbf{Rationale:} FR10 involves integrating with EHR systems, which adds complexity. We plan to address this later to focus on core functionalities first.} \\
   \midrule
-  FR12 & \textbf{Completion Date:} March 2, 2024\\
-       & \textbf{Rationale:} FR12 allows patient self-upload of images. Given legal considerations and our initial focus on clinicians, we scheduled it for later development. \\
+  \sout{FR12} & \sout{\textbf{Completion Date:} March 2, 2024}\\
+       & \sout{\textbf{Rationale:} FR12 allows patient self-upload of images. Given legal considerations and our initial focus on clinicians, we scheduled it for later development.} \\
   \midrule
-  FR15 & \textbf{Completion Date:} March 10, 2024\\
-       & \textbf{Rationale:} FR15 expands support to other imaging modalities. We aim to perfect chest X-ray analysis before adding CT and MRI support, so we scheduled this for the last phase. \\
+  \sout{FR15} & \sout{\textbf{Completion Date:} March 10, 2024}\\
+       & \sout{\textbf{Rationale:} FR15 expands support to other imaging modalities. We aim to perfect chest X-ray analysis before adding CT and MRI support, so we scheduled this for the last phase.} \\
   \bottomrule
   \end{tabular}
   \caption{Low Priority Functional Requirements}
@@ -1459,14 +1473,14 @@ This project must comply with critical legal and regulatory standards to ensure 
   PR2 & \textbf{Completion Date:} October 25, 2023\\
       & \textbf{Rationale:} PR2 aims for high system uptime. Reliability is critical, so we must ensure the system is stable from the initial launch. \\
   \midrule
-  SR2 & \textbf{Completion Date:} December 4, 2023\\
-      & \textbf{Rationale:} SR2 implements role-based access control, necessary for security and compliance. We need to control data access from the beginning. \\
+  \sout{SR2} & \sout{\textbf{Completion Date:} December 4, 2023}\\
+      & \sout{\textbf{Rationale:} SR2 implements role-based access control, necessary for security and compliance. We need to control data access from the beginning.} \\
   \midrule
   MS1 & \textbf{Completion Date:} December 8, 2023\\
       & \textbf{Rationale:} MS1 involves modular architecture and documentation, facilitating future maintenance. \\
   \midrule
-  LR1 & \textbf{Completion Date:} Januaray 7, 2023\\
-      & \textbf{Rationale:} LR1 ensures compliance with data protection laws, which is legally required. We must adhere to regulations from the outset to avoid legal issues. \\
+  \sout{LR1} & \sout{\textbf{Completion Date:} Januaray 7, 2023}\\
+      & \sout{\textbf{Rationale:} LR1 ensures compliance with data protection laws, which is legally required. We must adhere to regulations from the outset to avoid legal issues.} \\
   \midrule
   LR2 & \textbf{Completion Date:} January 20, 2023\\
       & \textbf{Rationale:} LR2 requires adherence to ISO 13485, ensuring quality and safety. Meeting industry standards builds trust and facilitates future certifications. \\
@@ -1486,8 +1500,8 @@ This project must comply with critical legal and regulatory standards to ensure 
   LF2 & \textbf{Completion Date:} February 18, 2024\\
       & \textbf{Rationale:} LF2 improves the user interface to minimize eye strain. While important for user comfort, it can be refined after the main features are operational. \\
   \midrule
-  UH2 & \textbf{Completion Date:} February 15, 2024\\
-      & \textbf{Rationale:} UH2 adds context-sensitive help and tooltips. Enhancing usability is beneficial, but we plan to implement it after gathering initial user feedback. \\
+  \sout{UH2} & \sout{\textbf{Completion Date:} February 15, 2024}\\
+      & \sout{\textbf{Rationale:} UH2 adds context-sensitive help and tooltips. Enhancing usability is beneficial, but we plan to implement it after gathering initial user feedback.} \\
   \midrule
   PR3 & \textbf{Completion Date:} February 10, 2024\\
       & \textbf{Rationale:} PR3 enhances performance by supporting concurrent image processing. Scheduling this for later allows us to optimize the system after core functionalities are stable. \\
@@ -1495,14 +1509,14 @@ This project must comply with critical legal and regulatory standards to ensure 
   MS2 & \textbf{Completion Date:} February 2, 2024\\
       & \textbf{Rationale:} MS2 involves automated testing for reliability. Implementing it after initial development helps us maintain code quality as the project grows. \\
   \midrule
-  OE1 & \textbf{Completion Date:} March 18, 2024\\
-       & \textbf{Rationale:} OE1 integrates with hospital PACS systems. Given the complexity, we plan to tackle this once the system's core features are solidified. \\
+  \sout{OE1} & \sout{\textbf{Completion Date:} March 18, 2024}\\
+       & \sout{\textbf{Rationale:} OE1 integrates with hospital PACS systems. Given the complexity, we plan to tackle this once the system's core features are solidified.} \\
   \midrule
   OE2 & \textbf{Completion Date:} March 14, 2024\\
        & \textbf{Rationale:} OE2 ensures operation under variable network conditions. This enhancement is scheduled for later, focusing first on standard network environments. \\
   \midrule
-  CR1 & \textbf{Completion Date:} March 4, 2024\\
-       & \textbf{Rationale:} CR1 adds multilingual support. We aim to include additional languages after ensuring the system functions well in the primary language. \\
+  \sout{CR1} & \sout{\textbf{Completion Date:} March 4, 2024}\\
+       & \sout{\textbf{Rationale:} CR1 adds multilingual support. We aim to include additional languages after ensuring the system functions well in the primary language.} \\
   \bottomrule
   \end{tabular}
   \caption{Medium and Low Priority Non-Functional Requirements}
@@ -1535,10 +1549,10 @@ These requirements are core to our system's functionality and essential for meet
         \item \textbf{Possible Changes}: N/A
     \end{itemize}
 
-    \item \textbf{FR13}: Support multiple user roles with appropriate access levels.
+    \item \sout{\textbf{FR13}: Support multiple user roles with appropriate access levels.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Crucial for security and compliance with regulations.
-        \item \textbf{Possible Changes}: N/A
+        \item \sout{\textbf{Rationale}: Crucial for security and compliance with regulations.}
+        \item \textbf{Possible Changes}: \sout{N/A}
     \end{itemize}
 
     \item \textbf{SR1}: Encrypt all patient data using AES-256 encryption.
@@ -1547,16 +1561,16 @@ These requirements are core to our system's functionality and essential for meet
         \item \textbf{Possible Changes}: N/A
     \end{itemize}
 
-    \item \textbf{SR2}: Implement role-based access control.
+    \item \sout{\textbf{SR2}: Implement role-based access control.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Critical for security and regulatory compliance.
-        \item \textbf{Possible Changes}: N/A
+        \item \sout{\textbf{Rationale}: Critical for security and regulatory compliance.}
+        \item \sout{\textbf{Possible Changes}: N/A}
     \end{itemize}
 
-    \item \textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).
+    \item \sout{\textbf{LR1}: Comply with healthcare data protection laws (HIPAA, PIPEDA).}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Legal compliance is mandatory.
-        \item \textbf{Possible Changes}: N/A
+        \item \sout{\textbf{Rationale}: Legal compliance is mandatory.}
+        \item \sout{\textbf{Possible Changes}: N/A}
     \end{itemize}
 \end{enumerate}
 
@@ -1601,10 +1615,10 @@ These requirements are important but may undergo minor adjustments based on user
         \item \textbf{Possible Changes}: Modify the display format of confidence levels.
     \end{itemize}
 
-    \item \textbf{FR14}: Create a new copy of the X-ray before AI analysis.
+    \item \sout{\textbf{FR14}: Create a new copy of the X-ray before AI analysis.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Protects data integrity; implementation methods might improve.
-        \item \textbf{Possible Changes}: Optimize data handling or copying procedures.
+        \item \sout{\textbf{Rationale}: Protects data integrity; implementation methods might improve.}
+        \item \sout{\textbf{Possible Changes}: Optimize data handling or copying procedures.}
     \end{itemize}
 
     \item \textbf{FR16}: Support regular updates to the AI model.
@@ -1679,10 +1693,10 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Simplify the alert system or postpone implementation.
     \end{itemize}
 
-    \item \textbf{FR10}: Integrate with EHR systems to import/export data.
+    \item \sout{\textbf{FR10}: Integrate with EHR systems to import/export data.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Adds complexity; might be challenging within our timeline.
-        \item \textbf{Possible Changes}: Limit integration scope or schedule for future development.
+        \item \sout{\textbf{Rationale}: Adds complexity; might be challenging within our timeline.}
+        \item \sout{\textbf{Possible Changes}: Limit integration scope or schedule for future development.}
     \end{itemize}
 
     \item \textbf{FR12}: Allow patients to upload images for self-diagnosis with disclaimers.
@@ -1691,10 +1705,10 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Restrict feature access or require additional consent.
     \end{itemize}
 
-    \item \textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.
+    \item \sout{\textbf{FR15}: Support additional imaging modalities like CT scans and MRIs.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: May exceed current project scope; could be deferred.
-        \item \textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.
+        \item \sout{\textbf{Rationale}: May exceed current project scope; could be deferred.}
+        \item \sout{\textbf{Possible Changes}: Focus on chest X-rays initially; schedule other modalities for later phases.}
     \end{itemize}
 
     \item \textbf{LF2}: Use color schemes and fonts that minimize eye strain.
@@ -1703,10 +1717,10 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Redesign UI for improved comfort.
     \end{itemize}
 
-    \item \textbf{UH2}: Provide context-sensitive help and tooltips.
+    \item \sout{\textbf{UH2}: Provide context-sensitive help and tooltips.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Resource constraints might affect implementation scope.
-        \item \textbf{Possible Changes}: Adjust help features or prioritize key areas.
+        \item \sout{\textbf{Rationale}: Resource constraints might affect implementation scope.}
+        \item \sout{\textbf{Possible Changes}: Adjust help features or prioritize key areas.}
     \end{itemize}
 
     \item \textbf{PR3}: Support processing of up to 20 images concurrently.
@@ -1715,10 +1729,10 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Reduce number of concurrent images or optimize performance.
     \end{itemize}
 
-    \item \textbf{OE1}: Integrate with hospital PACS using DICOM.
+    \item \sout{\textbf{OE1}: Integrate with hospital PACS using DICOM.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Integration complexity may limit scope.
-        \item \textbf{Possible Changes}: Support specific PACS systems or delay integration.
+        \item \sout{\textbf{Rationale}: Integration complexity may limit scope.}
+        \item \sout{\textbf{Possible Changes}: Support specific PACS systems or delay integration.}
     \end{itemize}
 
     \item \textbf{OE2}: Operate effectively in networks with latency up to 200ms.
@@ -1727,10 +1741,10 @@ These requirements may be adjusted due to resource constraints, technical challe
         \item \textbf{Possible Changes}: Adjust network condition requirements or focus on standard environments first.
     \end{itemize}
 
-    \item \textbf{CR1}: Support both English and French languages.
+    \item \sout{\textbf{CR1}: Support both English and French languages.}
     \begin{itemize}[label=-]
-        \item \textbf{Rationale}: Multilingual support adds complexity; may be postponed.
-        \item \textbf{Possible Changes}: Limit initial support to English; add languages later.
+        \item \sout{\textbf{Rationale}: Multilingual support adds complexity; may be postponed.}
+        \item \sout{\textbf{Possible Changes}: Limit initial support to English; add languages later.}
     \end{itemize}
 \end{enumerate}
 
