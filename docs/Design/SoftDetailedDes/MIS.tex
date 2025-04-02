@@ -128,7 +128,6 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     probability & $\mathbb{P}$ & a real number in [0, 1] representing likelihood\\
     matrix & $\mathbb{M}_{m,n}$ & a 2D array of size m×n containing numerical values\\
     binary & $\mathbb{B}$ & boolean values {true, false}\\
-    Binary Number & $\mathbb{B}^*$ & a sequence of binary digits (0s and 1s)\\
     \bottomrule
     \end{tabular} 
     \end{center}
@@ -148,7 +147,8 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     HTTP Request & HTTPRequest & Object containing HTTP request information including headers, body, and method \\
     HTTP Response & HTTPResponse & Object containing HTTP response information including status code, headers, and body \\
     DataFrame & pd.DataFrame & 2-dimensional labeled data structure for patient and medical records \\
-    JSON & JSON & JavaScript Object Notation, lightweight data interchange format \\
+    Base64 & Base64 & Binary-to-text encoding scheme for transmitting binary image data \\
+    YAML & YAML & Human-readable data serialization format for configuration files \\
     \bottomrule
     \end{tabular}
     \caption{Data types from libraries}
@@ -344,7 +344,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & XRayImage:Binary Number& DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
+    \texttt{predictDisease} & XRayImage:binary & DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
     \hline
 \end{tabular}
 
@@ -406,7 +406,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{trackProgression} & XrayImage1: Binary Number, \newline XrayImage2: Binary Number & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
+    \texttt{trackProgression} & XrayImage1: binary, \newline XrayImage2: binary & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
     \hline
 \end{tabular}
 \end{center}
@@ -624,7 +624,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewPatientList} & doctorID: int, filters: [string] & Patients: [user] & PatientListNotFoundException \\
+    \texttt{viewPatientList} & Doctor ID: int, filters: [string] & Patients: [user] & PatientListNotFoundException \\
     \hline
     \texttt{sortList} & Sorting criteria: [string] & Patients: [user] & None \\
     \hline
@@ -654,24 +654,30 @@ Note: This is being handled by React server
 \subsubsection{viewPatientList(doctorID, filters)}
 
 \begin{itemize}
-    \item \textbf{Transition}: $\text{doctorID} \in \text{Doctor} \land \text{filters} \in \text{FilterSet}, \quad \text{s.t. } \text{FilterSet} \subseteq \text{List[String]}$
-    \item \textbf{Output}: \text{getPatientDetails}
+    \item \textbf{Transition}: Retrieves a list of patients associated with the given doctor, applying the specified filters.
+    \item \textbf{Output}: Returns the list of patient details or throws a \texttt{PatientListNotFoundException} if no patients are found.
 \end{itemize}
 
-\subsubsection{sortList(criteria, Patients)}
+\subsubsection{sortList(criteria)}
 
 \begin{itemize}
-    \item \textbf{Transition}: where the function \texttt{sortList} takes two arugments: criteria or a set of applied filters in the form of a $String$  and Patients a $List[String]$ of the patients in the application. The function sorts the list of patients based on the criteria provided.
-    \item \textbf{Output}: Sorted List[String] of the List of Patients
+    \item \textbf{Transition}: Sorts the current patient list based on the provided criteria.
+    \item \textbf{Output}: Returns the sorted patient list.
 \end{itemize}
 
-\subsubsection{addPatient(FormData)}
+\subsubsection{addPatient(fromData)}
 \begin{itemize}
-    \item \textbf{Transition}: $\text{addPatient} : \text{FormData} \to \text{PatientData}$, where the function \texttt{addPatient} maps an element $f \in \text{FormData}$ (representing the submitted form data) to an element $p \in \text{PatientData}$ representing the created patient data stored in the backend.
+    \item \textbf{Transition}: Submits the provided form data to the backend service for processing.
+    \item \textbf{Output}: Returns the created patient data.
 \end{itemize}
 
+\subsection{Local Functions}
+\begin{itemize}
+\item \textbf{sortPatients(criteria)}: Sorts the patient list based on the provided criteria.
+\end{itemize}
 
 \newpage
+% /********************* M7 *********************/
 \section{Patient Overview Module}
 
 \subsection{Other Modules the Current Module Uses}
@@ -951,7 +957,7 @@ N/A
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{getprogression} & XrayImage1: Binary Number, \newline XrayImage2: Binary Number & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
+    \texttt{getprogression} & XrayImage1: binary, \newline XrayImage2: binary & Progression Result: \newline ProgressionResult & \texttt{ProgressionFailedException} \\
     \hline
     \texttt{getLatestProgression} & userId: string & Progression Result: \newline ProgressionResult & \texttt{UserNotFound Exception, LastestProgressionFailed Exeception} \\
     \hline
@@ -1015,7 +1021,7 @@ N/A
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & \texttt{XrayImage: Binary Number} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
+    \texttt{predictDisease} & \texttt{XrayImage: binary} & \texttt{Prediction Result: PredictionResult} & \texttt{PredictionFailedException} \\
     \hline
 \end{tabular}
 

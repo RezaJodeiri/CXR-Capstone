@@ -98,27 +98,23 @@ docker system prune -a
 
 # Project Evaluation and Issue Tracking
 
-
-| Section                 | Title                              | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
-|-------------------------|------------------------------------|-----------------------------|------------|------------------------|
-| **SRS**                 | Address TA Feedback               | Improve formatting and style; mention figures in paragraphs and fix title. [#125](https://github.com/RezaJodeiri/CXR-Capstone/issues/125) | `44e80d1`  | TA Yiding Li|
-|                         | What not How (Abstract)           | Improve constraints details. [#126](https://github.com/RezaJodeiri/CXR-Capstone/issues/126)                                               | `44e80d1`  | TA Yiding Li|
-|                         | Complete, Correct, and Unambiguous| Template explanation. [#124](https://github.com/RezaJodeiri/CXR-Capstone/issues/124)                                                      | `44e80d1`  | TA Yiding Li|
-|                         | Traceable Requirements            | Fix referencing for section 5.2. [#123](https://github.com/RezaJodeiri/CXR-Capstone/issues/123)                                           | `44e80d1`  | TA Yiding Li|
-|                         | Document Content                  | Fix functional requirements. [#122](https://github.com/RezaJodeiri/CXR-Capstone/issues/122)                                               | `44e80d1`  | TA Yiding Li|
-|                         | Project Goals                     | Goal statements inconsistency. [#55](https://github.com/RezaJodeiri/CXR-Capstone/issues/55)                                               | `44e80d1`  | TA Yiding Li|
-|                         | Document Content                  | Fix FR and NFR to align with the current scope of the project. [#201](https://github.com/RezaJodeiri/CXR-Capstone/issues/201)             | `32ef20a`  | Team Feedback|
-| **Hazard Analysis**     |                                   |                                                                                                                                           |            |             |
-|                         | Document Content                  | Fixed citation. [#202](https://github.com/RezaJodeiri/CXR-Capstone/issues/202)                                                            | `b5c1abe`  | TA Yiding Li|
+| Section                 |  Title                          | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
+|-------------------------|--------------------------------------|-----------------------------|------------|----------------------|
+| **SRS**                 |                                      |                             |            |                      |
+|                         | Address TA Feedback                  | Issue description here      | `abc1234`  | TA John Doe          |
+|                         | Fix Functional Requirement 6         | Issue description here      | `def5678`  | Peer Jane Doe        |
+| **Hazard Analysis**     |                                      |                             |            |                      |
+|                         | Address TA Feedback                  | Issue description here      | `abc1234`  | TA John Doe          |
+|                         | Fix Functional Requirement 6         | Issue description here      | `def5678`  | Peer Jane Doe        |
 | **MIS**                 |                                      |                             |            |                      |
-|                         | Formalization                     | Fixed Formalization [#191](https://github.com/RezaJodeiri/CXR-Capstone/issues/191)                                                        | `42b5c48`  | TA Yiding Li|
-|                         | Input Representation              | Fixed Input Representation [#192](https://github.com/RezaJodeiri/CXR-Capstone/issues/192)                                                 | `b1e88f5`  | TA Yiding Li|
-|                         | Specific Definition of JSON       | Fixed Specific Definition of JSON [#193](https://github.com/RezaJodeiri/CXR-Capstone/issues/193)                                          | `9bed20b`  | TA Yiding Li|
-|                         | HTTP Design                       | Fixed Descritpition of HTTP Design [#194](https://github.com/RezaJodeiri/CXR-Capstone/issues/194)                                         | `78338d3`  | TA Yiding Li|
+|                         | Revise System Architecture          | Issue description here      | `ghi9012`  | TA Alex Smith        |
+|                         | Clarify Module Responsibilities     | Issue description here      | `jkl3456`  | Peer Mike Brown      |
+| **MG**                  |                                      |                             |            |                      |
+|                         | Improve Traceability                | Issue description here      | `mno7890`  | TA Sarah Lee        |
+|                         | Fix Incorrect Assumptions           | Issue description here      | `pqr1234`  | Peer Emily Davis     |
 | **V&V Plan**            |                                      |                             |            |                      |
-|                         | Nondynamic testing used as necessary & Improve Testing                 | Improve Testing [#196](https://github.com/RezaJodeiri/CXR-Capstone/issues/196)                                       | `eb96f46`  | TA Yiding Li  |
-|                         | General Information                                                    | Objective mismatching                                 [#195](https://github.com/RezaJodeiri/CXR-Capstone/issues/195) | `eb96f46`  | TA Yiding Li  |
-|                         | Unaligned FRs and NFRs | Align FRs and NFRs testings with current project scope  [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
-|                         | Unaligned Extras | Align extras with current project scope [#204](https://github.com/RezaJodeiri/CXR-Capstone/issues/204)                          | `0e53ce2`  | Team Feedback |
+|                         | Add Unit Test Cases                 | Issue description here      | `stu5678`  | TA Alex Johnson      |
+|                         | Update Integration Testing Strategy | Issue description here      | `vwx9012`  | Peer Chris Evans     |
 | **V&V Report**          |                                      |                             |            |                      |
-
+|                         | Add Test Results Summary            | Issue description here      | `yz12345`  | TA Rachel Green      |
+|                         | Include Performance Test Findings   | Issue description here      | `abc6789`  | Peer Laura White     |

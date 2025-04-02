@@ -79,13 +79,17 @@ This software will be compatible with Windows 10 or higher and macOS 12 or highe
 
 \newpage
 \section{Goals}
-\begin{table}[H] 
+\begin{table}[H] % Change from [ht] to [H] for stricter control
     \hspace*{-2cm}
     \centering
     \begin{tabular}{|p{3cm}|p{6cm}|p{6cm}|}
     \hline
     \textbf{Goal} & \textbf{Explanation} & \textbf{Reasoning} \\ \hline
-    Accurate Disease Detection & The system must accurately detect diseases such as pneumonia and cardiac conditions from chest X-rays with a minimum accuracy of 85\%. Additionally, it will generate structured, human-readable reports that summarize key findings, confidence levels, and disease progression status within a loading time of 5 seconds. These reports will be formatted for easy interpretation by the users without requiring additional modifications saving in less than 1 second. & High accuracy in disease detection is critical to ensure the system’s reliability and effectiveness in supporting clinical decisions. An AI system that misidentifies conditions could lead to incorrect diagnoses, affecting patient outcomes. Furthermore, automating the report generation process enhances efficiency by reducing the time users spend reviewing raw data and manually formatting findings. \\ \hline
+    Accurate Disease Detection & The system must detect diseases such as pneumonia and other cardiac conditions in chest X-rays with a minimum accuracy of 85\%. & High accuracy in disease detection is essential to ensure the system’s reliability and to support clinical decisions. \\ \hline
+
+    Automated Report Generation & The system will generate structured, human-readable reports that summarize key findings, confidence levels, and disease progression status for each patient. These reports will be easily interpretable by clinicians and require no additional formatting. & Automating the report generation process streamlines clinical workflows by providing a ready-to-use summary of results. This minimizes the time clinicians spend manually reviewing raw data and allows them to focus on decision-making, improving overall efficiency in medical settings. \\ \hline
+    
+    Disease Progression Tracking Mechanism & A feature will be implemented that tracks disease progression or improvement over multiple chest X-rays taken from the same patient within a specific time frame, providing actionable insights on changes in the patient’s condition. &Tracking disease progression is crucial in offering a longitudinal analysis of the patient's health. By analyzing X-rays over time, the system will help clinicians assess the effectiveness of treatments and adjust strategies accordingly, ensuring that care is continuously optimized.\\ \hline
 
     Intuitive User Interface & The design of the user interface for this system must be simple and intuitive, allowing healthcare professionals with varying technical backgrounds to use the platform efficiently. It is essential that the interface enables users to easily upload chest X-rays, view results, and generate reports without requiring extensive training. &The user base for this project includes clinicians and radiologists, many of whom may have limited experience with AI tools or complex interfaces. A streamlined and user-friendly design will ensure that users can navigate the system quickly, minimizing errors and maximizing adoption in clinical settings. This will help ensure that the system can be integrated seamlessly into everyday workflows.  \\ \hline
     

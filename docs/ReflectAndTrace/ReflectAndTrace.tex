@@ -2,7 +2,6 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage{longtable}
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -10,9 +9,8 @@
 
 \date{}
 
-\input{../packages/Comments.tex}
-\input{../packages/Common.tex}
-\input{../packages/Reflection.tex}
+\input{../Comments}
+\input{../Common}
 
 \begin{document}
 
@@ -28,84 +26,46 @@ on your reflections.}
 
 \section{Changes in Response to Feedback}
 
+\plt{Summarize the changes made over the course of the project in response to
+feedback from TAs, the instructor, teammates, other teams, the project
+supervisor (if present), and from user testers.}
+
+\plt{For those teams with an external supervisor, please highlight how the feedback 
+from the supervisor shaped your project.  In particular, you should highlight the 
+supervisor's response to your Rev 0 demonstration to them.}
+
+\plt{Version control can make the summary relatively easy, if you used issues
+and meaningful commits.  If you feedback is in an issue, and you responded in
+the issue tracker, you can point to the issue as part of explaining your
+changes.  If addressing the issue required changes to code or documentation, you
+can point to the specific commit that made the changes.  Although the links are
+helpful for the details, you should include a label for each item of feedback so
+that the reader has an idea of what each item is about without the need to click
+on everything to find out.}
+
+\plt{If you were not organized with your commits, traceability between feedback
+and commits will not be feasible to capture after the fact.  You will instead
+need to spend time writing down a summary of the changes made in response to
+each item of feedback.}
+
+\plt{You should address EVERY item of feedback.  A table or itemized list is
+recommended.  You should record every item of feedback, along with the source of
+that feedback and the change you made in response to that feedback.  The
+response can be a change to your documentation, code, or development process.
+The response can also be the reason why no changes were made in response to the
+feedback.  To make this information manageable, you will record the feedback and
+response separately for each deliverable in the sections that follow.}
+
+\plt{If the feedback is general or incomplete, the TA (or instructor) will not
+be able to grade your response to feedback.  In that case your grade on this
+document, and likely the Revision 1 versions of the other documents will be
+low.} 
+
 \subsection{SRS and Hazard Analysis}
-
-Here is the feedback we received on the SRS and Hazard Analysis documents, and the changes we made in response to that feedback.
-
-\begin{longtable}{| p{0.2\textwidth} | p{0.2\textwidth} | p{0.3\textwidth} | p{0.1\textwidth} |}
-    \caption{Feedback and Changes for SRS Documentation} \\
-    \hline
-    \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
-    \hline
-    \endfirsthead
-    \hline
-    \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
-    \hline
-    \endhead
-    \hline
-    \endfoot
-    TA Feedback & Formatting and Style & Mention figures in paragraphs and fix title & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/125}{\#125}\\
-    \hline
-    TA Feedback & What not How(Abstract) & Improve constraints details & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/126}{\#126} \\
-    \hline
-    TA Feedback & Complete, Correct and Unambiguous & Template explanation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/124}{\#124}\\
-    \hline
-    TA Feedback & Traceable Requirements & Fix referencing for section 5.2. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/123}{\#123} \\
-    \hline
-    TA Feedback & Document Content & Fix functional requirements. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/122}{\#122} \\
-    \hline
-    Peer Review & Project Goals & Goal Statements Inconsistency. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/55}{\#55} \\
-    \hline
-    Team Feedback & Document Content & Fix FR and NFR to align with the current scope of project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/201}{\#201}\\
-    \hline
-    TA Feedback & Document Content & Fixed Citation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/202}{\#202}\\
-    \hline
-
-\end{longtable}
 
 \subsection{Design and Design Documentation}
 
-Here is the feedback we received on the Design and Design Documentation, and the changes we made in response to that feedback.
-\begin{longtable}{| p{0.2\textwidth} | p{0.2\textwidth} | p{0.3\textwidth} | p{0.1\textwidth} |}
-\hline
-\textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
-\hline
-TA Feedback & Document Content & Formalization  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/191}{\#191} \\
-\hline
-TA Feedback & Document Content & Input represenation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/192}{\#192} \\
-\hline
-TA Feedback & Document Content & Specific Definition of JSON & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/193}{\#193} \\
-\hline
-TA Feedback & Document Content & HTTP Design & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/194}{\#194} \\
-\hline
-\end{longtable}
-
 \subsection{VnV Plan and Report}
-
-Here is the feedback we received on the VNV Plan and VNV  Report, and the changes we made in response to that feedback.
-
-\begin{longtable}{| p{0.2\textwidth} | p{0.2\textwidth} | p{0.3\textwidth} | p{0.1\textwidth} |}
-    \caption{Feedback and Changes for VNV Plan} \\
-    \hline
-    \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
-    \hline
-    \endfirsthead
-    \hline
-    \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
-    \hline
-    \endhead
-    \hline
-    \endfoot
-    TA Feedback & Nondynamic testing used as necessary & Improve Testing & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/196}{\#196} \\
-    \hline
-    TA Feedback & General Information & Objective mismatching & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/195}{\#195} \\
-    \hline
-    Team Feedback & System Tests for Functional / Nonfunctional Requirements are specific & Update based on team feedback & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/203}{\#203}\\
-    \hline
-    Team Feedback & Extras & Change extras based on current scope & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/204}{\#204}\\
-    \hline
-
-\end{longtable}
 
 \section{Challenge Level and Extras}
 
@@ -145,71 +105,28 @@ sell to make money? If your product isn't something that would be sold, like an
 open source project, how would you go about attracting users?  How many potential 
 users currently exist?}
 
-\subsection{Market Demand and Opportunity}
-The market for AI-driven medical imaging analysis is growing rapidly due to increasing healthcare digitization and the global shortage of radiologists. The demand for fast, accurate, and cost-effective diagnostic tools makes this product highly viable. Potential users include hospitals, clinics, telemedicine providers, and government healthcare initiatives. Additionally, developing countries with limited access to radiologists represent a significant market where AI-powered solutions could improve diagnostic capabilities.
-
-\subsection{Marketing Strategy}
-Marketing would involve direct outreach to hospitals and healthcare providers, showcasing the efficiency and accuracy of the model through clinical trials and case studies. Partnerships with electronic health record (EHR) providers could facilitate integration into existing workflows. Furthermore, regulatory approvals such as FDA or Health Canada certification would enhance credibility. However, our team plans more on leveraging via government healthcare programs and partnerships.
-
-\subsection{Production Cost Estimate}
-The cost of production includes:
-\begin{itemize}
-
-    \item \textbf{Cloud Services (AWS ECS):} The hosting and management of the backend system will be powered by AWS Elastic Container Service. This service will handle containerized microservices, ensuring scalability. Costs for ECS typically range from x to x dollar per month, depending on traffic, load, and the number of services running.
-    \item \textbf{GPU/Server Cost:} To train the AI model efficiently, a dedicated GPU or server instance is required for training and inference tasks. For optimal performance, services like AWS EC2 GPU instances would be suitable, which cost around 3 to 5 dollars per hour, depending on the selected instance type. In our case, using the Mcmaster GPU server, there was no cost for training and inference, but we estimate a cost of 500 to 1,000 dollars per month if we did not have access to the mcmaster GPU server. Note our product is the application not the computer or server it runs on.
-    \item \textbf{Cost of API Services:} The integration of ChatGPT for natural language processing tasks, such as generating reports or patient interaction, incurs costs based on the number of API calls. This will vary depending on usage but can be estimated at a few cents per API call, estimating the monthly cost to be the amount of patients divded by 100. 
-\end{itemize}
-
-
-\subsection{Pricing Model}
-\begin{itemize}
-    \item \textbf{SaaS Model (Subscription-based):} Hospitals or the government pays a monthly or annual fee per facility or per patient scan. For considerable profit our team would need to charge around \$1,237/month per hospital or \$2.34 per scan. This model ensures predictable revenue and allows for scaling as more hospitals adopt the technology.
-\end{itemize}
-Given these models, the pricing would balance affordability with long-term sustainability while ensuring accessibility for lower-income hospitals.
-
-\subsection{Break-even Analysis}
-THIS SECTION NEEDS TO BE FILLED
-
-\subsection{Conclusion}
-By aligning pricing, marketing, and distribution with the needs of healthcare providers, the AI-powered X-ray tool has strong market potential. A subscription-based model, combined with strategic partnerships, regulatory approvals, and research collaborations, can drive adoption and profitability while improving global healthcare outcomes. Additionally, partnering with government healthcare programs ensures a stable product demand and consistent revenue stream, as governments often prioritize long-term investments in healthcare infrastructure and technology.
-
 \section{Reflection on Project Management (LO24)}
 
+\plt{This question focuses on processes and tools used for project management.}
+
 \subsection{How Does Your Project Management Compare to Your Development Plan}
-\begin{enumerate}
-    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1,Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
-    \item[-] Our primary communication tools(Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
-    \item[-] Roles and responsibilities as outlined in our development plan were largely adhered to. Each member focused on their assigned modules (e.g., frontend UI, model training, backend integration), and we successfully coordinated via our Git branching workflow and task tracking system (GitHub issues).
-    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model(DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
-\end{enumerate}
+
+\plt{Did you follow your Development plan, with respect to the team meeting plan, 
+team communication plan, team member roles and workflow plan.  Did you use the 
+technology you planned on using?}
 
 \subsection{What Went Well?}
-\begin{enumerate}
-    \item[-] Discord and GitHub Discussions helped streamline both quick check-ins and in-depth technical discussions. Clear communication reduced misunderstandings and sped up decision-making.
-    \item[-] Each member had a clearly defined role (e.g., frontend, model dev, backend), which minimized overlap and improved accountability. Tasks were assigned and tracked using GitHub Issues and Project Boards.
-    \item[-] Weekly meetings kept everyone aligned, and sprint planning ensured we had clear short-term goals. Checkpoints during development helped catch issues early.
-    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via Github was used effectively for collaboration and rollback when needed.
-    \item[-] Independent module development (e.g., AI model, UI, API) allowed parallel progress without bottlenecks. CI/CD setup helped with automated testing and smooth deployment.
-    
-\end{enumerate}
+
+\plt{What went well for your project management in terms of processes and 
+technology?}
 
 \subsection{What Went Wrong?}
-\begin{enumerate}
-    \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
-    \item[-] Our original plan didn’t account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
-    \item[-] Early-stage code and design decisions weren’t always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
-    \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
-\end{enumerate}
+
+\plt{What went wrong in terms of processes and technology?}
 
 \subsection{What Would you Do Differently Next Time?}
 
-\begin{enumerate}
-    \item[-] Allocate extra time in the schedule for unexpected delays, model tuning, and integration/debugging.
-    \item[-] Build a rough end-to-end prototype early to identify integration pain points sooner, even before full model training is complete.
-    \item[-] Maintain consistent documentation practices from the start, including API specs, model details, and configuration notes, to reduce confusion later.
-    \item[-] Involve test users (or at least team cross-reviews) earlier in the UI development cycle to catch usability issues before final sprint.
-    \item[-] Identify high-risk components (e.g., novel model architectures) up front and create extra plans or fallback options.
-\end{enumerate}
+\plt{What will you do differently for your next project?}
 
 \section{Reflection on Capstone}
 
@@ -217,29 +134,11 @@ By aligning pricing, marketing, and distribution with the needs of healthcare pr
 
 \subsection{Which Courses Were Relevant}
 
-\begin{itemize}
-    \item \textbf{4ML3 Machine Learning and AI:} The principles and techniques from this course provided a foundation for understanding how to train and deploy machine learning models, especially the convolutional neural networks (CNNs) used for image classification in medical X-rays. Key topics such as model validation, overfitting, and the use of pre-trained models were directly applicable to the AI model development for disease prediction.
-    
-    \item \textbf{4HC3 Human Computer Interfaces:} The knowledge gained from this course on Norman’s principles of design was crucial in designing an intuitive and effective user interface for the capstone project. Understanding the user experience was essential for ensuring that the system is accessible and user-friendly, especially for medical professionals who will interact with the system.
-    
-    \item \textbf{4A03 Ethics:} This course allowed our group to have some former background in the ethical implications of using AI in healthcare, especially regarding privacy, consent, and ensuring that the model works equitably across different patient demographics. This understanding guided the way our team handled data and made design decisions for this project.
-    
-    \item \textbf{4X03 Scientific Computation:} This course helped the group understand numerical methods and how to implement efficient algorithms for scientific computing. It was particularly useful when optimizing performance for processing large-scale image datasets, such as chest X-rays, and for ensuring that the system was computationally feasible and efficient.
-
-\end{itemize}
+\plt{Which of the courses you have taken were relevant for the capstone project?}
 
 \subsection{Knowledge/Skills Outside of Courses}
 
-\begin{itemize}
-    \item \textbf{Deep Learning Frameworks (PyTorch):} The team collectively enhanced its understanding of PyTorch, a deep learning framework, to implement the AI model for chest X-ray analysis. This involved collaboratively building convolutional neural networks (CNNs), fine-tuning pre-trained models, and developing robust image data pipelines for preprocessing and augmenting the X-ray images.
-        
-    \item \textbf{Regulatory Compliance in Healthcare (HIPAA):} Since the project involves medical data and aims to have real-world applications in healthcare, the team researched and gained knowledge about healthcare regulations like Health Insurance Portability and Accountability Act for AI-based medical tools. This included understanding privacy concerns and compliance measures for handling patient data safely and legally. 
-        
-    \item \textbf{API Integration and Deployment:} To integrate the machine learning model into a production environment, the team learned how to set up RESTful APIs and integrate them with the frontend. This included working with cloud services such as AWS to deploy the system and ensure scalability for real-world use. This was crucial for making the AI model accessible to healthcare professionals and ensuring that it could handle multiple requests simultaneously. 
-        
-    \item \textbf{Data Annotation and Augmentation for Medical Imaging:} The team acquired knowledge on handling medical image datasets, including proper annotation of X-ray images for training purposes and applying image augmentation techniques to improve model robustness. This was particularly important as public datasets for chest X-rays can be limited and require preprocessing for real-world applications. 
-        
-    \item \textbf{Performance Monitoring and Model Optimization:} To ensure that the AI system performed well in production, the team explored model optimization techniques, such as hyperparameter tuning, and utilized performance monitoring tools to track the model’s real-world effectiveness in detecting lung diseases. This included setting up logging and feedback mechanisms to ensure continuous learning and improvement.
-\end{itemize}
+\plt{What skills/knowledge did you need to acquire for your capstone project
+that was outside of the courses you took?}
 
 \end{document}
