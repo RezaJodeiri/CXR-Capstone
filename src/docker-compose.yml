@@ -1,16 +1,18 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: local.Dockerfile
+      args:
+        - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
     ports:
       - ${FRONTEND_HOST_PORT}:3000
     environment:
-      - WATCHPACK_POLLING=${WATCHPACK_POLLING}
-      - WATCHPACK_POLLING_INTERVAL=2000
-      - REACT_APP_API_URL=${PROTOCOL}://${HOST}:${BACKEND_HOST_PORT}
+      - WATCHPACK_POLLING=true
     command: npm start
     depends_on:
       - backend
-    image: neuralanalyzer/frontend:latest
+    image: neuralanalyzer/frontend:dev
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -21,13 +23,11 @@ services:
       - ${BACKEND_HOST_PORT}:5000
     environment:
       - FRONTEND_URL=${PROTOCOL}://${HOST}:${FRONTEND_HOST_PORT}
-      - TORCHXRAYVISION_MODEL_URL=${PROTOCOL}://torchxrayvision_model
-      # - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model
+      - NEURALANALYZER_MODEL_URL=${PROTOCOL}://neuralanalyzer_model:${NEURALANALYZER_MODEL_HOST_PORT}
     command: python app.py
     image: neuralanalyzer/backend:latest
     depends_on:
-      # - neuralanalyzer_model
-      - torchxrayvision_model
+      - neuralanalyzer_model
     volumes:
       - ./backend:/app
     env_file:
@@ -35,23 +35,22 @@ services:
     networks:
       - backend_private_network
 
-  # neuralanalyzer_model:
-  #   build: ./ai-services/neuralanalyzer
-  #   command: python app.py
-  #   image: neuralanalyzer:latest
-  #   volumes:
-  #     - ./ai-services/neuralanalyzer:/app
-  #   networks:
-  #     - backend_private_network
-
-  torchxrayvision_model:
-    build: ./ai-services/torchxrayvision
-    command: python torch_app.py
-    image: torchxrayvision:latest
+  neuralanalyzer_model:
+    build: ./ai_services/neuralanalyzer
+    ports:
+      - 9999:9999
+    command: python neural_app.py
+    image: neuralanalyzer:latest
     volumes:
-      - ./ai-services/torchxrayvision:/app
+      - ./ai_services/neuralanalyzer:/app
     networks:
       - backend_private_network
+
+    #CUDA support
+    # runtime: nvidia
+    # environment:
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
 networks:
   backend_private_network:

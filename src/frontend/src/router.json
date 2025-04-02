@@ -1,0 +1,10 @@
+{
+  "paths": {
+    "/patients": {
+      "title": "Patients"
+    },
+    "/settings": {
+      "title": "Settings"
+    }
+  }
+}

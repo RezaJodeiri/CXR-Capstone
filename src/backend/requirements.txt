@@ -1,7 +1,9 @@
-Flask==2.2.5
-flask-cors==5.0.0
-boto3==1.35.59
-botocore==1.35.59
-python-dotenv==1.0.1
-requests==2.32.3
-werkzeug==2.2.2
+Flask
+flask-cors
+boto3
+botocore
+python-dotenv
+requests
+werkzeug
+OpenAI
+openai

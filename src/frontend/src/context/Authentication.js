@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(response.user));
         setToken(response.token);
         setUser(response.user);
-        navigate("/dashboard");
+        navigate("/patients");
         return true;
       }
       return false;
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(response.user));
         setToken(response.token);
         setUser(response.user);
-        navigate("/dashboard");
+        navigate("/patients");
         return true;
       }
       return false;
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     setToken(null);
     setUser(null);
-    navigate("/login");
+    navigate("/");
   };
 
   const isAuthenticated = () => {
