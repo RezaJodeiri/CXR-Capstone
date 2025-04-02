@@ -135,7 +135,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd src/frontend
-          npm ci
+          npm install
       
       - name: Run frontend tests
         run: |
