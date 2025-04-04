@@ -282,11 +282,7 @@ This subsection provides a list of terms that are used in the subsequent section
     \hline
     Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
     \hline
-    Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
-    \hline
-    Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
-    \hline
-    Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
+    Threshold for ROC Analysis & 0.75 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
     \hline
 \end{tabular}
 
@@ -450,7 +446,7 @@ The software is typically used in medical and clinical contexts to support healt
 \subsubsection{Normal Operation}
 As observed in the use case diagram, the system begins with user input from either patients or radiologists, who upload chest X-ray images to be analyzed. These images can be stored locally or in the cloud for easy access. Once uploaded, the system processes the images using machine learning algorithms to detect abnormalities, annotate findings, and generate diagnostic reports. These reports include detailed analysis results and suggested diagnostic advice, which radiologists can review, edit, and compare with previous records if needed.The system also enables radiologists to refine patient treatment plans based on the AI-generated insights, ensuring a smooth and accurate workflow from image upload to delivering meaningful medical recommendations.
 \subsubsection{Undesired Event Handling}
-If an undesired event (normalization fails / error in report generation / session timeout) occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
+If an undesired event (refer to \ref{fig:finite state machine}) occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 Physicians / Radiologists: 
@@ -516,7 +512,7 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 85\% accuracy. Setting an 85\% threshold ensures the model performs close to human-level diagnostic reliability, which builds trust with clinicians and patients.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 75\% accuracy. Setting an 75\% threshold ensures the model performs close to human-level diagnostic reliability, which builds trust with clinicians and patients.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_ease_of_ML_intro}:] \textbf{Simple to introduce more ML models: }New classifier models must be simple and intuitive to be integrated with the system, with short time-to-market. This goal will require a containerized ML-plugin code template (in Python) and guidelines documentations for new models to follow.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_fault-tolerance}:] \textbf{High Fault-Tolerance: }Neuralanalyzer's system (front-end, back-end, ML-plugins) must handle run-time errors as clever as possible, to prevents run-time crashes, and unwanted downtime. Comprehensive unit and integration testings must be present, to reduce errors and bugs within the system.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_good_UI}:] \textbf{Intuitive UI/UX: }Neuralanalyzer's front-end must be user-friendly and straight-forward to be used. Front-end's core features such as login, account registration, and image-prediction should require as few clicks as possible.
@@ -675,11 +671,11 @@ This project must comply with critical legal and regulatory standards to ensure 
   \item \textbf{Prediction:}
     \begin{align*}
       \hat{y}_i &= \begin{cases}
-        1 & \text{if } P(x_i) \geq 0.85 \\
-        0 & \text{if } P(x_i) < 0.85
+        1 & \text{if } P(x_i) \geq 0.75 \\
+        0 & \text{if } P(x_i) < 0.75
       \end{cases}
     \end{align*}
-    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.85, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
+    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.75, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
 
   \item \textbf{Evaluation:}
     \begin{align*}
@@ -697,7 +693,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 
 \subsubsection{Model Constraints}
 \begin{itemize}
-  \item The model \( M \) should achieve an accuracy of at least 85\% on the validation dataset.
+  \item The model \( M \) should achieve an accuracy of at least 75\% on the validation dataset.
   \item Each input image \( x_i \) should be preprocessed to a fixed size (e.g., 224x224 pixels) to ensure compatibility with the model.
   \item The model should be trained on a diverse dataset that includes images from different demographics and disease categories.
 \end{itemize}
@@ -707,7 +703,7 @@ This project must comply with critical legal and regulatory standards to ensure 
     \centering
     \includegraphics[width=1\linewidth]{statem.png}
     \caption{Finite State Machine Diagram}
-    \label{fig:enter-label}
+    \label{fig:finite state machine}
 \end{figure}
 
 \newpage
@@ -754,19 +750,21 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR3} & Develop a system that analyzes chest X-ray images to detect specific diseases with at least 85 percent accuracy. \\
+\textbf{\sout{FR3}} & \sout{Develop a system that analyzes chest X-ray images to detect specific diseases with at least 75 percent accuracy.} \\
 \hline
-\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\textbf{\sout{Rationale}} & \sout{One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings.} \\
 \hline
-\textbf{Verification} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 85\% accuracy threshold. \\
+\textbf{\sout{Verification}} & \sout{Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 75\% accuracy threshold.} \\
 \hline
-\textbf{Priority} & High \\
+\textbf{\sout{Priority}} & \sout{High} \\
 \hline
-\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
+\textbf{\sout{Traceability}} & \sout{PR1, HS1, SR1, FR1 (input of images), FR6 (reporting)} \\
 \hline
 \end{tabular}
-\caption{Functional Requirement FR3}
+\caption{\sout{Functional Requirement FR3}}
+\textcolor{red}{Removed as this is a non-functional requirement }
 \end{table}
+
 \begin{table}[h!]
 \centering
 \rowcolors{2}{white}{white}
@@ -1163,6 +1161,27 @@ This project must comply with critical legal and regulatory standards to ensure 
 \end{tabular}
 \caption{Non-functional Requirement PR3}
 \end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR4} & Develop a system that analyzes chest X-ray images to detect specific diseases with at least 75 percent accuracy. \\
+\hline
+\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\hline
+\textbf{Fit Criterion} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 75\% accuracy threshold. \\
+
+\hline
+\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
+\hline
+\end{tabular}
+\caption{Non-Functional Requirement PR4}
+\textcolor{red}{Added from functional requirement}
+\end{table} 
+
 \newpage
 \subsubsection{Operational and Environmental Requirements}
 
@@ -1537,7 +1556,7 @@ These requirements are core to our system's functionality and essential for meet
         \item \textbf{Possible Changes}: N/A
     \end{itemize}
 
-    \item \textbf{FR3}: Analyze chest X-rays to detect diseases with $\geq85\%$ accuracy.
+    \item \sout{\textbf{FR3}}\textcolor{red}{PR4}: Analyze chest X-rays to detect diseases with $\geq75\%$ accuracy.
     \begin{itemize}[label=-]
         \item \textbf{Rationale}: Central to the system's purpose; critical for providing value to users.
         \item \textbf{Possible Changes}: N/A
@@ -1760,89 +1779,73 @@ These requirements may be adjusted due to resource constraints, technical challe
 \begin{table}[h!]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3pt} % Adjust the column separation to make it tighter
-\renewcommand{\arraystretch}{1} % Adjust row height for a tighter fit
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1}
+
 \begin{tabular}{|p{1cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|}
 \hline
-    & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\ 
+    & \textbf{FR1} & \textbf{FR2} & \textbf{PR4} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\
 \hline
-\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\ 
+\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\
 \hline
-\textbf{FR2} & & X & & & & & & & & & & & & & & X \\ 
+\textbf{FR2} & & X & & & & & & & & & & & & & & X \\
 \hline
-\textbf{FR3} & X & & X & X & X & X & & & & & & & & & & X \\ 
+\textbf{PR4} & X & & X & X & X & X & & & & & & & & & & X \\
 \hline
-\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\ 
+\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\
 \hline
-\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\ 
+\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\
 \hline
-\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\ 
+\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\
 \hline
-\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\ 
+\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\
 \hline
-\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\ 
+\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\
 \hline
-\textbf{FR9} & & & & & & X & & & X & & & & & & & \\ 
+\textbf{FR9} & & & & & & X & & & X & & & & & & & \\
 \hline
-\textbf{FR10} & & & & & & & X & & & X & & & X & & & X \\ 
+\textbf{FR11} & & & & & & & & & & & X & & & & & \\
 \hline
-\textbf{FR11} & & & & & & & & & & & X & & & & & \\ 
+\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\
 \hline
-\textbf{FR12} & X & & & & & & & & & & X & X & X & & & \\ 
+\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\
 \hline
-\textbf{FR13} & & & & & & & X & & & X & & X & X & & & \\ 
+\textbf{LF2} & X & & & & & & & & & & & & & & & \\
 \hline
-\textbf{FR14} & X & & & & & & & & & & & & & X & & \\ 
+\textbf{UH1} & X & X & & & & & & & & & & & & & & \\
 \hline
-\textbf{FR15} & X & & & & & & & & & & & & & & X & \\ 
+\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\
 \hline
-\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\ 
+\textbf{PR2} & & & & & X & & X & & & & & & & & & \\
 \hline
-\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\ 
+\textbf{PR3} & & & & & X & & X & & & & & & & & & \\
 \hline
-\textbf{LF2} & X & & & & & & & & & & & & & & & \\ 
+\textbf{PR4} & X &  & X & X & X & & & & & & & & & & X \\
 \hline
-\textbf{UH1} & X & X & & & & & & & & & & & & & & \\ 
+\textbf{OE2} & & & & X & & X & & & & & & & & & & \\
 \hline
-\textbf{UH2} & & X & & & X & X & & & & & X & & & & & \\ 
+\textbf{SR1} & & & & & & & X & & & & & X & & & & \\
 \hline
-\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\ 
+\textbf{MS1} & & & & & & & & & & X & & & & & & X \\
 \hline
-\textbf{PR2} & & & & & X & & X & & & & & & & & & \\ 
+\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\
 \hline
-\textbf{PR3} & & & & & X & & X & & & & & & & & & \\ 
+\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\
 \hline
-\textbf{OE1} & & & & & & & X & & & & & & & X & & \\ 
+\textbf{HS1} & & & X & X & & & & & & & & & & & & \\
 \hline
-\textbf{OE2} & & & & X & & X & & & & & & & & & & \\ 
-\hline
-\textbf{SR1} & & & & & & & X & & & & & X & & & & \\ 
-\hline
-\textbf{SR2} & & & & & & & & & & & & X & X & & & \\ 
-\hline
-\textbf{MS1} & & & & & & & & & & X & & & & & & X \\ 
-\hline
-\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\ 
-\hline
-\textbf{CR1} & & & & & & & & & & & & & & X & & \\ 
-\hline
-\textbf{LR1} & & & & & & & & & & & & X & X & & & \\ 
-\hline
-\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\ 
-\hline
-\textbf{HS1} & & & X & X & & & & & & & & & & & & \\ 
-\hline
-\textbf{HS2} & & & & & & & & & & & & X & & & & \\ 
+\textbf{HS2} & & & & & & & & & & & & X & & & & \\
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements (column i depends on row j if there's a X presented in the cell)}
-\label{Table:Traceability}
+\caption{Updated Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements (column i depends on row j if there's an X presented in the cell)}
+\label{Table:UpdatedTraceability}
 \end{table}
 \end{landscape}
 }
+
+
 \newpage{}
 \section*{Appendix --- Reflection}
-
 \begin{enumerate}
   \item What went well while writing this deliverable? \\\\
 We felt the SRS document provided us strong growth and structures as the content was comprehensive. We were able to gain a better understanding of the necessary elements like the scope, context diagrams, and nonfunctional requirements such as performance and safety. The clear delineation between normal operations and undesired event handling gave us confidence in its thoroughness. Overall, we felt that the SRS document provided us with a solid foundation to work from, especially in terms of its clarity, organization, and attention to detail. It gave us a clear picture of the system's requirements and made it easier to move forward with design and implementation.
