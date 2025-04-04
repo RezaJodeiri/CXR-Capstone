@@ -503,11 +503,22 @@ The following testing techniques will be used to verify the implementation our s
     \item{Example of 1 System test cases: Sign up on the front-end and validating the existing user on the back-end, etc.}
     \item{All end-to-end tests must cover all business use-cases (Log-in, sign-up, image-upload, prediction.), and Functional Requirements.}
   \end{itemize}
-  \item[]{\textbf{Periodic Health Checks}}
+\item[]{\textbf{Periodic Health Checks}}
+\begin{itemize}
+  \item{The front-end, back-end, and ML model will be checked periodically to measure the system's uptime. Measured uptime must satisfy the agreed-upon SLA (95\%).}
+  \item{Periodic Health Checks will be performed regardless of the system's software version and state.}
+  \item{In addition to uptime, the following performance parameters will be monitored:}
   \begin{itemize}
-    \item{The front-end, back-end, and ML model will be checked periodically to measure system's uptime. Measured uptime must satisfy the agrred-upon SLA (95\%).}
-    \item{Periodic Health Checks will be performed regardless of the system' software version and state.}
+    \item{API response time must remain under 500 milliseconds on average.}
+    \item{System memory usage must remain below 80\% capacity during normal operations.}
+    \item{Server CPU usage must remain below 85\% under standard load conditions.}
+    \item{Database query response times must be under 1 second for 95\% of queries.}
   \end{itemize}
+  \item{Threshold violations will trigger alerts and initiate diagnostic procedures to ensure system stability and performance.}
+\end{itemize}
+\textcolor{red}{Updated based on peer review feedbacks}
+  \end{itemize}
+
   \item[]{\textbf{Manual Testing}}
   \begin{itemize}
     \item{Manual testing will be performed by the team to ensure intuitive and simple UI/UX to the end-user.}
@@ -627,7 +638,8 @@ Test Case Derivation: Authorized users should be able to upload images in suppor
 
 How the test will be performed: The test will be conducted automatically using the Cypress testing framework.
 \begin{itemize}
-  \item[-] \textit{Step 1}: The automated test script will simulate a user logging into the system as an authorized healthcare professional using valid credentials (\texttt{username: doctor\_user}, \texttt{password: SecurePass123}).
+  \item[-] \textit{Step 1}: \sout{The automated test script will simulate a user logging into the system as an authorized healthcare professional using valid credentials (\texttt{username: doctor\_user}, \texttt{password: SecurePass123}).}
+  \textcolor{red}{Removed as per peer review addressed, user log in is already in the initial state }
   \item[-] \textit{Step 2}: Upon successful authentication, the script will navigate to the image upload section located at \texttt{/upload}.
   \item[-] \textit{Step 3}: The script will simulate the user clicking the ``Upload Image'' button and selecting the file \texttt{sample\_image.dcm} from the directory \texttt{./test\_data/}.
   \item[-] \textit{Step 4}: The script will simulate the user confirming the upload by clicking the ``Submit'' button.
@@ -1789,7 +1801,180 @@ The prioritization of modules for testing is based on the following criteria:
     \item[-] \textbf{Risk Assessment}: Modules with higher associated risks, such as security and data handling, will be prioritized to mitigate potential issues.
 \end{itemize}
 
-\noindent By focusing our testing efforts on high-impact modules, we aim to ensure a robust and reliable application while efficiently utilizing our resources.
+\subsection{Tests for AWS Cognito Module}
+Testing for \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/src/backend/test/test_aws_conito.py}{test\_aws\_cognito.py} \\
+
+\textbf{test\_get\_self\_user():}  
+\begin{itemize}
+    \item Retrieves a user's full profile using a unique identifier and checks for the presence and accuracy of core fields such as name, gender, and organization. Ensures backend correctly maps and fetches user data using UUIDs.
+    \item \textbf{Test Goal:} To confirm that user data retrieval via user ID returns a complete and accurate profile. 
+    \newline
+\end{itemize}
+
+\textbf{test\_sign\_up\_doctor():}  
+\begin{itemize}
+    \item Registers a doctor by using their email, password, and additional personal details like occupation and organization. Ensures user creation includes correct username formatting and password handling.
+    \item \textbf{Test Goal:} To verify that doctor registration creates the correct user account with accurate details and login credentials. 
+    \newline
+\end{itemize}
+
+\textbf{test\_create\_patient():}  
+\begin{itemize}
+    \item Creates a new patient entry linked to a specific doctor by capturing essential patient details like name, gender, and birthdate. Verifies the auto-generation of a username and password for the patient.
+    \item \textbf{Test Goal:} To confirm that patient creation works correctly by linking the patient to a doctor and generating the correct username and password. 
+    \newline
+\end{itemize}
+
+\textbf{test\_sign\_in\_user():}  
+\begin{itemize}
+    \item Signs in a user with their email and password, ensuring that authentication tokens are generated. Verifies the presence of the access and refresh tokens in the response.
+    \item \textbf{Test Goal:} To ensure the sign-in process correctly generates authentication tokens for the user. 
+    \newline
+\end{itemize}
+
+\textbf{test\_get\_self\_user():}  
+\begin{itemize}
+    \item Fetches the authenticated user's details using their access token, ensuring that all essential information like email, name, and occupation are returned accurately.
+    \item \textbf{Test Goal:} To confirm that the correct and complete user profile information is returned when accessing the authenticated user's data. 
+    \newline
+\end{itemize}
+
+\textbf{test\_get\_user\_by\_id():}  
+\begin{itemize}
+    \item Retrieves a user’s profile by their unique identifier (UUID) to check for accuracy in their details such as name, gender, and occupation.
+    \item \textbf{Test Goal:} To ensure that user information is correctly fetched by user ID and includes all necessary fields. 
+    \newline
+\end{itemize}
+
+\textbf{test\_update\_user\_by\_id():}  
+\begin{itemize}
+    \item Updates a user’s profile information using their unique identifier and validates that changes to attributes like name and occupation are applied correctly in the backend.
+    \item \textbf{Test Goal:} To verify that profile updates via user ID are successful and reflect the correct changes in the database. 
+    \newline
+\end{itemize}
+
+
+\subsection{Tests for S3 Presigned URL Handler Module}
+Testing for \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/src/backend/test/test_aws_s3.py}{test\_aws\_s3.py}
+
+\textbf{test\_generate\_url():}  
+\begin{itemize}
+    \item Tests if `generate\_presigned\_url` returns the mocked S3 URL, confirming that the function correctly generates a URL.
+    \item \textbf{Test Goal:} To verify that the `generate\_presigned\_url` function correctly returns a valid URL in string format.
+    \newline
+    \newline
+\end{itemize}
+
+\textbf{test\_upload\_file():}  
+\begin{itemize}
+    \item Tests if `upload\_file` returns the expected success response with status and message, confirming that the upload operation works as intended.
+    \item \textbf{Test Goal:} To ensure the `upload\_file` function correctly simulates a successful file upload and returns the appropriate success response.
+    \newline
+\end{itemize}
+
+
+\subsection{Tests for {Report Generation Service Module}}
+Testing for \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/src/backend/test/test_report_generation_service.py}{test\_report\_generation\_service.py}
+
+\textbf{test\_openai\_api\_key\_exists():}  
+\begin{itemize}
+    \item Tests if the OpenAI API key is correctly set and not None or empty, ensuring that the application has valid API credentials for interacting with OpenAI.
+    \item \textbf{Test Goal:} To verify that the OpenAI API key is not None or an empty string, confirming that valid credentials are used.
+    \newline
+\end{itemize}
+
+\textbf{test\_user\_id\_exists():}  
+\begin{itemize}
+    \item Tests if the user ID is set and not None or empty, ensuring that a valid user ID is available for generating personalized reports.
+    \item \textbf{Test Goal:} To confirm that the user ID is set correctly and is not empty or None.
+    \newline
+\end{itemize}
+
+\textbf{test\_image\_url\_exists():}  
+\begin{itemize}
+    \item Tests if the image URL is correctly set and is not None or empty, ensuring that a valid URL is provided for image processing.
+    \item \textbf{Test Goal:} To ensure that the image URL is set correctly and is not None or an empty string.
+    \newline
+\end{itemize}
+
+\textbf{test\_generate\_report():}  
+\begin{itemize}
+    \item Tests the `generate\_report` method of the `ReportGenerationService` to check if it returns a valid report with findings, impressions, and predictions.
+    \item \textbf{Test Goal:} To verify that the `generate\_report` method returns a complete report, including findings, impression, and prediction for the user.
+    \newline
+\end{itemize}
+
+\subsection{Tests for Database Module}
+Testing for \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/src/backend/test/test_db.py}{test\_db.py} \\ 
+
+\textbf{test\_get\_paginated\_record\_by\_userId():}  
+\begin{itemize}
+    \item Tests if the `get\_paginated\_record\_by\_userId` method fetches paginated medical records for a given user ID, ensuring that data retrieval is correct and pagination is handled.
+    \item \textbf{Test Goal:} To confirm that the method returns valid and paginated medical records based on the user ID.
+    \newline
+\end{itemize}
+
+\textbf{test\_get\_record\_by\_id():}  
+\begin{itemize}
+    \item Tests if the `get\_record\_by\_id` method fetches a medical record by its unique identifier, ensuring that it retrieves the correct record.
+    \item \textbf{Test Goal:} To verify that the method correctly returns the medical record based on the given ID.
+    \newline
+\end{itemize}
+
+\textbf{test\_create\_new\_record():}  
+\begin{itemize}
+    \item Tests if the `create\_new\_record` method creates a new medical record for the user, ensuring that the record is created successfully in the system.
+    \item \textbf{Test Goal:} To ensure that a new medical record is correctly created for the user with valid details.
+    \newline
+\end{itemize}
+
+\textbf{test\_update\_record\_by\_id():}  
+\begin{itemize}
+    \item Tests if the `update\_record\_by\_id` method updates a medical record by its ID, verifying that the record is modified correctly.
+    \item \textbf{Test Goal:} To verify that the medical record is successfully updated by its unique identifier.
+    \newline
+\end{itemize}
+
+\textbf{test\_link\_report\_to\_record():}  
+\begin{itemize}
+    \item Tests if the `link\_report\_to\_record` method links a report to a medical record, ensuring that the link between the two is established correctly.
+    \item \textbf{Test Goal:} To ensure that the report is successfully linked to the corresponding medical record.
+    \newline
+\end{itemize}
+
+\textbf{test\_get\_paginated\_prescription\_by\_recordId():}  
+\begin{itemize}
+    \item Tests if the `get\_paginated\_prescription\_by\_recordId` method fetches paginated medical prescriptions for a given record ID, ensuring that data retrieval and pagination are correct.
+    \item \textbf{Test Goal:} To confirm that the method returns valid and paginated prescriptions based on the record ID.
+    \newline
+\end{itemize}
+
+\textbf{test\_get\_prescription\_by\_id():}  
+\begin{itemize}
+    \item Tests if the `get\_prescription\_by\_id` method fetches a prescription by its unique identifier, ensuring that it retrieves the correct prescription.
+    \item \textbf{Test Goal:} To verify that the method correctly returns the prescription based on the given ID.
+    \newline
+\end{itemize}
+
+\textbf{test\_create\_new\_prescription():}  
+\begin{itemize}
+    \item Tests if the `create\_new\_prescription` method creates a new prescription for a given medical record, ensuring the prescription is successfully created.
+    \item \textbf{Test Goal:} To ensure that a new prescription is correctly created for the medical record.
+    \newline
+\end{itemize}
+
+\textbf{test\_update\_prescription\_by\_id():}  
+\begin{itemize}
+    \item Tests if the `update\_prescription\_by\_id` method updates a prescription by its ID, verifying that the prescription details are modified correctly.
+    \item \textbf{Test Goal:} To verify that the prescription is successfully updated by its unique identifier.
+    \newline
+\end{itemize}
+
+
+
+
+
+
 
 \newpage
 \bibliographystyle{plainnat}
@@ -1855,6 +2040,8 @@ The prioritization of modules for testing is based on the following criteria:
   \item How secure do you feel using this product in terms of patient data privacy? (1 = Not secure, 5 = Very secure)
   \item Are there any other medical conditions or features you would like the product to detect or analyze in future updates?
 \end{enumerate}
+
+
 
 
 \newpage{}
