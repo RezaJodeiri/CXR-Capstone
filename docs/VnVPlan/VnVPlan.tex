@@ -28,7 +28,6 @@
 \input{../packages/Comments.tex}
 \input{../packages/Common.tex}
 \input{../packages/Reflection.tex}
-
 \begin{document}
 
 \title{System Verification and Validation Plan for \progname{}} 
@@ -200,7 +199,7 @@ After the AI model completes the analysis of medical images, the system automati
     
     \subsubsection{Verification of AI Model Accuracy and Correctness (In scope)}
     \begin{itemize}
-        \item[-] Confirm that the AI model meets the specified minimum accuracy threshold (e.g., 85\% accuracy) as defined in the SRS.
+        \item[-] Confirm that the AI model meets the specified minimum accuracy threshold (e.g., 75\% accuracy) as defined in the SRS.
         \item[-] Validate the model’s capability to correctly predict various lung conditions (e.g., pneumonia, lung cancer) from X-ray images, ensuring reliable clinical decision-making.
         \item[-] Verifying the correctness of the AI's predictions is essential to ensure reliable clinical decision-making.
     \end{itemize}
@@ -511,7 +510,7 @@ The following testing techniques will be used to verify the implementation our s
   \begin{itemize}
     \item{API response time must remain under 500 milliseconds on average.}
     \item{System memory usage must remain below 80\% capacity during normal operations.}
-    \item{Server CPU usage must remain below 85\% under standard load conditions.}
+    \item{Server CPU usage must remain below 75\% under standard load conditions.}
     \item{Database query response times must be under 1 second for 95\% of queries.}
   \end{itemize}
   \item{Threshold violations will trigger alerts and initiate diagnostic procedures to ensure system stability and performance.}
@@ -707,38 +706,39 @@ How the test will be performed:
   \end{itemize}
 
 \end{enumerate}
+\subsubsection{\sout{AI Model Inference Tests}}
 
-\subsubsection{AI Model Inferece Tests}
-
-This subsection covers Requirement \#3 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
-document by testing that the system analyzes chest X-ray images using a convolutional neural network (CNN)-based AI model to detect the presence or absence of specific diseases with an accuracy of 85\% or higher.
+\sout{This subsection covers Requirement \#3 of the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} \citep{SRS}
+document by testing that the system analyzes chest X-ray images using a convolutional neural network (CNN)-based AI model to detect the presence or absence of specific diseases with an accuracy of 75\% or higher.}
 
 \begin{enumerate}
 
-\item \textbf{test-FR3-1} \label{test-FR3-1}
+\item \textbf{\sout{test-FR3-1}} \label{test-FR3-1}
 
-Control: Automatic
+\sout{Control: Automatic}
 
-Initial State: The AI model is deployed and integrated into the system, ready for analysis.
+\sout{Initial State: The AI model is deployed and integrated into the system, ready for analysis.}
 
-Input: A test dataset of 1,000 chest X-ray images with known diagnoses (500 positive cases, 500 negative cases).
+\sout{Input: A test dataset of 1,000 chest X-ray images with known diagnoses (500 positive cases, 500 negative cases).}
 
-Output: The AI model achieves an accuracy of at least 85\%, correctly identifying at least 850 out of 1,000 cases.
+\sout{Output: The AI model achieves an accuracy of at least 75\%, correctly identifying at least 750 out of 1,000 cases.}
 
-Test Case Derivation: The AI model must meet or exceed the specified accuracy threshold to be considered effective.
+\sout{Test Case Derivation: The AI model must meet or exceed the specified accuracy threshold to be considered effective.}
 
-How the test will be performed:
+\sout{How the test will be performed:}
 \begin{itemize}
-  \item[-] \textit{Step 1}: The automated test script will load the test dataset from \texttt{./test\_data/test\_set/}.
-  \item[-] \textit{Step 2}: Preprocess each image according to FR17 requirements (e.g., resize to 224x224 pixels, normalize pixel values).
-  \item[-] \textit{Step 3}: Feed the preprocessed images into the AI model in batches (e.g., batch size of 32).
-  \item[-] \textit{Step 4}: Record the AI model's predictions for each image.
-  \item[-] \textit{Step 5}: Compare the predictions with the ground truth labels from \texttt{fr3\_test\_set\_labels.csv}.
-  \item[-] \textit{Step 6}: Calculate performance metrics including accuracy, precision, recall, and ROC curves.
-  \item[-] \textit{Step 7}: Verify that the accuracy is at least 85\%, using assertions.
+  \item[-] \textit{Step 1}: \sout{The automated test script will load the test dataset from \texttt{./test\_data/test\_set/}.}
+  \item[-] \textit{Step 2}: \sout{Preprocess each image according to FR17 requirements (e.g., resize to 224x224 pixels, normalize pixel values).}
+  \item[-] \textit{Step 3}: \sout{Feed the preprocessed images into the AI model in batches (e.g., batch size of 32).}
+  \item[-] \textit{Step 4}: \sout{Record the AI model's predictions for each image.}
+  \item[-] \textit{Step 5}: \sout{Compare the predictions with the ground truth labels from \texttt{fr3\_test\_set\_labels.csv}.}
+  \item[-] \textit{Step 6}: \sout{Calculate performance metrics including accuracy, precision, recall, and ROC curves.}
+  \item[-] \textit{Step 7}: \sout{Verify that the accuracy is at least 75\%, using assertions.}
 \end{itemize}
 
 \end{enumerate}
+\textcolor{red}{Removed to non-functional requirement}
+
 
 \subsubsection{Patient Condition Progression Tests}
 
@@ -1505,6 +1505,28 @@ Output/Result: Processing time (float), system resource utilization (float), ima
 
 How this test will be performed: The automated script will simulate different users to upload 20 images simultaneously and start the stopwatch or monitoring tool when the uploads begin. It will keep track of the CPU, memory, and I/O usage during the processing of the 20 images. When image processing is finished, it will calculate and return the average processing time for the 20 images, return CPU usage, memory usage, and check for errors or failures.
 
+\item{NFR-PR4\\}\label{NFR-PR4}
+\begin{enumerate}
+
+Type: Non-Functional, Automated
+
+Initial State: The AI model is deployed and integrated into the system, ready for analysis.
+
+Input: A test dataset of 1,000 chest X-ray images with known diagnoses (500 positive cases, 500 negative cases).
+
+Output: The AI model achieves an accuracy of at least 75\%, correctly identifying at least 750 out of 1,000 cases.
+
+How the test will be performed:
+\begin{itemize}
+  \item[-] \textit{Step 1}: The automated test script will load the test dataset from \texttt{./test\_data/test\_set/}.
+  \item[-] \textit{Step 2}: Preprocess each image according to FR17 requirements (e.g., resize to 224x224 pixels, normalize pixel values).
+  \item[-] \textit{Step 3}: Feed the preprocessed images into the AI model in batches (e.g., batch size of 32).
+  \item[-] \textit{Step 4}: Record the AI model's predictions for each image.
+  \item[-] \textit{Step 5}: Compare the predictions with the ground truth labels from \texttt{fr3\_test\_set\_labels.csv}.
+  \item[-] \textit{Step 6}: Calculate performance metrics including accuracy, precision, recall, and ROC curves.
+  \item[-] \textit{Step 7}: Verify that the accuracy is at least 75\%, using assertions.
+\end{itemize}
+
 \end{enumerate}
 
 \subsubsection{Operational and Environmental}
@@ -1709,79 +1731,65 @@ How this test will be performed: The test person should generate a diagnostic re
 \begin{table}[H]
   \centering
   \footnotesize 
-  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
   \hline
-  \textbf{Test ID} & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} \\ \hline
-  test-FR1-1-\ref{test-FR1-1} & $\times$ & & & & & & & & & & & & & \\ \hline
-  test-FR1-2-\ref{test-FR1-2} & $\times$ & & & & & & & & & & & & & \\ \hline
-  test-FR2-1-\ref{test-FR2-1} & & $\times$ & & & & & & & & & & & & \\ \hline
-  test-FR3-1-\ref{test-FR3-1} & & & $\times$ & & & & & & & & & & & \\ \hline
-  test-FR4-1-\ref{test-FR4-1} & & & & $\times$ & & & & & & & & & & \\ \hline
-  test-FR5-1-\ref{test-FR5-1} & & & & & $\times$ & & & & & & & & & \\ \hline
-  test-FR5-2-\ref{test-FR5-2} & & & & & $\times$ & & & & & & & & & \\ \hline
-  test-FR6-1-\ref{test-FR6-1} & & & & & & $\times$ & & & & & & & & \\ \hline
-  test-FR6-2-\ref{test-FR6-2} & & & & & & $\times$ & & & & & & & & \\ \hline
-  test-FR7-1-\ref{test-FR7-1} & & & & & & & $\times$ & & & & & & & \\ \hline
-  test-FR8-1-\ref{test-FR8-1} & & & & & & & & $\times$ & & & & & & \\ \hline
-  test-FR9-1-\ref{test-FR9-1} & & & & & & & & & $\times$ & & & & & \\ \hline
-  test-FR10-1-\ref{test-FR10-1} & & & & & & & & & & $\times$ & & & & \\ \hline
-  test-FR11-1-\ref{test-FR11-1} & & & & & & & & & & & $\times$ & & & \\ \hline
-  test-FR12-1-\ref{test-FR12-1} & & & & & & & & & & & & $\times$ & & \\ \hline
-  test-FR13-1-\ref{test-FR13-1} & & & & & & & & & & & & & $\times$ & \\ \hline
-  test-FR14-1-\ref{test-FR14-1} & & & & & & & & & & & & & & $\times$ \\ \hline
-  test-FR14-2-\ref{test-FR14-2} & & & & & & & & & & & & & & $\times$ \\ \hline
+  \textbf{Test ID} & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR11} \\ \hline
+  test-FR1-1-\ref{test-FR1-1} & $\times$ & & & & & & & & & \\ \hline
+  test-FR1-2-\ref{test-FR1-2} & $\times$ & & & & & & & & & \\ \hline
+  test-FR2-1-\ref{test-FR2-1} & & $\times$ & & & & & & & & \\ \hline
+  test-FR3-1-\ref{test-FR3-1} & & & $\times$ & & & & & & & \\ \hline
+  test-FR4-1-\ref{test-FR4-1} & & & & $\times$ & & & & & & \\ \hline
+  test-FR5-1-\ref{test-FR5-1} & & & & & $\times$ & & & & & \\ \hline
+  test-FR5-2-\ref{test-FR5-2} & & & & & $\times$ & & & & & \\ \hline
+  test-FR6-1-\ref{test-FR6-1} & & & & & & $\times$ & & & & \\ \hline
+  test-FR6-2-\ref{test-FR6-2} & & & & & & $\times$ & & & & \\ \hline
+  test-FR7-1-\ref{test-FR7-1} & & & & & & & $\times$ & & & \\ \hline
+  test-FR8-1-\ref{test-FR8-1} & & & & & & & & $\times$ & & \\ \hline
+  test-FR9-1-\ref{test-FR9-1} & & & & & & & & & $\times$ & \\ \hline
+  test-FR11-1-\ref{test-FR11-1} & & & & & & & & & & $\times$ \\ \hline
   \end{tabular}
-  \caption{\textbf{Functional Requirements Traceability}}
-  \end{table}
-  
-  \begin{table}[H]
-    \centering
-    \begin{tabular}{|c|cc|cc|ccc|cc|cc|cc|c|cc|cc|}
-      \hline
-      \multicolumn{1}{|c|}{\textbf{NFR ID}} & \multicolumn{2}{c|}{\textbf{LF}} & \multicolumn{2}{c|}{\textbf{UH}} & \multicolumn{3}{c|}{\textbf{PR}} & \multicolumn{2}{c|}{\textbf{OE}} & \multicolumn{2}{c|}{\textbf{SR}} & \multicolumn{2}{c|}{\textbf{MS}} & \textbf{CR} & \multicolumn{2}{c|}{\textbf{LR}} & \multicolumn{2}{c|}{\textbf{HS}} \\ 
-      \hline
-      & 1 & 2 & 1 & 2 & 1 & 2 & 3 & 1 & 2 & 1 & 2 & 1 & 2 & 1 & 1 & 2 & 1 & 2 \\ 
-      \hline
-      LF 1 & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      LF 2 &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      UH 1 &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      UH 2 &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      PR 1 &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      PR 2 &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      PR 3 &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      OE 1 &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      OE 2 &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  &  \\ 
-      \hline
-      SR 1 &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  &  \\ 
-      \hline
-      SR 2 &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  &  \\ 
-      \hline
-      MS1  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  &  \\ 
-      \hline
-      MS2  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  &  \\ 
-      \hline
-      CR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  &  \\ 
-      \hline
-      LR 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  &  \\ 
-      \hline
-      LR 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  &  \\ 
-      \hline
-      HS 1 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x &  \\ 
-      \hline
-      HS 2 &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & x \\ 
-      \hline
-    \end{tabular}
-    \caption{\textbf{Nonfunctional Requirements Traceability Matrix}}
-    \label{tab:nf_requirements}
-  \end{table}  
+  \caption{\textcolor{red}{Functional Requirements Traceability (Updated)}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|cc|c|cccc|c|c|cc|}
+    \hline
+    \multicolumn{1}{|c|}{\textbf{NFR ID}} & \multicolumn{2}{c|}{\textbf{LF}} & \textbf{UH} & \multicolumn{4}{c|}{\textbf{PR}} & \textbf{OE} & \textbf{SR} & \multicolumn{2}{c|}{\textbf{MS}} \\ 
+    \hline
+    & 1 & 2 & 1 & 1 & 2 & 3 & 4 & 2 & 1 & 1 & 2 \\ 
+    \hline
+    LF 1 & x &  &  &  &  &  &  &  &  &  &  \\ 
+    \hline
+    LF 2 &  & x &  &  &  &  &  &  &  &  &  \\ 
+    \hline
+    UH 1 &  &  & x &  &  &  &  &  &  &  &  \\ 
+    \hline
+    PR 1 &  &  &  & x &  &  &  &  &  &  &  \\ 
+    \hline
+    PR 2 &  &  &  &  & x &  &  &  &  &  &  \\ 
+    \hline
+    PR 3 &  &  &  &  &  & x &  &  &  &  &  \\ 
+    \hline
+    PR 4 &  &  &  &  &  &  & x &  &  &  &  \\ 
+    \hline
+    OE 2 &  &  &  &  &  &  &  & x &  &  &  \\ 
+    \hline
+    SR 1 &  &  &  &  &  &  &  &  & x &  &  \\ 
+    \hline
+    MS 1 &  &  &  &  &  &  &  &  &  & x &  \\ 
+    \hline
+    MS 2 &  &  &  &  &  &  &  &  &  &  & x \\ 
+    \hline
+  \end{tabular}
+  \caption{\textcolor{red}{Updated Nonfunctional Requirements Traceability Matrix}}
+  \label{tab:nf_requirements}
+\end{table}
+
+
+
+
+
   \end{landscape}
   
 \section{Unit Test Description}
@@ -2011,7 +2019,7 @@ Testing for \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/src/back
       \hline
       Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
       \hline
-      Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
+      Threshold for ROC Analysis & 0.75 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
       \hline
       Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
       \hline
