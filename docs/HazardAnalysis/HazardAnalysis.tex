@@ -126,6 +126,8 @@ To keep the hazard assessment focused and effective, we make the following criti
     \item {We assume that users are qualified healthcare professionals with the necessary training to interpret the system's outputs correctly. The system is primarily intended for professional use in clinical settings.}
     \item {Our system is designed to handle unintentional user errors and common misuse scenarios, but it may not be fully protected against deliberate malicious activities aimed at exploiting vulnerabilities or deceiving the AI algorithms.}
     \item {Our hazard analysis for external environment components, like network infrastructure and third-party systems, considers typical use cases and does not cover extreme conditions outside the intended operation of the system.}
+    \item{It is assumed that all patients whose chest X-ray images are processed by the system have provided informed consent for the use of their medical data. }\\
+    \textcolor{red}{Added assumption that patients gave informed consent as per peer review feedback}
 
 \end{enumerate}
 
@@ -512,7 +514,10 @@ Using the results of the FMEA, we can derive the following safety and security r
 
 \vspace{0.5cm}
 
-\textbf{SR6}:\hypertarget{SR5}{The system shall implement security measures for API endpoints and service communications to protect against security vulnerabilities}
+\textbf{SR6}:\hypertarget{SR5}{The system shall implement security measures for all API endpoints and service communications by enforcing HTTPS/TLS encryption for all data in transit. Communications between the frontend, backend, and database will be protected using industry-standard encryption protocols. API endpoints will require authentication and authorization using secure tokens (e.g., OAuth 2.0 or JWT) to prevent unauthorized access. All transmitted and received data will be validated to protect against injection attacks and data breaches.
+}
+
+\textcolor{red}{Add more details on what security is used and how they are implemented in the system as per peer review feedback}
 \vspace{0.2cm}
 
 \emph{Rationale}: Secure APIs and communications prevent unauthorized access and data breaches, ensuring the system's integrity and confidentiality.

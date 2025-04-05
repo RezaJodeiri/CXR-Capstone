@@ -34,7 +34,7 @@ on your reflections.}
 Here is the feedback we received on the SRS and Hazard Analysis documents, and the changes we made in response to that feedback.
 
 \begin{longtable}{| p{0.2\textwidth} | p{0.2\textwidth} | p{0.3\textwidth} | p{0.1\textwidth} |}
-    \caption{Feedback and Changes for SRS Documentation and Hazard Analysis} \\
+    \caption{Feedback and Changes for SRS Documentation } \\
     \hline
     \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
     \hline
@@ -59,12 +59,27 @@ Here is the feedback we received on the SRS and Hazard Analysis documents, and t
     \hline
     Team Feedback & Document Content & Fix FR and NFR to align with the current scope of project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/201}{\#201}\\
     \hline
-    TA Feedback & Document Content & Fixed Citation in reference section  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/202}{\#202}\\
+    TA Feedback & Document Content & Fixed citation error in reference section  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/202}{\#202}\\
     \hline
     Peer Review & What not How (Abstract) & Compatibility of DICOM image is not a priority of this project and adding support for legacy systems would require additional development, validation, and maintenance efforts. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/60}{\#60}\\
     \hline
     Peer Review & What not How (Abstract) & Privacy measures are already implicitly covered in SR1 and SR2  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/57}{\#57} \\
+    \hline
     Peer Review & Document organization & detailed theoretical models like ELBO optimization would shift the focus from specifying what the system must do to how certain algorithms work internally, which is beyond the typical scope of an SRS  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/46}{\#46} \\
+    \hline
+    Peer Review & Out of Scope Hazards & We classified AI libraries, image encoding, and hardware hazards as out of scope because they are external dependencies. Risks from these areas will be mitigated through standard library validation and hardware certification, without detailed project-level tracking. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/70}{\#70}\\
+    \hline 
+    Peer Review & Hazard Analysis: FMEA AI false positive & The result of AI model will be reviewed by a certified radiologist,  so they are not detailed in the FMEA & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/69}{\#69}\\
+    \hline
+    Peer Review & Hazard Analysis: Critical Assumptions & Add an assumption that patients gave informed constent to use their X-rays for analysis & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/68}{\#68}\\
+    \hline 
+    Peer Review & Hazard Analysis: Security and Safety Requirements SR6 & Add more details on what security is used and how they are implemented in the system & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/67}{\#67}\\
+    \hline
+    Peer Review &  Hazard Analysis: Security Requirements HS1 & Already stated that all AI-generated diagnosis need to be confirmed despite of the accuracy & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/66}{\#66}\\
+    \hline
+    Peer Review & Hazard Analysis: Data encryption requirement & Encryption is already mandated by broader privacy compliance requirements stated in SR4 (HIPPA, GDPR) & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/65}{\#65}\\
+    \hline
+    
     
 
 \end{longtable}
@@ -76,13 +91,19 @@ Here is the feedback we received on the Design and Design Documentation, and the
 \hline
 \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
 \hline
-TA Feedback & Document Content & Formalization  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/191}{\#191} \\
+TA Feedback & Document Content & Addressed lack of typing issue and that discription are oftern prose  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/191}{\#191} \\
 \hline
-TA Feedback & Document Content & Input represenation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/192}{\#192} \\
+TA Feedback & Document Content & Fixed that inputs are typed weirdly and some types (YAML and Base64) are defined but not used & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/192}{\#192} \\
 \hline
-TA Feedback & Document Content & Specific Definition of JSON & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/193}{\#193} \\
+TA Feedback & Document Content & added a specific definition of JSON & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/193}{\#193} \\
 \hline
-TA Feedback & Document Content & HTTP Design & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/194}{\#194} \\
+TA Feedback & Document Content & describe what exact data are passed through the API in HTTP communication & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/194}{\#194} \\
+\hline
+Peer Review & 5.0 Module Hierarchy - User Authentication model did not abides by single responsibility & We decided not to split the User Authentication module because its current complexity is manageable, and combining authentication and authorization improves cohesion. &\href{https://github.com/RezaJodeiri/CXR-Capstone/issues/142}{\#142}\\
+\hline
+Peer Review & 6.2 Non-Functional Requirements LR1: Compliance with healthcare data protection laws & M14 has already addressed the sepcification on how data privacy would be achieved and securely stored & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/143}{\#143}\\
+\hline
+Peer Review & 6.1 Functional Requirements (FR5: Highlight affected areas on X-rays) & Add more details on how affected areas will be visualized & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/145}{\#145}
 \hline
 \end{longtable}
 
@@ -118,7 +139,21 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
     \hline
     Peer review &  Section 4.3 - Security Tests & We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/85}{\#85}
     \hline
-    Peer review & Section 5.2.6 - Periodic Health Checks & Add specific criteria for measuring Periodic Health Checks &  \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/86}{\#86}
+    Peer review & Section 5.2.6 - Periodic Health Checks & Add specific criteria for measuring Periodic Health Checks &  \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/86}{\#86}\\
+    \hline
+    Peer review & NFR-LR1 Privacy Compliance & Manual compliance review is sufficient for the current project size and risk level. Automation can be added later if system complexity or regulatory needs increase. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/180}{\#180}\\
+    \hline
+    Peer Review & NFR-HS1 User Action Logging & Add additional log validation test for potential failure cases & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/181}{\#181}\\
+    \hline
+    Peer Review & NFR-HS2 AI Disclaimer & We are prioritizing disclaimer visibility for this phase and due to resource constraints, will defer user comprehension testing and A/B testing to future updates. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/182}{\#182}\\
+    \hline 
+    Peer Review & NFR-LR1 Privacy Compliance & clarify how evolving regulations will be tracked and integrated into the system & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/183}{\#183}\\
+    \hline
+    Peer Review & NFR-HS1 User Action Logging & Define log retention policy and how will they be stored & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/184}{\#184}\\
+    \hline 
+    Peer Review & NFR-HS2 AI Disclaimer & visibility of the disclaimer meets current goals. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/185}{\#185}\\
+    \hline
+
 
 \end{longtable}
 
