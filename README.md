@@ -108,17 +108,68 @@ docker system prune -a
 |                         | Document Content                  | Fix functional requirements. [#122](https://github.com/RezaJodeiri/CXR-Capstone/issues/122)                                               | `44e80d1`  | TA Yiding Li|
 |                         | Project Goals                     | Goal statements inconsistency. [#55](https://github.com/RezaJodeiri/CXR-Capstone/issues/55)                                               | `44e80d1`  | TA Yiding Li|
 |                         | Document Content                  | Fix FR and NFR to align with the current scope of the project. [#201](https://github.com/RezaJodeiri/CXR-Capstone/issues/201)             | `32ef20a`  | Team Feedback|
+|                         | Operational and Environmental Requirement 1                  | Compatibility of DICOM image is not a priority of this project and adding support for legacy systems would require additional development, validation, and maintenance efforts. [#60](https://github.com/RezaJodeiri/CXR-Capstone/issues/60)             | `32ef20a`  | Peer Review |
+
+|                         | What not How (Abstract)                | Privacy measures are already implicitly covered in SR1 and SR2. [#57](https://github.com/RezaJodeiri/CXR-Capstone/issues/57)             | `32ef20a`  | Peer Review |
+|                         | Document organization               | detailed theoretical models like ELBO optimization would shift the focus from specifying what the system must do to how certain algorithms work internally, which is beyond the typical scope of an SRS [#46](https://github.com/RezaJodeiri/CXR-Capstone/issues/46)             | `32ef20a`  | Peer Review |
+
+
 | **Hazard Analysis**     |                                   |                                                                                                                                           |            |             |
 |                         | Document Content                  | Fixed citation. [#202](https://github.com/RezaJodeiri/CXR-Capstone/issues/202)                                                            | `b5c1abe`  | TA Yiding Li|
-| **MIS**                 |                                      |                             |            |                      |
+
+|                         | Out of Scope Hazards                | We classified AI libraries, image encoding, and hardware hazards as out of scope because they are external dependencies. Risks from these areas will be mitigated through standard library validation and hardware certification, without detailed project-level tracking [#70](https://github.com/RezaJodeiri/CXR-Capstone/issues/70)                                                            | `c751e24`  | Peer Review Feedback|
+
+|                         | Hazard Analysis: FMEA AI false positive               | The result of AI model will be reviewed by a certified radiologist,  so they are not detailed in the FMEA [#69](https://github.com/RezaJodeiri/CXR-Capstone/issues/69)                                                            | `c751e24`  | Peer Review Feedback|
+
+|                         | Hazard Analysis: Critical Assumptions             | Add an assumption that patients gave informed constent to use their X-rays for analysis [#68](https://github.com/RezaJodeiri/CXR-Capstone/issues/68)                                                            | `c751e24`  | Peer Review Feedback|
+
+|                         |  Hazard Analysis: Security and Safety Requirements SR6             | Add more details on what security is used and how they are implemented in the system [#67](https://github.com/RezaJodeiri/CXR-Capstone/issues/67)                                                            | `c751e24`  | Peer Review Feedback|
+
+|                         |  Hazard Analysis: Security Requirements HS1             | Already stated that all AI-generated diagnosis need to be confirmed despite of the accuracy [#66](https://github.com/RezaJodeiri/CXR-Capstone/issues/66)                                                            | `c751e24`  | Peer Review Feedback|
+
+|                         |  Hazard Analysis: Data encryption requirement           | Encryption is already mandated by broader privacy compliance requirements stated in SR4 (HIPPA, GDPR) [#65](https://github.com/RezaJodeiri/CXR-Capstone/issues/65)                                                            | `c751e24`  | Peer Review Feedback|
+
+
+
+| **MIS & MG**                 |                                      |                             |            |                      |
 |                         | Formalization                     | Fixed Formalization [#191](https://github.com/RezaJodeiri/CXR-Capstone/issues/191)                                                        | `42b5c48`  | TA Yiding Li|
 |                         | Input Representation              | Fixed Input Representation [#192](https://github.com/RezaJodeiri/CXR-Capstone/issues/192)                                                 | `b1e88f5`  | TA Yiding Li|
 |                         | Specific Definition of JSON       | Fixed Specific Definition of JSON [#193](https://github.com/RezaJodeiri/CXR-Capstone/issues/193)                                          | `9bed20b`  | TA Yiding Li|
 |                         | HTTP Design                       | Fixed Descritpition of HTTP Design [#194](https://github.com/RezaJodeiri/CXR-Capstone/issues/194)                                         | `78338d3`  | TA Yiding Li|
+
+|                         | 5.0 Module Hierarchy - User Authentication model did not abides by single responsibility                      | We decided not to split the User Authentication module because its current complexity is manageable, and combining authentication and authorization improves cohesion. [#142](https://github.com/RezaJodeiri/CXR-Capstone/issues/142)                                         | `d45c34c`  | Peer Review Feedback |
+
+|                         | 6.2 Non-Functional Requirements LR1                     | M14 has already addressed the sepcification on how data privacy would be achieved and securely stored [#143](https://github.com/RezaJodeiri/CXR-Capstone/issues/143)                                         | `d45c34c`  | Peer Review Feedback |
+
+|                         | .1 Functional Requirements (FR5)                    | Add more details on how affected areas will be visualized [#145](https://github.com/RezaJodeiri/CXR-Capstone/issues/145)                                         | `d45c34c`  | Peer Review Feedback |
+
 | **V&V Plan**            |                                      |                             |            |                      |
 |                         | Nondynamic testing used as necessary & Improve Testing                 | Improve Testing [#196](https://github.com/RezaJodeiri/CXR-Capstone/issues/196)                                       | `eb96f46`  | TA Yiding Li  |
 |                         | General Information                                                    | Objective mismatching                                 [#195](https://github.com/RezaJodeiri/CXR-Capstone/issues/195) | `eb96f46`  | TA Yiding Li  |
 |                         | Unaligned FRs and NFRs | Align FRs and NFRs testings with current project scope  [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
 |                         | Unaligned Extras | Align extras with current project scope [#204](https://github.com/RezaJodeiri/CXR-Capstone/issues/204)                          | `0e53ce2`  | Team Feedback |
+|                         |  Unit Test Description | Updated unit test description and adding traces [#81](https://github.com/RezaJodeiri/CXR-Capstone/issues/81)                          | `ffc0479`  | Peer Review  Feedback |
+|                         |  Section 2.1.1 - User Interface (UI) | Our UI is designed to be lightweight, responsive, and platform-independent, adhering to general web and mobile compatibility best practices. [#82](https://github.com/RezaJodeiri/CXR-Capstone/issues/82)                          | `ffc0479`  | Peer Review Feedback |
+
+|                         |  Section 4.1.6 - Structured Report Generation Tests |  We decided not to address this suggestion because structured report generation testing is focused on validating correct outputs under normal conditions. Failure handling will be tested separately during full system reliability testing to better align with project priorities and scope. [#83](https://github.com/RezaJodeiri/CXR-Capstone/issues/83)                          | `ffc0479`  | Peer Review Feedback |
+
+|                         |  Section 4 (System Tests) |  Removing user log in the test step as it is already stated in the initial state. [#84](https://github.com/RezaJodeiri/CXR-Capstone/issues/84)                          | `ffc0479`  | Peer Review Feedback |
+
+|                         |  Section 4.3 - Security Tests |  We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase [#85](https://github.com/RezaJodeiri/CXR-Capstone/issues/85)                          | `ffc0479`  | Peer Review Feedback |
+
+|                         |  Section 5.2.6 - Periodic Health Checks |  Add specific criteria for measuring Periodic Health Checks [#86](https://github.com/RezaJodeiri/CXR-Capstone/issues/86)                          | `ffc0479`  | Peer Review Feedback |
+
 | **V&V Report**          |                                      |                             |            |                      |
+
+|                         | NFR-LR1 Privacy Compliance ｜ Manual compliance review is sufficient for the current project size and risk level. Automation can be added later if system complexity or regulatory needs increase. [#180](https://github.com/RezaJodeiri/CXR-Capstone/issues/180)                          | `7fb0a2f`  | Peer Review Feedback |
+
+|                         | NFR-HS1 User Action Logging ｜ Add additional log validation test for potential failure cases [#181](https://github.com/RezaJodeiri/CXR-Capstone/issues/181)                          | `7fb0a2f`  | Peer Review Feedback |
+
+|                         | NFR-HS2 AI Disclaimer ｜ We are prioritizing disclaimer visibility for this phase and due to resource constraints, will defer user comprehension testing and A/B testing to future updates. [#182](https://github.com/RezaJodeiri/CXR-Capstone/issues/182)                          | `7fb0a2f`  | Peer Review Feedback |
+
+|                         | NFR-LR1 Privacy Compliance ｜  clarify how evolving regulations will be tracked and integrated into the system[#183](https://github.com/RezaJodeiri/CXR-Capstone/issues/183)                          | `7fb0a2f`  | Peer Review Feedback |
+
+|                         | NFR-HS1 User Action Logging ｜  Define log retention policy and how will they be stored[#184](https://github.com/RezaJodeiri/CXR-Capstone/issues/184)                          | `7fb0a2f`  | Peer Review Feedback |
+
+|                         | NFR-HS2 AI Disclaimer ｜ visibility of the disclaimer meets current goals.[#185](https://github.com/RezaJodeiri/CXR-Capstone/issues/185)                          | `7fb0a2f`  | Peer Review Feedback |
 
