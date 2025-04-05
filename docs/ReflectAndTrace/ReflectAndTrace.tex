@@ -4,6 +4,8 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{multirow}
+\usepackage{hyperref}
+
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -18,14 +20,6 @@
 \begin{document}
 
 \maketitle
-
-\plt{Reflection is an important component of getting the full benefits from a
-learning experience.  Besides the intrinsic benefits of reflection, this
-document will be used to help the TAs grade how well your team responded to
-feedback.  Therefore, traceability between Revision 0 and Revision 1 is and
-important part of the reflection exercise.  In addition, several CEAB (Canadian
-Engineering Accreditation Board) Learning Outcomes (LOs) will be assessed based
-on your reflections.}
 
 \section{Changes in Response to Feedback}
 
@@ -103,7 +97,7 @@ Peer Review & 5.0 Module Hierarchy - User Authentication model did not abides by
 \hline
 Peer Review & 6.2 Non-Functional Requirements LR1: Compliance with healthcare data protection laws & M14 has already addressed the sepcification on how data privacy would be achieved and securely stored & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/143}{\#143}\\
 \hline
-Peer Review & 6.1 Functional Requirements (FR5: Highlight affected areas on X-rays) & Add more details on how affected areas will be visualized & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/145}{\#145}
+Peer Review & 6.1 Functional Requirements (FR5: Highlight affected areas on X-rays) & Add more details on how affected areas will be visualized & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/145}{\#145} \\
 \hline
 \end{longtable}
 
@@ -129,15 +123,15 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
     \hline
     Team Feedback & System Tests for Functional / Nonfunctional Requirements are specific & Update based on team feedback, remove some fr and nfr test items as they are no longer in the scope of the project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/203}{\#203}\\
     \hline
-    Peer review &  Unit Test Description & Updated unit test description and adding traces & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/81}{\#81}
+    Peer review &  Unit Test Description & Updated unit test description and adding traces & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/81}{\#81} \\
     \hline
-    Peer review & Section 2.1.1 - User Interface (UI) & Our UI is designed to be lightweight, responsive, and platform-independent, adhering to general web and mobile compatibility best practices. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/82}{\#82}
+    Peer review & Section 4.1.6 - Structured Report Generation Tests & We decided not to address this suggestion because structured report generation testing is focused on validating correct outputs under normal conditions. Failure handling will be tested separately during full system reliability testing to better align with project priorities and scope. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/83}{\#83} \\
     \hline
-    Peer review & Section 4.1.6 - Structured Report Generation Tests & We decided not to address this suggestion because structured report generation testing is focused on validating correct outputs under normal conditions. Failure handling will be tested separately during full system reliability testing to better align with project priorities and scope. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/83}{\#83}
+    Peer review & Section 4 (System Tests) & Removing user log in the test step as it is already stated in the initial state. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/84}{\#84} \\
     \hline
-    Peer review & Section 4 (System Tests) & Removing user log in the test step as it is already stated in the initial state. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/84}{\#84}
+    Peer review & Section 4.3 - Security Tests & We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/85}{\#85} \\
     \hline
-    Peer review &  Section 4.3 - Security Tests & We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/85}{\#85}
+    Peer review &  Section 4.3 - Security Tests & We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/85}{\#85}\\
     \hline
     Peer review & Section 5.2.6 - Periodic Health Checks & Add specific criteria for measuring Periodic Health Checks &  \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/86}{\#86}\\
     \hline
@@ -152,6 +146,10 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
     Peer Review & NFR-HS1 User Action Logging & Define log retention policy and how will they be stored & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/184}{\#184}\\
     \hline 
     Peer Review & NFR-HS2 AI Disclaimer & visibility of the disclaimer meets current goals. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/185}{\#185}\\
+    \hline
+    TA Feedback & NFR-PR1, NFR-PR2, NFR-PR3, NFR-OE1 Test Specifications & Tests mention exact inputs and expected outputs, but some setups are not specified. Added detailed hardware specifications, network conditions, and testing environment details. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/213#issue-2973794790}{\#213}\\
+    \hline
+    TA Feedback & Document Formatting Issues & Corrected capitalization in section title "Changes due to Performance Testing" and removed empty parentheses in "TraceabilityMatrix:UnitTeststoModules()". & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/213#issue-2973794790}{\#213}\\
     \hline
 
 
@@ -187,9 +185,9 @@ Our project included the following extras:
 \end{itemize}
 
 
-\section{Design Iteration (LO11 (PrototypeIterate))}
+\section{Design Iteration (LO11 (PrototypeIterat)}
 
-Our project underwent significant design iterations throughout its development lifecycle, with each phase building upon lessons learned from previous stages and incorporating stakeholder feedback.
+Our project underwent significant design iterations throughout its development lifecycle, with each phase building upon lessons learned from previous stages and incorporating feeback from our instructors and stakeholders.
 
 \subsection{POC Stage: Disease Classification and Initial Feedback}
 
@@ -201,23 +199,23 @@ Our proof-of-concept (POC) focused primarily on establishing baseline disease cl
     \item[-] The DenseNet architecture allowed for efficient feature extraction and reuse through dense connections
 \end{itemize}
 
-During this initial implementation phase, we developed a basic interface displaying classification results and confidence scores for individual X-ray images. While functionally capable of processing images and providing probability scores for various conditions, the interface lacked clinical workflow integration and user-specific design considerations.
+\noindent During this initial implementation phase, we developed a basic interface displaying classification results and confidence scores for individual X-ray images. While functionally capable of processing images and providing probability scores for various conditions, the interface lacked clinical workflow integration and user-specific design considerations.
 
-Upon reviewing our POC implementation, Dr. Moradi provided pivotal feedback that significantly shaped our subsequent development approach:
+\noindent Upon reviewing our POC implementation, Dr. Moradi provided pivotal feedback that significantly shaped our subsequent development approach:
 
 \begin{itemize}
     \item[-] Our interface lacked a coherent user flow that aligned with clinical workflows
-    \item[-] The system needed clearer focus on a specific stakeholder group instead of trying to accommodate multiple user types
+    \item[-] The system needed clearer focus on a specific stakeholder group instead of trying to accommodate multiple user type
     \item[-] He recommended we choose between designing primarily for physicians or patients, as these groups have fundamentally different needs and usage patterns
 \end{itemize}
 
-Dr. Moradi emphasized that our visualization of results was too technical and not optimized for clinical decision-making. He noted that while our focus on model accuracy was important, it needed to be balanced with usability and seamless integration into existing clinical workflows. This feedback highlighted a critical insight: technical capability alone would not ensure adoption in healthcare settings without thoughtful design for the end user's context and needs.
+\noindent Dr. Moradi emphasized that our visualization of results was too technical and not optimized for clinical decision-making. He noted that while our focus on model accuracy was important, it needed to be balanced with usability and seamless integration into existing clinical workflows. This feedback highlighted a critical insight: technical capability alone would not ensure adoption in healthcare settings without thoughtful design for the end user's context and needs.
 
 \subsection{Rev 0: Redesign of Interface and Integrating Cloud Services}
 
 Dr. Moradi's feedback prompted a complete redesign of our application's flow and architecture for Revision 0. We made the strategic decision to focus exclusively on physicians as our primary users, recognizing that they are the final approvers of AI-assisted diagnoses and possess the medical expertise necessary to interpret results correctly. This decision also acknowledged the potential risks of patients directly accessing complex diagnostic information without professional guidance.
 
-The redesigned physician-centric interface featured:
+\noindent The redesigned physician-centric interface featured:
 
 \begin{itemize}
     \item[-] A patient directory organized by disease severity to help prioritize cases
@@ -226,9 +224,8 @@ The redesigned physician-centric interface featured:
     \item[-] Secure data storage and retrieval mechanisms compliant with healthcare data protection requirements
 \end{itemize}
 
-We structured the interface to follow a logical clinical workflow, starting with patient selection and proceeding through examination, diagnosis, and treatment planning. By incorporating design principles from established medical software, we aimed to create an environment that felt familiar and intuitive to healthcare professionals.
-
-When Dr. Spencer Smith reviewed this iteration, he identified several opportunities for further improvement:
+\noindent We structured the interface to follow a logical clinical workflow, starting with patient selection and proceeding through examination, diagnosis, and treatment planning. By incorporating design principles from established medical software, we aimed to create an environment that felt familiar and intuitive to healthcare professionals.
+\noindent When Dr. Spencer Smith reviewed this iteration, he identified several opportunities for further improvement:
 
 \begin{itemize}
     \item[-] He observed that our interface still required excessive manual data entry from physicians
@@ -236,13 +233,13 @@ When Dr. Spencer Smith reviewed this iteration, he identified several opportunit
     \item[-] He recommended streamlining the prescription entry process to improve physician adoption
 \end{itemize}
 
-Dr. Smith emphasized the importance of prioritizing physicians' time efficiency through features like auto-complete and standardized templates. His feedback underscored a key insight: reducing cognitive load and administrative burden on physicians would allow them to focus more on patient care and less on system interaction, significantly increasing the likelihood of adoption in clinical settings.
+\noindent Dr. Smith emphasized the importance of prioritizing physicians' time efficiency through features like auto-complete and standardized templates. His feedback underscored a key insight: reducing cognitive load and administrative burden on physicians would allow them to focus more on patient care and less on system interaction, significantly increasing the likelihood of adoption in clinical settings.
 
 \subsection{Rev 1: DETR and Linear Transformer for Enhanced Disease Classification}
 
 For our final revision, we addressed Dr. Smith's feedback while simultaneously advancing our technical approach through more sophisticated AI models. We implemented a Detection Transformer (DETR) model trained on the Imagenome dataset to identify 12 distinct anatomical regions in chest X-rays. This approach enabled precise localization of findings rather than just whole-image classification, providing significantly more clinically relevant information.
 
-The technical advancements in this phase included:
+\noindent The technical advancements in this phase included:
 
 \begin{itemize}
     \item[-] Training a DETR model to identify specific anatomical regions within chest X-rays
@@ -250,13 +247,13 @@ The technical advancements in this phase included:
     \item[-] Adding natural language processing capabilities to convert structured findings into human-readable reports
 \end{itemize}
 
-These technical improvements were complemented by user interface enhancements directly addressing the feedback we received. We added automated data entry features, including templated notes and prescription suggestions based on detected conditions. The system could now highlight specific regions of concern within X-rays while simultaneously reducing the documentation burden on physicians.
+\noindent These technical improvements were complemented by user interface enhancements directly addressing the feedback we received. We added automated data entry features, including templated notes and prescription suggestions based on detected conditions. The system could now highlight specific regions of concern within X-rays while simultaneously reducing the documentation burden on physicians.
 
 \subsection{Final Implementation}
 
 Our final system successfully balanced technical sophistication with practical clinical utility. The evolution from a basic classification tool to an integrated clinical decision support system reflected our iterative approach and responsiveness to stakeholder feedback. 
 
-The completed system provides physicians with:
+\noindent The completed system provides physicians with:
 \begin{itemize}
     \item[-] Precise anatomical localization of findings through advanced transformer models
     \item[-] Clear visual highlighting of affected regions 
@@ -265,22 +262,172 @@ The completed system provides physicians with:
     \item[-] Secure, scalable cloud infrastructure
 \end{itemize}
 
-This iterative development process demonstrated the importance of balancing technical innovation with user-centered design. By incorporating feedback at each stage, we were able to create a solution that not only leveraged cutting-edge AI technology but also integrated seamlessly into clinical workflows. The progression from our initial focus on model accuracy to our final emphasis on physician workflow integration illustrates how our understanding of the problem space matured throughout the project lifecycle.
+\noindent This iterative development process demonstrated the importance of balancing technical innovation with user-centered design. By incorporating feedback at each stage, we were able to create a solution that not only leveraged cutting-edge AI technology but also integrated seamlessly into clinical workflows. The progression from our initial focus on model accuracy to our final emphasis on physician workflow integration illustrates how our understanding of the problem space matured throughout the project lifecycle.
 
 \section{Design Decisions (LO12)}
 
-\plt{Reflect and justify your design decisions.  How did limitations,
- assumptions, and constraints influence your decisions?  Discuss each of these
- separately.}
+Our project's design evolved significantly from initial conception to final implementation, guided by a series of deliberate decisions shaped by limitations, assumptions, and constraints we encountered. This section explains our key design decisions and the factors that influenced them.
+
+\subsection{Limitations and Their Influence}
+
+Several technical and practical limitations significantly shaped our design approach:
+
+\begin{itemize}
+    \item[-] \textbf{Limited Clinical Expertise:} As software engineering students, our team lacked formal medical training. This limitation influenced our decision to:
+    \begin{itemize}
+        \item[-] Rely heavily on expert feedback from Dr. Moradi.
+        \item[-] Implement clear confidence metrics for all AI predictions
+        \item[-] Design the system as a diagnostic aid rather than a replacement for clinical judgment
+    \end{itemize}
+    
+    \item[-] \textbf{Computational Resource Constraints:} Although we had access to McMaster's GPU servers, we faced limitations in training time and resource allocation, which led us to:
+    \begin{itemize}
+        \item[-] Utilize transfer learning with pre-trained models (TorchXRayVision in POC, DETR in Rev 1)
+        \item[-] Implement efficient data pipelines to optimize training
+        \item[-] Design am AWS cloud-based architecture that could scale according to available resources
+        \item[-] Prioritize model architectures that balanced accuracy with computational efficiency
+    \end{itemize}
+    
+    \item[-] \textbf{Dataset Limitations:} The available chest X-ray datasets had inherent limitations in terms of diversity, labeling consistency, and coverage of rare conditions. These limitations led us to:
+    \begin{itemize}
+        \item[-] Combine multiple datasets (NIH, MIMIC-CXR, CheXpert, PadChest) for broader coverage
+        \item[-] Implement data augmentation to improve model generalization
+        \item[-] Focus on the most common and well-represented conditions for initial deployment
+        \item[-] Design a modular architecture that could incorporate new datasets as they become available
+    \end{itemize}
+\end{itemize}
+
+\subsection{Assumptions and Their Impact}
+
+Our design was guided by several key assumptions that shaped both our approach and implementation:
+
+\begin{itemize}
+    \item[-] \textbf{Physicians as Primary Users:} We assumed that physicians would be the primary users of our system rather than patients. This assumption, reinforced by Dr. Moradi's feedback, fundamentally shaped our interface design by:
+    \begin{itemize}
+        \item[-] Incorporating medical terminology and visualizations familiar to healthcare professionals
+        \item[-] Organizing the workflow around clinical decision-making processes
+        \item[-] Prioritizing accuracy and detail over simplified explanations
+        \item[-] Including features specifically for clinical documentation and follow-up
+    \end{itemize}
+    
+    \item[-] \textbf{Integration with Existing Workflows:} We assumed that successful adoption would require seamless integration with existing clinical workflows rather than disrupting them. This led us to:
+    \begin{itemize}
+        \item[-] Design the UI to mimic familiar medical software interfaces
+        \item[-] Implement a patient directory similar to electronic health record systems
+        \item[-] Create automated documentation features to reduce administrative burden
+        \item[-] Provide export functionality compatible with common medical data formats
+    \end{itemize}
+    
+    \item[-] \textbf{Value of Region-Specific Analysis:} We assumed that localized disease detection would provide more clinical value than whole-image classification. This assumption guided our progression from DenseNet to DETR models and led to:
+    \begin{itemize}
+        \item[-] Implementation of anatomical region detection capabilities
+        \item[-] Development of region-specific highlighting in the user interface
+        \item[-] Creation of more detailed and specific diagnostic reports
+        \item[-] Design of a comparison feature for tracking changes in specific regions over time
+    \end{itemize}
+\end{itemize}
+
+\subsection{Constraints and Their Effects}
+
+Several external and internal constraints bounded our design possibilities:
+
+\begin{itemize}
+    \item[-] \textbf{Time Constraints:} The academic timeline of the capstone project imposed strict deadlines that influenced our decisions to:
+    \begin{itemize}
+        \item[-] Prioritize core functionalities (disease detection, region localization, reporting)
+        \item[-] Defer some features (multilingual support, prescription integration in ML model, advanced security features) to future iterations
+        \item[-] Choose established technologies and frameworks over experimental ones
+        \item[-] Implement an iterative development approach with clearly defined milestones
+    \end{itemize}
+    
+    \item[-] \textbf{Security and Privacy Requirements:} Healthcare data requires strict security measures, constraining our design in several ways:
+    \begin{itemize}
+        \item[-] Implementation of AES-256 encryption (included in AWS incognito) for all patient data
+        \item[-] Design of secure authentication and authorization mechanisms
+        \item[-] Creation of detailed audit logs for all system activities
+        \item[-] Selection of compliant cloud infrastructure for deployment
+    \end{itemize}
+    
+    \item[-] \textbf{Usability Requirements:} The need for high usability in clinical settings constrained our design choices by requiring:
+    \begin{itemize}
+        \item[-] Responsive interface with minimal loading times
+        \item[-] Intuitive navigation requiring minimal training
+        \item[-] Clear visualization of results without information overload
+        \item[-] Consistent layout and interaction patterns throughout the application
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\subsection{Traceability of Changes from Rev 0 to Rev 1}
+
+The following table provides a comprehensive list of all changes made between Revision 0 and Revision 1 of our system, organized by component:
+
+\begin{longtable}{| p{0.25\textwidth} | p{0.35\textwidth} | p{0.35\textwidth} |}
+    \caption{Detailed Changes Between Rev 0 and Rev 1} \\
+    \hline
+    \textbf{Component} & \textbf{Rev 0 Implementation} & \textbf{Rev 1 Changes} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Component} & \textbf{Rev 0 Implementation} & \textbf{Rev 1 Changes} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    
+    AI Model Architecture & DenseNet-based classification using TorchXRayVision & Implemented DETR model for anatomical region detection and Linear Transformer for disease classification \\
+    \hline
+    
+    Dataset Utilization & Used pre-trained models on standard datasets & Added training on Imagenome dataset to identify 12 specific anatomical regions \\
+    \hline
+    
+    Disease Localization & Whole-image classification with no region-specific information & Added precise localization of findings with region-specific highlighting \\
+    \hline
+    
+    User Interface - Patient Directory & Basic list of patients with minimal filtering & Enhanced directory with prioritization based on disease severity and status \\
+    \hline
+    
+    User Interface - Patient View & Manual data entry for patient history and symptoms & Added automated data entry features with templates and suggestions \\
+    \hline
+    
+    Reporting Capabilities & Basic probability scores for detected conditions & Implemented natural language processing to generate human-readable reports \\
+    \hline
+        
+    Image Visualization & Basic image display with global classification results & Added region-specific highlighting and interactive visualization of affected areas \\
+    \hline
+    
+    Backend Infrastructure & Local deployment with limited scalability & Migrated to cloud-based architecture with improved scalability and accessibility \\
+    \hline
+    
+    Data Storage & Basic database with limited security features & Implemented comprehensive security measures and backup systems \\
+    \hline
+    
+    Workflow Integration & Generic interface not optimized for clinical use & Redesigned workflow to match clinical decision-making processes \\
+    \hline
+    
+    Performance Optimization & Base implementation with standard processing times & Optimized image processing pipeline for faster analysis and response \\
+    \hline
+    
+    
+\end{longtable}
+
+\subsection{Rationale for Key Design Changes}
+
+The evolution from Rev 0 to Rev 1 was guided by specific feedback and insights gained during development:
+
+\begin{itemize}
+    \item[-] \textbf{Shift to DETR Architecture:} The transition from DenseNet to DETR was motivated by the need for more precise localization of findings, which physicians indicated would significantly enhance clinical utility. This architectural change enabled region-specific analysis rather than just whole-image classification.
+    
+    \item[-] \textbf{Automated Data Entry:} Dr. Smith's feedback about excessive manual entry directly led to the implementation of automated features like templates and suggestions, aimed at reducing physician workload and improving adoption rates.
+    
+    \item[-] \textbf{Cloud Migration:} The decision to move to a cloud-based architecture was driven by scalability needs identified during performance testing of Rev 0, which showed limitations in handling multiple concurrent users.
+    
+    \item[-] \textbf{Enhanced Visualization:} The improved visualization capabilities in Rev 1 directly addressed Dr. Moradi's concern that our initial approach was too technical and not optimized for clinical decision-making.
+\end{itemize}
+
+\noindent These design decisions reflect our iterative approach to development, incorporating stakeholder feedback and addressing limitations to create a system that balances technical capabilities with practical clinical utility. By carefully considering the constraints, assumptions, and limitations we faced, we were able to develop a solution that effectively meets the needs of healthcare professionals while operating within our available resources.
 
 \section{Economic Considerations (LO23)}
-
-\plt{Is there a market for your product? What would be involved in marketing your 
-product? What is your estimate of the cost to produce a version that you could 
-sell?  What would you charge for your product?  How many units would you have to 
-sell to make money? If your product isn't something that would be sold, like an 
-open source project, how would you go about attracting users?  How many potential 
-users currently exist?}
 
 \subsection{Market Demand and Opportunity}
 The market for AI-driven medical imaging analysis is growing rapidly due to increasing healthcare digitization and the global shortage of radiologists. The demand for fast, accurate, and cost-effective diagnostic tools makes this product highly viable. Potential users include hospitals, clinics, telemedicine providers, and government healthcare initiatives. Additionally, developing countries with limited access to radiologists represent a significant market where AI-powered solutions could improve diagnostic capabilities.
@@ -340,6 +487,7 @@ The cost the project per month can be broken down as follow:
     \hline
 \end{longtable}
 
+\newpage
 \subsection{Conclusion}
 Currently, our database contains roughly 20 radiologists, and 100 active patients. By simple calculations
 \begin{itemize}
@@ -352,28 +500,34 @@ Assuming that there are no other costs of this project (labour, transportation, 
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 \begin{enumerate}
-    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1,Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
-    \item[-] Our primary communication tools(Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
+    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1, Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
+    \item[-] Our primary communication tools (Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
+    \item[-] We leveraged GitHub's project management features extensively, creating a structured kanban board with columns for Backlog, To Do, In Progress, and Done. Each task was represented as an issue with detailed descriptions, acceptance criteria, and assigned team members. This allowed us to visualize our workflow and track progress in real-time.
     \item[-] Roles and responsibilities as outlined in our development plan were largely adhered to. Each member focused on their assigned modules (e.g., frontend UI, model training, backend integration), and we successfully coordinated via our Git branching workflow and task tracking system (GitHub issues).
-    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model(DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
+    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model (DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
 \end{enumerate}
 
 \subsection{What Went Well?}
 \begin{enumerate}
     \item[-] Discord and GitHub Discussions helped streamline both quick check-ins and in-depth technical discussions. Clear communication reduced misunderstandings and sped up decision-making.
     \item[-] Each member had a clearly defined role (e.g., frontend, model dev, backend), which minimized overlap and improved accountability. Tasks were assigned and tracked using GitHub Issues and Project Boards.
+    \item[-] Our GitHub workflow was particularly effective—we created issues for each feature, bug, or enhancement with specific labels (e.g., "frontend", "model", "urgent"), milestones tied to sprint goals, and assigned team members. Pull requests were linked to issues, ensuring traceability between code changes and requirements.
+    \item[-] We organized work into two-week sprints with clear deliverables set at the beginning of each sprint. GitHub milestones helped us monitor sprint progress, with burndown charts showing the completion rate of issues. This allowed us to adjust resources or scope when necessary to meet deadlines.
     \item[-] Weekly meetings kept everyone aligned, and sprint planning ensured we had clear short-term goals. Checkpoints during development helped catch issues early.
-    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via Github was used effectively for collaboration and rollback when needed.
+    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via GitHub was used effectively for collaboration and rollback when needed.
     \item[-] Independent module development (e.g., AI model, UI, API) allowed parallel progress without bottlenecks. CI/CD setup helped with automated testing and smooth deployment.
-    
+    \item[-] GitHub's code review system was instrumental in maintaining code quality, with required reviews before merging any significant changes. This peer review process helped catch bugs early and ensured knowledge sharing across the team.
 \end{enumerate}
 
 \subsection{What Went Wrong?}
 \begin{enumerate}
     \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
+    \item[-] Although GitHub issues were created for most tasks, we occasionally had "shadow work" that wasn't properly tracked in the system. This made it difficult to accurately assess workload and progress at times.
     \item[-] Our original plan didn't account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
+    \item[-] We sometimes created issues that were too large or ambiguous, making them difficult to complete within a single sprint. This led to issues spanning multiple sprints and complicated progress tracking.
     \item[-] Early-stage code and design decisions weren't always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
     \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
+    \item[-] While GitHub provided excellent tracking tools, we didn't fully utilize all features like estimate points or time tracking, which would have helped with more accurate sprint planning and resource allocation.
 \end{enumerate}
 
 \subsection{What Would you Do Differently Next Time?}
@@ -382,8 +536,12 @@ Assuming that there are no other costs of this project (labour, transportation, 
     \item[-] Allocate extra time in the schedule for unexpected delays, model tuning, and integration/debugging.
     \item[-] Build a rough end-to-end prototype early to identify integration pain points sooner, even before full model training is complete.
     \item[-] Maintain consistent documentation practices from the start, including API specs, model details, and configuration notes, to reduce confusion later.
+    \item[-] Create smaller, more granular GitHub issues with clearer acceptance criteria and time estimates. This would improve our ability to track progress and identify bottlenecks more quickly.
+    \item[-] Implement a more formal GitHub workflow with standardized branch naming conventions, issue templates, and automated CI/CD pipelines from the beginning. This would reduce overhead and ensure consistent practices across the team.
     \item[-] Involve test users (or at least team cross-reviews) earlier in the UI development cycle to catch usability issues before final sprint.
+    \item[-] Use GitHub's milestone features more effectively to track progress against larger goals and provide better visibility into overall project status.
     \item[-] Identify high-risk components (e.g., novel model architectures) up front and create extra plans or fallback options.
+    \item[-] Schedule regular backlog refinement sessions to ensure issues remain relevant and appropriately sized as the project evolves.
 \end{enumerate}
 
 \section{Reflection on Capstone}

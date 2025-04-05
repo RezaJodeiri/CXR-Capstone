@@ -11,6 +11,8 @@ Below is the structure of the project and an explanation of the key folders and 
 ```
 CXR-Capstone/
 ├── src/
+│   ├── ai-services/          # AI model services
+│   ├── ai_services/          # Additional AI functionalities
 │   ├── backend/
 │   │   ├── api/
 │   │   │   ├── __init__.py
@@ -30,31 +32,36 @@ CXR-Capstone/
 │   │   ├── Dockerfile          # Backend container config
 │   │   ├── requirements.txt    # Production dependencies
 │   │   └── requirements-dev.txt # Development dependencies
-│   └── frontend/
-│       ├── public/
-│       │   └── index.html      # HTML entry point
-│       ├── src/
-│       │   ├── components/
-│       │   │   ├── Buttons.jsx
-│       │   │   ├── Inputs.jsx
-│       │   │   └── ProtectedRoute.jsx
-│       │   ├── context/
-│       │   │   └── Authentication.js
-│       │   ├── pages/
-│       │   │   ├── LoginPage.jsx
-│       │   │   ├── RegisterPage.jsx
-│       │   │   └── PredictionPage.jsx
-│       │   ├── services/
-│       │   │   └── api.js      # API service layer
-│       │   └── App.jsx         # Main React component
-│       ├── .gitignore
-│       └── package.json       # Frontend dependencies
+│   ├── frontend/
+│   │   ├── public/
+│   │   │   └── index.html      # HTML entry point
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── Buttons.jsx
+│   │   │   │   ├── Inputs.jsx
+│   │   │   │   └── ProtectedRoute.jsx
+│   │   │   ├── context/
+│   │   │   │   └── Authentication.js
+│   │   │   ├── pages/
+│   │   │   │   ├── LoginPage.jsx
+│   │   │   │   ├── RegisterPage.jsx
+│   │   │   │   └── PredictionPage.jsx
+│   │   │   ├── services/
+│   │   │   │   └── api.js      # API service layer
+│   │   │   └── App.jsx         # Main React component
+│   │   ├── .gitignore
+│   │   └── package.json       # Frontend dependencies
+│   ├── infrastructure/        # Infrastructure setup files
+│   ├── notebooks/             # Jupyter notebooks for model development
+│   ├── docker-compose.yml     # Docker configuration for all services
+│   └── .env                   # Environment variables
 ├── test/
 │   ├── backend/
 │   │   └── api/
 │   │       └── test_oauth.py  # Authentication tests
 │   ├── conftest.py           # Pytest configuration
 │   └── README.md             # Test documentation
+├── INSTALL.md                # Installation instructions
 └── README.md                 # Project documentation
 ```
 
@@ -96,7 +103,7 @@ docker-compose down
 docker system prune -a
 ```
 
-# Project Evaluation and Issue Tracking
+# Project documents and Issue Tracking
 
 
 | Section                 | Title                              | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
@@ -121,4 +128,7 @@ docker system prune -a
 |                         | Unaligned FRs and NFRs | Align FRs and NFRs testings with current project scope  [#203](https://github.com/RezaJodeiri/CXR-Capstone/issues/203)                          | `eb96f46`  | Team Feedback |
 |                         | Unaligned Extras | Align extras with current project scope [#204](https://github.com/RezaJodeiri/CXR-Capstone/issues/204)                          | `0e53ce2`  | Team Feedback |
 | **V&V Report**          |                                      |                             |            |                      |
+|                         | Test Specifications              | Added detailed hardware specifications, network conditions, and testing environment details for NFR-PR1, NFR-PR2, NFR-PR3, and NFR-OE1 [#213](https://github.com/RezaJodeiri/CXR-Capstone/issues/213)  | `a7d82bf`  | TA Feedback |
+|                         | Document Formatting              | Corrected capitalization in section title "Changes due to Performance Testing" and removed empty parentheses in "TraceabilityMatrix:UnitTeststoModules()" [#213](https://github.com/RezaJodeiri/CXR-Capstone/issues/213)  | `a7d82bf`  | TA Feedback |
+|                         | Typo Correction                  | Fixed "Questin" to "Question" in survey figure caption [#213](https://github.com/RezaJodeiri/CXR-Capstone/issues/213)  | `a7d82bf`  | TA Feedback |
 

@@ -285,7 +285,6 @@ Rationale: These modules track the progression of a disease over time and analyz
 \textbf{FR5: Highlight affected areas on X-rays} \\
 Modules: \mref{mDiseasePredict}, \mref{mReportView}, \mref{mPredictModel} \\
 Rationale: \mref{mDiseasePredict} analyzes the X-rays and identifies affected areas, while \mref{mReportView} visualizes those areas for the user. \mref{mPredictModel} assists with disease prediction and highlighting (potential affected area are detected using bounding boxes). \\
-\textcolor{red}{Changed rationale per peer review, adding more details on how areas are visualized}
 \newline
 \textbf{FR6: Generate a structured report} \\
 Modules: \mref{mReportView} \\
@@ -302,26 +301,22 @@ Rationale: These modules monitor changes in a patient's condition and provide no
 \textbf{FR9: Allow treatment plan adjustments} \\
 Modules: \mref{mReportView}, \mref{mRecord} \\
 Rationale: \mref{mReportView} stores medical records, which includes treatment plans. \mref{mRecord} module enables viewing and adjusting the plans as necessary. \\
-\newline
 
-\sout{\textbf{FR10: Integrate with EHR systems}} \\
+\noindent\sout{\textbf{FR10: Integrate with EHR systems}} \\
 \sout{Modules: \mref{mRecord}, \mref{mDataStore}} \\
 \sout{Rationale: Integration with EHR (Electronic Health Records) systems requires a secure and reliable data storage mechanism, handled by the \mref{mRecord} and \mref{mDataStore} module.} \\
-\textcolor{red}{Removed due to change in the current scope of the project, also stay consistent with SRS}
 \newline
 \textbf{FR11: Display confidence levels in UI} \\
 Modules: \mref{mReportView} \\
 Rationale: The confidence levels of AI predictions are displayed through the \mref{mReportView} to inform users about the accuracy of diagnoses. \\
-\newline
 
-\textbf{FR12: Patient uploads for self-diagnosis (Canceled)} \\
+\noindent\textbf{FR12: Patient uploads for self-diagnosis (Canceled)} \\
 Rationale: This feature was canceled, so no module is connected to it. \\
 \newline
 \textbf{FR13: Support user roles and access levels (Canceled)} \\
 Rationale: This feature was canceled, so no module is connected to it. \\
-\newline
 
-\textbf{FR14: Create a new copy of X-rays for analysis} \\
+\noindent\textbf{FR14: Create a new copy of X-rays for analysis} \\
 Modules: \mref{mRecordsList} \\
 Rationale: The \mref{mRecordsList} module manages and stores medical records, including X-ray images, and enables creating new copies for further analysis. \\
 \newline
@@ -345,7 +340,6 @@ Rationale: These modules are designed with usability in mind to allow healthcare
 \sout{\textbf{UH2: Context-sensitive help}} \\
 \sout{Modules: \mref{mAuth}, \mref{mDataStore}} \\
 \sout{Rationale: The \mref{mAuth} module ensures that users can access the system securely, while \mref{mDataStore} can provide relevant help regarding data management and privacy settings.} \\
-\textcolor{red}{Removed due to change in the current scope of the project, also stay consistent with SRS}
 \newline
 \textbf{PR1: Process images within 30 seconds} \\
 Modules: \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel} \\
@@ -358,17 +352,12 @@ Rationale: These modules ensure that the application is available and responsive
 \textbf{PR3: Concurrent processing of 20 images} \\
 Modules: \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel} \\
 Rationale: The system is designed to handle the simultaneous processing of multiple images, enabling efficient analysis of large batches of X-rays or other diagnostic images. \\
-\newline
 
-
-\sout{\textbf{OE1: Integration with PACS systems}} \\
+\noindent\sout{\textbf{OE1: Integration with PACS systems}} \\
 \sout{Modules: \mref{mDataStore}} \\
 \sout{Rationale: PACS (Picture Archiving and Communication System) integration allows the system to interact with medical imaging databases, which is managed by \mref{mDataStore}.} \\
-\textcolor{red}{Removed due to change in the current scope of the project, also stay consistent with SRS}
 
-
-\newline
-\textbf{OE2: Operate in variable network conditions} \\
+\noindent\textbf{OE2: Operate in variable network conditions} \\
 Modules: \mref{mWebApp}, \mref{mHTTP} \\
 Rationale: These modules are built to handle different network conditions, ensuring that the web application can function reliably even with fluctuating internet speeds. \\
 \newline
@@ -383,17 +372,12 @@ Rationale: The modular architecture allows each module to be updated or replaced
 \textbf{MS2: Automated testing suites} \\
 Modules: \mref{mDiseasePredict}, \mref{mDiseaseProgress}, \mref{mProgressModel}, \mref{mPredictModel}, \mref{mRecord} \\
 Rationale: These modules require robust automated testing to ensure their functionality and accuracy in disease prediction, progression tracking, and data management. \\
-\newline
 
-
-\sout{\textbf{CR1: Support English and French languages}} \\
+\noindent\sout{\textbf{CR1: Support English and French languages}} \\
 \sout{Modules: \mref{mPatientList}, \mref{mPatientOverview}, \mref{mProgressView}, \mref{mRecordsList}, \mref{mReportView}} \\
 \sout{Rationale: These modules display patient information and reports, which must support multiple languages for broader user accessibility.} \\
-\textcolor{red}{Removed due to change in the current scope of the project, also stay consistent with SRS}
 
-
-\newline
-\textbf{LR1: Compliance with healthcare data protection laws} \\
+\noindent\textbf{LR1: Compliance with healthcare data protection laws} \\
 Modules: \mref{mDataStore} \\
 Rationale: \mref{mDataStore} ensures compliance with healthcare regulations by securely handling patient data in accordance with legal requirements. \\
 \newline
@@ -401,9 +385,7 @@ Rationale: \mref{mDataStore} ensures compliance with healthcare regulations by s
 Modules: \mref{mDataStore} \\
 Rationale: \mref{mDataStore} ensures that all data handling and storage comply with ISO 13485 standards for medical devices.\\
 
- \\
-\newline
-\textbf{HS1: Radiologist validation of AI-generated diagnoses} \\
+\noindent\textbf{HS1: Radiologist validation of AI-generated diagnoses} \\
 Modules: \mref{mReportView} \\
 Rationale: The \mref{mReportView} module provides a platform for radiologists to review AI-generated diagnoses and confirm their accuracy before taking action. \\
 \newline
