@@ -1,3 +1,7 @@
+"""
+Author: Kelly Deng
+"""
+
 from .mocks.mock_s3 import MockS3PresignedURLHandler, MockBoto3S3Client
 from unittest.mock import patch
 import unittest

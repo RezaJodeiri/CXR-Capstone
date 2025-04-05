@@ -1,3 +1,6 @@
+"""
+Author: Nathan Luong
+"""
 from unittest.mock import MagicMock
 
 class MockBaseDynamoService(MagicMock):

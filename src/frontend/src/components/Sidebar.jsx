@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";

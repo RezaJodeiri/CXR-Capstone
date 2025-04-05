@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useRef, useState, useEffect } from "react";
 
 export const XrayWithSegmentationBoxes = ({

@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from flask import Blueprint, jsonify
 
 health_check_bp = Blueprint('health_check', __name__)

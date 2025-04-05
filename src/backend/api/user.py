@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from flask import Blueprint, jsonify, request
 from runtime import IdentityProvider
 

@@ -1,3 +1,5 @@
+# Author: Reza Jodeiri, Nathan Luong
+
 services:
   frontend:
     build:

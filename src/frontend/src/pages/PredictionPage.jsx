@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 

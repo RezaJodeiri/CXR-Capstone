@@ -1,3 +1,7 @@
+"""
+Author: Ayman Akhras
+"""
+
 import unittest
 from runtime import ReportGenerationService
 from openai import OpenAI

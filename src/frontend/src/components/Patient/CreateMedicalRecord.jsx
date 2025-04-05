@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { getMedicalRecord, uploadFile } from "../../services/api";

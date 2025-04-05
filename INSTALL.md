@@ -8,7 +8,7 @@ This project is fully containerized using Docker Compose, which automatically ha
 
 ## Quick Start
 
-Please refer to the **Getting Started** section in the [README.md](README.md) for complete installation instructions.
+Please refer to the **Getting Started** section in the [README.md](README.md) for complete installation instructions for developer.
 
 ## Uninstallation
 

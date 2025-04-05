@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import TopBar from "../components/TopBar";

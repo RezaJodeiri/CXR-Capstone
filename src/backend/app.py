@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong, Ayman Akhras, Kelly Deng
+"""
+
 from flask import Flask, json, make_response, request
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException

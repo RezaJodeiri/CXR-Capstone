@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from functools import wraps
 
 from flask import jsonify, request

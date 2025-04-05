@@ -1,3 +1,7 @@
+"""
+Author: Kelly Deng
+"""
+
 from flask import Flask, jsonify, request, Blueprint
 from runtime import S3PresignedURLHandler
 

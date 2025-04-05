@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React from "react";
 import { useAuth } from "../context/Authentication";
 import { useLocation, useParams, Link, useNavigate } from "react-router-dom";

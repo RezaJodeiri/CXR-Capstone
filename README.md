@@ -3,16 +3,39 @@
 A deep learning-based chest X-ray analysis project using PyTorch and Flask for backend, and React for frontend.
 
 ## Project Overview
+
 This project focuses on using PyTorch and deep learning to analyze chest X-rays and generate reports that predict potential diseases, along with demographic information such as race, age, and gender. By utilizing multi-task learning, the model aims to handle both medical diagnosis and demographic classification, addressing challenges in medical imaging, bias mitigation, and multi-label prediction.
+
+## Accessing the Production Application
+
+Head over to `https://www.neuralanalyzer.ca/` and login using your credentials. For testing purposes, you can use the following credentials:
+
+* **Username:** `nathan_doctor@neuralanalyzer.com`
+* **Password:** `Test123!`
 
 ## Project Structure
 
-Below is the structure of the project and an explanation of the key folders and files.
-```
+Below is the structure of the project and an explanation of the key folders and files. A more detailed explanation of each folder and file can be found in the respective `README.md` files within each folder.
+
+```txt
 CXR-Capstone/
 ├── src/
-│   ├── ai-services/          # AI model services
 │   ├── ai_services/          # Additional AI functionalities
+│   │   ├── neuralanalyzer/
+│   │   |    ├── Dockerfile                        # Container config for AI services
+│   │   |    ├── README.md
+│   │   |    ├── models
+│   │   |    │   ├── Detr
+│   │   |    │   │   ├── Detr.ckpt                 # Pre-trained object detection checkpoint
+│   │   |    │   │   ├── detr.py                   # Object detection model
+│   │   |    │   │   └── detr_api.py               # Object detection API
+│   │   |    │   ├── __init__.py
+│   │   |    │   └── classification
+│   │   |    │       ├── classification_api.py     # Classification API
+│   │   |    │       ├── model.ckpt                # Pre-trained classification checkpoint
+│   │   |    │       └── transfomer.py             # Transformer model
+│   │   |    ├── neural_app.py                     # Main entry point for the AI service
+│   │   |    └── requirements.txt                  # Dependencies for AI services
 │   ├── backend/
 │   │   ├── api/
 │   │   │   ├── __init__.py
@@ -65,10 +88,9 @@ CXR-Capstone/
 └── README.md                 # Project documentation
 ```
 
-## Getting Started
+## Getting Started (For Developers)
 
 This project is fully containerized using Docker and Docker Compose. There is no need to manually install any dependencies like `npm` or `pip`. The Docker configuration will take care of setting up both the frontend and backend.
-
 
 ### Prerequisites
 
@@ -76,7 +98,21 @@ Ensure that you have **Docker** installed on your system:
 
 - **Docker**: [Download Docker](https://www.docker.com/get-started) and install it for your operating system.
 
+Ensure that the repository is cloned to your local machine. You can do this by running the following command in your terminal:
+
+```bash
+git clone <repository-url>.git
+```
+
 ### Steps to Run the Application
+
+#### 1. Download the DETR checkpoint file from Google Drive
+
+- Download the DETR checkpoint file from [Google Drive](https://drive.google.com/file/d/1QLIL-O6WTS219aUd1UeTkJ6WkMBvrC4M/view).
+- Place the downloaded file in the `src/ai_services/neuralanalyzer/models/Detr` directory.
+- Name the file `Detr.ckpt`.
+
+#### 2. Build and Run the Application
 
 ```bash
 # 1.Direct terminal to the src folder where the docker-compose.yml file is located:
@@ -103,8 +139,7 @@ docker-compose down
 docker system prune -a
 ```
 
-# Project documents and Issue Tracking
-
+## Project documents and Issue Tracking
 
 | Section                 | Title                              | Issue Description           | Commit ID  | Feedback By (TA/Peer) |
 |-------------------------|------------------------------------|-----------------------------|------------|------------------------|

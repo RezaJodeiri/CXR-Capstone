@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import { PrimaryButton } from "./Buttons";
 import { PrimaryTextInputWithLabel } from "./Inputs";
 

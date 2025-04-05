@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React from "react";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { Link } from "react-router-dom";

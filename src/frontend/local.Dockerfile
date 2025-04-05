@@ -1,3 +1,5 @@
+# Author: Nathan Luong
+
 # Stage 1: Build
 FROM node:16-slim AS build
 WORKDIR /app

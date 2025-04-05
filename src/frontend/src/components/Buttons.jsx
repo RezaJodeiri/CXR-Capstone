@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 export const PrimaryButton = ({ text, onClick, disabled = false }) => {
   return (
     <button

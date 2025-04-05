@@ -1,3 +1,7 @@
+"""
+Author: Ayman Akhras
+"""
+
 from ..config import Config
 from openai import OpenAI
 

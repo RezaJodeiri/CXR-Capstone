@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 import os
 
 from botocore.config import Config as aws_config

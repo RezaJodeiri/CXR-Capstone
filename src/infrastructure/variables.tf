@@ -1,3 +1,4 @@
+// Author: Nathan Luong
 variable "TORCHXRAYVISION_MODEL_URL" {
     type = string
     sensitive = true
