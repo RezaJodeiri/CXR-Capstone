@@ -611,12 +611,15 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Type} & Manual \\
 \hline
-\textbf{Verification} & Thorough review of system design documentation and development artifacts against regulatory requirements by compliance specialists. Mapping system features to specific regulatory requirements and evaluating the implementation of privacy-enhancing technologies. \\
+\textbf{Verification} & Thorough review of system design documentation and development artifacts against regulatory requirements by compliance specialists. Mapping system features to specific regulatory requirements and evaluating the implementation of privacy-enhancing technologies.
+Periodic regulatory review process conducted biannually to track and integrate evolving regulations such as HIPAA, PIPEDA, and future relevant standards.
+\\
 \hline
 \textbf{Validation} & System design implements all relevant HIPAA and PIPEDA guidelines for data privacy and security, including proper access controls, audit logging, encryption, and data minimization practices. Access to patient information is restricted based on user roles with appropriate authentication mechanisms. \\
 \hline
 \end{tabular}
-\caption{Non-Functiona Requirement LR1: Privacy Compliance}
+\caption{Non-Functional Requirement LR1: Privacy Compliance}
+\textcolor{red}{Addressing peer review feedback, clarify how evolving regulations will be tracked and integrated into the system}
 \end{table}
 \newpage
 \subsection{Health and Safety (HS)}
@@ -634,10 +637,11 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Automated capture and storage of user interactions when radiologist users review and act upon AI-generated reports. Triggering various user actions and confirming that appropriate log entries were generated with all required metadata. \\
 \hline
-\textbf{Validation} & System captures detailed logs including doctor's review actions (confirm/reject) with accurate timestamps, user identifiers, and context information. Each log entry includes the specific action taken, when it occurred, which user performed it, and on which patient record. \\
+\textbf{Validation} & System captures detailed logs including doctor's review actions (confirm/reject) with accurate timestamps, user identifiers, and context information. Logs will be stored in a secure database for 1 months. Each log entry includes the specific action taken, when it occurred, which user performed it, and on which patient record. \\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement HS1: User Action Logging}
+\textcolor{red}{Address peer review feedback of log retention policy}
 \end{table}
 
 \begin{table}[H]
@@ -654,10 +658,12 @@ This subsection provides a list of terms that are used in the subsequent section
 \hline
 \textbf{Verification} & Manual inspection of the user interface when accessing AI-generated diagnostic reports. Reviewing all screens where AI-generated content is displayed to confirm consistent presentation of disclaimers across different user roles and access paths. \\
 \hline
-\textbf{Validation} & A clearly visible disclaimer box is prominently displayed when viewing AI results, using appropriate positioning, with text explicitly stating that AI-generated results are for decision support only and should not replace professional medical judgment. Refer to \hyperref[appendix:A]{Appendix A, Figure 7} for survey feedback on disclaimer clarity. \\
+\textbf{Validation} & A clearly visible disclaimer box is prominently displayed when viewing AI results, using appropriate positioning, with text explicitly stating that AI-generated results are for decision support only and should not replace professional medical judgment. Refer to \hyperref[appendix:A]{Appendix A, Figure 7} for survey feedback on disclaimer clarity. Validation will include checking the integrity and completeness of logs after system recovery from crashes. Tests will also verify that all log entries are immutable and protected against unauthorized changes. Load tests will validate the system’s ability to accurately capture and maintain logs under peak usage conditions.
+\\
 \hline
 \end{tabular}
 \caption{Non-Functional Requirement HS2: AI Disclaimer}
+\textcolor{red}{Update HS1 validation section based on peer review feedback}
 \end{table}
 
 \clearpage
