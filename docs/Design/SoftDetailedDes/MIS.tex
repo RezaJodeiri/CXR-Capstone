@@ -133,7 +133,7 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     \end{tabular} 
     \end{center}
     For detailed mathematical notations and specifications, please refer to the \href{https://github.com/RezaJodeiri/CXR-Capstone/blob/main/docs/SRS/SRS.pdf}{SRS} document \citep{SRS}.
-    \subsection{Data Types from Libraries}
+\subsection{Data Types from Libraries}
 \begin{table}[H]
     \centering
     \renewcommand{\arraystretch}{1.2}
@@ -154,6 +154,46 @@ The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}. 
     \caption{Data types from libraries}
     \end{table}
 
+
+\subsection{Internal Data Types}
+\subsubsection{User}
+\begin{itemize}
+    \item  \textbf{id}: String
+    \item \textbf{first\_name}: String
+    \item \textbf{last\_name}: String
+    \item \textbf{occupation}: String
+    \item \textbf{doctorId}: String
+    \item \textbf{avatar}: String
+    \item \textbf{isDoctor}: Boolean
+\end{itemize}
+
+\subsubsection{PredictionResult}
+\begin{itemize}
+    \item  \textbf{result}: [{\textbf{disease}: String, \textbf{prediction}: Integer}]
+\end{itemize}
+
+\subsubsection{ProgressionResult}
+\begin{itemize}
+    \item  \textbf{result}: [{\textbf{disease}: String, \textbf{progression}: Number}]
+\end{itemize}
+
+\subsubsection{Record}
+\begin{itemize}
+    \item  \textbf{id}: String
+    \item \textbf{userId}: String
+    \item \textbf{note}: String
+    \item \textbf{findings}: String
+    \item \textbf{prediction}: PredictionResult
+\end{itemize}
+
+\subsubsection{Prescription}
+\begin{itemize}
+    \item  \textbf{id}: String
+    \item \textbf{userId}: String
+    \item \textbf{recordId}: String
+    \item \textbf{findings}: String
+    \item \textbf{prediction}: PredictionResult
+\end{itemize}
 \newpage
 \section{Module Decomposition}
 
@@ -264,15 +304,15 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: string, \newline user\_detail: User & user: User & \texttt{Unauthorized}, \newline \texttt{UserAlreadyExists}, \newline \texttt{InternalServer} \\
     \hline
     \texttt{sign\_in\_user} & user\_email: string, \newline password: string & bearer\_token: string & \texttt{Unauthorized}, \newline \texttt{IncorrectCredentials}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
+    \texttt{get\_self\_user} & bearer\_token: string & user: User & \texttt{Unauthorized}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{get\_user\_by\_id} & uuid: string & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{get\_user\_by\_id} & bearer\_token: string, uuid: string & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
-    \texttt{update\_user\_by\_id} & uuid: string, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
+    \texttt{update\_user\_by\_id} & bearer\_token: string, uuid: string, \newline updated\_user\_json: User & user: User & \texttt{Unauthorized}, \newline \texttt{UserNotFound}, \newline \texttt{InternalServer} \\
     \hline
 \end{tabular}
 \end{center}
@@ -344,7 +384,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    \texttt{predictDisease} & XRayImage:Binary Number& DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
+    \texttt{predictDisease} & xrayUrl:string & DiseasePrediction: PredictionResult & \texttt{PredictionFailException} \\
     \hline
 \end{tabular}
 
@@ -368,7 +408,7 @@ Note: This is being handled by React server
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{predictDisease(XRayImage)}
+\subsubsection{predictDisease(XRayImageUrl)}
 \begin{itemize}
     \item \textbf{Transition}: Uses the loaded model to make predictions based on the provided X-ray image data.
     \item \textbf{Output}: Returns the disease prediction (e.g., probability of a disease being present) or throws an \texttt{InvalidImageException} if the image is invalid.
@@ -406,7 +446,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{trackProgression} & XrayImage1: Binary Number, \newline XrayImage2: Binary Number & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
+    \texttt{trackProgression} & XrayImage1Url: string, \newline XrayImage2Url: String & Progression: PregressionResult & \texttt{ProgressionFailedException} \\
     \hline
 \end{tabular}
 \end{center}
@@ -430,7 +470,7 @@ Note: This is being handled by React server
 \end{itemize}
 
 \subsection{Access Routine Semantics}
-\subsubsection{trackProgression(XrayImage1, XrayImage2)}
+\subsubsection{trackProgression(XrayImage1Url, XrayImage2Url)}
 \begin{itemize}
     \item \textbf{Transition}: Uses the existing model to calculate disease progression based on the provided X-ray images.
     \item \textbf{Output}: Returns the disease progression.
@@ -468,15 +508,15 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{sign\_up\_user} & user\_email: string, \newline password: int, \newline user\_detail: JSON & user: user & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
+    \texttt{sign\_up\_user} & user\_email: string, \newline password: int, \newline user\_detail: User & user: User & \texttt{Unauthorized, UserAlreadyExists, InternalServerError} \\
     \hline
     \texttt{sign\_in\_user} & user\_email: string, \newline password: int & bearer\_token: string & \texttt{Unauthorized, IncorrectCredentials, InternalServerError} \\
     \hline
-    \texttt{get\_self\_user} & bearer\_token: string & user: user & \texttt{Unauthorized, InternalServerError} \\
+    \texttt{get\_self\_user} & bearer\_token: string & user: User & \texttt{Unauthorized, InternalServerError} \\
     \hline
-    \texttt{get\_user\_by\_id} & uuid: int & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \texttt{get\_user\_by\_id} & bearer\_token: string, uuid: int & user: User & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
     \hline
-    \texttt{update\_user\_by\_id} & uuid: int, \newline updated\_user\_json: JSON & user: user & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
+    \texttt{update\_user\_by\_id} & bearer\_token: string, uuid: int, \newline updated\_user\_json: JSON & user: User & \texttt{Unauthorized, UserNotFoundException, InternalServerError} \\
     \hline
   \end{tabular}
 \end{center}
@@ -557,10 +597,11 @@ Note: This is being handled by React server
         \end{itemize}
 \end{itemize}
 
-\subsubsection{get\_user\_by\_id(uuid)}
+\subsubsection{get\_user\_by\_id(bearer\_token, uuid)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
+            \item \textbf{bearer\_token}: Authentication token of the doctor.
             \item \textbf{uuid}: The unique identifier of the user (string)
         \end{itemize}
     \item \textbf{Outputs}: A user object containing the user's details.
@@ -574,10 +615,11 @@ Note: This is being handled by React server
         \end{itemize}
 \end{itemize}
 
-\subsubsection{update\_user\_by\_id(uuid, updated\_user\_json)}
+\subsubsection{update\_user\_by\_id(bearer\_token, uuid, updated\_user\_json)}
 \begin{itemize}
     \item \textbf{Inputs}:
         \begin{itemize}
+            \item \textbf{bearer\_token}: Authentication token of the doctor.
             \item \textbf{uuid}: The unique identifier of the user (string)
             \item \textbf{updated\_user\_json}: Python Dictionary object that contains the field which the caller wants to update the user with.
         \end{itemize}
@@ -624,11 +666,11 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{viewPatientList} & doctorID: int, filters: [string] & Patients: [user] & PatientListNotFoundException \\
+    \texttt{viewPatientList} & doctorID: int, filters: [string] & Patients: [User] & PatientListNotFoundException \\
     \hline
-    \texttt{sortList} & Sorting criteria: [string] & Patients: [user] & None \\
+    \texttt{sortList} & Sorting criteria: [string] & Patients: [User] & None \\
     \hline
-    \texttt{addPatient} & Form Data: JSON & Patient: user & FailedToCreateUserException \\
+    \texttt{addPatient} & Form Data: User & Patient: User & FailedToCreateUserException \\
     \hline
   \end{tabularx}
 \end{center}
@@ -690,7 +732,7 @@ Note: This is being handled by React server
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{getPatient} & Patient ID: int & Patient overview details: [detail] & \texttt{OverviewNotFoundException} \\
+    \texttt{getPatient} & Patient ID: int & Patient overview details: [User] & \texttt{OverviewNotFoundException} \\
     \hline
 \end{tabular}
 
@@ -1072,21 +1114,21 @@ path
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline 
-    \texttt{getPaginatedPrescriptionByRecordId} & recordId: string, \newline limit: int & prescriptions: [prescription] & \texttt{GetPaginatedException} \newline \texttt{RecordDoesNotExistException}\\
+    \texttt{getPaginatedPrescriptionByRecordId} & recordId: string, \newline limit: int & prescriptions: [Prescription] & \texttt{GetPaginatedException} \newline \texttt{RecordDoesNotExistException}\\
     \hline
-    \texttt{getPrescriptionById} & uuid: string & prescription: prescription & \texttt{GetPrescriptionException} \\
+    \texttt{getPrescriptionById} & uuid: string & prescription: Prescription & \texttt{GetPrescriptionException} \\
     \hline
-    \texttt{createNewPrescription} & recordId: string, \newline prescription: prescription & prescription: prescription & \texttt{CreatePrescriptionException} \\
+    \texttt{createNewPrescription} & recordId: string, \newline prescription: Prescription & prescription: Prescription & \texttt{CreatePrescriptionException} \\
     \hline
-    \texttt{updatePrescriptionById} & uuid: string, \newline prescription: Prescription & prescription: prescription & \texttt{UpdatePrescriptionException}, \newline \texttt{PrescriptionNotFoundException} \\
+    \texttt{updatePrescriptionById} & uuid: string, \newline prescription: Prescription & prescription: Prescription & \texttt{UpdatePrescriptionException}, \newline \texttt{PrescriptionNotFoundException} \\
     \hline
-    \texttt{getPaginatedRecordByUserId} & userId: string, \newline limit: int & records: [record] & \texttt{GetPaginatedRecordException}, \newline \texttt{UserNotFoundException} \\
+    \texttt{getPaginatedRecordByUserId} & userId: string, \newline limit: int & records: [Record] & \texttt{GetPaginatedRecordException}, \newline \texttt{UserNotFoundException} \\
     \hline
-    \texttt{getRecordById} & uuid: string & record: record & \texttt{GetRecordException}, \newline \texttt{RecordNotFoundException} \\
+    \texttt{getRecordById} & uuid: string & record: Record & \texttt{GetRecordException}, \newline \texttt{RecordNotFoundException} \\
     \hline
-    \texttt{createNewRecord} & userId: string, \newline record: record & record: record & \texttt{CreateRecordException} \\
+    \texttt{createNewRecord} & userId: string, \newline record: Record & record: Record & \texttt{CreateRecordException} \\
     \hline
-    \texttt{updateRecordById} & uuid: string, \newline record: record & record: record & \texttt{UpdateRecordException}, \newline \texttt{RecordNotFoundException} \\
+    \texttt{updateRecordById} & uuid: string, \newline record: Record & record: Record & \texttt{UpdateRecordException}, \newline \texttt{RecordNotFoundException} \\
     \hline
 \end{tabular}
 \end{center}
