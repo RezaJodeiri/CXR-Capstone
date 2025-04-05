@@ -3,6 +3,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{multirow}
 \usepackage{hyperref}
 
 
@@ -403,7 +404,6 @@ Marketing would involve direct outreach to hospitals and healthcare providers, s
 \subsection{Production Cost Estimate}
 The cost of production includes:
 \begin{itemize}
-
     \item \textbf{Cloud Services (AWS ECS):} The hosting and management of the backend system will be powered by AWS Elastic Container Service. This service will handle containerized microservices, ensuring scalability. Costs for ECS typically range from x to x dollar per month, depending on traffic, load, and the number of services running.
     \item \textbf{GPU/Server Cost:} To train the AI model efficiently, a dedicated GPU or server instance is required for training and inference tasks. For optimal performance, services like AWS EC2 GPU instances would be suitable, which cost around 3 to 5 dollars per hour, depending on the selected instance type. In our case, using the Mcmaster GPU server, there was no cost for training and inference, but we estimate a cost of 500 to 1,000 dollars per month if we did not have access to the mcmaster GPU server. Note our product is the application not the computer or server it runs on.
     \item \textbf{Cost of API Services:} The integration of ChatGPT for natural language processing tasks, such as generating reports or patient interaction, incurs costs based on the number of API calls. This will vary depending on usage but can be estimated at a few cents per API call, estimating the monthly cost to be the amount of patients divded by 100. 
@@ -411,16 +411,55 @@ The cost of production includes:
 
 
 \subsection{Pricing Model}
+Since the application is enterprise-focussed, there are two models to compare when pricing the users:
 \begin{itemize}
-    \item \textbf{SaaS Model (Subscription-based):} Hospitals or the government pays a monthly or annual fee per facility or per patient scan. For considerable profit our team would need to charge around \$1,237/month per hospital or \$2.34 per scan. This model ensures predictable revenue and allows for scaling as more hospitals adopt the technology.
+    \item \textbf{Charging for number of licenses:} Each hospital pay a monthly fee for the number of licenses they have purchase. Each license represent a radiologist, and no matter the amount of data a radiologist produce, they will get charged the same as others.
+    \begin{itemize}
+        \item \textbf{Advantages:} This model generate a predictable cashflow and monthly recurring revenue. In addition, it's very straight-forward, making it easy for hospitals to manage and scale licensing cost.
+        \item \textbf{Disadvantages:} Experienced radiologists might have significantly more patients than others users (i.e: doctors in training, resident). This creates huge friction for hospitals to buy licenses for specialists with low expected patient count. Additionally, usage prediction becomes tricky for Lung Vision AI since any license can generate an infinite amount of data in theory.
+    \end{itemize}
+    
+    \item \textbf{Charging for number of patients:} Each hospitals pay a monthly fee for the number of patients they service.
+    \begin{itemize}
+        \item \textbf{Advantages:} This model encourage a pay-as-you-go mentality, making usage and cost prediction for Lung Vision AI a lot simpler. Additionally, this model is suitable for private clinics where patient growth is not too drastic.
+        \item \textbf{Disadvantages:} This pricing model is unfavorable for big hospitals, since forecasting expected patients for a given month is difficult, making costs management unpredictable.
+    \end{itemize}
 \end{itemize}
-Given these models, the pricing would balance affordability with long-term sustainability while ensuring accessibility for lower-income hospitals.
+
+To balance long-term user satisfaction, affordability, and profitability, our has decided to go with the \textbf{charging for licenses model}, with an upper limit of how many patient are allowed to be created per license. If doctors would like to service more patients using their current license, a different pricing schema will be applied per user.
 
 \subsection{Break-even Analysis}
-THIS SECTION NEEDS TO BE FILLED
+The cost the project per month can be broken down as follow:
+\begin{longtable}{| p{0.15\textwidth} | p{0.2\textwidth} | p{0.2\textwidth} | p{0.45\textwidth}|}
+    \hline
+    \textbf{Category} & \textbf{Cost} & \textbf{Cost/Month} & \textbf{Description} \\
+    \hline
+
+    \multirow{1}{*}{\parbox{0.15\textwidth}{\textbf{Business\\Operation}}}
+    & \textbf{Domain Name} & \$1.23 & Cost associated with purchasing and maintaining the domain name for the application. \\
+    \hline 
+
+    \multirow{3}{*}{\textbf{Hosting}} 
+    & \textbf{Database} & \$13.00 & NoSQL database (AWS DynamoDB) and blob storage expenses (AWS S3). \\
+    \cline{2-4}
+    & \textbf{Load Balancing} & \$17.60 & Costs of load balancer (AWS ALB) to ensure high availability and scalability of the application. \\
+    \cline{2-4}
+    & \textbf{Computing} & \$5.00 & Cloud container running cost (AWS Elastic Container Service). \\
+    \cline{2-4}
+    & \textbf{Other} & \$33.50 & Any additional variable costs, such as OpenAI usage or additional AWS services (AWS ECR, IAM). \\ 
+    \hline
+    
+    & \textbf{Total Cost} & \$70.33 & \\
+    \hline
+\end{longtable}
 
 \subsection{Conclusion}
-By aligning pricing, marketing, and distribution with the needs of healthcare providers, the AI-powered X-ray tool has strong market potential. A subscription-based model, combined with strategic partnerships, regulatory approvals, and research collaborations, can drive adoption and profitability while improving global healthcare outcomes. Additionally, partnering with government healthcare programs ensures a stable product demand and consistent revenue stream, as governments often prioritize long-term investments in healthcare infrastructure and technology.
+Currently, our database contains roughly 20 radiologists, and 100 active patients. By simple calculations
+\begin{itemize}
+    \item Cost per patient = 70.33/ 100 = 0.7033 dollars
+    \item Cost per license = 70.33/ 20 = 14.066 dollars
+\end{itemize}
+Assuming that there are no other costs of this project (labour, transportation, etc.) the break price per license will be 14.066 dollars, with a max limit of 5 patient per license. For every new patient doctors would like to serve, an additional 0.7033 dollars per user will be charged.
 
 \section{Reflection on Project Management (LO24)}
 
