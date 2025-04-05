@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-
 from runtime import IdentityProvider
 
 oauth_bp = Blueprint("oauth", __name__)
@@ -9,17 +8,18 @@ oauth_bp = Blueprint("oauth", __name__)
 def sign_in():
     try:
         auth_result = IdentityProvider.sign_in_user(
-            email=request.args.get("email"), 
-            password=request.args.get("password")
+            email=request.args.get("email"), password=request.args.get("password")
         )
 
-        return jsonify({
-            "token": auth_result["AccessToken"],
-            "user": {
-                "email": request.args.get("email"),
-                "userInfo": IdentityProvider.get_self_user(auth_result["AccessToken"])
-            }
-        }), 200
+        return (
+            jsonify(
+                {
+                    "token": auth_result["AccessToken"],
+                    "user": IdentityProvider.get_self_user(auth_result["AccessToken"]),
+                }
+            ),
+            200,
+        )
     except Exception as e:
         return (
             jsonify({"error": str(e)}),
@@ -31,7 +31,7 @@ def sign_in():
 def sign_up():
     try:
         body = request.get_json()
-        user = IdentityProvider.sign_up_user(
+        user = IdentityProvider.sign_up_doctor(
             password=request.args.get("password"),
             user_email=request.args.get("email"),
             user_detail={
@@ -42,17 +42,10 @@ def sign_up():
                 "location": body["location"],
             },
         )
-        auth_result = IdentityProvider.sign_in_user(
-            email=request.args.get("email"),
-            password=request.args.get("password")
+        return (
+            jsonify(user),
+            200,
         )
-        return jsonify({
-            "token": auth_result["AccessToken"],
-            "user": {
-                "email": request.args.get("email"),
-                "userInfo": user
-            }
-        }), 200
     except Exception as e:
         return (
             jsonify({"error": str(e)}),
@@ -82,13 +75,9 @@ def refresh_token():
         refresh_token = request.json.get("refresh_token")
         response = IdentityProvider.cognito_idp_client.initiate_auth(
             ClientId=IdentityProvider.client_id,
-            AuthFlow='REFRESH_TOKEN_AUTH',
-            AuthParameters={
-                'REFRESH_TOKEN': refresh_token
-            }
+            AuthFlow="REFRESH_TOKEN_AUTH",
+            AuthParameters={"REFRESH_TOKEN": refresh_token},
         )
-        return jsonify({
-            "token": response['AuthenticationResult']['AccessToken']
-        }), 200
+        return jsonify({"token": response["AuthenticationResult"]["AccessToken"]}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 401

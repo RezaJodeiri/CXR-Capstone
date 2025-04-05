@@ -1,0 +1,68 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  setup:
+    name: Setup & ECR Login
+    runs-on: ubuntu-latest
+    outputs:
+      registry: ${{ steps.login-ecr.outputs.registry }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+  deploy:
+    name: Deploy ${{ matrix.ecs_service_name }}
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ecs_service_name: frontend-service
+            image_name: neuralanalyzer/frontend
+            source_code_path: src/frontend
+            build_args: --build-arg REACT_APP_API_URL=https://api.neuralanalyzer.ca
+          - ecs_service_name: backend-service
+            image_name: neuralanalyzer/backend
+            source_code_path: src/backend
+            build_args: ""
+          - ecs_service_name: torchxrayvision-service
+            image_name: neuralanalyzer/torchxrayvision
+            source_code_path: src/ai-services/torchxrayvision
+            build_args: ""
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, Push, and Deploy
+        run: |
+          cd ${{ matrix.source_code_path }}
+          docker build ${{matrix.build_args}} -t ${{secrets.ECR_ENDPOINT}}/${{ matrix.image_name }}:latest .
+          docker push ${{secrets.ECR_ENDPOINT}}/${{ matrix.image_name }}:latest
+          aws ecs update-service \
+            --cluster neuralanalyzer-cluster \
+            --service ${{ matrix.ecs_service_name }} \
+            --force-new-deployment

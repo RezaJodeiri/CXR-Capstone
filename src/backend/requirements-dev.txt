@@ -1,8 +1,8 @@
 # Testing dependencies
-pytest==7.2.0
-pytest-mock==3.8.0
-flask-testing==0.8.1
-pytest-cov==3.0.0
-types-requests==2.31.0
-flake8==6.0.0
-mypy==1.4.1
+pytest
+pytest-mock
+flask-testing
+pytest-cov
+types-requests
+flake8
+mypy

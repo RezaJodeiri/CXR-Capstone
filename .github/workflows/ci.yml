@@ -1,0 +1,155 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - '**'  
+
+env:
+  PYTHON_VERSION: "3.8"
+  COGNITO_USER_POOL_ID: mock-user-pool-id
+  COGNITO_APP_CLIENT_ID: mock-client-id
+  COGNITO_APP_CLIENT_SECRET: mock-client-secret
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: mock-access-key
+  AWS_SECRET_ACCESS_KEY: mock-secret-key
+  OPENAI_API_KEY: mock-openai-api-key
+
+jobs:
+  setup:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+           
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.local/lib/python${{ env.PYTHON_VERSION }}/site-packages
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+          
+      - name: Install dependencies
+        run: |
+          pip install -r src/backend/requirements.txt
+          pip install -r src/backend/requirements-dev.txt
+
+  lint:
+    name: Lint and Type Check
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r src/backend/requirements.txt
+          pip install -r src/backend/requirements-dev.txt
+      
+      - name: Run flake8
+        run: |
+          flake8 src test --output-file=flake8-report.txt --statistics --exit-zero
+          if grep -q "^E" flake8-report.txt; then
+            echo "Critical flake8 errors found!"
+            exit 1
+          fi
+          
+      - name: Upload flake8 report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flake8-report
+          path: flake8-report.txt
+          if-no-files-found: warn
+          include-hidden-files: false
+
+  test-backend:
+    name: Run Backend Tests
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r src/backend/requirements.txt
+          pip install -r src/backend/requirements-dev.txt
+      
+      - name: Backend Tests and Coverage
+        run: |
+          pytest src/backend/test \
+            --cov=src \
+            --cov-report=term \
+            --cov-report=xml \
+            --junitxml=pytest.xml
+
+      - name: Upload test.jpg results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: |
+            pytest.xml
+            coverage.xml
+          if-no-files-found: warn
+
+  test-frontend:
+    name: Run Frontend Tests
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache-dependency-path: src/frontend/package-lock.json
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd src/frontend
+          npm install
+      
+      - name: Run frontend tests
+        run: |
+          cd src/frontend
+          npm test
+
+      - name: Upload test.jpg results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test.jpg-results
+          path: src/frontend/test.jpg-results
+          if-no-files-found: warn
+
+permissions:
+  pull-requests: write
+  checks: write
