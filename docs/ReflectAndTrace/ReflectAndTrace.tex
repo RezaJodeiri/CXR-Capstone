@@ -13,7 +13,6 @@
 \input{../packages/Comments.tex}
 \input{../packages/Common.tex}
 \input{../packages/Reflection.tex}
-
 \begin{document}
 
 \maketitle
@@ -33,7 +32,7 @@ on your reflections.}
 Here is the feedback we received on the SRS and Hazard Analysis documents, and the changes we made in response to that feedback.
 
 \begin{longtable}{| p{0.2\textwidth} | p{0.2\textwidth} | p{0.3\textwidth} | p{0.1\textwidth} |}
-    \caption{Feedback and Changes for SRS Documentation} \\
+    \caption{Feedback and Changes for SRS Documentation and Hazard Analysis} \\
     \hline
     \textbf{Feedback Source} & \textbf{Feedback Item} & \textbf{Response} & \textbf{Issue} \\
     \hline
@@ -46,20 +45,26 @@ Here is the feedback we received on the SRS and Hazard Analysis documents, and t
     \endfoot
     TA Feedback & Formatting and Style & Mention figures in paragraphs and fix title & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/125}{\#125}\\
     \hline
-    TA Feedback & What not How(Abstract) & Improve constraints details & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/126}{\#126} \\
+    TA Feedback & What not How(Abstract) & Improve constraints details as some constraints lack detail ("what") & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/126}{\#126} \\
     \hline
-    TA Feedback & Complete, Correct and Unambiguous & Template explanation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/124}{\#124}\\
+    TA Feedback & Complete, Correct and Unambiguous & Template explanation (already addressed in previous versions) & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/124}{\#124}\\
     \hline
     TA Feedback & Traceable Requirements & Fix referencing for section 5.2. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/123}{\#123} \\
     \hline
-    TA Feedback & Document Content & Fix functional requirements. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/122}{\#122} \\
+    TA Feedback & Document Content & Fix functional requirements & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/122}{\#122} \\
     \hline
-    Peer Review & Project Goals & Goal Statements Inconsistency. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/55}{\#55} \\
+    Peer Review & Project Goals & Goal Statements Inconsistency with the rest of the doc & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/55}{\#55} \\
     \hline
     Team Feedback & Document Content & Fix FR and NFR to align with the current scope of project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/201}{\#201}\\
     \hline
-    TA Feedback & Document Content & Fixed Citation & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/202}{\#202}\\
+    TA Feedback & Document Content & Fixed Citation in reference section  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/202}{\#202}\\
     \hline
+    Peer Review & What not How (Abstract) & Compatibility of DICOM image is not a priority of this project and adding support for legacy systems would require additional development, validation, and maintenance efforts. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/60}{\#60}\\
+    \hline
+    Peer Review & What not How (Abstract) & Privacy measures are already implicitly covered in SR1 and SR2  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/57}{\#57} \\
+    \hline
+    Peer Review & Document organization & detailed theoretical models like ELBO optimization would shift the focus from specifying what the system must do to how certain algorithms work internally, which is beyond the typical scope of an SRS  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/46}{\#46} \\
+    
 
 \end{longtable}
 
@@ -77,6 +82,12 @@ TA Feedback & Document Content & Input represenation & \href{https://github.com/
 TA Feedback & Document Content & Specific Definition of JSON & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/193}{\#193} \\
 \hline
 TA Feedback & Document Content & HTTP Design & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/194}{\#194} \\
+\hline
+Peer Review & 5.0 Module Hierarchy - User Authentication model did not abides by single responsibility & We decided not to split the User Authentication module because its current complexity is manageable, and combining authentication and authorization improves cohesion. &\href{https://github.com/RezaJodeiri/CXR-Capstone/issues/142}{\#142}\\
+\hline
+Peer Review & 6.2 Non-Functional Requirements LR1: Compliance with healthcare data protection laws & M14 has already addressed the sepcification on how data privacy would be achieved and securely stored & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/143}{\#143}\\
+\hline
+Peer Review & 6.1 Functional Requirements (FR5: Highlight affected areas on X-rays) & Add more details on how affected areas will be visualized & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/145}{\#145}
 \hline
 \end{longtable}
 
@@ -96,14 +107,23 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
     \endhead
     \hline
     \endfoot
-    TA Feedback & Nondynamic testing used as necessary & Improve Testing & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/196}{\#196} \\
+    TA Feedback & Nondynamic testing used as necessary & Improve Testing, add linting test (already part of the doc)& \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/196}{\#196} \\
     \hline
-    TA Feedback & General Information & Objective mismatching & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/195}{\#195} \\
+    TA Feedback & General Information & update objectives based on the scope of vnv plan, instead the scope of the entire project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/195}{\#195} \\
     \hline
-    Team Feedback & System Tests for Functional / Nonfunctional Requirements are specific & Update based on team feedback & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/203}{\#203}\\
+    Team Feedback & System Tests for Functional / Nonfunctional Requirements are specific & Update based on team feedback, remove some fr and nfr test items as they are no longer in the scope of the project & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/203}{\#203}\\
     \hline
-    Team Feedback & Extras & Change extras based on current scope & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/204}{\#204}\\
+    Peer review &  Unit Test Description & Updated unit test description and adding traces & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/81}{\#81}
     \hline
+    Peer review & Section 2.1.1 - User Interface (UI) & Our UI is designed to be lightweight, responsive, and platform-independent, adhering to general web and mobile compatibility best practices. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/82}{\#82}
+    \hline
+    Peer review & Section 4.1.6 - Structured Report Generation Tests & We decided not to address this suggestion because structured report generation testing is focused on validating correct outputs under normal conditions. Failure handling will be tested separately during full system reliability testing to better align with project priorities and scope. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/83}{\#83}
+    \hline
+    Peer review & Section 4 (System Tests) & Removing user log in the test step as it is already stated in the initial state. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/84}{\#84}
+    \hline
+    Peer review &  Section 4.3 - Security Tests & We chose not to add session timeout and concurrent login tests because they are outside the core security scope for this release. These aspects will be considered in future system hardening phase & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/85}{\#85}
+    \hline
+    Peer review & Section 5.2.6 - Periodic Health Checks & Add specific criteria for measuring Periodic Health Checks &  \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/86}{\#86}
 
 \end{longtable}
 
@@ -111,24 +131,111 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
 
 \subsection{Challenge Level}
 
-\plt{State the challenge level (advanced, general, basic) for your project.  Your challenge level should exactly match what is included in your problem statement.  This should be the challenge level agreed on between you and the course instructor.}
+The challenge level of this project is classified as advanced, reflecting the complexity of integrating AI for diagnostic purposes in medical imaging. The project required implementing sophisticated machine learning models for chest X-ray analysis, ensuring robust data handling with privacy compliance, and developing an intuitive user interface for healthcare professionals.
+\newline
+Key technical challenges included:
+\begin{itemize}
+    \item[-] Developing and training AI models capable of detecting diseases in chest X-rays with high accuracy
+    \item[-] Implementing comparative analysis capabilities to track disease progression between scans
+    \item[-] Demonstration of lung segmentaion using DETR model and visulzing them on the lungs
+    \item[-] Ensuring secure storage and handling of sensitive medical data through cloud services
+    \item[-] Building a system architecture that supports regular model updates without service disruption
+\end{itemize}
+
+\noindent Our team leveraged our knowledge of tensors, linear algebra, machine learning, and image processing to address these challenges effectively.
+
 
 \subsection{Extras}
 
-\plt{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.}
+Our project included the following extras:
+
+\begin{itemize}
+    \item[-] \textbf{Research Report:} We developed a research paper proposing a unified Transformer-based framework for comprehensive chest X-ray analysis with an emphasis on anatomical localization. Our approach utilized a Detection Transformer (DETR) to identify anatomical regions and support downstream tasks including disease classification and progression monitoring.
+    
+    \item[-] \textbf{Norman Principle Report:} We created a detailed evaluation of our system's user interface based on Don Norman's seven usability principles. This report assessed how intuitive, user-friendly, and efficient our interface is from multiple perspectives, providing valuable insights for further UI refinements.
+
+\end{itemize}
+
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
-\plt{Explain how you arrived at your final design and implementation.  How did
-the design evolve from the first version to the final version?} 
+Our project underwent significant design iterations throughout its development lifecycle, with each phase building upon lessons learned from previous stages and incorporating stakeholder feedback.
 
-\plt{Don't just say what you changed, say why you changed it.  The needs of the
-client should be part of the explanation.  For example, if you made changes in
-response to usability testing, explain what the testing found and what changes
-it led to.}
+\subsection{POC Stage: Disease Classification and Initial Feedback}
+
+Our proof-of-concept (POC) focused primarily on establishing baseline disease classification capabilities using the TorchXRayVision library with its pre-trained DenseNet model. This approach provided several immediate advantages:
+
+\begin{itemize}
+    \item[-] The model was pre-trained on multiple chest X-ray datasets including NIH ChestX-ray14 (112,120 images), MIMIC-CXR (377,110 images), CheXpert (223,648 images), and PadChest (160,868 images)
+    \item[-] It could detect 18 different thoracic pathologies with reasonable accuracy
+    \item[-] The DenseNet architecture allowed for efficient feature extraction and reuse through dense connections
+\end{itemize}
+
+During this initial implementation phase, we developed a basic interface displaying classification results and confidence scores for individual X-ray images. While functionally capable of processing images and providing probability scores for various conditions, the interface lacked clinical workflow integration and user-specific design considerations.
+
+Upon reviewing our POC implementation, Dr. Moradi provided pivotal feedback that significantly shaped our subsequent development approach:
+
+\begin{itemize}
+    \item[-] Our interface lacked a coherent user flow that aligned with clinical workflows
+    \item[-] The system needed clearer focus on a specific stakeholder group instead of trying to accommodate multiple user types
+    \item[-] He recommended we choose between designing primarily for physicians or patients, as these groups have fundamentally different needs and usage patterns
+\end{itemize}
+
+Dr. Moradi emphasized that our visualization of results was too technical and not optimized for clinical decision-making. He noted that while our focus on model accuracy was important, it needed to be balanced with usability and seamless integration into existing clinical workflows. This feedback highlighted a critical insight: technical capability alone would not ensure adoption in healthcare settings without thoughtful design for the end user's context and needs.
+
+\subsection{Rev 0: Redesign of Interface and Integrating Cloud Services}
+
+Dr. Moradi's feedback prompted a complete redesign of our application's flow and architecture for Revision 0. We made the strategic decision to focus exclusively on physicians as our primary users, recognizing that they are the final approvers of AI-assisted diagnoses and possess the medical expertise necessary to interpret results correctly. This decision also acknowledged the potential risks of patients directly accessing complex diagnostic information without professional guidance.
+
+The redesigned physician-centric interface featured:
+
+\begin{itemize}
+    \item[-] A patient directory organized by disease severity to help prioritize cases
+    \item[-] Comprehensive patient-specific views showing clinical history, previous records, and prescription plans in a unified dashboard
+    \item[-] Backend migration to cloud services for improved scalability and accessibility
+    \item[-] Secure data storage and retrieval mechanisms compliant with healthcare data protection requirements
+\end{itemize}
+
+We structured the interface to follow a logical clinical workflow, starting with patient selection and proceeding through examination, diagnosis, and treatment planning. By incorporating design principles from established medical software, we aimed to create an environment that felt familiar and intuitive to healthcare professionals.
+
+When Dr. Spencer Smith reviewed this iteration, he identified several opportunities for further improvement:
+
+\begin{itemize}
+    \item[-] He observed that our interface still required excessive manual data entry from physicians
+    \item[-] He suggested automating the capture and input of patient history information where possible
+    \item[-] He recommended streamlining the prescription entry process to improve physician adoption
+\end{itemize}
+
+Dr. Smith emphasized the importance of prioritizing physicians' time efficiency through features like auto-complete and standardized templates. His feedback underscored a key insight: reducing cognitive load and administrative burden on physicians would allow them to focus more on patient care and less on system interaction, significantly increasing the likelihood of adoption in clinical settings.
+
+\subsection{Rev 1: DETR and Linear Transformer for Enhanced Disease Classification}
+
+For our final revision, we addressed Dr. Smith's feedback while simultaneously advancing our technical approach through more sophisticated AI models. We implemented a Detection Transformer (DETR) model trained on the Imagenome dataset to identify 12 distinct anatomical regions in chest X-rays. This approach enabled precise localization of findings rather than just whole-image classification, providing significantly more clinically relevant information.
+
+The technical advancements in this phase included:
+
+\begin{itemize}
+    \item[-] Training a DETR model to identify specific anatomical regions within chest X-rays
+    \item[-] Implementing a Linear Transformer model that leveraged features extracted from the DETR model for disease classification
+    \item[-] Adding natural language processing capabilities to convert structured findings into human-readable reports
+\end{itemize}
+
+These technical improvements were complemented by user interface enhancements directly addressing the feedback we received. We added automated data entry features, including templated notes and prescription suggestions based on detected conditions. The system could now highlight specific regions of concern within X-rays while simultaneously reducing the documentation burden on physicians.
+
+\subsection{Final Implementation}
+
+Our final system successfully balanced technical sophistication with practical clinical utility. The evolution from a basic classification tool to an integrated clinical decision support system reflected our iterative approach and responsiveness to stakeholder feedback. 
+
+The completed system provides physicians with:
+\begin{itemize}
+    \item[-] Precise anatomical localization of findings through advanced transformer models
+    \item[-] Clear visual highlighting of affected regions 
+    \item[-] Automated report generation to reduce documentation time
+    \item[-] An intuitive workflow aligned with clinical practice
+    \item[-] Secure, scalable cloud infrastructure
+\end{itemize}
+
+This iterative development process demonstrated the importance of balancing technical innovation with user-centered design. By incorporating feedback at each stage, we were able to create a solution that not only leveraged cutting-edge AI technology but also integrated seamlessly into clinical workflows. The progression from our initial focus on model accuracy to our final emphasis on physician workflow integration illustrates how our understanding of the problem space matured throughout the project lifecycle.
 
 \section{Design Decisions (LO12)}
 
@@ -154,7 +261,6 @@ Marketing would involve direct outreach to hospitals and healthcare providers, s
 \subsection{Production Cost Estimate}
 The cost of production includes:
 \begin{itemize}
-
     \item \textbf{Cloud Services (AWS ECS):} The hosting and management of the backend system will be powered by AWS Elastic Container Service. This service will handle containerized microservices, ensuring scalability. Costs for ECS typically range from x to x dollar per month, depending on traffic, load, and the number of services running.
     \item \textbf{GPU/Server Cost:} To train the AI model efficiently, a dedicated GPU or server instance is required for training and inference tasks. For optimal performance, services like AWS EC2 GPU instances would be suitable, which cost around 3 to 5 dollars per hour, depending on the selected instance type. In our case, using the Mcmaster GPU server, there was no cost for training and inference, but we estimate a cost of 500 to 1,000 dollars per month if we did not have access to the mcmaster GPU server. Note our product is the application not the computer or server it runs on.
     \item \textbf{Cost of API Services:} The integration of ChatGPT for natural language processing tasks, such as generating reports or patient interaction, incurs costs based on the number of API calls. This will vary depending on usage but can be estimated at a few cents per API call, estimating the monthly cost to be the amount of patients divded by 100. 
@@ -162,16 +268,55 @@ The cost of production includes:
 
 
 \subsection{Pricing Model}
+Since the application is enterprise-focussed, there are two models to compare when pricing the users:
 \begin{itemize}
-    \item \textbf{SaaS Model (Subscription-based):} Hospitals or the government pays a monthly or annual fee per facility or per patient scan. For considerable profit our team would need to charge around \$1,237/month per hospital or \$2.34 per scan. This model ensures predictable revenue and allows for scaling as more hospitals adopt the technology.
+    \item \textbf{Charging for number of licenses:} Each hospital pay a monthly fee for the number of licenses they have purchase. Each license represent a radiologist, and no matter the amount of data a radiologist produce, they will get charged the same as others.
+    \begin{itemize}
+        \item \textbf{Advantages:} This model generate a predictable cashflow and monthly recurring revenue. In addition, it's very straight-forward, making it easy for hospitals to manage and scale licensing cost.
+        \item \textbf{Disadvantages:} Experienced radiologists might have significantly more patients than others users (i.e: doctors in training, resident). This creates huge friction for hospitals to buy licenses for specialists with low expected patient count. Additionally, usage prediction becomes tricky for Lung Vision AI since any license can generate an infinite amount of data in theory.
+    \end{itemize}
+    
+    \item \textbf{Charging for number of patients:} Each hospitals pay a monthly fee for the number of patients they service.
+    \begin{itemize}
+        \item \textbf{Advantages:} This model encourage a pay-as-you-go mentality, making usage and cost prediction for Lung Vision AI a lot simpler. Additionally, this model is suitable for private clinics where patient growth is not too drastic.
+        \item \textbf{Disadvantages:} This pricing model is unfavorable for big hospitals, since forecasting expected patients for a given month is difficult, making costs management unpredictable.
+    \end{itemize}
 \end{itemize}
-Given these models, the pricing would balance affordability with long-term sustainability while ensuring accessibility for lower-income hospitals.
+
+To balance long-term user satisfaction, affordability, and profitability, our has decided to go with the \textbf{charging for licenses model}, with an upper limit of how many patient are allowed to be created per license. If doctors would like to service more patients using their current license, a different pricing schema will be applied per user.
 
 \subsection{Break-even Analysis}
-THIS SECTION NEEDS TO BE FILLED
+The cost the project per month can be broken down as follow:
+\begin{longtable}{| p{0.15\textwidth} | p{0.2\textwidth} | p{0.2\textwidth} | p{0.45\textwidth}|}
+    \hline
+    \textbf{Category} & \textbf{Cost} & \textbf{Cost/Month} & \textbf{Description} \\
+    \hline
+
+    \multirow{1}{*}{\parbox{0.15\textwidth}{\textbf{Business\\Operation}}}
+    & \textbf{Domain Name} & \$1.23 & Cost associated with purchasing and maintaining the domain name for the application. \\
+    \hline 
+
+    \multirow{3}{*}{\textbf{Hosting}} 
+    & \textbf{Database} & \$13.00 & NoSQL database (AWS DynamoDB) and blob storage expenses (AWS S3). \\
+    \cline{2-4}
+    & \textbf{Load Balancing} & \$17.60 & Costs of load balancer (AWS ALB) to ensure high availability and scalability of the application. \\
+    \cline{2-4}
+    & \textbf{Computing} & \$5.00 & Cloud container running cost (AWS Elastic Container Service). \\
+    \cline{2-4}
+    & \textbf{Other} & \$33.50 & Any additional variable costs, such as OpenAI usage or additional AWS services (AWS ECR, IAM). \\ 
+    \hline
+    
+    & \textbf{Total Cost} & \$70.33 & \\
+    \hline
+\end{longtable}
 
 \subsection{Conclusion}
-By aligning pricing, marketing, and distribution with the needs of healthcare providers, the AI-powered X-ray tool has strong market potential. A subscription-based model, combined with strategic partnerships, regulatory approvals, and research collaborations, can drive adoption and profitability while improving global healthcare outcomes. Additionally, partnering with government healthcare programs ensures a stable product demand and consistent revenue stream, as governments often prioritize long-term investments in healthcare infrastructure and technology.
+Currently, our database contains roughly 20 radiologists, and 100 active patients. By simple calculations
+\begin{itemize}
+    \item Cost per patient = 70.33/ 100 = 0.7033 dollars
+    \item Cost per license = 70.33/ 20 = 14.066 dollars
+\end{itemize}
+Assuming that there are no other costs of this project (labour, transportation, etc.) the break price per license will be 14.066 dollars, with a max limit of 5 patient per license. For every new patient doctors would like to serve, an additional 0.7033 dollars per user will be charged.
 
 \section{Reflection on Project Management (LO24)}
 
@@ -196,8 +341,8 @@ By aligning pricing, marketing, and distribution with the needs of healthcare pr
 \subsection{What Went Wrong?}
 \begin{enumerate}
     \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
-    \item[-] Our original plan didn’t account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
-    \item[-] Early-stage code and design decisions weren’t always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
+    \item[-] Our original plan didn't account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
+    \item[-] Early-stage code and design decisions weren't always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
     \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
 \end{enumerate}
 
@@ -213,33 +358,31 @@ By aligning pricing, marketing, and distribution with the needs of healthcare pr
 
 \section{Reflection on Capstone}
 
-\plt{This question focuses on what you learned during the course of the capstone project.}
-
 \subsection{Which Courses Were Relevant}
 
 \begin{itemize}
-    \item \textbf{4ML3 Machine Learning and AI:} The principles and techniques from this course provided a foundation for understanding how to train and deploy machine learning models, especially the convolutional neural networks (CNNs) used for image classification in medical X-rays. Key topics such as model validation, overfitting, and the use of pre-trained models were directly applicable to the AI model development for disease prediction.
+    \item[-] \textbf{4ML3 Machine Learning and AI:} The principles and techniques from this course provided a foundation for understanding how to train and deploy machine learning models, especially the convolutional neural networks (CNNs) used for image classification in medical X-rays. Key topics such as model validation, overfitting, and the use of pre-trained models were directly applicable to the AI model development for disease prediction.
     
-    \item \textbf{4HC3 Human Computer Interfaces:} The knowledge gained from this course on Norman’s principles of design was crucial in designing an intuitive and effective user interface for the capstone project. Understanding the user experience was essential for ensuring that the system is accessible and user-friendly, especially for medical professionals who will interact with the system.
+    \item[-] \textbf{4HC3 Human Computer Interfaces:} The knowledge gained from this course on Norman's principles of design was crucial in designing an intuitive and effective user interface for the capstone project. Understanding the user experience was essential for ensuring that the system is accessible and user-friendly, especially for medical professionals who will interact with the system.
     
-    \item \textbf{4A03 Ethics:} This course allowed our group to have some former background in the ethical implications of using AI in healthcare, especially regarding privacy, consent, and ensuring that the model works equitably across different patient demographics. This understanding guided the way our team handled data and made design decisions for this project.
+    \item[-] \textbf{4A03 Ethics:} This course allowed our group to have some former background in the ethical implications of using AI in healthcare, especially regarding privacy, consent, and ensuring that the model works equitably across different patient demographics. This understanding guided the way our team handled data and made design decisions for this project.
     
-    \item \textbf{4X03 Scientific Computation:} This course helped the group understand numerical methods and how to implement efficient algorithms for scientific computing. It was particularly useful when optimizing performance for processing large-scale image datasets, such as chest X-rays, and for ensuring that the system was computationally feasible and efficient.
+    \item[-] \textbf{4X03 Scientific Computation:} This course helped the group understand numerical methods and how to implement efficient algorithms for scientific computing. It was particularly useful when optimizing performance for processing large-scale image datasets, such as chest X-rays, and for ensuring that the system was computationally feasible and efficient.
 
 \end{itemize}
 
 \subsection{Knowledge/Skills Outside of Courses}
 
 \begin{itemize}
-    \item \textbf{Deep Learning Frameworks (PyTorch):} The team collectively enhanced its understanding of PyTorch, a deep learning framework, to implement the AI model for chest X-ray analysis. This involved collaboratively building convolutional neural networks (CNNs), fine-tuning pre-trained models, and developing robust image data pipelines for preprocessing and augmenting the X-ray images.
+    \item[-] \textbf{Deep Learning Frameworks (PyTorch):} The team collectively enhanced its understanding of PyTorch, a deep learning framework, to implement the AI model for chest X-ray analysis. This involved collaboratively building convolutional neural networks (CNNs), fine-tuning pre-trained models, and developing robust image data pipelines for preprocessing and augmenting the X-ray images.
         
-    \item \textbf{Regulatory Compliance in Healthcare (HIPAA):} Since the project involves medical data and aims to have real-world applications in healthcare, the team researched and gained knowledge about healthcare regulations like Health Insurance Portability and Accountability Act for AI-based medical tools. This included understanding privacy concerns and compliance measures for handling patient data safely and legally. 
+    \item[-] \textbf{Regulatory Compliance in Healthcare (HIPAA):} Since the project involves medical data and aims to have real-world applications in healthcare, the team researched and gained knowledge about healthcare regulations like Health Insurance Portability and Accountability Act for AI-based medical tools. This included understanding privacy concerns and compliance measures for handling patient data safely and legally. 
         
-    \item \textbf{API Integration and Deployment:} To integrate the machine learning model into a production environment, the team learned how to set up RESTful APIs and integrate them with the frontend. This included working with cloud services such as AWS to deploy the system and ensure scalability for real-world use. This was crucial for making the AI model accessible to healthcare professionals and ensuring that it could handle multiple requests simultaneously. 
+    \item[-] \textbf{API Integration and Deployment:} To integrate the machine learning model into a production environment, the team learned how to set up RESTful APIs and integrate them with the frontend. This included working with cloud services such as AWS to deploy the system and ensure scalability for real-world use. This was crucial for making the AI model accessible to healthcare professionals and ensuring that it could handle multiple requests simultaneously. 
         
-    \item \textbf{Data Annotation and Augmentation for Medical Imaging:} The team acquired knowledge on handling medical image datasets, including proper annotation of X-ray images for training purposes and applying image augmentation techniques to improve model robustness. This was particularly important as public datasets for chest X-rays can be limited and require preprocessing for real-world applications. 
+    \item[-] \textbf{Data Annotation and Augmentation for Medical Imaging:} The team acquired knowledge on handling medical image datasets, including proper annotation of X-ray images for training purposes and applying image augmentation techniques to improve model robustness. This was particularly important as public datasets for chest X-rays can be limited and require preprocessing for real-world applications. 
         
-    \item \textbf{Performance Monitoring and Model Optimization:} To ensure that the AI system performed well in production, the team explored model optimization techniques, such as hyperparameter tuning, and utilized performance monitoring tools to track the model’s real-world effectiveness in detecting lung diseases. This included setting up logging and feedback mechanisms to ensure continuous learning and improvement.
+    \item[-] \textbf{Performance Monitoring and Model Optimization:} To ensure that the AI system performed well in production, the team explored model optimization techniques, such as hyperparameter tuning, and utilized performance monitoring tools to track the model's real-world effectiveness in detecting lung diseases. This included setting up logging and feedback mechanisms to ensure continuous learning and improvement.
 \end{itemize}
 
 \end{document}
