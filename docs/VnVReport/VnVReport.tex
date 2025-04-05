@@ -1306,7 +1306,7 @@ Based on verifying that cloud-storage interactions produce valid URLs and store 
 In our VNV plan it was decided that our team will conduct a survey to gather feedback on the system's usability and functionality to test our non functional requirements. After running this survery and retriving its results we made several changes to improve the user experience and address user concerns. One of the questions asked was "Which of the following non-functional aspects would most benefit from improvement?", a long list of of non-functional aspects were provided: System response, Visual Design and interface, Language support, Network reliability, Error handling and feedback, Accessibility features, Security measures, and Report presentation. The survey results showed that the most common response was Report presentation and Accessibility features. The team decided to focus on improving these areas to enhance the user experience by making the report page more user-friendly and accessible. Additionally, we improved the error handling and feedback system to provide more informative messages and guide users through the process. Link to the survery could be found here \href{https://docs.google.com/forms/d/e/1FAIpQLSerUF1jnbQLceYKAH8_uzAeIAO6bEwd-WwY225wNQoM95o4Xg/viewform?usp=sharing}{Survey}.
 \subsection{Changes due to Supervisor Feedback}
 Dr.Mehdi Moradi, our supervisor, provided feedback on the system's performance and usability. He suggested that instead of the doctor or radiologists uploading a png file of the x-ray image, the system should be able to take in a DICOM (Digital Imaging and Communications in Medicine) files as input. This would allow the system to process the image with patient data embeded within it. Additionally, he recommended that the system should be able to handle multiple images at once, as this would be more practical in a real-world clinical setting. To address these suggestions, we updated the system to accept DICOM files as input and process multiple images simultaneously. This change improved the system's performance and usability, making it more efficient and user-friendly.
-\subsection{Changes due to performance testing}
+\subsection{Changes due to Performance Testing}
 After conducting performance testing, we found that the system's ability to handle multiple users simultaneously was not optimal. Our application really started to slow down around 20 concurrent users. To address this issue our team decided to allocate more resources to the backend server to improve performance. We also optimized the code to reduce processing time and improve the system's overall efficiency. These changes helped the system handle more users simultaneously and improved the user experience.
 \newpage
 \section{Automated Testing}
@@ -1467,7 +1467,7 @@ UT-30 & M13 \\ \hline
 UT-31 & M14 \\ \hline
 UT-32 & M14 \\ \hline
 \end{tabular}
-\caption{Traceability Matrix: Unit Tests to Modules \citep{}}
+\caption{Traceability Matrix: Unit Tests to Modules \citep{SRS}}
 \label{tab:traceability}
 \end{table}
   
