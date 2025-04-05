@@ -388,13 +388,6 @@ The evolution from Rev 0 to Rev 1 was guided by specific feedback and insights g
 
 \section{Economic Considerations (LO23)}
 
-\plt{Is there a market for your product? What would be involved in marketing your 
-product? What is your estimate of the cost to produce a version that you could 
-sell?  What would you charge for your product?  How many units would you have to 
-sell to make money? If your product isn't something that would be sold, like an 
-open source project, how would you go about attracting users?  How many potential 
-users currently exist?}
-
 \subsection{Market Demand and Opportunity}
 The market for AI-driven medical imaging analysis is growing rapidly due to increasing healthcare digitization and the global shortage of radiologists. The demand for fast, accurate, and cost-effective diagnostic tools makes this product highly viable. Potential users include hospitals, clinics, telemedicine providers, and government healthcare initiatives. Additionally, developing countries with limited access to radiologists represent a significant market where AI-powered solutions could improve diagnostic capabilities.
 
@@ -453,6 +446,7 @@ The cost the project per month can be broken down as follow:
     \hline
 \end{longtable}
 
+\newpage
 \subsection{Conclusion}
 Currently, our database contains roughly 20 radiologists, and 100 active patients. By simple calculations
 \begin{itemize}
@@ -465,28 +459,34 @@ Assuming that there are no other costs of this project (labour, transportation, 
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 \begin{enumerate}
-    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1,Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
-    \item[-] Our primary communication tools(Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
+    \item[-] We closely followed our scheduled meeting plan, holding weekly stand-ups and additional ad hoc meetings during key development phases (Rev0, Rev1, Final Demonstration). These meetings helped us stay aligned and adapt quickly when challenges arose. 
+    \item[-] Our primary communication tools (Discord and GitHub) were used effectively for both asynchronous updates and collaborative debugging. We maintained clear version control and documentation throughout development. 
+    \item[-] We leveraged GitHub's project management features extensively, creating a structured kanban board with columns for Backlog, To Do, In Progress, and Done. Each task was represented as an issue with detailed descriptions, acceptance criteria, and assigned team members. This allowed us to visualize our workflow and track progress in real-time.
     \item[-] Roles and responsibilities as outlined in our development plan were largely adhered to. Each member focused on their assigned modules (e.g., frontend UI, model training, backend integration), and we successfully coordinated via our Git branching workflow and task tracking system (GitHub issues).
-    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model(DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
+    \item[-] We used the technologies originally proposed in our plan, including Python, PyTorch, React JS. The only deviation was adopting a Detection Transformer model (DETR) earlier than planned due to its proven effectiveness in localization tasks during our initial model experimentation. 
 \end{enumerate}
 
 \subsection{What Went Well?}
 \begin{enumerate}
     \item[-] Discord and GitHub Discussions helped streamline both quick check-ins and in-depth technical discussions. Clear communication reduced misunderstandings and sped up decision-making.
     \item[-] Each member had a clearly defined role (e.g., frontend, model dev, backend), which minimized overlap and improved accountability. Tasks were assigned and tracked using GitHub Issues and Project Boards.
+    \item[-] Our GitHub workflow was particularly effective—we created issues for each feature, bug, or enhancement with specific labels (e.g., "frontend", "model", "urgent"), milestones tied to sprint goals, and assigned team members. Pull requests were linked to issues, ensuring traceability between code changes and requirements.
+    \item[-] We organized work into two-week sprints with clear deliverables set at the beginning of each sprint. GitHub milestones helped us monitor sprint progress, with burndown charts showing the completion rate of issues. This allowed us to adjust resources or scope when necessary to meet deadlines.
     \item[-] Weekly meetings kept everyone aligned, and sprint planning ensured we had clear short-term goals. Checkpoints during development helped catch issues early.
-    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via Github was used effectively for collaboration and rollback when needed.
+    \item[-] Our planned technologies (PyTorch, Python, React JS) integrated well with each other. Version control via GitHub was used effectively for collaboration and rollback when needed.
     \item[-] Independent module development (e.g., AI model, UI, API) allowed parallel progress without bottlenecks. CI/CD setup helped with automated testing and smooth deployment.
-    
+    \item[-] GitHub's code review system was instrumental in maintaining code quality, with required reviews before merging any significant changes. This peer review process helped catch bugs early and ensured knowledge sharing across the team.
 \end{enumerate}
 
 \subsection{What Went Wrong?}
 \begin{enumerate}
     \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
+    \item[-] Although GitHub issues were created for most tasks, we occasionally had "shadow work" that wasn't properly tracked in the system. This made it difficult to accurately assess workload and progress at times.
     \item[-] Our original plan didn't account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
+    \item[-] We sometimes created issues that were too large or ambiguous, making them difficult to complete within a single sprint. This led to issues spanning multiple sprints and complicated progress tracking.
     \item[-] Early-stage code and design decisions weren't always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
     \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
+    \item[-] While GitHub provided excellent tracking tools, we didn't fully utilize all features like estimate points or time tracking, which would have helped with more accurate sprint planning and resource allocation.
 \end{enumerate}
 
 \subsection{What Would you Do Differently Next Time?}
@@ -495,8 +495,12 @@ Assuming that there are no other costs of this project (labour, transportation, 
     \item[-] Allocate extra time in the schedule for unexpected delays, model tuning, and integration/debugging.
     \item[-] Build a rough end-to-end prototype early to identify integration pain points sooner, even before full model training is complete.
     \item[-] Maintain consistent documentation practices from the start, including API specs, model details, and configuration notes, to reduce confusion later.
+    \item[-] Create smaller, more granular GitHub issues with clearer acceptance criteria and time estimates. This would improve our ability to track progress and identify bottlenecks more quickly.
+    \item[-] Implement a more formal GitHub workflow with standardized branch naming conventions, issue templates, and automated CI/CD pipelines from the beginning. This would reduce overhead and ensure consistent practices across the team.
     \item[-] Involve test users (or at least team cross-reviews) earlier in the UI development cycle to catch usability issues before final sprint.
+    \item[-] Use GitHub's milestone features more effectively to track progress against larger goals and provide better visibility into overall project status.
     \item[-] Identify high-risk components (e.g., novel model architectures) up front and create extra plans or fallback options.
+    \item[-] Schedule regular backlog refinement sessions to ensure issues remain relevant and appropriately sized as the project evolves.
 \end{enumerate}
 
 \section{Reflection on Capstone}
