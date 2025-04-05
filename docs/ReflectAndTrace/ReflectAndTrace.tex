@@ -62,10 +62,9 @@ Here is the feedback we received on the SRS and Hazard Analysis documents, and t
     \hline
     Peer Review & What not How (Abstract) & Compatibility of DICOM image is not a priority of this project and adding support for legacy systems would require additional development, validation, and maintenance efforts. & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/60}{\#60}\\
     \hline
-    Peer Review & What not How (Abstract) & Privacy measures are already implicitly covered in SR1 and SR2  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/57}{\#57}
-    \hline
-    Peer Review & Document organization & detailed theoretical models like ELBO optimization would shift the focus from specifying what the system must do to how certain algorithms work internally, which is beyond the typical scope of an SRS  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/46}{\#46}
-    \hline
+    Peer Review & What not How (Abstract) & Privacy measures are already implicitly covered in SR1 and SR2  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/57}{\#57} \\
+    Peer Review & Document organization & detailed theoretical models like ELBO optimization would shift the focus from specifying what the system must do to how certain algorithms work internally, which is beyond the typical scope of an SRS  & \href{https://github.com/RezaJodeiri/CXR-Capstone/issues/46}{\#46} \\
+    
 
 \end{longtable}
 
@@ -117,24 +116,111 @@ Here is the feedback we received on the VNV Plan and VNV  Report, and the change
 
 \subsection{Challenge Level}
 
-\plt{State the challenge level (advanced, general, basic) for your project.  Your challenge level should exactly match what is included in your problem statement.  This should be the challenge level agreed on between you and the course instructor.}
+The challenge level of this project is classified as advanced, reflecting the complexity of integrating AI for diagnostic purposes in medical imaging. The project required implementing sophisticated machine learning models for chest X-ray analysis, ensuring robust data handling with privacy compliance, and developing an intuitive user interface for healthcare professionals.
+\newline
+Key technical challenges included:
+\begin{itemize}
+    \item[-] Developing and training AI models capable of detecting diseases in chest X-rays with high accuracy
+    \item[-] Implementing comparative analysis capabilities to track disease progression between scans
+    \item[-] Demonstration of lung segmentaion using DETR model and visulzing them on the lungs
+    \item[-] Ensuring secure storage and handling of sensitive medical data through cloud services
+    \item[-] Building a system architecture that supports regular model updates without service disruption
+\end{itemize}
+
+\noindent Our team leveraged our knowledge of tensors, linear algebra, machine learning, and image processing to address these challenges effectively.
+
 
 \subsection{Extras}
 
-\plt{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.}
+Our project included the following extras:
+
+\begin{itemize}
+    \item[-] \textbf{Research Report:} We developed a research paper proposing a unified Transformer-based framework for comprehensive chest X-ray analysis with an emphasis on anatomical localization. Our approach utilized a Detection Transformer (DETR) to identify anatomical regions and support downstream tasks including disease classification and progression monitoring.
+    
+    \item[-] \textbf{Norman Principle Report:} We created a detailed evaluation of our system's user interface based on Don Norman's seven usability principles. This report assessed how intuitive, user-friendly, and efficient our interface is from multiple perspectives, providing valuable insights for further UI refinements.
+
+\end{itemize}
+
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
-\plt{Explain how you arrived at your final design and implementation.  How did
-the design evolve from the first version to the final version?} 
+Our project underwent significant design iterations throughout its development lifecycle, with each phase building upon lessons learned from previous stages and incorporating stakeholder feedback.
 
-\plt{Don't just say what you changed, say why you changed it.  The needs of the
-client should be part of the explanation.  For example, if you made changes in
-response to usability testing, explain what the testing found and what changes
-it led to.}
+\subsection{POC Stage: Disease Classification and Initial Feedback}
+
+Our proof-of-concept (POC) focused primarily on establishing baseline disease classification capabilities using the TorchXRayVision library with its pre-trained DenseNet model. This approach provided several immediate advantages:
+
+\begin{itemize}
+    \item[-] The model was pre-trained on multiple chest X-ray datasets including NIH ChestX-ray14 (112,120 images), MIMIC-CXR (377,110 images), CheXpert (223,648 images), and PadChest (160,868 images)
+    \item[-] It could detect 18 different thoracic pathologies with reasonable accuracy
+    \item[-] The DenseNet architecture allowed for efficient feature extraction and reuse through dense connections
+\end{itemize}
+
+During this initial implementation phase, we developed a basic interface displaying classification results and confidence scores for individual X-ray images. While functionally capable of processing images and providing probability scores for various conditions, the interface lacked clinical workflow integration and user-specific design considerations.
+
+Upon reviewing our POC implementation, Dr. Moradi provided pivotal feedback that significantly shaped our subsequent development approach:
+
+\begin{itemize}
+    \item[-] Our interface lacked a coherent user flow that aligned with clinical workflows
+    \item[-] The system needed clearer focus on a specific stakeholder group instead of trying to accommodate multiple user types
+    \item[-] He recommended we choose between designing primarily for physicians or patients, as these groups have fundamentally different needs and usage patterns
+\end{itemize}
+
+Dr. Moradi emphasized that our visualization of results was too technical and not optimized for clinical decision-making. He noted that while our focus on model accuracy was important, it needed to be balanced with usability and seamless integration into existing clinical workflows. This feedback highlighted a critical insight: technical capability alone would not ensure adoption in healthcare settings without thoughtful design for the end user's context and needs.
+
+\subsection{Rev 0: Redesign of Interface and Integrating Cloud Services}
+
+Dr. Moradi's feedback prompted a complete redesign of our application's flow and architecture for Revision 0. We made the strategic decision to focus exclusively on physicians as our primary users, recognizing that they are the final approvers of AI-assisted diagnoses and possess the medical expertise necessary to interpret results correctly. This decision also acknowledged the potential risks of patients directly accessing complex diagnostic information without professional guidance.
+
+The redesigned physician-centric interface featured:
+
+\begin{itemize}
+    \item[-] A patient directory organized by disease severity to help prioritize cases
+    \item[-] Comprehensive patient-specific views showing clinical history, previous records, and prescription plans in a unified dashboard
+    \item[-] Backend migration to cloud services for improved scalability and accessibility
+    \item[-] Secure data storage and retrieval mechanisms compliant with healthcare data protection requirements
+\end{itemize}
+
+We structured the interface to follow a logical clinical workflow, starting with patient selection and proceeding through examination, diagnosis, and treatment planning. By incorporating design principles from established medical software, we aimed to create an environment that felt familiar and intuitive to healthcare professionals.
+
+When Dr. Spencer Smith reviewed this iteration, he identified several opportunities for further improvement:
+
+\begin{itemize}
+    \item[-] He observed that our interface still required excessive manual data entry from physicians
+    \item[-] He suggested automating the capture and input of patient history information where possible
+    \item[-] He recommended streamlining the prescription entry process to improve physician adoption
+\end{itemize}
+
+Dr. Smith emphasized the importance of prioritizing physicians' time efficiency through features like auto-complete and standardized templates. His feedback underscored a key insight: reducing cognitive load and administrative burden on physicians would allow them to focus more on patient care and less on system interaction, significantly increasing the likelihood of adoption in clinical settings.
+
+\subsection{Rev 1: DETR and Linear Transformer for Enhanced Disease Classification}
+
+For our final revision, we addressed Dr. Smith's feedback while simultaneously advancing our technical approach through more sophisticated AI models. We implemented a Detection Transformer (DETR) model trained on the Imagenome dataset to identify 12 distinct anatomical regions in chest X-rays. This approach enabled precise localization of findings rather than just whole-image classification, providing significantly more clinically relevant information.
+
+The technical advancements in this phase included:
+
+\begin{itemize}
+    \item[-] Training a DETR model to identify specific anatomical regions within chest X-rays
+    \item[-] Implementing a Linear Transformer model that leveraged features extracted from the DETR model for disease classification
+    \item[-] Adding natural language processing capabilities to convert structured findings into human-readable reports
+\end{itemize}
+
+These technical improvements were complemented by user interface enhancements directly addressing the feedback we received. We added automated data entry features, including templated notes and prescription suggestions based on detected conditions. The system could now highlight specific regions of concern within X-rays while simultaneously reducing the documentation burden on physicians.
+
+\subsection{Final Implementation}
+
+Our final system successfully balanced technical sophistication with practical clinical utility. The evolution from a basic classification tool to an integrated clinical decision support system reflected our iterative approach and responsiveness to stakeholder feedback. 
+
+The completed system provides physicians with:
+\begin{itemize}
+    \item[-] Precise anatomical localization of findings through advanced transformer models
+    \item[-] Clear visual highlighting of affected regions 
+    \item[-] Automated report generation to reduce documentation time
+    \item[-] An intuitive workflow aligned with clinical practice
+    \item[-] Secure, scalable cloud infrastructure
+\end{itemize}
+
+This iterative development process demonstrated the importance of balancing technical innovation with user-centered design. By incorporating feedback at each stage, we were able to create a solution that not only leveraged cutting-edge AI technology but also integrated seamlessly into clinical workflows. The progression from our initial focus on model accuracy to our final emphasis on physician workflow integration illustrates how our understanding of the problem space matured throughout the project lifecycle.
 
 \section{Design Decisions (LO12)}
 
@@ -202,8 +288,8 @@ By aligning pricing, marketing, and distribution with the needs of healthcare pr
 \subsection{What Went Wrong?}
 \begin{enumerate}
     \item[-] Some tasks, particularly around localized disease progression tracking, took significantly longer than expected. This affected sprint timelines and required scope adjustments mid-way.
-    \item[-] Our original plan didn’t account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
-    \item[-] Early-stage code and design decisions weren’t always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
+    \item[-] Our original plan didn't account for debugging, model tuning iterations, or integration testing delays. This compressed our final testing and documentation phases.
+    \item[-] Early-stage code and design decisions weren't always documented consistently, leading to rework during integration. We improved this mid-project by enforcing clearer commit messages and README updates.
     \item[-] Adopting DETR introduced additional complexity (e.g., custom training routines, evaluation metrics), which required more experimentation and adaptation than anticipated.
 \end{enumerate}
 
@@ -219,33 +305,31 @@ By aligning pricing, marketing, and distribution with the needs of healthcare pr
 
 \section{Reflection on Capstone}
 
-\plt{This question focuses on what you learned during the course of the capstone project.}
-
 \subsection{Which Courses Were Relevant}
 
 \begin{itemize}
-    \item \textbf{4ML3 Machine Learning and AI:} The principles and techniques from this course provided a foundation for understanding how to train and deploy machine learning models, especially the convolutional neural networks (CNNs) used for image classification in medical X-rays. Key topics such as model validation, overfitting, and the use of pre-trained models were directly applicable to the AI model development for disease prediction.
+    \item[-] \textbf{4ML3 Machine Learning and AI:} The principles and techniques from this course provided a foundation for understanding how to train and deploy machine learning models, especially the convolutional neural networks (CNNs) used for image classification in medical X-rays. Key topics such as model validation, overfitting, and the use of pre-trained models were directly applicable to the AI model development for disease prediction.
     
-    \item \textbf{4HC3 Human Computer Interfaces:} The knowledge gained from this course on Norman’s principles of design was crucial in designing an intuitive and effective user interface for the capstone project. Understanding the user experience was essential for ensuring that the system is accessible and user-friendly, especially for medical professionals who will interact with the system.
+    \item[-] \textbf{4HC3 Human Computer Interfaces:} The knowledge gained from this course on Norman's principles of design was crucial in designing an intuitive and effective user interface for the capstone project. Understanding the user experience was essential for ensuring that the system is accessible and user-friendly, especially for medical professionals who will interact with the system.
     
-    \item \textbf{4A03 Ethics:} This course allowed our group to have some former background in the ethical implications of using AI in healthcare, especially regarding privacy, consent, and ensuring that the model works equitably across different patient demographics. This understanding guided the way our team handled data and made design decisions for this project.
+    \item[-] \textbf{4A03 Ethics:} This course allowed our group to have some former background in the ethical implications of using AI in healthcare, especially regarding privacy, consent, and ensuring that the model works equitably across different patient demographics. This understanding guided the way our team handled data and made design decisions for this project.
     
-    \item \textbf{4X03 Scientific Computation:} This course helped the group understand numerical methods and how to implement efficient algorithms for scientific computing. It was particularly useful when optimizing performance for processing large-scale image datasets, such as chest X-rays, and for ensuring that the system was computationally feasible and efficient.
+    \item[-] \textbf{4X03 Scientific Computation:} This course helped the group understand numerical methods and how to implement efficient algorithms for scientific computing. It was particularly useful when optimizing performance for processing large-scale image datasets, such as chest X-rays, and for ensuring that the system was computationally feasible and efficient.
 
 \end{itemize}
 
 \subsection{Knowledge/Skills Outside of Courses}
 
 \begin{itemize}
-    \item \textbf{Deep Learning Frameworks (PyTorch):} The team collectively enhanced its understanding of PyTorch, a deep learning framework, to implement the AI model for chest X-ray analysis. This involved collaboratively building convolutional neural networks (CNNs), fine-tuning pre-trained models, and developing robust image data pipelines for preprocessing and augmenting the X-ray images.
+    \item[-] \textbf{Deep Learning Frameworks (PyTorch):} The team collectively enhanced its understanding of PyTorch, a deep learning framework, to implement the AI model for chest X-ray analysis. This involved collaboratively building convolutional neural networks (CNNs), fine-tuning pre-trained models, and developing robust image data pipelines for preprocessing and augmenting the X-ray images.
         
-    \item \textbf{Regulatory Compliance in Healthcare (HIPAA):} Since the project involves medical data and aims to have real-world applications in healthcare, the team researched and gained knowledge about healthcare regulations like Health Insurance Portability and Accountability Act for AI-based medical tools. This included understanding privacy concerns and compliance measures for handling patient data safely and legally. 
+    \item[-] \textbf{Regulatory Compliance in Healthcare (HIPAA):} Since the project involves medical data and aims to have real-world applications in healthcare, the team researched and gained knowledge about healthcare regulations like Health Insurance Portability and Accountability Act for AI-based medical tools. This included understanding privacy concerns and compliance measures for handling patient data safely and legally. 
         
-    \item \textbf{API Integration and Deployment:} To integrate the machine learning model into a production environment, the team learned how to set up RESTful APIs and integrate them with the frontend. This included working with cloud services such as AWS to deploy the system and ensure scalability for real-world use. This was crucial for making the AI model accessible to healthcare professionals and ensuring that it could handle multiple requests simultaneously. 
+    \item[-] \textbf{API Integration and Deployment:} To integrate the machine learning model into a production environment, the team learned how to set up RESTful APIs and integrate them with the frontend. This included working with cloud services such as AWS to deploy the system and ensure scalability for real-world use. This was crucial for making the AI model accessible to healthcare professionals and ensuring that it could handle multiple requests simultaneously. 
         
-    \item \textbf{Data Annotation and Augmentation for Medical Imaging:} The team acquired knowledge on handling medical image datasets, including proper annotation of X-ray images for training purposes and applying image augmentation techniques to improve model robustness. This was particularly important as public datasets for chest X-rays can be limited and require preprocessing for real-world applications. 
+    \item[-] \textbf{Data Annotation and Augmentation for Medical Imaging:} The team acquired knowledge on handling medical image datasets, including proper annotation of X-ray images for training purposes and applying image augmentation techniques to improve model robustness. This was particularly important as public datasets for chest X-rays can be limited and require preprocessing for real-world applications. 
         
-    \item \textbf{Performance Monitoring and Model Optimization:} To ensure that the AI system performed well in production, the team explored model optimization techniques, such as hyperparameter tuning, and utilized performance monitoring tools to track the model’s real-world effectiveness in detecting lung diseases. This included setting up logging and feedback mechanisms to ensure continuous learning and improvement.
+    \item[-] \textbf{Performance Monitoring and Model Optimization:} To ensure that the AI system performed well in production, the team explored model optimization techniques, such as hyperparameter tuning, and utilized performance monitoring tools to track the model's real-world effectiveness in detecting lung diseases. This included setting up logging and feedback mechanisms to ensure continuous learning and improvement.
 \end{itemize}
 
 \end{document}
