@@ -282,11 +282,7 @@ This subsection provides a list of terms that are used in the subsequent section
     \hline
     Input Image Size & 224x224 pixels – Suitable for CNN architectures, balancing computational efficiency and image detail. \\
     \hline
-    Threshold for ROC Analysis & 0.85 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
-    \hline
-    Precision & 92\% – Reflects the percentage of true positive cases among all cases predicted positive. \\
-    \hline
-    Recall & 88\% – Reflects the percentage of true positive cases among all actual positive cases. \\
+    Threshold for ROC Analysis & 0.75 – The probability cut-off for positive classification, balancing sensitivity and specificity. \\
     \hline
 \end{tabular}
 
@@ -334,7 +330,7 @@ The reader of this SRS document should possess an undergraduate level of softwar
 \subsubsection{The Clients} 
 This refers to Dr. Mehdi Moradi and his research team. Dr. Moradi, an Associate Professor in the Department of Computing and Software at McMaster University, has significant experience in the field of medical imaging and AI-based diagnostic tools. He is also an Associate Member in Medical Imaging, with a research focus on integrating advanced machine learning techniques into clinical applications. His work includes developing AI algorithms that can analyze medical images with high accuracy, which aligns closely with the goals of this project. His research on the Imagenome dataset has been instrumental in advancing the understanding of AI-based image interpretation, especially in radiology.
 \begin{enumerate}
-\item \textbf{Role:} Dr. Moradi and his team will serve as the main decision-makers for the scope, features, and overall system design of the AI solution. They will provide critical feedback on the system's development, ensuring that it meets clinical standards and aligns with real-world needs. Their expertise in interpreting complex imaging data will be crucial in refining the AI model's ability to accurately detect abnormalities in chest X-rays. Moreover, their guidance will help in addressing challenges such as data variability, imbalanced datasets, and ethical considerations like bias and fairness in AI predictions. Dr. Moradi’s experience with the clinical deployment of AI solutions will be vital for navigating regulatory hurdles, such as compliance with healthcare regulations, and ensuring the system's compatibility with existing medical imaging workflows.
+\item \textbf{Role:} Dr. Moradi and his team will serve as the main decision-makers for the scope, features, and overall system design of the AI solution. They will provide critical feedback on the system's development, ensuring that it meets clinical standards and aligns with real-world needs. Their expertise in interpreting complex imaging data will be crucial in refining the AI model's ability to accurately detect abnormalities in chest X-rays. Moreover, their guidance will help in addressing challenges such as data variability, imbalanced datasets, and ethical considerations like bias and fairness in AI predictions. Dr. Moradi's experience with the clinical deployment of AI solutions will be vital for navigating regulatory hurdles, such as compliance with healthcare regulations, and ensuring the system's compatibility with existing medical imaging workflows.
 \end{enumerate}
 \subsubsection{The Customers:}
 This refers to healthcare providers, patients, and medical facilities.
@@ -359,7 +355,7 @@ Medical facilities include hospitals and clinics. They can integrate the softwar
 This includes the technical support team and technicians who work for hospitals. They are responsible for ensuring seamless connectivity with existing systems, maintaining workflow, and ensuring data security and privacy.
 
 \begin{enumerate}
-\item \textbf{Role:} They help configure the AI system based on the needs of the medical facility. They ensure compatibility of the AI system with the hospital’s workflow and make necessary adjustments to optimize performance.
+\item \textbf{Role:} They help configure the AI system based on the needs of the medical facility. They ensure compatibility of the AI system with the hospital's workflow and make necessary adjustments to optimize performance.
 \end{enumerate}
 \subsection{Personas}
 \subsubsection{Physicians / Radiologists Persona:}
@@ -369,7 +365,7 @@ Dr. Emily is a senior radiologist with over 10 years of professional experience 
 Dr.Emily is excited about how AI can help with diagnosis, especially with flagging and annotating potential abnormalities and providing help on decision-making, which she hopes to increase her overall working efficiency. However, Dr.Emily values transparency in X-ray results so she wants the AI to offer clear explanation instead of being a "black box" that makes decisions for her. She expects the AI system to integrate smoothly into her existing workflow with an intuitive user interface and not too much technology knowledge required. 
 
 \subsubsection{Patient Persona:}
-James is a construction site worker and a father of two who recently took a chest X-ray examination after experiencing consistent shortness of breath. As it takes around one week to get the result, he is anxious that it might be a serious condition and would like to know the results as soon as possible. He’s not familiar with medical imaging technology and doesn't know how would AI help with diagnosis. But he really wants to get an accurate and timely result regarding his health condition.\\
+James is a construction site worker and a father of two who recently took a chest X-ray examination after experiencing consistent shortness of breath. As it takes around one week to get the result, he is anxious that it might be a serious condition and would like to know the results as soon as possible. He's not familiar with medical imaging technology and doesn't know how would AI help with diagnosis. But he really wants to get an accurate and timely result regarding his health condition.\\
 \newline
 James hopes that AI can help catch potential abnormalities that might be missed by human errors. Privacy and security are also important to James, and he wants to be sure that his personal medical data is handled confidentially and safely. He doesn't want his personal data shared with unauthorized organizations. 
 
@@ -385,7 +381,7 @@ His day-to-day work involves working on researches on AI applications in healthc
 
 \subsection{Impact Analysis}
 
-The primary benefit of this project lies in the ability to deliver preliminary diagnostic results quickly, thereby enhancing diagnostic efficiency and significantly reducing patient wait times. Moreover, the system’s capability for large-scale data classification can gradually improve the precision of analyses, reduce misdiagnoses, and alleviate the workload on medical professionals. When scaled effectively, this project has the potential to increase productivity within the medical sector, reduce healthcare costs, and accelerate service delivery. Additionally, by leveraging cloud-based deployment, this solution can extend diagnostic support to remote regions, providing preliminary assessments without the immediate need for in-person medical consultations.
+The primary benefit of this project lies in the ability to deliver preliminary diagnostic results quickly, thereby enhancing diagnostic efficiency and significantly reducing patient wait times. Moreover, the system's capability for large-scale data classification can gradually improve the precision of analyses, reduce misdiagnoses, and alleviate the workload on medical professionals. When scaled effectively, this project has the potential to increase productivity within the medical sector, reduce healthcare costs, and accelerate service delivery. Additionally, by leveraging cloud-based deployment, this solution can extend diagnostic support to remote regions, providing preliminary assessments without the immediate need for in-person medical consultations.
 
 \subsubsection{Economic Impact}
 According to 2023 data from the Canadian government, the average annual salary for doctors is CAD 233,726 \cite{2}. With each chest X-ray analysis typically taking around 15 minutes and a wait time of 1 to 2 days for results \cite{1}, this AI tool has the potential to reduce analysis time to near-instantaneous levels, cutting costs by approximately CAD 30 per examination. Given that Canada conducts around 20 million X-ray examinations annually, with chest X-rays comprising about 6 to 8 million of these \cite{3}, the potential cost savings range from CAD 160 million to CAD 240 million annually. This economic benefit not only supports more efficient use of healthcare resources but also enables reinvestment into other critical areas of patient care.
@@ -450,7 +446,7 @@ The software is typically used in medical and clinical contexts to support healt
 \subsubsection{Normal Operation}
 As observed in the use case diagram, the system begins with user input from either patients or radiologists, who upload chest X-ray images to be analyzed. These images can be stored locally or in the cloud for easy access. Once uploaded, the system processes the images using machine learning algorithms to detect abnormalities, annotate findings, and generate diagnostic reports. These reports include detailed analysis results and suggested diagnostic advice, which radiologists can review, edit, and compare with previous records if needed.The system also enables radiologists to refine patient treatment plans based on the AI-generated insights, ensuring a smooth and accurate workflow from image upload to delivering meaningful medical recommendations.
 \subsubsection{Undesired Event Handling}
-If an undesired event (normalization fails / error in report generation / session timeout) occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
+If an undesired event (refer to \ref{fig:finite state machine}) occurs during the operation of the system, it will transition into an error state. In this state, no further data processing will occur to prevent the possibility of using corrupted or inaccurate information, ensuring the integrity of the user's input. A clear error message will be provided to inform the user about the issue, helping them understand the cause and potentially prevent similar occurrences in future operations. To resume normal functionality, the user will need to restart the process and re-upload their data, ensuring that the undesired event does not impact the final results.
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 Physicians / Radiologists: 
@@ -516,7 +512,7 @@ Our team, Neuralanalyzer, saw an opportunity to transform traditional health-car
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 85\% accuracy. Setting an 85\% threshold ensures the model performs close to human-level diagnostic reliability, which builds trust with clinicians and patients.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_prediction_accuracy}:] \textbf{High Prediction Accuracy: }Machine Learning Model used by Neuralanalyzer must have a high prediction accuracy for Chest X-Ray images. We are aiming for a minimum of 75\% accuracy. Setting an 75\% threshold ensures the model performs close to human-level diagnostic reliability, which builds trust with clinicians and patients.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_ease_of_ML_intro}:] \textbf{Simple to introduce more ML models: }New classifier models must be simple and intuitive to be integrated with the system, with short time-to-market. This goal will require a containerized ML-plugin code template (in Python) and guidelines documentations for new models to follow.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_fault-tolerance}:] \textbf{High Fault-Tolerance: }Neuralanalyzer's system (front-end, back-end, ML-plugins) must handle run-time errors as clever as possible, to prevents run-time crashes, and unwanted downtime. Comprehensive unit and integration testings must be present, to reduce errors and bugs within the system.
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_good_UI}:] \textbf{Intuitive UI/UX: }Neuralanalyzer's front-end must be user-friendly and straight-forward to be used. Front-end's core features such as login, account registration, and image-prediction should require as few clicks as possible.
@@ -647,7 +643,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] McMaster Department's servers will be available for our group members to perform model training and development. Under another assumption that our group members, as users of department resources, must follow department guidelines.
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] It is assumed that the training data set used for model development will include diverse and representative samples to ensure the model’s robustness and generalization across different populations.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] It is assumed that the training data set used for model development will include diverse and representative samples to ensure the model's robustness and generalization across different populations.
 \end{itemize}
 
   \clearpage
@@ -675,11 +671,11 @@ This project must comply with critical legal and regulatory standards to ensure 
   \item \textbf{Prediction:}
     \begin{align*}
       \hat{y}_i &= \begin{cases}
-        1 & \text{if } P(x_i) \geq 0.85 \\
-        0 & \text{if } P(x_i) < 0.85
+        1 & \text{if } P(x_i) \geq 0.75 \\
+        0 & \text{if } P(x_i) < 0.75
       \end{cases}
     \end{align*}
-    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.85, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
+    The model predicts \( \hat{y}_i = 1 \) (disease present) if the probability \( P(x_i) \) is greater than or equal to 0.75, and \( \hat{y}_i = 0 \) (disease absent) otherwise.
 
   \item \textbf{Evaluation:}
     \begin{align*}
@@ -697,7 +693,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 
 \subsubsection{Model Constraints}
 \begin{itemize}
-  \item The model \( M \) should achieve an accuracy of at least 85\% on the validation dataset.
+  \item The model \( M \) should achieve an accuracy of at least 75\% on the validation dataset.
   \item Each input image \( x_i \) should be preprocessed to a fixed size (e.g., 224x224 pixels) to ensure compatibility with the model.
   \item The model should be trained on a diverse dataset that includes images from different demographics and disease categories.
 \end{itemize}
@@ -707,7 +703,7 @@ This project must comply with critical legal and regulatory standards to ensure 
     \centering
     \includegraphics[width=1\linewidth]{statem.png}
     \caption{Finite State Machine Diagram}
-    \label{fig:enter-label}
+    \label{fig:finite state machine}
 \end{figure}
 
 \newpage
@@ -754,19 +750,21 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR3} & Develop a system that analyzes chest X-ray images to detect specific diseases with at least 85 percent accuracy. \\
+\textbf{\sout{FR3}} & \sout{Develop a system that analyzes chest X-ray images to detect specific diseases with at least 75 percent accuracy.} \\
 \hline
-\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\textbf{\sout{Rationale}} & \sout{One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings.} \\
 \hline
-\textbf{Verification} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 85\% accuracy threshold. \\
+\textbf{\sout{Verification}} & \sout{Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 75\% accuracy threshold.} \\
 \hline
-\textbf{Priority} & High \\
+\textbf{\sout{Priority}} & \sout{High} \\
 \hline
-\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
+\textbf{\sout{Traceability}} & \sout{PR1, HS1, SR1, FR1 (input of images), FR6 (reporting)} \\
 \hline
 \end{tabular}
-\caption{Functional Requirement FR3}
+\caption{\sout{Functional Requirement FR3}}
+\textcolor{red}{Removed as this is a non-functional requirement }
 \end{table}
+
 \begin{table}[h!]
 \centering
 \rowcolors{2}{white}{white}
@@ -830,9 +828,9 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR7} & Develop a system that store patient data, including images and reports, in a secure database for future reference. \\
+\textbf{FR7} & Develop a system that stores patient data, including images and reports, in a database for future reference. \\
 \hline
-\textbf{Rationale} & Keeping patient records secure and accessible for future consultations or research is important for patient care continuity. \\
+\textbf{Rationale} & Keeping patient records accessible for future consultations or research is important for patient care continuity. \\
 \hline
 \textbf{Verification} & Verify that the system correctly stores and retrieves patient data from the database. \\
 \hline
@@ -893,7 +891,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \hline
 \sout{\textbf{Rationale}} & \sout{Integrating with existing EHR systems improves workflow efficiency and reduces the need for manual data entry, making the system more useful in a clinical setting.} \\
 \hline
-\sout{\textbf{Verification}} & \sout{Test the system’s ability to connect with standard EHR systems and exchange data using appropriate protocols.} \\
+\sout{\textbf{Verification}} & \sout{Test the system's ability to connect with standard EHR systems and exchange data using appropriate protocols.} \\
 \hline
 \sout{\textbf{Priority}} & \sout{Low} \\
 \hline
@@ -909,7 +907,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR11} & The system shall display confidence levels for disease detection and progression analysis results through an intuitive user interface that requires minimal training to operate. \\
+\textbf{FR11} & The system shall display confidence levels for disease detection and progression analysis results. \\
 \hline
 \textbf{Rationale} & Providing confidence levels helps clinicians assess the reliability of the results. \\
 \hline
@@ -970,7 +968,7 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\sout{\textbf{FR14}} & \sout{Develop a system that would create a new copy of a patient’s X-ray before running the AI model for analysis.} \\
+\sout{\textbf{FR14}} & \sout{Develop a system that would create a new copy of a patient's X-ray before running the AI model for analysis.} \\
 \hline
 \sout{\textbf{Rationale}} & \sout{Creating a new copy ensures that the original X-ray remains unchanged for future reference, while the AI model works on the new version for tagging and analysis.} \\
 \hline
@@ -1011,9 +1009,9 @@ This project must comply with critical legal and regulatory standards to ensure 
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
 \hline
 \rowcolor{gray!30}
-\textbf{FR16} & Develop a system that would support regular updates to the AI model to incorporate new data and improve accuracy over time. \\
+\textbf{FR16} & Develop a system that would support regular updates to the AI model to incorporate new data. \\
 \hline
-\textbf{Rationale} & Continuous learning enhances the model's performance and keeps it up-to-date with the latest medical knowledge. \\
+\textbf{Rationale} & Regular model updates help to keep the system current with new medical information. \\
 \hline
 \textbf{Verification} & Ensure that the system can accept and integrate updated models without disrupting service. \\
 \hline
@@ -1163,6 +1161,27 @@ This project must comply with critical legal and regulatory standards to ensure 
 \end{tabular}
 \caption{Non-functional Requirement PR3}
 \end{table}
+
+\begin{table}[h!]
+\centering
+\rowcolors{2}{white}{white}
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{PR4} & Develop a system that analyzes chest X-ray images to detect specific diseases with at least 75 percent accuracy. \\
+\hline
+\textbf{Rationale} & One of the core functionalities of our system is its ability to detect diseases like pneumonia from X-rays. This ensures the AI model is effective in clinical settings. \\
+\hline
+\textbf{Fit Criterion} & Evaluate the accuracy of the disease detection model against a test dataset and confirm it meets or exceeds the 75\% accuracy threshold. \\
+
+\hline
+\textbf{Traceability} & PR1, HS1, SR1, FR1 (input of images), FR6 (reporting) \\
+\hline
+\end{tabular}
+\caption{Non-Functional Requirement PR4}
+\textcolor{red}{Added from functional requirement}
+\end{table} 
+
 \newpage
 \subsubsection{Operational and Environmental Requirements}
 
@@ -1537,7 +1556,7 @@ These requirements are core to our system's functionality and essential for meet
         \item \textbf{Possible Changes}: N/A
     \end{itemize}
 
-    \item \textbf{FR3}: Analyze chest X-rays to detect diseases with $\geq85\%$ accuracy.
+    \item \sout{\textbf{FR3}}\textcolor{red}{PR4}: Analyze chest X-rays to detect diseases with $\geq75\%$ accuracy.
     \begin{itemize}[label=-]
         \item \textbf{Rationale}: Central to the system's purpose; critical for providing value to users.
         \item \textbf{Possible Changes}: N/A
@@ -1760,89 +1779,73 @@ These requirements may be adjusted due to resource constraints, technical challe
 \begin{table}[h!]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3pt} % Adjust the column separation to make it tighter
-\renewcommand{\arraystretch}{1} % Adjust row height for a tighter fit
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1}
+
 \begin{tabular}{|p{1cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|p{0.9cm}|}
 \hline
-    & \textbf{FR1} & \textbf{FR2} & \textbf{FR3} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\ 
+    & \textbf{FR1} & \textbf{FR2} & \textbf{PR4} & \textbf{FR4} & \textbf{FR5} & \textbf{FR6} & \textbf{FR7} & \textbf{FR8} & \textbf{FR9} & \textbf{FR10} & \textbf{FR11} & \textbf{FR12} & \textbf{FR13} & \textbf{FR14} & \textbf{FR15} & \textbf{FR16} \\
 \hline
-\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\ 
+\textbf{FR1} & X & X & & & & & X & & & & & & & & & \\
 \hline
-\textbf{FR2} & & X & & & & & & & & & & & & & & X \\ 
+\textbf{FR2} & & X & & & & & & & & & & & & & & X \\
 \hline
-\textbf{FR3} & X & & X & X & X & X & & & & & & & & & & X \\ 
+\textbf{PR4} & X & & X & X & X & X & & & & & & & & & & X \\
 \hline
-\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\ 
+\textbf{FR4} & & & X & X & X & & & X & & & & & & & & \\
 \hline
-\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\ 
+\textbf{FR5} & & & & X & X & X & & & & & & & & & X & \\
 \hline
-\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\ 
+\textbf{FR6} & X & & X & X & X & X & & & X & & & & & & & \\
 \hline
-\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\ 
+\textbf{FR7} & X & & & & & X & X & & & X & & & X & & & \\
 \hline
-\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\ 
+\textbf{FR8} & & & & X & & X & & X & & & & & & & & \\
 \hline
-\textbf{FR9} & & & & & & X & & & X & & & & & & & \\ 
+\textbf{FR9} & & & & & & X & & & X & & & & & & & \\
 \hline
-\textbf{FR10} & & & & & & & X & & & X & & & X & & & X \\ 
+\textbf{FR11} & & & & & & & & & & & X & & & & & \\
 \hline
-\textbf{FR11} & & & & & & & & & & & X & & & & & \\ 
+\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\
 \hline
-\textbf{FR12} & X & & & & & & & & & & X & X & X & & & \\ 
+\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\
 \hline
-\textbf{FR13} & & & & & & & X & & & X & & X & X & & & \\ 
+\textbf{LF2} & X & & & & & & & & & & & & & & & \\
 \hline
-\textbf{FR14} & X & & & & & & & & & & & & & X & & \\ 
+\textbf{UH1} & X & X & & & & & & & & & & & & & & \\
 \hline
-\textbf{FR15} & X & & & & & & & & & & & & & & X & \\ 
+\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\
 \hline
-\textbf{FR16} & & & X & & & & & & & X & & & & & X & X \\ 
+\textbf{PR2} & & & & & X & & X & & & & & & & & & \\
 \hline
-\textbf{LF1} & X & & X & X & X & & & & & & & & & & & \\ 
+\textbf{PR3} & & & & & X & & X & & & & & & & & & \\
 \hline
-\textbf{LF2} & X & & & & & & & & & & & & & & & \\ 
+\textbf{PR4} & X &  & X & X & X & & & & & & & & & & X \\
 \hline
-\textbf{UH1} & X & X & & & & & & & & & & & & & & \\ 
+\textbf{OE2} & & & & X & & X & & & & & & & & & & \\
 \hline
-\textbf{UH2} & & X & & & X & X & & & & & X & & & & & \\ 
+\textbf{SR1} & & & & & & & X & & & & & X & & & & \\
 \hline
-\textbf{PR1} & & & X & X & X & & & & & & & & & & & \\ 
+\textbf{MS1} & & & & & & & & & & X & & & & & & X \\
 \hline
-\textbf{PR2} & & & & & X & & X & & & & & & & & & \\ 
+\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\
 \hline
-\textbf{PR3} & & & & & X & & X & & & & & & & & & \\ 
+\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\
 \hline
-\textbf{OE1} & & & & & & & X & & & & & & & X & & \\ 
+\textbf{HS1} & & & X & X & & & & & & & & & & & & \\
 \hline
-\textbf{OE2} & & & & X & & X & & & & & & & & & & \\ 
-\hline
-\textbf{SR1} & & & & & & & X & & & & & X & & & & \\ 
-\hline
-\textbf{SR2} & & & & & & & & & & & & X & X & & & \\ 
-\hline
-\textbf{MS1} & & & & & & & & & & X & & & & & & X \\ 
-\hline
-\textbf{MS2} & & & & & & & X & & & & & & & X & & X \\ 
-\hline
-\textbf{CR1} & & & & & & & & & & & & & & X & & \\ 
-\hline
-\textbf{LR1} & & & & & & & & & & & & X & X & & & \\ 
-\hline
-\textbf{LR2} & & & & & & & X & & & X & & & & X & X & \\ 
-\hline
-\textbf{HS1} & & & X & X & & & & & & & & & & & & \\ 
-\hline
-\textbf{HS2} & & & & & & & & & & & & X & & & & \\ 
+\textbf{HS2} & & & & & & & & & & & & X & & & & \\
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements (column i depends on row j if there's a X presented in the cell)}
-\label{Table:Traceability}
+\caption{Updated Traceability Matrix Showing the Dependencies Between Functional and Non-Functional Requirements (column i depends on row j if there's an X presented in the cell)}
+\label{Table:UpdatedTraceability}
 \end{table}
 \end{landscape}
 }
+
+
 \newpage{}
 \section*{Appendix --- Reflection}
-
 \begin{enumerate}
   \item What went well while writing this deliverable? \\\\
 We felt the SRS document provided us strong growth and structures as the content was comprehensive. We were able to gain a better understanding of the necessary elements like the scope, context diagrams, and nonfunctional requirements such as performance and safety. The clear delineation between normal operations and undesired event handling gave us confidence in its thoroughness. Overall, we felt that the SRS document provided us with a solid foundation to work from, especially in terms of its clarity, organization, and attention to detail. It gave us a clear picture of the system's requirements and made it easier to move forward with design and implementation.
@@ -1898,7 +1901,7 @@ This requires sufficient knowledge of Angular, TypeScript, HTML, and CSS. They m
 
 
 \textbf{Assigned Team Members: All} \\
-The main component of the AI model for chest X-ray analysis centers around comprehending the user’s expectations. Healthcare professionals, including radiologists, pulmonologists, and general practitioners, will be the main users of this application since they will need to use the tool for diagnosing lung diseases. Therefore, it is critical to gain an understanding of users and their information needs when designing the AI model and its interface, with the intention of providing relevant information that is precise and adequate.
+The main component of the AI model for chest X-ray analysis centers around comprehending the user's expectations. Healthcare professionals, including radiologists, pulmonologists, and general practitioners, will be the main users of this application since they will need to use the tool for diagnosing lung diseases. Therefore, it is critical to gain an understanding of users and their information needs when designing the AI model and its interface, with the intention of providing relevant information that is precise and adequate.
 
 Furthermore, our application would be helpful for end-users, including junior doctors in medical school, who can use the application as an educational tool or supplemental diagnostic aid. Determining which users will be the target audience and their expectations will inform design choices ranging from how complex the expected output is to how user-friendly the user-interface design is. Everyone is expected to partake in user research, where they will seek feedback from potential end-users and consult healthcare professionals to ensure the tool caters to the specific needs of users from different disciplines. The team will also consider designs that may be more attractive to patients, such as picture-based diagnostic aids or X-ray interpretation rather than a plethora of diagnostic radiology information. This will involve creating a proper compromise between providing detailed diagnostic and analytical information.
 
