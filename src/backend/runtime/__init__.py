@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from .config import Config
 from .data.aws_cognito import CognitoIdentityProvider
 from .data.prediction_services import PredictionService as PS

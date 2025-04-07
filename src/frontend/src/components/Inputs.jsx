@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 export const PrimaryTextInput = ({
   type,
   placeholder,

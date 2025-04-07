@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from .base_service import BaseDynamoService
 from boto3.dynamodb.conditions import Key
 

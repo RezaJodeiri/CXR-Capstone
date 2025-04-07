@@ -1,5 +1,9 @@
 # Bookkeeping
 
+## Overview
+
+This repository contains the infrastructure code for the CXR-Capstone project. It is responsible for setting up and managing the necessary infrastructure components, including AWS services, Docker containers, and Terraform configurations.
+
 ## Pushing onto AWS ECR to work with AWS Fargate
 
 Fargate only works with `amd64` images. To push the image to ECR, you need to tag the image with the ECR repository URI and then push it.

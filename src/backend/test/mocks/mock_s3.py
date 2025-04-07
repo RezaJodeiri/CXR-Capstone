@@ -1,3 +1,7 @@
+"""
+Author: Kelly Deng
+"""
+
 from unittest.mock import MagicMock
 from runtime.data.aws_s3 import S3PresignedURLHandler
 

@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 import requests
 
 from ..config import Config

@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from unittest.mock import MagicMock
 from runtime.data.aws_cognito import CognitoIdentityProvider
 

@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from runtime.data.report_generation_service import ReportGenerationService
 
 class MockOpenAI:

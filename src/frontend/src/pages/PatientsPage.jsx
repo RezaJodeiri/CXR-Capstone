@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {

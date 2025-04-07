@@ -1,3 +1,7 @@
+"""
+Author: Kelly Deng
+"""
+
 import boto3
 import requests
 from botocore.config import Config

@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong, Ayman Akhras, Kelly Deng
+"""
+
 import os
 import sys
 import pytest

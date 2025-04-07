@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useState, useCallback } from "react";
 import { SecondaryButton, PrimaryButton } from "../components/Buttons";
 import { Link } from "react-router-dom";

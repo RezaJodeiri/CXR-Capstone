@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from decorators.login_required import authentication_required
 from flask import Blueprint, jsonify, request
 from runtime import PredictionService

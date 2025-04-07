@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React from "react";
 import TopBar from "../components/TopBar";
 

@@ -1,3 +1,7 @@
+"""
+Author: Patrick Zhou, Reza Jodeiri
+"""
+
 import torch.nn as nn
 
 class TransformerNetwork(nn.Module):

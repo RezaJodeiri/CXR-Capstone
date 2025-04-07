@@ -1,3 +1,7 @@
+"""
+Author: Patrick Zhou
+"""
+
 import unittest
 from .mocks.mock_db import MockMedicalRecordService as MRS, MockMedicalPrescriptionService as MPS
 

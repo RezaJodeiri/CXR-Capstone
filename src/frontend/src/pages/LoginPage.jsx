@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import React, { useState } from "react";
 import { PrimaryButton, SecondaryButton } from "../components/Buttons";
 import { PrimaryTextInputWithLabel } from "../components/Inputs";

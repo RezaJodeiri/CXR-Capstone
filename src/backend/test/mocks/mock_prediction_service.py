@@ -1,3 +1,7 @@
+"""
+Author: Nathan Luong
+"""
+
 from runtime.data.prediction_services import PredictionService
 
 class MockPredictionService(PredictionService):

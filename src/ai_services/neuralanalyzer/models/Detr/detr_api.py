@@ -1,3 +1,7 @@
+"""
+Author: Patrick Zhou, Reza Jodeiri
+"""
+
 import io
 import os
 import torch

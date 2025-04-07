@@ -1,3 +1,5 @@
+// Author: Nathan Luong, Reza Jodeiri
+
 import { createContext, useState, useEffect, useContext } from "react";
 import { signIn, signUp, getSelfUser } from "../services/api";
 import { useNavigate } from "react-router-dom";

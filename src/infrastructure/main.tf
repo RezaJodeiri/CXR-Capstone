@@ -1,3 +1,4 @@
+// Author: Nathan Luong
 provider "aws" {
   region = "us-west-2"
 }
