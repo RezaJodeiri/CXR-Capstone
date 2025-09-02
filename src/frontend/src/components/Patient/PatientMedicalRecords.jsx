@@ -465,7 +465,7 @@ function PatientMedicalRecords({ patient }) {
                 Cancel
               </button>
               <button
-                //TODO
+                onClick={submitRecord}
                 className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-none font-medium"
               >
                 Approval

@@ -1,0 +1,130 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_cloudwatch_log_group.backend_logs (expand)" [label = "aws_cloudwatch_log_group.backend_logs", shape = "box"]
+		"[root] aws_cloudwatch_log_group.frontend_logs (expand)" [label = "aws_cloudwatch_log_group.frontend_logs", shape = "box"]
+		"[root] aws_cloudwatch_log_group.torchxrayvision_logs (expand)" [label = "aws_cloudwatch_log_group.torchxrayvision_logs", shape = "box"]
+		"[root] aws_ecs_cluster.main (expand)" [label = "aws_ecs_cluster.main", shape = "box"]
+		"[root] aws_ecs_service.backend (expand)" [label = "aws_ecs_service.backend", shape = "box"]
+		"[root] aws_ecs_service.frontend (expand)" [label = "aws_ecs_service.frontend", shape = "box"]
+		"[root] aws_ecs_service.torchxrayvision (expand)" [label = "aws_ecs_service.torchxrayvision", shape = "box"]
+		"[root] aws_ecs_task_definition.backend (expand)" [label = "aws_ecs_task_definition.backend", shape = "box"]
+		"[root] aws_ecs_task_definition.frontend (expand)" [label = "aws_ecs_task_definition.frontend", shape = "box"]
+		"[root] aws_ecs_task_definition.torchxrayvision (expand)" [label = "aws_ecs_task_definition.torchxrayvision", shape = "box"]
+		"[root] aws_internet_gateway.main_igw (expand)" [label = "aws_internet_gateway.main_igw", shape = "box"]
+		"[root] aws_lb.backend_lb (expand)" [label = "aws_lb.backend_lb", shape = "box"]
+		"[root] aws_lb.frontend_lb (expand)" [label = "aws_lb.frontend_lb", shape = "box"]
+		"[root] aws_lb_listener.backend_https_listener (expand)" [label = "aws_lb_listener.backend_https_listener", shape = "box"]
+		"[root] aws_lb_listener.backend_listener (expand)" [label = "aws_lb_listener.backend_listener", shape = "box"]
+		"[root] aws_lb_listener.frontend_https_listener (expand)" [label = "aws_lb_listener.frontend_https_listener", shape = "box"]
+		"[root] aws_lb_listener.frontend_listener (expand)" [label = "aws_lb_listener.frontend_listener", shape = "box"]
+		"[root] aws_lb_target_group.backend_tg (expand)" [label = "aws_lb_target_group.backend_tg", shape = "box"]
+		"[root] aws_lb_target_group.frontend_tg (expand)" [label = "aws_lb_target_group.frontend_tg", shape = "box"]
+		"[root] aws_route_table.private_rt (expand)" [label = "aws_route_table.private_rt", shape = "box"]
+		"[root] aws_route_table.public_rt (expand)" [label = "aws_route_table.public_rt", shape = "box"]
+		"[root] aws_route_table_association.private_subnet_association (expand)" [label = "aws_route_table_association.private_subnet_association", shape = "box"]
+		"[root] aws_route_table_association.public_subnet_association (expand)" [label = "aws_route_table_association.public_subnet_association", shape = "box"]
+		"[root] aws_security_group.aws_services_related_endpoints_sg (expand)" [label = "aws_security_group.aws_services_related_endpoints_sg", shape = "box"]
+		"[root] aws_security_group.backend_sg (expand)" [label = "aws_security_group.backend_sg", shape = "box"]
+		"[root] aws_security_group.frontend_sg (expand)" [label = "aws_security_group.frontend_sg", shape = "box"]
+		"[root] aws_security_group.torch_sg (expand)" [label = "aws_security_group.torch_sg", shape = "box"]
+		"[root] aws_subnet.private (expand)" [label = "aws_subnet.private", shape = "box"]
+		"[root] aws_subnet.public (expand)" [label = "aws_subnet.public", shape = "box"]
+		"[root] aws_vpc.main (expand)" [label = "aws_vpc.main", shape = "box"]
+		"[root] aws_vpc_endpoint.ecr_api (expand)" [label = "aws_vpc_endpoint.ecr_api", shape = "box"]
+		"[root] aws_vpc_endpoint.ecr_dkr (expand)" [label = "aws_vpc_endpoint.ecr_dkr", shape = "box"]
+		"[root] aws_vpc_endpoint.logs (expand)" [label = "aws_vpc_endpoint.logs", shape = "box"]
+		"[root] aws_vpc_endpoint.s3 (expand)" [label = "aws_vpc_endpoint.s3", shape = "box"]
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" [label = "provider[\"registry.terraform.io/hashicorp/aws\"]", shape = "diamond"]
+		"[root] var.AWS_ACCESS_KEY_ID" [label = "var.AWS_ACCESS_KEY_ID", shape = "note"]
+		"[root] var.AWS_REGION" [label = "var.AWS_REGION", shape = "note"]
+		"[root] var.AWS_SECRET_ACCESS_KEY" [label = "var.AWS_SECRET_ACCESS_KEY", shape = "note"]
+		"[root] var.COGNITO_APP_CLIENT_ID" [label = "var.COGNITO_APP_CLIENT_ID", shape = "note"]
+		"[root] var.COGNITO_APP_CLIENT_SECRET" [label = "var.COGNITO_APP_CLIENT_SECRET", shape = "note"]
+		"[root] var.COGNITO_USER_POOL_ID" [label = "var.COGNITO_USER_POOL_ID", shape = "note"]
+		"[root] var.NEURALANALYZER_MODEL_URL" [label = "var.NEURALANALYZER_MODEL_URL", shape = "note"]
+		"[root] var.OPENAI_API_KEY" [label = "var.OPENAI_API_KEY", shape = "note"]
+		"[root] var.TORCHXRAYVISION_MODEL_URL" [label = "var.TORCHXRAYVISION_MODEL_URL", shape = "note"]
+		"[root] var.acm_ssl_certificate_arn" [label = "var.acm_ssl_certificate_arn", shape = "note"]
+		"[root] aws_cloudwatch_log_group.backend_logs (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_cloudwatch_log_group.frontend_logs (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_cloudwatch_log_group.torchxrayvision_logs (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_ecs_cluster.main (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_ecs_service.backend (expand)" -> "[root] aws_ecs_service.torchxrayvision (expand)"
+		"[root] aws_ecs_service.backend (expand)" -> "[root] aws_ecs_task_definition.backend (expand)"
+		"[root] aws_ecs_service.backend (expand)" -> "[root] aws_lb_listener.backend_listener (expand)"
+		"[root] aws_ecs_service.frontend (expand)" -> "[root] aws_ecs_cluster.main (expand)"
+		"[root] aws_ecs_service.frontend (expand)" -> "[root] aws_ecs_task_definition.frontend (expand)"
+		"[root] aws_ecs_service.frontend (expand)" -> "[root] aws_lb_listener.frontend_listener (expand)"
+		"[root] aws_ecs_service.torchxrayvision (expand)" -> "[root] aws_ecs_cluster.main (expand)"
+		"[root] aws_ecs_service.torchxrayvision (expand)" -> "[root] aws_ecs_task_definition.torchxrayvision (expand)"
+		"[root] aws_ecs_service.torchxrayvision (expand)" -> "[root] aws_security_group.backend_sg (expand)"
+		"[root] aws_ecs_service.torchxrayvision (expand)" -> "[root] aws_subnet.public (expand)"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] aws_cloudwatch_log_group.backend_logs (expand)"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] aws_lb.frontend_lb (expand)"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.AWS_ACCESS_KEY_ID"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.AWS_REGION"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.AWS_SECRET_ACCESS_KEY"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.COGNITO_APP_CLIENT_ID"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.COGNITO_APP_CLIENT_SECRET"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.COGNITO_USER_POOL_ID"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.NEURALANALYZER_MODEL_URL"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.OPENAI_API_KEY"
+		"[root] aws_ecs_task_definition.backend (expand)" -> "[root] var.TORCHXRAYVISION_MODEL_URL"
+		"[root] aws_ecs_task_definition.frontend (expand)" -> "[root] aws_cloudwatch_log_group.frontend_logs (expand)"
+		"[root] aws_ecs_task_definition.frontend (expand)" -> "[root] aws_lb.backend_lb (expand)"
+		"[root] aws_ecs_task_definition.frontend (expand)" -> "[root] var.AWS_REGION"
+		"[root] aws_ecs_task_definition.torchxrayvision (expand)" -> "[root] aws_cloudwatch_log_group.torchxrayvision_logs (expand)"
+		"[root] aws_internet_gateway.main_igw (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_lb.backend_lb (expand)" -> "[root] aws_security_group.backend_sg (expand)"
+		"[root] aws_lb.backend_lb (expand)" -> "[root] aws_subnet.public (expand)"
+		"[root] aws_lb.frontend_lb (expand)" -> "[root] aws_security_group.frontend_sg (expand)"
+		"[root] aws_lb.frontend_lb (expand)" -> "[root] aws_subnet.public (expand)"
+		"[root] aws_lb_listener.backend_https_listener (expand)" -> "[root] aws_lb.backend_lb (expand)"
+		"[root] aws_lb_listener.backend_https_listener (expand)" -> "[root] aws_lb_target_group.backend_tg (expand)"
+		"[root] aws_lb_listener.backend_https_listener (expand)" -> "[root] var.acm_ssl_certificate_arn"
+		"[root] aws_lb_listener.backend_listener (expand)" -> "[root] aws_lb.backend_lb (expand)"
+		"[root] aws_lb_listener.backend_listener (expand)" -> "[root] aws_lb_target_group.backend_tg (expand)"
+		"[root] aws_lb_listener.frontend_https_listener (expand)" -> "[root] aws_lb.frontend_lb (expand)"
+		"[root] aws_lb_listener.frontend_https_listener (expand)" -> "[root] aws_lb_target_group.frontend_tg (expand)"
+		"[root] aws_lb_listener.frontend_https_listener (expand)" -> "[root] var.acm_ssl_certificate_arn"
+		"[root] aws_lb_listener.frontend_listener (expand)" -> "[root] aws_lb.frontend_lb (expand)"
+		"[root] aws_lb_listener.frontend_listener (expand)" -> "[root] aws_lb_target_group.frontend_tg (expand)"
+		"[root] aws_lb_target_group.backend_tg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_lb_target_group.frontend_tg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_route_table.private_rt (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_route_table.public_rt (expand)" -> "[root] aws_internet_gateway.main_igw (expand)"
+		"[root] aws_route_table_association.private_subnet_association (expand)" -> "[root] aws_route_table.private_rt (expand)"
+		"[root] aws_route_table_association.private_subnet_association (expand)" -> "[root] aws_subnet.private (expand)"
+		"[root] aws_route_table_association.public_subnet_association (expand)" -> "[root] aws_route_table.public_rt (expand)"
+		"[root] aws_route_table_association.public_subnet_association (expand)" -> "[root] aws_subnet.public (expand)"
+		"[root] aws_security_group.aws_services_related_endpoints_sg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_security_group.backend_sg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_security_group.frontend_sg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_security_group.torch_sg (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_subnet.private (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_subnet.public (expand)" -> "[root] aws_vpc.main (expand)"
+		"[root] aws_vpc.main (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_vpc_endpoint.ecr_api (expand)" -> "[root] aws_security_group.aws_services_related_endpoints_sg (expand)"
+		"[root] aws_vpc_endpoint.ecr_api (expand)" -> "[root] aws_subnet.private (expand)"
+		"[root] aws_vpc_endpoint.ecr_dkr (expand)" -> "[root] aws_security_group.aws_services_related_endpoints_sg (expand)"
+		"[root] aws_vpc_endpoint.ecr_dkr (expand)" -> "[root] aws_subnet.private (expand)"
+		"[root] aws_vpc_endpoint.logs (expand)" -> "[root] aws_security_group.aws_services_related_endpoints_sg (expand)"
+		"[root] aws_vpc_endpoint.logs (expand)" -> "[root] aws_subnet.private (expand)"
+		"[root] aws_vpc_endpoint.s3 (expand)" -> "[root] aws_route_table.private_rt (expand)"
+		"[root] aws_vpc_endpoint.s3 (expand)" -> "[root] aws_route_table.public_rt (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_ecs_service.backend (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_ecs_service.frontend (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener.backend_https_listener (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener.frontend_https_listener (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route_table_association.private_subnet_association (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route_table_association.public_subnet_association (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_security_group.torch_sg (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_vpc_endpoint.ecr_api (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_vpc_endpoint.ecr_dkr (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_vpc_endpoint.logs (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_vpc_endpoint.s3 (expand)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)"
+	}
+}
